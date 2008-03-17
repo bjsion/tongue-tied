@@ -1,0 +1,104 @@
+package org.tonguetied.domain;
+
+import org.tonguetied.domain.Country.CountryCode;
+import org.tonguetied.domain.Language.LanguageCode;
+import org.tonguetied.domain.Translation.TranslationState;
+
+import junitx.extensions.ComparabilityTestCase;
+
+public class TranslationComparabilityTest extends ComparabilityTestCase {
+    
+    private Language hebrew;
+    private Language russian;
+    private Language defaultLanguage;
+    private Country defaultCountry;
+    private Country israel;
+    private Bundle bundle;
+    private Keyword keyword1;
+    private Keyword keyword2;
+
+    /**
+     * @param name
+     */
+    public TranslationComparabilityTest(String name) {
+        super(name);
+
+        hebrew = new Language();
+        hebrew.setCode(LanguageCode.he);
+        hebrew.setName("Hebrew");
+        
+        russian = new Language();
+        russian.setCode(LanguageCode.ru);
+        russian.setName("Russian");
+        
+        defaultLanguage = new Language();
+        defaultLanguage.setCode(LanguageCode.DEFAULT);
+        defaultLanguage.setName("Default");
+        
+        israel = new Country();
+        israel.setCode(CountryCode.IL);
+        israel.setName("Israel");
+        
+        defaultCountry = new Country();
+        defaultCountry.setCode(CountryCode.DEFAULT);
+        defaultCountry.setName("Default");
+        
+        bundle = new Bundle();
+        bundle.setName("bundle");
+        bundle.setResourceName("test");
+        bundle.setDescription("description");
+        
+        keyword1 = new Keyword();
+        keyword1.setKeyword("keywordOne");
+        keyword1.setContext("context");
+        
+        keyword2 = new Keyword();
+        keyword2.setKeyword("keywordTwo");
+        keyword2.setContext("context");
+    }
+
+    /* (non-Javadoc)
+     * @see junitx.extensions.ComparabilityTestCase#createEqualInstance()
+     */
+    @Override
+    protected Comparable<?> createEqualInstance() throws Exception {
+        Translation translation = new Translation();
+        translation.setKeyword(keyword1);
+        translation.setLanguage(hebrew);
+        translation.setCountry(israel);
+        translation.setBundle(bundle);
+        translation.setValue("value");
+        translation.setState(TranslationState.QUERIED);
+        return translation;
+    }
+
+    /* (non-Javadoc)
+     * @see junitx.extensions.ComparabilityTestCase#createGreaterInstance()
+     */
+    @Override
+    protected Comparable<?> createGreaterInstance() throws Exception {
+        Translation translation = new Translation();
+        translation.setKeyword(keyword1);
+        translation.setLanguage(russian);
+        translation.setCountry(israel);
+        translation.setBundle(bundle);
+        translation.setValue("value");
+        translation.setState(TranslationState.QUERIED);
+        return translation;
+    }
+
+    /* (non-Javadoc)
+     * @see junitx.extensions.ComparabilityTestCase#createLessInstance()
+     */
+    @Override
+    protected Comparable<?> createLessInstance() throws Exception {
+        Translation translation = new Translation();
+        translation.setKeyword(keyword1);
+        translation.setLanguage(hebrew);
+        translation.setCountry(defaultCountry);
+        translation.setBundle(bundle);
+        translation.setValue("value");
+        return translation;
+    }
+
+}
