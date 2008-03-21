@@ -64,7 +64,7 @@
                             <form:hidden path="translations[${index.index}].id" id="translation${index.index}.id"/>
                             <form:hidden path="translations[${index.index}].version" id="translation${index.index}.version"/>
                             <authz:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
-                            <input type="image" src="<c:url value="images/delete.gif"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" name="deleteTranslation" value="${translation.id}"/>
+                            <input type="image" src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" name="deleteTranslation" value="${translation.id}"/>
                             </authz:authorize>
                         </td>
                         <td>
