@@ -150,7 +150,7 @@
                 <c:url value="deleteKeyword.htm" var="deleteKeywordUrl" scope="page"><c:param name="keywordId" value="${translation.keyword.id}"/></c:url>
                 <fmt:message key="confirmKeywordDelete" var="confirmDeleteKeywordMsg" scope="page"><fmt:param value="${keyword.keyword}"/></fmt:message>
                 <a href="${deleteKeywordUrl}" onclick="return confirm('${confirmDeleteKeywordMsg}')">
-                    <img src="<c:url value="images/delete.gif"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" class="imgLink"/>
+                    <img src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" class="imgLink"/>
                 </a>
             </display:column>
             <display:column titleKey="keyword" group="2" class="keyword" sortable="true">
