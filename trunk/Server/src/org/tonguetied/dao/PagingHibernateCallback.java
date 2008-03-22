@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.tonguetied.dao;
 
 import java.sql.SQLException;
@@ -16,7 +13,7 @@ import org.springframework.orm.hibernate3.HibernateCallback;
  * This class adds pagination to a {@link Query} or {@link Criteria}.
  * 
  * @author bsion
- * @see http://blog.hibernate.org/cgi-bin/blosxom.cgi/2004/08/14#fn.html
+ * @see <a href="http://blog.hibernate.org/cgi-bin/blosxom.cgi/2004/08/14#fn.html">hibernate pagination</a>
  */
 public class PagingHibernateCallback implements HibernateCallback {
     

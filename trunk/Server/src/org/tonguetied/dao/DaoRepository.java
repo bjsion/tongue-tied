@@ -173,7 +173,7 @@ public interface DaoRepository
     List<Bundle> getBundles();	  
     
     /**
-     * Retrieve the user by business key, ie the {@link User#getUserName()} 
+     * Retrieve the user by business key, ie the {@link User#getUsername()} 
      * from permanent storage.
      * 
      * @param username the business key to search for

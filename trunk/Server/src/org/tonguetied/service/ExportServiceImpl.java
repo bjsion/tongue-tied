@@ -99,7 +99,8 @@ public class ExportServiceImpl implements ExportService {
             Map<String, Object> root = new HashMap<String, Object>();
             ExportDataPostProcessor postProcessor = parameters.getFormatType().getPostProcessor();
             if (postProcessor != null) {
-                List results = postProcessor.transformData(translations, daoRepository);
+                List<?> results = 
+                    postProcessor.transformData(translations, daoRepository);
                 root.put("items", results);
 //                if (parameters.getLanguages().contains(arg0))
                 Language traditionalChinese = new Language();

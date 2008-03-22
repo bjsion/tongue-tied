@@ -237,7 +237,7 @@ public class User implements UserDetails {
                 authorities.add(authority);
             }
             
-            this.setAuthorities((GrantedAuthority[]) authorities.toArray(
+            this.setAuthorities(authorities.toArray(
                     new GrantedAuthority[authorities.size()]));
         }
     }
@@ -245,7 +245,7 @@ public class User implements UserDetails {
     /**
      * Convenience method to add a permission to this User.
      * 
-     * @param permission the authorized permission to add
+     * @param userRight the authorized permission to add
      * @throws IllegalArgumentException if the <tt>userRight</tt> is 
      * <tt>null</tt>
      */
@@ -265,7 +265,7 @@ public class User implements UserDetails {
         if (!authorities.contains(authority)) {
             authorities.add(authority);
         }
-        this.setAuthorities((GrantedAuthority[]) authorities.toArray(
+        this.setAuthorities(authorities.toArray(
                 new GrantedAuthority[authorities.size()]));
     }
 
@@ -315,9 +315,15 @@ public class User implements UserDetails {
         this.isCredentialsNonExpired = isCredentialsNonExpired;
     }
 
+    /**
+     * Returns a cloned array of {@link GrantedAuthority}s. This is done for 
+     * security reasons, as the authorities are mutable.
+     * 
+     * @return the {@link GrantedAuthority}s for this user.
+     */
     @Transient
     public GrantedAuthority[] getAuthorities() {
-        return grantedAuthorities;
+        return grantedAuthorities.clone();
     }
     
     public void setAuthorities(GrantedAuthority[] authorities) {

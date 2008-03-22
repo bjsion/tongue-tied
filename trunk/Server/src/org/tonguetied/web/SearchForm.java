@@ -137,9 +137,10 @@ public class SearchForm {
     
     /**
      * 
-     * @return
+     * @return the keyword of this search form
      */
     public Keyword getKeyword() {
+        // TODO : return a clone of this object as it should be immutable
         return this.keyword;
     }
 }

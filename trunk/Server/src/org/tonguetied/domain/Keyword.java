@@ -119,7 +119,7 @@ public class Keyword implements Cloneable, Comparable<Object>, Auditable
      * <code>translations</code>. The translation to be removed is matched by
      * the <code>id</code> of the {@link Translation}.
      * 
-     * @param id the id of the {@link Translation} to remove
+     * @param translationId the id of the {@link Translation} to remove
      */
     public void removeTranslation(Long translationId) {
         Translation translation = (Translation) CollectionUtils.find(

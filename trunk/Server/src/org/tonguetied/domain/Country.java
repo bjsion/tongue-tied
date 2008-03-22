@@ -98,7 +98,7 @@ public class Country implements Comparable<Object>
      * This enum contains the list of country codes according to iso3166
      * arranged in alphabetical order of countries' names in English
      *
-     * @see http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/list-en1.html
+     * @see <a href="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/list-en1.html">ISO Country codes</a>
      */
     public enum CountryCode {
         /**
