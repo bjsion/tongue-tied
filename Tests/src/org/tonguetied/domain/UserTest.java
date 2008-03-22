@@ -44,7 +44,7 @@ public class UserTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.domain.User#setUserRights(java.util.Set)}.
+     * Test method for {@link org.tonguetied.domain.User#setUserRights(SortedSet)}.
      */
     @Test
     public final void testSetUserRights() {
@@ -66,7 +66,7 @@ public class UserTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.domain.User#setUserRights(java.util.Set)}.
+     * Test method for {@link org.tonguetied.domain.User#setUserRights(SortedSet)}.
      */
     @Test
     public final void testSetUserRightsToNull() {

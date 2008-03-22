@@ -43,7 +43,7 @@ public class UserDetailsServiceTest extends AbstractServiceTest {
     }
 
     /**
-     * Test method for {@link UserServiceImpl#loadUserByUsername(String)}.
+     * Test method for {@link UserDetailsService#loadUserByUsername(String)}.
      */
     public final void testLoadUserByUsername() {
         UserDetails userDetails = 
@@ -62,7 +62,7 @@ public class UserDetailsServiceTest extends AbstractServiceTest {
     }
     
     /**
-     * Test method for {@link UserServiceImpl#loadUserByUsername(String)}.
+     * Test method for {@link UserDetailsService#loadUserByUsername(String)}.
      */
     public final void testLoadUserByUsernameWithExpiredAccount() {
         UserDetails userDetails = 
@@ -80,7 +80,7 @@ public class UserDetailsServiceTest extends AbstractServiceTest {
     }
     
     /**
-     * Test method for {@link UserServiceImpl#loadUserByUsername(String)}.
+     * Test method for {@link UserDetailsService#loadUserByUsername(String)}.
      */
     public final void testLoadUserByUsernameWithInvalidCred() {
         UserDetails userDetails = 
@@ -98,7 +98,7 @@ public class UserDetailsServiceTest extends AbstractServiceTest {
     }
     
     /**
-     * Test method for {@link UserServiceImpl#loadUserByUsername(String)}.
+     * Test method for {@link UserDetailsService#loadUserByUsername(String)}.
      */
     @ExpectedException(UsernameNotFoundException.class)
     public final void testLoadUserByUsernameNull() throws Exception {
@@ -106,7 +106,7 @@ public class UserDetailsServiceTest extends AbstractServiceTest {
     }
 
     /**
-     * Test method for {@link UserServiceImpl#loadUserByUsername(String)}.
+     * Test method for {@link UserDetailsService#loadUserByUsername(String)}.
      */
     @ExpectedException(UsernameNotFoundException.class)
     public final void testLoadUserByUsernameBlank() {
@@ -114,7 +114,7 @@ public class UserDetailsServiceTest extends AbstractServiceTest {
     }
 
     /**
-     * Test method for {@link UserServiceImpl#loadUserByUsername(String)}.
+     * Test method for {@link UserDetailsService#loadUserByUsername(String)}.
      */
     @ExpectedException(UsernameNotFoundException.class)
     public final void testLoadUserByUsernameUnknown() {
@@ -122,7 +122,7 @@ public class UserDetailsServiceTest extends AbstractServiceTest {
     }
 
     /**
-     * Test method for {@link UserServiceImpl#loadUserByUsername(String)}.
+     * Test method for {@link UserDetailsService#loadUserByUsername(String)}.
      */
     @ExpectedException(UsernameNotFoundException.class)
     public final void testLoadUserWithNoAuthorizations() {
@@ -130,14 +130,14 @@ public class UserDetailsServiceTest extends AbstractServiceTest {
     }
     
     /**
-     * @param userService the userService to set
+     * @param userService the {@link UserDetailsServiceTest} to set
      */
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
     /**
-     * @param userService the userService to set
+     * @param userDetailsService the {@link UserDetailsService} to set
      */
     public void setUserDetailsService(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;

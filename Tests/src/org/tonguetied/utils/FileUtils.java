@@ -49,7 +49,7 @@ public class FileUtils
      * Get the contents of a {@link File} as a String. Convience method to 
      * {@link #loadFile(InputStream)}  
      * 
-     * @param resourceName the name of the file to load
+     * @param file the name of the file to load
      * @return the contents of a file as a <code>String</code>
      * @throws IOException if the file fails to load
      * @throws IllegalArgumentException if <code>file</code> does not exist or 
@@ -69,7 +69,7 @@ public class FileUtils
     /**
      * Get the contents of a {@link InputStream} as a String. 
      * 
-     * @param resourceName the name of the file to load
+     * @param resource the name of the file to load
      * @return the contents of a file as a <code>String</code>
      * @throws IOException if the file fails to load
      */

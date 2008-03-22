@@ -169,7 +169,7 @@ public class ExcelImporterTest extends AbstractServiceTest {
     }
     
     /**
-     * Test method for {@link org.tonguetied.service.ExcelImporter#importData()}.
+     * Test method for {@link org.tonguetied.service.ExcelImporter#importData(byte[])}.
      */
     public void testImportData() throws Exception {
         File input = new File(System.getProperty("user.dir") + 

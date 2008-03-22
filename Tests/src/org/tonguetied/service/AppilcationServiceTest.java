@@ -2,7 +2,6 @@ package org.tonguetied.service;
 
 import java.util.List;
 
-import org.hibernate.criterion.MatchMode;
 import org.junit.Test;
 import org.tonguetied.domain.Bundle;
 import org.tonguetied.domain.Country;
@@ -339,7 +338,7 @@ public class AppilcationServiceTest extends AbstractServiceTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.service.ApplicationServiceImpl#findKeywords(Keyword, boolean, MatchMode)}.
+     * Test method for {@link org.tonguetied.service.ApplicationServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
      */
     @Test(expected=IllegalArgumentException.class)
     public final void testFindKeywordsWithKeywordNull() {
@@ -354,7 +353,7 @@ public class AppilcationServiceTest extends AbstractServiceTest {
     }
     
     /**
-     * Test method for {@link org.tonguetied.service.ApplicationServiceImpl#findKeywords(Keyword, boolean, MatchMode)}.
+     * Test method for {@link org.tonguetied.service.ApplicationServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsWithNoMatches() {
@@ -366,7 +365,7 @@ public class AppilcationServiceTest extends AbstractServiceTest {
     }
     
     /**
-     * Test method for {@link org.tonguetied.service.ApplicationServiceImpl#findKeywords(Keyword, boolean, MatchMode)}.
+     * Test method for {@link org.tonguetied.service.ApplicationServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsByKeyword() {
@@ -380,7 +379,7 @@ public class AppilcationServiceTest extends AbstractServiceTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.service.ApplicationServiceImpl#findKeywords(Keyword, boolean, MatchMode)}.
+     * Test method for {@link org.tonguetied.service.ApplicationServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsByKeywordEmptyString() {
@@ -396,7 +395,7 @@ public class AppilcationServiceTest extends AbstractServiceTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.service.ApplicationServiceImpl#findKeywords(Keyword, boolean, MatchMode)}.
+     * Test method for {@link org.tonguetied.service.ApplicationServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsByTranslationValue() {
@@ -422,7 +421,7 @@ public class AppilcationServiceTest extends AbstractServiceTest {
     }
     
     /**
-     * Test method for {@link org.tonguetied.service.ApplicationServiceImpl#findKeywords(Keyword, boolean, MatchMode)}.
+     * Test method for {@link org.tonguetied.service.ApplicationServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsByBundle() {
@@ -452,7 +451,7 @@ public class AppilcationServiceTest extends AbstractServiceTest {
     }
     
     /**
-     * Test method for {@link org.tonguetied.service.ApplicationServiceImpl#findKeywords(Keyword, boolean, MatchMode)}.
+     * Test method for {@link org.tonguetied.service.ApplicationServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsByCountry() {
@@ -491,7 +490,7 @@ public class AppilcationServiceTest extends AbstractServiceTest {
     }
     
     /**
-     * Test method for {@link org.tonguetied.service.ApplicationServiceImpl#findKeywords(Keyword, boolean, MatchMode)}.
+     * Test method for {@link org.tonguetied.service.ApplicationServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsByTranslationState() {
@@ -529,7 +528,7 @@ public class AppilcationServiceTest extends AbstractServiceTest {
     }
     
     /**
-     * Test method for {@link org.tonguetied.service.ApplicationServiceImpl#findKeywords(Keyword, boolean, MatchMode)}.
+     * Test method for {@link org.tonguetied.service.ApplicationServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsWithEmptyKeyword() {
