@@ -68,7 +68,7 @@ public class KeywordFactoryTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.domain.Keyword#Keyword(java.util.List, org.tonguetied.domain.Country)}.
+     * Test method for {@link org.tonguetied.domain.KeywordFactory#createKeyword(java.util.List, org.tonguetied.domain.Country)}.
      */
     @Test
     public final void testConstructorWithListOfLanguages() {
@@ -82,7 +82,7 @@ public class KeywordFactoryTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.domain.Keyword#Keyword(java.util.List, org.tonguetied.domain.Country)}.
+     * Test method for {@link org.tonguetied.domain.KeywordFactory#createKeyword(java.util.List, org.tonguetied.domain.Country)}.
      */
     @Test(expected=IllegalArgumentException.class)
     public final void testConstructorWithListOfNullLanguages() {
@@ -90,7 +90,7 @@ public class KeywordFactoryTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.domain.Keyword#Keyword(java.util.List, org.tonguetied.domain.Language)}.
+     * Test method for {@link org.tonguetied.domain.KeywordFactory#createKeyword(java.util.List, org.tonguetied.domain.Language)}.
      */
     @Test
     public final void testConstructorWithListOfCountries() {
@@ -104,7 +104,7 @@ public class KeywordFactoryTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.domain.Keyword#Keyword(java.util.List, org.tonguetied.domain.Language)}.
+     * Test method for {@link org.tonguetied.domain.KeywordFactory#createKeyword(java.util.List, org.tonguetied.domain.Language)}.
      */
     @Test(expected=IllegalArgumentException.class)
     public final void testConstructorWithListOfNullCountries() {

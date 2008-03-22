@@ -45,7 +45,7 @@ public class PreferenceFilterTest {
      * @param language
      * @param country
      * @param bundle
-     * @param keyword
+     * @param keywordStr
      */
     public PreferenceFilterTest(boolean expected, String value, Language language, Country country, Bundle bundle, String keywordStr) {
         this.expected = expected;
