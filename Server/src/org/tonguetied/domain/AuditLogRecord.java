@@ -125,17 +125,21 @@ public class AuditLogRecord {
     }
 
     /**
-     * @return the created
+     * Returns a cloned instance of the date the record was created. This is 
+     * done for security reasons, so that the internals of the date cannot be
+     * changed.
+     * 
+     * @return the date the record was created
      */
     @Column(nullable=false)
     public Date getCreated() {
-        return created;
+        return (Date) created.clone();
     }
 
     /**
-     * @param created the created to set
+     * @param created the date the record was created
      */
-    public void setCreated(Date created) {
+    public void setCreated(final Date created) {
         this.created = created;
     }
     

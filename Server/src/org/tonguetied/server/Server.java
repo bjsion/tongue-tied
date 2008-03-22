@@ -124,7 +124,7 @@ public class Server
     /**
      * This method returns diagnostics information from the server. 
      *  
-     * @return
+     * @return the server statistics
      */
     public static Map<String, String> getServerInfo()
     {

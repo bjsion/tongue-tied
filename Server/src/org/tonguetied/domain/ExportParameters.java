@@ -57,7 +57,7 @@ public class ExportParameters {
     }
 
     /**
-     * @param countrys the collection of {@link CountryCode}s to export
+     * @param countries the collection of {@link Country}s to export
      */
     public void setCountries(List<Country> countries) {
         this.countries = countries;
@@ -89,7 +89,7 @@ public class ExportParameters {
     }
 
     /**
-     * @param languages the collection of {@link LanguageCode} to export
+     * @param languages the collection of {@link Language}s to export
      */
     public void setLanguages(List<Language> languages) {
         this.languages = languages;

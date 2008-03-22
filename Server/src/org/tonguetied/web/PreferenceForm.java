@@ -131,8 +131,7 @@ public class PreferenceForm {
 
     /**
      * Method used to initialize class after it has been created. After 
-     * initialization each list has its default item added. The {@link ViewType}
-     * is set to {@link ViewType#Language}. 
+     * initialization each list has its default item added.
      */
     public void init() {
         this.setSelectedLanguages(appService.getLanguages());

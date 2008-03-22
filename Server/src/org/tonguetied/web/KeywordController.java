@@ -38,8 +38,8 @@ import org.tonguetied.service.ApplicationService;
  * {@link Country}
  *  
  * @author bsion
- * @see Keyword#Keyword(java.util.List, Country)
- * @see Keyword#Keyword(java.util.List, Language)
+ * @see KeywordFactory#createKeyword(java.util.List, Country)
+ * @see KeywordFactory#createKeyword(java.util.List, Language)
  */
 public class KeywordController extends CancellableFormController {
     

@@ -21,7 +21,7 @@ public interface UserService {
     void saveOrUpdate(User user);
     
     /**
-     * Retrieve the user by business key, ie the {@link User#getUserName()}.
+     * Retrieve the user by business key, ie the {@link User#getUsername()}.
      * 
      * @param username the business key to search for
      * @return the {@link User} matching the <code>username</code> or 

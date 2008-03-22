@@ -101,7 +101,7 @@ public class Language implements Comparable<Object>
      * iso639.2 arranged in alphabetical order of language names in English
      * 
      * @author bsion
-     * @see http://www.loc.gov/standards/iso639-2/
+     * @see <a href="http://www.loc.gov/standards/iso639-2/">ISO language codes</a>
      *
      */
     public enum LanguageCode {
