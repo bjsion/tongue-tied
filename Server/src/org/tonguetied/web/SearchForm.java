@@ -1,5 +1,7 @@
 package org.tonguetied.web;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import org.tonguetied.domain.Bundle;
 import org.tonguetied.domain.Country;
 import org.tonguetied.domain.Keyword;
@@ -136,11 +138,22 @@ public class SearchForm {
     }
     
     /**
+     * Returns a cloned instance of the {@link Keyword}. This is done for 
+     * security reasons, so that the internals of the keyword cannot be
+     * changed.
      * 
      * @return the keyword of this search form
      */
     public Keyword getKeyword() {
-        // TODO : return a clone of this object as it should be immutable
-        return this.keyword;
+        return this.keyword.clone();
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return new ReflectionToStringBuilder(this, 
+                ToStringStyle.SHORT_PREFIX_STYLE).toString();
     }
 }
