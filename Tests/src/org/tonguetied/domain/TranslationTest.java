@@ -43,7 +43,7 @@ public class TranslationTest {
      * Test method for {@link org.tonguetied.domain.Keyword#clone()}.
      */
     @Test
-    public final void testCloneWithEmptyValues() throws CloneNotSupportedException {
+    public final void testCloneWithEmptyValues() {
         Translation translation = new Translation();
         translation.setLanguage(null);
         translation.setCountry(null);
@@ -62,7 +62,7 @@ public class TranslationTest {
      * Test method for {@link org.tonguetied.domain.Translation#clone()}.
      */
     @Test
-    public void testClone() throws CloneNotSupportedException {
+    public void testClone() {
         Translation translation = new Translation();
         translation.setLanguage(portugese);
         translation.setCountry(brazil);
