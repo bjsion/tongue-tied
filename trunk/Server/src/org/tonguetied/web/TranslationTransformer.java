@@ -30,7 +30,6 @@ public class TranslationTransformer {
      * @return a list of {@link Translation}s
      */
     public static List<Translation> transform(final List<Keyword> keywords) 
-              throws CloneNotSupportedException 
     {
         List<Translation> translations = new ArrayList<Translation>();
   
@@ -39,7 +38,7 @@ public class TranslationTransformer {
             for (Keyword keyword: keywords) {
                 if (CollectionUtils.isEmpty(keyword.getTranslations())) {
                     translation = new Translation();
-                    translation.setKeyword((Keyword) keyword.clone());
+                    translation.setKeyword(keyword.clone());
                     translations.add(translation);
                 }
                 else {
