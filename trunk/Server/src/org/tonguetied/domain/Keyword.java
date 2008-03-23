@@ -208,13 +208,19 @@ public class Keyword implements Cloneable, Comparable<Object>, Auditable
      * @see java.lang.Object#clone()
      */
     @Override
-    public final Keyword clone() throws CloneNotSupportedException {
-        Keyword clone = (Keyword) super.clone();
-        if (translations != null) {
-            clone.setTranslations(new TreeSet<Translation>());
-            for (Translation translation: translations) {
-                clone.addTranslation(translation.clone());
+    public final Keyword clone() {
+        Keyword clone;
+        try {
+            clone = (Keyword) super.clone();
+            if (translations != null) {
+                clone.setTranslations(new TreeSet<Translation>());
+                for (Translation translation: translations) {
+                    clone.addTranslation(translation.clone());
+                }
             }
+        }
+        catch (CloneNotSupportedException cnse) {
+            clone = null;
         }
         return clone;
     }
