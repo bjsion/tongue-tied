@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC 
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">  
+
+<!--
+  - Application context definition for TongueTied application
+  - $Id: hibernate.cfg.xml,v 1.5 2007/12/01 06:57:28 bsion Exp $
+-->
+	    
+<hibernate-configuration>
+	<session-factory>
+		<!-- dialect for Hypersonic SQL -->
+		<property name="dialect">
+			org.hibernate.dialect.HSQLDialect
+		</property>
+        
+		<property name="hibernate.show_sql">true</property>
+		
+		<property name="hibernate.cache.use_second_level_cache">true</property>
+		<property name="hibernate.cache.use_query_cache">true</property>
+		<property name="hibernate.cache.provider_class">
+			org.hibernate.cache.EhCacheProvider
+		</property>
+		<!--
+		<property name="generate_statistics">true</property>	
+		<property name="hibernate.use_outer_join">false</property>
+		<property name="hibernate.max_fetch_depth">0</property>
+		<property name="hibernate.default_batch_fetch_size">4</property>
+		-->
+
+		<!-- need to manually add all persistable classes -->
+        <mapping class="org.tonguetied.domain.AuditLogRecord"/>
+        <mapping class="org.tonguetied.domain.Bundle" />
+        <mapping class="org.tonguetied.domain.Country" />
+        <mapping class="org.tonguetied.domain.Keyword" />
+        <mapping class="org.tonguetied.domain.Language" />
+        <mapping class="org.tonguetied.domain.Translation" />
+        <mapping class="org.tonguetied.domain.User" />
+        <mapping class="org.tonguetied.domain.UserRight"/>
+	</session-factory>
+</hibernate-configuration>
