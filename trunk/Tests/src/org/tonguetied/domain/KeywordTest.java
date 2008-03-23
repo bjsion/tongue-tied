@@ -71,7 +71,7 @@ public class KeywordTest {
      * Test method for {@link org.tonguetied.domain.Keyword#clone()}.
      */
     @Test
-    public final void testCloneWithEmptyValues() throws CloneNotSupportedException {
+    public final void testCloneWithEmptyValues() {
         Keyword keyword = new Keyword();
         keyword.setKeyword(null);
         keyword.setContext(null);
@@ -88,7 +88,7 @@ public class KeywordTest {
      * Test method for {@link org.tonguetied.domain.Keyword#clone()}.
      */
     @Test
-    public final void testCloneWithTranslation() throws CloneNotSupportedException {
+    public final void testCloneWithTranslation() {
         Keyword keyword = new Keyword();
         keyword.setKeyword("a keyword");
         keyword.setContext("context");
