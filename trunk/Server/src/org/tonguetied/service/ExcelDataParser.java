@@ -146,23 +146,18 @@ public class ExcelDataParser implements HSSFListener {
                             Language language = 
                                 languages.get(lrec.getColumn()-4);
                             String value = sstrec.getString(lrec.getSSTIndex());
-                            try {
-                                Translation translation = 
-                                    baseTranslation.clone();
-                                if (language.getCode() == LanguageCode.zht) {
-                                    language = 
-                                        daoRepository.getLanguage(LanguageCode.zh);
-                                    Country country = daoRepository.getCountry(CountryCode.TW);
-                                    translation.setCountry(country);
-                                }
-                                translation.setLanguage(language);
-                                translation.setState(TranslationState.UNVERIFIED);
-                                translation.setValue(value);
-                                keyword.addTranslation(translation);
+                            Translation translation = 
+                                baseTranslation.clone();
+                            if (language.getCode() == LanguageCode.zht) {
+                                language = 
+                                    daoRepository.getLanguage(LanguageCode.zh);
+                                Country country = daoRepository.getCountry(CountryCode.TW);
+                                translation.setCountry(country);
                             }
-                            catch (CloneNotSupportedException cnse) {
-                                throw new ImportException(cnse);
-                            }
+                            translation.setLanguage(language);
+                            translation.setState(TranslationState.UNVERIFIED);
+                            translation.setValue(value);
+                            keyword.addTranslation(translation);
 //                        System.out.println("String cell found with value "
 //                                + sstrec.getString(lrec.getSSTIndex()));
                         }
