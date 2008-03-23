@@ -205,8 +205,15 @@ public class Translation implements Cloneable, Comparable<Object>
      * @see java.lang.Object#clone()
      */
     @Override
-    public Translation clone() throws CloneNotSupportedException {
-        return (Translation) super.clone();
+    public Translation clone() {
+        Translation clone;
+        try {
+            clone = (Translation) super.clone(); 
+        }
+        catch (CloneNotSupportedException cnse) {
+            clone = null;
+        }
+        return clone;
     }
     
     @Override
