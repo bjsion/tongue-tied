@@ -142,7 +142,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	
 	<bean name="mainController" class="org.tonguetied.web.MainController" parent="baseController">
         <property name="viewPreferences" ref="viewPreferences"/>
-        <property name="searchForm" ref="searchForm"/>
+        <property name="searchParameters" ref="searchParameters"/>
         <property name="userService" ref="userService"/>
         <property name="auditService" ref="auditService"/>
     </bean>
@@ -151,24 +151,24 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 		<property name="commandName" value="bundle"/>
 		<property name="formView" value="bundle/bundle"/>
         <property name="validator" ref="bundleValidator"/>
-		<property name="successView" value="redirect:/bundles.htm"/>
-        <property name="cancelView" value="redirect:/bundles.htm"/>
+		<property name="successView" value="forward:/bundles.htm"/>
+        <property name="cancelView" value="forward:/bundles.htm"/>
 	</bean>
 	
 	<bean name="countryController" class="org.tonguetied.web.CountryController" parent="baseController">
 		<property name="commandName" value="country"/>
 		<property name="formView" value="country/country"/>
         <property name="validator" ref="countryValidator"/>
-		<property name="successView" value="redirect:/countries.htm"/>
-        <property name="cancelView" value="redirect:/countries.htm"/>
+		<property name="successView" value="forward:/countries.htm"/>
+        <property name="cancelView" value="forward:/countries.htm"/>
 	</bean>
 	
 	<bean name="languageController" class="org.tonguetied.web.LanguageController" parent="baseController">
 		<property name="commandName" value="language"/>
 		<property name="formView" value="language/language"/>
         <property name="validator" ref="languageValidator"/>
-		<property name="successView" value="redirect:/languages.htm"/>
-        <property name="cancelView" value="redirect:/languages.htm"/>
+		<property name="successView" value="forward:/languages.htm"/>
+        <property name="cancelView" value="forward:/languages.htm"/>
 	</bean>
 	
     <bean name="exportController" class="org.tonguetied.web.ExportController" parent="baseController">
@@ -193,22 +193,22 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 		<property name="commandName" value="keyword"/>
         <property name="validator" ref="keywordValidator"/>
 		<property name="formView" value="keyword/keyword"/>
-		<property name="successView" value="redirect:/keywords.htm"/>
-        <property name="cancelView" value="redirect:/keywords.htm"/>
+		<property name="successView" value="forward:/keywords.htm"/>
+        <property name="cancelView" value="forward:/keywords.htm"/>
 	</bean>
 	
 	<bean name="searchController" class="org.tonguetied.web.SearchController" parent="baseController">
-		<property name="commandName" value="searchForm"/>
+		<property name="commandName" value="searchParameters"/>
 		<property name="formView" value="keyword/keywords"/>
-		<property name="successView" value="keyword/keywords"/>
+        <property name="successView" value="forward:/keywords.htm"/>
+        <property name="searchParameters" ref="searchParameters"/>
         <property name="viewPreferences" ref="viewPreferences"/>
-        <property name="searchForm" ref="searchForm"/>
 	</bean>
     
     <bean name="preferenceController" class="org.tonguetied.web.PreferenceController" parent="baseController">
         <property name="commandName" value="viewPreferences"/>
         <property name="formView" value="keyword/keywords"/>
-        <property name="successView" value="redirect:/keywords.htm"/>
+        <property name="successView" value="forward:/keywords.htm"/>
         <property name="viewPreferences" ref="viewPreferences"/>
     </bean>
     
@@ -216,8 +216,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="commandName" value="user"/>
         <property name="formView" value="user/user"/>
         <property name="validator" ref="userValidator"/>
-        <property name="successView" value="redirect:/users.htm"/>
-        <property name="cancelView" value="redirect:/users.htm"/>
+        <property name="successView" value="forward:/users.htm"/>
+        <property name="cancelView" value="forward:/users.htm"/>
         <property name="userService" ref="userService"/>
     </bean>
     
@@ -229,11 +229,11 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="userValidator" autowire="byName" dependency-check="objects" class="org.tonguetied.web.UserValidator"/>
     
     <bean name="viewPreferences" class="org.tonguetied.web.PreferenceForm" scope="session" init-method="init">
-        <property name="appService" ref="appService"/>
         <aop:scoped-proxy/>
+        <property name="appService" ref="appService"/>
     </bean>
     
-    <bean name="searchForm" class="org.tonguetied.web.SearchForm" scope="session">
+    <bean name="searchParameters" class="org.tonguetied.web.SearchForm" scope="session">
         <aop:scoped-proxy/>
     </bean>
     
