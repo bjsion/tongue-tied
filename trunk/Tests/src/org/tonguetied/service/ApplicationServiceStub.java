@@ -85,7 +85,7 @@ public class ApplicationServiceStub implements ApplicationService {
             }
         };
         List<Keyword> results = 
-            (List) CollectionUtils.select(keywords.values(), keywordFilter);
+            (List<Keyword>) CollectionUtils.select(keywords.values(), keywordFilter);
         return results;
     }
 
