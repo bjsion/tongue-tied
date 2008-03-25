@@ -30,6 +30,7 @@ import org.junit.runners.Suite.SuiteClasses;
     LanguageComparabilityTest.class,
     LanguageEqualsHashCodeTest.class,
     LanguagePersistenceTest.class,
+    SearchFormTest.class,
     TranslationComparabilityTest.class,
     TranslationEqualsHashCodeTest.class,
     TranslationPersistenceTest.class,
