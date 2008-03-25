@@ -1,12 +1,14 @@
 package org.tonguetied.web;
 
+import static org.tonguetied.web.Constants.AUDIT_LOG;
 import static org.tonguetied.web.Constants.BUNDLES;
 import static org.tonguetied.web.Constants.COUNTRIES;
 import static org.tonguetied.web.Constants.LANGUAGES;
-import static org.tonguetied.web.Constants.SEARCH_FORM;
+import static org.tonguetied.web.Constants.SEARCH_PARAMETERS;
 import static org.tonguetied.web.Constants.SHOW_ALL;
 import static org.tonguetied.web.Constants.STATES;
 import static org.tonguetied.web.Constants.TRANSLATIONS;
+import static org.tonguetied.web.Constants.USERS;
 import static org.tonguetied.web.Constants.VIEW_PREFERENCES;
 
 import java.util.HashMap;
@@ -28,8 +30,8 @@ import org.tonguetied.domain.Language;
 import org.tonguetied.domain.Translation;
 import org.tonguetied.domain.User;
 import org.tonguetied.domain.Translation.TranslationState;
-import org.tonguetied.service.AuditService;
 import org.tonguetied.service.ApplicationService;
+import org.tonguetied.service.AuditService;
 import org.tonguetied.service.UserService;
 
 
@@ -46,7 +48,7 @@ public class MainController extends MultiActionController {
     private UserService userService;
     private AuditService auditService;
     private PreferenceForm viewPreferences;
-    private SearchForm searchForm;
+    private SearchForm searchParameters;
     
     /**
      * Handler method that acts as an HTTP interface to the 
@@ -61,19 +63,27 @@ public class MainController extends MultiActionController {
             HttpServletResponse response) throws Exception
     {
         List<Keyword> keywords;
-        boolean showAll = (Boolean) request.getSession().getAttribute(SHOW_ALL);
-        if (showAll) {
-            keywords = appService.getKeywords(0, viewPreferences.getMaxResults());
-            searchForm = new SearchForm();
+        String parameter = request.getParameter(SHOW_ALL);
+        boolean showAll;
+        if (parameter != null) {
+            showAll = Boolean.parseBoolean(parameter);
         }
         else {
-            Keyword keyword = searchForm.getKeyword().clone();
+            showAll = (Boolean) request.getSession().getAttribute(SHOW_ALL);
+        }
+        
+        if (showAll) {
+            keywords = appService.getKeywords(0, viewPreferences.getMaxResults());
+            searchParameters.initialize();
+        }
+        else {
+            Keyword keyword = searchParameters.getKeyword();
             if (new Translation().equals(keyword.getTranslations().first())) {
                 keyword.setTranslations(SetUtils.EMPTY_SORTED_SET);
             }
             keywords = 
                 appService.findKeywords(keyword,
-                        searchForm.getIgnoreCase(),
+                        searchParameters.getIgnoreCase(),
                                         0,
                                         viewPreferences.getMaxResults());
         }
@@ -82,6 +92,7 @@ public class MainController extends MultiActionController {
             TranslationTransformer.transform(keywords);
         PreferenceFilter filter = new PreferenceFilter(viewPreferences);
         CollectionUtils.filter(translations, filter);
+        searchParameters.getKeyword();
 
         Map<String, Object> model = new HashMap<String, Object>();
         model.put(TRANSLATIONS, translations);
@@ -89,7 +100,7 @@ public class MainController extends MultiActionController {
         model.put(BUNDLES, appService.getBundles());
         model.put(COUNTRIES, appService.getCountries());
         model.put(STATES, TranslationState.values());
-        model.put(SEARCH_FORM, searchForm);
+        model.put(SEARCH_PARAMETERS, searchParameters);
         model.put(VIEW_PREFERENCES, viewPreferences);
         return new ModelAndView("keyword/keywords", model);
     }
@@ -108,7 +119,7 @@ public class MainController extends MultiActionController {
     {
         List<Bundle> bundles = appService.getBundles();
         
-        return new ModelAndView("bundle/bundles", "bundles", bundles);
+        return new ModelAndView("bundle/bundles", BUNDLES, bundles);
     }
     
     /**
@@ -125,7 +136,7 @@ public class MainController extends MultiActionController {
     {
         List<Country> countries = appService.getCountries();
         
-        return new ModelAndView("country/countries", "countries", countries);
+        return new ModelAndView("country/countries", COUNTRIES, countries);
     }
     
     /**
@@ -142,7 +153,7 @@ public class MainController extends MultiActionController {
     {
         List<Language> languages = appService.getLanguages();
         
-        return new ModelAndView("language/languages", "languages", languages);
+        return new ModelAndView("language/languages", LANGUAGES, languages);
     }
     
     /**
@@ -159,7 +170,7 @@ public class MainController extends MultiActionController {
     {
         List<User> users = userService.getUsers();
         
-        return new ModelAndView("user/users", "users", users);
+        return new ModelAndView("user/users", USERS, users);
     }
     
     /**
@@ -176,7 +187,7 @@ public class MainController extends MultiActionController {
     {
         List<AuditLogRecord> auditLog = auditService.getAuditLog();
         
-        return new ModelAndView("audit/auditLog", "auditLog", auditLog);
+        return new ModelAndView("audit/auditLog", AUDIT_LOG, auditLog);
     }
     
     /**
@@ -194,7 +205,7 @@ public class MainController extends MultiActionController {
         String keywordId = request.getParameter("keywordId");
         appService.deleteKeyword(Long.parseLong(keywordId));
         
-        return new ModelAndView("redirect:/keywords.htm");
+        return new ModelAndView("forward:/keywords.htm");
     }
     
     /**
@@ -236,9 +247,9 @@ public class MainController extends MultiActionController {
     /**
      * Assign the {@link SearchForm}.
      * 
-     * @param searchForm the searchForm to set
+     * @param searchParameters the searchParameters to set
      */
-    public void setSearchForm(SearchForm searchForm) {
-        this.searchForm = searchForm;
+    public void setSearchParameters(SearchForm searchParameters) {
+        this.searchParameters = searchParameters;
     }
 }
