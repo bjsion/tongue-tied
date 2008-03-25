@@ -1,5 +1,7 @@
 package org.tonguetied.web;
 
+import static org.tonguetied.web.Constants.FIELD_NAME;
+
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -41,7 +43,7 @@ public class BundleValidator implements Validator {
      */
     private void validateMandatoryFields(Bundle bundle, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, "name", "errorBundleNameRequired", null, "default");
+                errors, FIELD_NAME, "errorBundleNameRequired", null, "default");
     }
     
     /**
@@ -57,7 +59,7 @@ public class BundleValidator implements Validator {
             Bundle other = appService.getBundle(bundle.getName());
             if (other != null) {
                 errors.rejectValue(
-                        "name", 
+                        FIELD_NAME, 
                         "errorBundleAlreadyExists",
                         new String[] {bundle.getName()},
                         "default");
