@@ -323,7 +323,7 @@ public class User implements UserDetails {
      */
     @Transient
     public GrantedAuthority[] getAuthorities() {
-        return grantedAuthorities.clone();
+        return grantedAuthorities == null? null: grantedAuthorities.clone();
     }
     
     public void setAuthorities(GrantedAuthority[] authorities) {
