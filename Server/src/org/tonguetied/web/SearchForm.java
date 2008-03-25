@@ -22,11 +22,7 @@ public class SearchForm {
     private boolean ignoreCase;
     
     public SearchForm() {
-        this.ignoreCase = true;
-        this.keyword = new Keyword();
-        Translation translation = new Translation();
-        translation.setState(null);
-        this.keyword.addTranslation(translation);
+        this.initialize();
     }
     
     /**
@@ -146,6 +142,18 @@ public class SearchForm {
      */
     public Keyword getKeyword() {
         return this.keyword.clone();
+    }
+    
+    /**
+     * Clears the contents of this object, sets all attributes to their initial
+     * value state. 
+     */
+    public void initialize() {
+        this.ignoreCase = true;
+        this.keyword = new Keyword();
+        Translation translation = new Translation();
+        translation.setState(null);
+        this.keyword.addTranslation(translation);
     }
 
     /* (non-Javadoc)
