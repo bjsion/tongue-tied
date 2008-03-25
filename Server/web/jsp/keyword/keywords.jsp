@@ -85,7 +85,7 @@
         </div>
         <div class="sidepanel">
             <c:url value="/search.htm" var="searchAction" scope="page"/>
-            <form:form id="searchForm" method="post" action="${searchAction}" commandName="searchForm">
+            <form:form id="searchParameters" method="post" action="${searchAction}" commandName="searchParameters">
                 <fieldset>
                     <legend><fmt:message key="search"/></legend>
                     <div>
@@ -114,10 +114,6 @@
                         </form:select>
                     </div>
                     <div>
-                        <form:label path="translatedText" cssClass="sidepanel"><fmt:message key="translatedText"/></form:label>
-                        <form:input path="translatedText"/>
-                    </div>
-                    <div>
                         <form:label path="translationState" cssClass="sidepanel"><fmt:message key="translationState"/></form:label>
                         <form:select path="translationState" size="1" cssClass="sidepanel">
                             <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
@@ -129,6 +125,10 @@
                                 <c:remove var="selected"/>
                             </c:forEach>
                         </form:select>
+                    </div>
+                    <div>
+                        <form:label path="translatedText" cssClass="sidepanel"><fmt:message key="translatedText"/></form:label>
+                        <form:input path="translatedText"/>
                     </div>
                     <div class="checkbox">
                         <form:checkbox path="ignoreCase"/>
@@ -145,6 +145,7 @@
 
     <div class="contentPanel">
         <h1><em><fmt:message key="language"/></em><fmt:message key="content"/></h1>
+        <a href="<c:url value="keywords.htm"><c:param name="showAll" value="true"/></c:url>" title="<fmt:message key="getAllKeywords"/>"><fmt:message key="show.all.keywords"/></a>
         <display:table name="translations" id="translation" sort="page" requestURI="">
             <display:column titleKey="action" group="1" class="actions">
                 <c:url value="deleteKeyword.htm" var="deleteKeywordUrl" scope="page"><c:param name="keywordId" value="${translation.keyword.id}"/></c:url>
