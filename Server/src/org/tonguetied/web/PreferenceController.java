@@ -1,5 +1,7 @@
 package org.tonguetied.web;
 
+import static org.tonguetied.web.Constants.BUNDLES;
+import static org.tonguetied.web.Constants.COUNTRIES;
 import static org.tonguetied.web.Constants.LANGUAGES;
 
 import java.util.HashMap;
@@ -22,6 +24,8 @@ import org.tonguetied.service.ApplicationService;
 
 
 /**
+ * Controller for processing preference setting requests.
+ * 
  * @author bsion
  *
  */
@@ -60,6 +64,8 @@ public class PreferenceController extends SimpleFormController {
     {
         Map<String, Object> model = new HashMap<String, Object>();
         model.put(LANGUAGES, appService.getLanguages());
+        model.put(BUNDLES, appService.getBundles());
+        model.put(COUNTRIES, appService.getCountries());
         
         return model;
     }
