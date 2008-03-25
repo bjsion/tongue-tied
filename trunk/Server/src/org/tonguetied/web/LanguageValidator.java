@@ -1,9 +1,14 @@
 package org.tonguetied.web;
 
+import static org.tonguetied.web.Constants.FIELD_CODE;
+import static org.tonguetied.web.Constants.FIELD_NAME;
+
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import org.tonguetied.domain.Country;
 import org.tonguetied.domain.Language;
+import org.tonguetied.domain.Language.LanguageCode;
 import org.tonguetied.service.ApplicationService;
 
 
@@ -41,9 +46,9 @@ public class LanguageValidator implements Validator {
      */
     private void validateMandatoryFields(Language language, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, "name", "errorLanguageNameRequired", null, "default");
+                errors, FIELD_NAME, "errorLanguageNameRequired", null, "default");
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, "code", "errorLanguageCodeRequired", null, "default");
+                errors, FIELD_CODE, "errorLanguageCodeRequired", null, "default");
     }
     
     /**
@@ -59,7 +64,7 @@ public class LanguageValidator implements Validator {
             Language other = appService.getLanguage(language.getCode());
             if (other != null) {
                 errors.rejectValue(
-                        "code", 
+                        FIELD_CODE, 
                         "errorLanguageAlreadyExists",
                         new String[] {language.getCode().name()},
                         "default");

@@ -1,5 +1,8 @@
 package org.tonguetied.web;
 
+import static org.tonguetied.web.Constants.FIELD_CODE;
+import static org.tonguetied.web.Constants.FIELD_NAME;
+
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -42,9 +45,9 @@ public class CountryValidator implements Validator {
      */
     private void validateMandatoryFields(Country country, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, "name", "errorCountryNameRequired", null, "default");
+                errors, FIELD_NAME, "errorCountryNameRequired", null, "default");
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, "code", "errorCountryCodeRequired", null, "default");
+                errors, FIELD_CODE, "errorCountryCodeRequired", null, "default");
     }
     
     /**
@@ -60,7 +63,7 @@ public class CountryValidator implements Validator {
             Country other = appService.getCountry(country.getCode());
             if (other != null) {
                 errors.rejectValue(
-                        "code", 
+                        FIELD_CODE, 
                         "errorCountryAlreadyExists", 
                         new String[] {country.getCode().name()}, 
                         "default");
