@@ -58,7 +58,7 @@ public class ExportServiceTest {
     private static DaoRepositoryStub daoRepository = new DaoRepositoryStub();
     
     private static final String SOURCE_ROOT = System.getProperty("user.dir") +
-        File.separator + ".." + File.separator + "Server" + File.separator + 
+        File.separator + ".." + File.separator + "Application" + File.separator + 
         "resources" + File.separator + "templates" + File.separator + 
         "freemarker" + File.separator + "export";
     private static final File OUTPUT_ROOT = 
