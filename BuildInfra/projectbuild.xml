@@ -5,8 +5,8 @@
     <property name="app.root" value="${basedir}/../"/>
 	
     <property file="${app.root}/BuildInfra/global.properties"/>
-    <property name="server.jar.file" value="TongueTiedServer.jar"/>
-    <property name="server.war.file" value="Server.war"/>
+    <property name="server.jar.file" value="server.jar"/>
+    <property name="server.war.file" value="tonguetied.war"/>
 
     <!-- target used to invoke a build script with a set of properties -->
     <!-- param: module.path -->
@@ -21,6 +21,12 @@
     <target name="build.infra">
         <antcall target="build.module">
             <param name="module.path" value="${infra.home}"/>
+        </antcall>
+    </target>
+
+    <target name="build.application">
+        <antcall target="build.module">
+            <param name="module.path" value="${application.home}"/>
         </antcall>
     </target>
 
@@ -41,6 +47,7 @@
     <!-- param: target -->
     <target name="build.all">
         <antcall target="build.infra"/>
+        <antcall target="build.application"/>
         <antcall target="build.server"/>
         <antcall target="build.tests"/>
     </target>

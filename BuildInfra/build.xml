@@ -35,6 +35,7 @@
 	<!--useful when perhaps move the source to a machine that is living in the past -->
 	<target name="touchall">
 		<touch>
+			<fileset dir="${application.home}"/>
 			<fileset dir="${infra.home}"/>
 			<fileset dir="${server.home}"/>
 		</touch>		

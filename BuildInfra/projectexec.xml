@@ -94,7 +94,7 @@
             <classpath refid="tonguetied.server.classpath"/>
             <classpath refid="temporary.server.path"/>
             <arg value="-w"/>
-            <arg value="${server.home}/builds/Server.war"/>
+            <arg value="${server.home}/builds/tonguetied.war"/>
             <arg value="-keystore"/>
             <arg value="${server.home}/resources/config/keystore"/>
         </java>
