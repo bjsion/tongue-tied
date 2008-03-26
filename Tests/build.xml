@@ -27,6 +27,7 @@
 
     <path id="compile.classpath">
         <pathelement location="${3rdparty.home}/JUnit/4.4/junit.jar"/>
+        <pathelement location="${application.home}/builds/tonguetied.jar"/>
         <pathelement location="${server.home}/builds/server.jar"/>
         <pathelement location="${3rdparty.home}/HSQLDB/1.8.0/hsqldb.jar"/>
         <pathelement location="${3rdparty.home}/Hibernate/3.2.0/hibernate3.jar"/>
@@ -50,7 +51,7 @@
     
     <path id="test.classpath">
         <path refid="compile.classpath"/>
-        <pathelement location="${server.home}/generated"/>
+        <pathelement location="${application.home}/generated"/>
         <pathelement location="${build.dir}/${module.jarfile}"/>
         <pathelement location="${3rdparty.home}/cglib/2.1.3/cglib-nodep-2.1_3.jar"/>
         <pathelement location="${3rdparty.home}/dom4j/1.6.1/jaxen-1.1-beta-7.jar"/>
