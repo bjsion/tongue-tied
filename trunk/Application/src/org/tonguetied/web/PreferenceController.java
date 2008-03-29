@@ -17,10 +17,10 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
-import org.tonguetied.domain.Bundle;
-import org.tonguetied.domain.Country;
-import org.tonguetied.domain.Language;
-import org.tonguetied.service.ApplicationService;
+import org.tonguetied.keywordmanagement.Bundle;
+import org.tonguetied.keywordmanagement.Country;
+import org.tonguetied.keywordmanagement.KeywordService;
+import org.tonguetied.keywordmanagement.Language;
 
 
 /**
@@ -31,7 +31,7 @@ import org.tonguetied.service.ApplicationService;
  */
 public class PreferenceController extends SimpleFormController {
 
-    private ApplicationService appService;
+    private KeywordService keywordService;
     private PreferenceForm viewPreferences;
     
     private static final Logger logger = 
@@ -63,9 +63,9 @@ public class PreferenceController extends SimpleFormController {
             throws Exception 
     {
         Map<String, Object> model = new HashMap<String, Object>();
-        model.put(LANGUAGES, appService.getLanguages());
-        model.put(BUNDLES, appService.getBundles());
-        model.put(COUNTRIES, appService.getCountries());
+        model.put(LANGUAGES, keywordService.getLanguages());
+        model.put(BUNDLES, keywordService.getBundles());
+        model.put(COUNTRIES, keywordService.getCountries());
         
         return model;
     }
@@ -80,7 +80,7 @@ public class PreferenceController extends SimpleFormController {
                 Language language = null;
                 if (element != null) {
                     Long id = new Long((String)element);
-                    language = appService.getLanguage(id);
+                    language = keywordService.getLanguage(id);
                 }
                 return language;
             }
@@ -91,7 +91,7 @@ public class PreferenceController extends SimpleFormController {
                 Country country = null;
                 if (element != null) {
                     Long id = new Long((String)element);
-                    country = appService.getCountry(id);
+                    country = keywordService.getCountry(id);
                 }
                 return country;
             }
@@ -102,7 +102,7 @@ public class PreferenceController extends SimpleFormController {
                 Bundle bundle = null;
                 if (element != null) {
                     Long id = new Long((String)element);
-                    bundle = appService.getBundle(id);
+                    bundle = keywordService.getBundle(id);
                 }
                 return bundle;
             }
@@ -110,12 +110,12 @@ public class PreferenceController extends SimpleFormController {
     }
     
     /**
-     * Assign the {@link ApplicationService}.
+     * Assign the {@link KeywordService}.
      * 
-     * @param appService the {@link ApplicationService} to set.
+     * @param keywordService the {@link KeywordService} to set.
      */
-    public void setAppService(ApplicationService appService) {
-        this.appService = appService;
+    public void setKeywordService(KeywordService keywordService) {
+        this.keywordService = keywordService;
     }
 
     /**

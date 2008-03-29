@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.tonguetied.domain.Keyword;
-import org.tonguetied.domain.Translation;
+import org.tonguetied.keywordmanagement.Keyword;
+import org.tonguetied.keywordmanagement.Translation;
 
 
 /**

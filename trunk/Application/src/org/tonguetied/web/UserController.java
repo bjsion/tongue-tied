@@ -13,10 +13,10 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.CancellableFormController;
-import org.tonguetied.domain.User;
-import org.tonguetied.domain.UserRight;
-import org.tonguetied.domain.UserRight.Permission;
-import org.tonguetied.service.UserService;
+import org.tonguetied.usermanagement.User;
+import org.tonguetied.usermanagement.UserRight;
+import org.tonguetied.usermanagement.UserService;
+import org.tonguetied.usermanagement.UserRight.Permission;
 
 
 /**

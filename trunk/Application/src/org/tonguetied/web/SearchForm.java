@@ -2,20 +2,20 @@ package org.tonguetied.web;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import org.tonguetied.domain.Bundle;
-import org.tonguetied.domain.Country;
-import org.tonguetied.domain.Keyword;
-import org.tonguetied.domain.Language;
-import org.tonguetied.domain.Translation;
-import org.tonguetied.domain.Translation.TranslationState;
-import org.tonguetied.service.ApplicationService;
+import org.tonguetied.keywordmanagement.Bundle;
+import org.tonguetied.keywordmanagement.Country;
+import org.tonguetied.keywordmanagement.Keyword;
+import org.tonguetied.keywordmanagement.KeywordService;
+import org.tonguetied.keywordmanagement.Language;
+import org.tonguetied.keywordmanagement.Translation;
+import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
 
 /**
  * Value object used to store and pass search criteria.
  * 
  * @author bsion
- * @see ApplicationService#findKeywords(Keyword, boolean, Integer, Integer)
+ * @see KeywordService#findKeywords(Keyword, boolean, Integer, Integer)
  */
 public class SearchForm {
     private Keyword keyword;

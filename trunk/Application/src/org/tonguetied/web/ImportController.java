@@ -14,8 +14,8 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.CancellableFormController;
-import org.tonguetied.domain.FormatType;
-import org.tonguetied.service.ExportService;
+import org.tonguetied.datatransfer.ExportService;
+import org.tonguetied.datatransfer.FormatType;
 
 
 /**

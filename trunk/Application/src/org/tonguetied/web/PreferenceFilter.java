@@ -2,8 +2,8 @@ package org.tonguetied.web;
 
 
 import org.apache.commons.collections.Predicate;
-import org.tonguetied.domain.Bundle;
-import org.tonguetied.domain.Translation;
+import org.tonguetied.keywordmanagement.Bundle;
+import org.tonguetied.keywordmanagement.Translation;
 
 
 /**

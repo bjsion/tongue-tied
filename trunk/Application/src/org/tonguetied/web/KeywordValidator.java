@@ -3,8 +3,8 @@ package org.tonguetied.web;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import org.tonguetied.domain.Keyword;
-import org.tonguetied.service.ApplicationService;
+import org.tonguetied.keywordmanagement.Keyword;
+import org.tonguetied.keywordmanagement.KeywordService;
 
 
 /**
@@ -14,7 +14,7 @@ import org.tonguetied.service.ApplicationService;
  *
  */
 public class KeywordValidator implements Validator {
-    private ApplicationService appService;
+    private KeywordService keywordService;
 
     /* (non-Javadoc)
      * @see org.springframework.validation.Validator#supports(java.lang.Class)
@@ -42,7 +42,7 @@ public class KeywordValidator implements Validator {
     private void validateDuplicates(Keyword keyword, Errors errors) {
         // check for duplicates of new records only
         if (keyword.getId() == null) {
-            Keyword other = appService.getKeyword(keyword.getKeyword());
+            Keyword other = keywordService.getKeyword(keyword.getKeyword());
             if (other != null) {
                 errors.rejectValue(
                         "keyword", 
@@ -54,11 +54,11 @@ public class KeywordValidator implements Validator {
     }
     
     /**
-     * Set the {@link ApplicationService} instance.
+     * Set the {@link KeywordService} instance.
      * 
-     * @param appService the appService instance.
+     * @param keywordService the keywordService instance.
      */
-    public void setAppService(ApplicationService appService) {
-        this.appService = appService;
+    public void setKeywordService(KeywordService keywordService) {
+        this.keywordService = keywordService;
     }
 }

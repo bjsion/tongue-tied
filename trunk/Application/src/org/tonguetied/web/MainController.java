@@ -22,17 +22,17 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.SetUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
-import org.tonguetied.domain.AuditLogRecord;
-import org.tonguetied.domain.Bundle;
-import org.tonguetied.domain.Country;
-import org.tonguetied.domain.Keyword;
-import org.tonguetied.domain.Language;
-import org.tonguetied.domain.Translation;
-import org.tonguetied.domain.User;
-import org.tonguetied.domain.Translation.TranslationState;
-import org.tonguetied.service.ApplicationService;
-import org.tonguetied.service.AuditService;
-import org.tonguetied.service.UserService;
+import org.tonguetied.audit.AuditLogRecord;
+import org.tonguetied.audit.AuditService;
+import org.tonguetied.keywordmanagement.Bundle;
+import org.tonguetied.keywordmanagement.Country;
+import org.tonguetied.keywordmanagement.Keyword;
+import org.tonguetied.keywordmanagement.KeywordService;
+import org.tonguetied.keywordmanagement.Language;
+import org.tonguetied.keywordmanagement.Translation;
+import org.tonguetied.keywordmanagement.Translation.TranslationState;
+import org.tonguetied.usermanagement.User;
+import org.tonguetied.usermanagement.UserService;
 
 
 /**
@@ -44,7 +44,7 @@ import org.tonguetied.service.UserService;
  */
 public class MainController extends MultiActionController {
 
-    private ApplicationService appService;
+    private KeywordService keywordService;
     private UserService userService;
     private AuditService auditService;
     private PreferenceForm viewPreferences;
@@ -52,7 +52,7 @@ public class MainController extends MultiActionController {
     
     /**
      * Handler method that acts as an HTTP interface to the 
-     * {@linkplain ApplicationService#getKeywords()} method.
+     * {@linkplain KeywordService#getKeywords()} method.
      * 
      * @param request the current HTTP request.
      * @param response the current HTTP response.
@@ -73,7 +73,7 @@ public class MainController extends MultiActionController {
         }
         
         if (showAll) {
-            keywords = appService.getKeywords(0, viewPreferences.getMaxResults());
+            keywords = keywordService.getKeywords(0, viewPreferences.getMaxResults());
             searchParameters.initialize();
         }
         else {
@@ -82,7 +82,7 @@ public class MainController extends MultiActionController {
                 keyword.setTranslations(SetUtils.EMPTY_SORTED_SET);
             }
             keywords = 
-                appService.findKeywords(keyword,
+                keywordService.findKeywords(keyword,
                         searchParameters.getIgnoreCase(),
                                         0,
                                         viewPreferences.getMaxResults());
@@ -96,9 +96,9 @@ public class MainController extends MultiActionController {
 
         Map<String, Object> model = new HashMap<String, Object>();
         model.put(TRANSLATIONS, translations);
-        model.put(LANGUAGES, appService.getLanguages());
-        model.put(BUNDLES, appService.getBundles());
-        model.put(COUNTRIES, appService.getCountries());
+        model.put(LANGUAGES, keywordService.getLanguages());
+        model.put(BUNDLES, keywordService.getBundles());
+        model.put(COUNTRIES, keywordService.getCountries());
         model.put(STATES, TranslationState.values());
         model.put(SEARCH_PARAMETERS, searchParameters);
         model.put(VIEW_PREFERENCES, viewPreferences);
@@ -107,7 +107,7 @@ public class MainController extends MultiActionController {
     
     /**
      * Handler method that acts as an HTTP interface to the 
-     * {@linkplain ApplicationService#getBundles()} method.
+     * {@linkplain KeywordService#getBundles()} method.
      * 
      * @param request the current HTTP request.
      * @param response the current HTTP response.
@@ -117,14 +117,14 @@ public class MainController extends MultiActionController {
     public ModelAndView bundles(HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
-        List<Bundle> bundles = appService.getBundles();
+        List<Bundle> bundles = keywordService.getBundles();
         
         return new ModelAndView("bundle/bundles", BUNDLES, bundles);
     }
     
     /**
      * Handler method that acts as an HTTP interface to the 
-     * {@linkplain ApplicationService#getCountries()} method.
+     * {@linkplain KeywordService#getCountries()} method.
      * 
      * @param request the current HTTP request.
      * @param response the current HTTP response.
@@ -134,14 +134,14 @@ public class MainController extends MultiActionController {
     public ModelAndView countries(HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
-        List<Country> countries = appService.getCountries();
+        List<Country> countries = keywordService.getCountries();
         
         return new ModelAndView("country/countries", COUNTRIES, countries);
     }
     
     /**
      * Handler method that acts as an HTTP interface to the 
-     * {@linkplain ApplicationService#getLanguages()} method.
+     * {@linkplain KeywordService#getLanguages()} method.
      * 
      * @param request the current HTTP request.
      * @param response the current HTTP response.
@@ -151,7 +151,7 @@ public class MainController extends MultiActionController {
     public ModelAndView languages(HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
-        List<Language> languages = appService.getLanguages();
+        List<Language> languages = keywordService.getLanguages();
         
         return new ModelAndView("language/languages", LANGUAGES, languages);
     }
@@ -192,7 +192,7 @@ public class MainController extends MultiActionController {
     
     /**
      * Handler method that acts as an HTTP interface to the 
-     * {@linkplain ApplicationService#delete(Object)} method.
+     * {@linkplain KeywordService#delete(Object)} method.
      * 
      * @param request the current HTTP request.
      * @param response the current HTTP response.
@@ -203,18 +203,18 @@ public class MainController extends MultiActionController {
             HttpServletResponse response) throws Exception
     {
         String keywordId = request.getParameter("keywordId");
-        appService.deleteKeyword(Long.parseLong(keywordId));
+        keywordService.deleteKeyword(Long.parseLong(keywordId));
         
         return new ModelAndView("forward:/keywords.htm");
     }
     
     /**
-     * Assign the {@link ApplicationService}.
+     * Assign the {@link KeywordService}.
      * 
-     * @param appService the {@link ApplicationService} to set
+     * @param keywordService the {@link KeywordService} to set
      */
-    public void setAppService(ApplicationService appService) {
-        this.appService = appService;
+    public void setKeywordService(KeywordService keywordService) {
+        this.keywordService = keywordService;
     }
     
     /**

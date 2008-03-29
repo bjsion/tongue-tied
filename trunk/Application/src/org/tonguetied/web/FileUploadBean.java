@@ -1,7 +1,7 @@
 package org.tonguetied.web;
 
 import org.springframework.web.multipart.MultipartFile;
-import org.tonguetied.domain.FormatType;
+import org.tonguetied.datatransfer.FormatType;
 
 
 /**

@@ -9,8 +9,8 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.CancellableFormController;
-import org.tonguetied.domain.Bundle;
-import org.tonguetied.service.ApplicationService;
+import org.tonguetied.keywordmanagement.Bundle;
+import org.tonguetied.keywordmanagement.KeywordService;
 
 
 /**
@@ -19,7 +19,7 @@ import org.tonguetied.service.ApplicationService;
  */
 public class BundleController extends CancellableFormController {
     
-    private ApplicationService appService;
+    private KeywordService keywordService;
     
     private static final Logger logger = 
         Logger.getLogger(BundleController.class);
@@ -48,7 +48,7 @@ public class BundleController extends CancellableFormController {
         Long id = null;
         if (stringId != null)
             id = Long.parseLong(stringId);
-        Bundle bundle = appService.getBundle(id);
+        Bundle bundle = keywordService.getBundle(id);
         if (bundle == null)
             bundle = new Bundle();
         
@@ -63,7 +63,7 @@ public class BundleController extends CancellableFormController {
         if (logger.isDebugEnabled()) logger.debug("saving bundle");
         Bundle bundle = (Bundle) command;
         
-        appService.saveOrUpdate(bundle);
+        keywordService.saveOrUpdate(bundle);
         
         return new ModelAndView(getSuccessView());
     }
@@ -76,11 +76,11 @@ public class BundleController extends CancellableFormController {
     }
 
     /**
-     * Assign the {@link ApplicationService}.
+     * Assign the {@link KeywordService}.
      * 
-     * @param appService the {@link ApplicationService} to set.
+     * @param keywordService the {@link KeywordService} to set.
      */
-    public void setAppService(ApplicationService appService) {
-        this.appService = appService;
+    public void setKeywordService(KeywordService keywordService) {
+        this.keywordService = keywordService;
     }
 }

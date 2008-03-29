@@ -6,8 +6,8 @@ import java.util.regex.Pattern;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import org.tonguetied.domain.User;
-import org.tonguetied.service.UserService;
+import org.tonguetied.usermanagement.User;
+import org.tonguetied.usermanagement.UserService;
 
 
 /**

@@ -6,9 +6,9 @@ import static org.tonguetied.web.Constants.FIELD_NAME;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import org.tonguetied.domain.Country;
-import org.tonguetied.domain.Country.CountryCode;
-import org.tonguetied.service.ApplicationService;
+import org.tonguetied.keywordmanagement.Country;
+import org.tonguetied.keywordmanagement.KeywordService;
+import org.tonguetied.keywordmanagement.Country.CountryCode;
 
 
 /**
@@ -19,7 +19,7 @@ import org.tonguetied.service.ApplicationService;
  */
 public class CountryValidator implements Validator {
     
-    private ApplicationService appService;
+    private KeywordService keywordService;
 
     /* (non-Javadoc)
      * @see org.springframework.validation.Validator#supports(java.lang.Class)
@@ -60,7 +60,7 @@ public class CountryValidator implements Validator {
     private void validateDuplicates(Country country, Errors errors) {
         // check for duplicates of new records only
         if (country.getId() == null) {
-            Country other = appService.getCountry(country.getCode());
+            Country other = keywordService.getCountry(country.getCode());
             if (other != null) {
                 errors.rejectValue(
                         FIELD_CODE, 
@@ -72,11 +72,11 @@ public class CountryValidator implements Validator {
     }
 
     /**
-     * Set the {@link ApplicationService} instance.
+     * Set the {@link KeywordService} instance.
      * 
-     * @param appService the appService instance.
+     * @param keywordService the keywordService instance.
      */
-    public void setAppService(ApplicationService appService) {
-        this.appService = appService;
+    public void setKeywordService(KeywordService keywordService) {
+        this.keywordService = keywordService;
     }
 }

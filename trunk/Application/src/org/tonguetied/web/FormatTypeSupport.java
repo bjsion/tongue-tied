@@ -3,7 +3,7 @@ package org.tonguetied.web;
 import java.beans.PropertyEditorSupport;
 
 import org.apache.commons.lang.StringUtils;
-import org.tonguetied.domain.FormatType;
+import org.tonguetied.datatransfer.FormatType;
 
 
 /**

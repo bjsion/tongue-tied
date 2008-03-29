@@ -3,7 +3,7 @@ package org.tonguetied.web;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import org.tonguetied.domain.ExportParameters;
+import org.tonguetied.datatransfer.ExportParameters;
 
 
 /**
