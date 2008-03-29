@@ -14,9 +14,9 @@ import org.junit.runners.Parameterized.Parameters;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-import org.tonguetied.domain.Bundle;
-import org.tonguetied.service.ApplicationService;
-import org.tonguetied.service.ApplicationServiceStub;
+import org.tonguetied.keywordmanagement.Bundle;
+import org.tonguetied.keywordmanagement.KeywordService;
+import org.tonguetied.keywordmanagement.KeywordServiceStub;
 
 
 /**
@@ -25,7 +25,7 @@ import org.tonguetied.service.ApplicationServiceStub;
  */
 @RunWith(value=Parameterized.class)
 public class BundleValidatorTest {
-    private ApplicationService appService;
+    private KeywordService keywordService;
     private Bundle bundle;
     private String fieldName;
 
@@ -56,12 +56,12 @@ public class BundleValidatorTest {
     
     @Before
     public void setup() {
-        this.appService = new ApplicationServiceStub();
+        this.keywordService = new KeywordServiceStub();
         Bundle existing = new Bundle();
         existing.setId(1256L);
         existing.setName("test");
         existing.setDescription("description");
-        this.appService.saveOrUpdate(existing);
+        this.keywordService.saveOrUpdate(existing);
     }
     
     /**
@@ -70,7 +70,7 @@ public class BundleValidatorTest {
     @Test
     public final void testValidateInvalidObject() {
         BundleValidator validator = new BundleValidator();
-        validator.setAppService(appService);
+        validator.setKeywordService(keywordService);
         Errors errors = new BindException(this.bundle, "bundle");
         validator.validate(this.bundle, errors);
         

@@ -1,7 +1,7 @@
 package org.tonguetied.web;
 
-import org.tonguetied.domain.Language;
-import org.tonguetied.domain.Language.LanguageCode;
+import org.tonguetied.keywordmanagement.Language;
+import org.tonguetied.keywordmanagement.Language.LanguageCode;
 
 import junitx.extensions.EqualsHashCodeTestCase;
 

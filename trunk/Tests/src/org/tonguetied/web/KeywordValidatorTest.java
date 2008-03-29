@@ -14,15 +14,15 @@ import org.junit.runners.Parameterized.Parameters;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-import org.tonguetied.domain.Bundle;
-import org.tonguetied.domain.Country;
-import org.tonguetied.domain.Keyword;
-import org.tonguetied.domain.Language;
-import org.tonguetied.domain.Translation;
-import org.tonguetied.domain.Country.CountryCode;
-import org.tonguetied.domain.Language.LanguageCode;
-import org.tonguetied.service.ApplicationService;
-import org.tonguetied.service.ApplicationServiceStub;
+import org.tonguetied.keywordmanagement.Bundle;
+import org.tonguetied.keywordmanagement.Country;
+import org.tonguetied.keywordmanagement.Keyword;
+import org.tonguetied.keywordmanagement.KeywordService;
+import org.tonguetied.keywordmanagement.KeywordServiceStub;
+import org.tonguetied.keywordmanagement.Language;
+import org.tonguetied.keywordmanagement.Translation;
+import org.tonguetied.keywordmanagement.Country.CountryCode;
+import org.tonguetied.keywordmanagement.Language.LanguageCode;
 
 
 /**
@@ -31,7 +31,7 @@ import org.tonguetied.service.ApplicationServiceStub;
  */
 @RunWith(value=Parameterized.class)
 public class KeywordValidatorTest {
-    private ApplicationService appService;
+    private KeywordService keywordService;
     private Keyword keyword;
     private String fieldName;
     
@@ -79,13 +79,13 @@ public class KeywordValidatorTest {
      */
     @Before
     public void setUp() throws Exception {
-        this.appService = new ApplicationServiceStub();
+        this.keywordService = new KeywordServiceStub();
         Keyword existing = new Keyword();
         existing.setId(1487L);
         existing.setKeyword("keyword");
         existing.setContext("context");
         existing.addTranslation(translation);
-        this.appService.saveOrUpdate(existing);
+        this.keywordService.saveOrUpdate(existing);
     }
 
     /**
@@ -94,7 +94,7 @@ public class KeywordValidatorTest {
     @Test
     public final void testValidate() {
         KeywordValidator validator = new KeywordValidator();
-        validator.setAppService(appService);
+        validator.setKeywordService(keywordService);
         Errors errors = new BindException(this.keyword, "keyword");
         validator.validate(this.keyword, errors);
         

@@ -14,9 +14,9 @@ import org.junit.runners.Parameterized.Parameters;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-import org.tonguetied.domain.User;
-import org.tonguetied.service.UserService;
-import org.tonguetied.service.UserServiceStub;
+import org.tonguetied.usermanagement.User;
+import org.tonguetied.usermanagement.UserService;
+import org.tonguetied.usermanagement.UserServiceStub;
 
 
 /**

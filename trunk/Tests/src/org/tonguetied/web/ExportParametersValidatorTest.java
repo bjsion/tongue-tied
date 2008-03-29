@@ -13,13 +13,13 @@ import org.junit.runners.Parameterized.Parameters;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-import org.tonguetied.domain.Bundle;
-import org.tonguetied.domain.Country;
-import org.tonguetied.domain.ExportParameters;
-import org.tonguetied.domain.FormatType;
-import org.tonguetied.domain.Language;
-import org.tonguetied.domain.Country.CountryCode;
-import org.tonguetied.domain.Language.LanguageCode;
+import org.tonguetied.datatransfer.ExportParameters;
+import org.tonguetied.datatransfer.FormatType;
+import org.tonguetied.keywordmanagement.Bundle;
+import org.tonguetied.keywordmanagement.Country;
+import org.tonguetied.keywordmanagement.Language;
+import org.tonguetied.keywordmanagement.Country.CountryCode;
+import org.tonguetied.keywordmanagement.Language.LanguageCode;
 
 
 /**

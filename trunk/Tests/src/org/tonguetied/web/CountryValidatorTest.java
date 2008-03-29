@@ -14,10 +14,10 @@ import org.junit.runners.Parameterized.Parameters;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-import org.tonguetied.domain.Country;
-import org.tonguetied.domain.Country.CountryCode;
-import org.tonguetied.service.ApplicationService;
-import org.tonguetied.service.ApplicationServiceStub;
+import org.tonguetied.keywordmanagement.Country;
+import org.tonguetied.keywordmanagement.KeywordService;
+import org.tonguetied.keywordmanagement.KeywordServiceStub;
+import org.tonguetied.keywordmanagement.Country.CountryCode;
 
 
 /**
@@ -26,7 +26,7 @@ import org.tonguetied.service.ApplicationServiceStub;
  */
 @RunWith(value=Parameterized.class)
 public class CountryValidatorTest {
-    private ApplicationService appService;
+    private KeywordService keywordService;
     private Country country;
     private String fieldName;
 
@@ -54,12 +54,12 @@ public class CountryValidatorTest {
     
     @Before
     public void setup() {
-        this.appService = new ApplicationServiceStub();
+        this.keywordService = new KeywordServiceStub();
         Country existing = new Country();
         existing.setId(1256L);
         existing.setCode(CountryCode.PL);
         existing.setName("Poland");
-        this.appService.saveOrUpdate(existing);
+        this.keywordService.saveOrUpdate(existing);
     }
     
     /**
@@ -68,7 +68,7 @@ public class CountryValidatorTest {
     @Test
     public final void testValidateInvalidObject() {
         CountryValidator validator = new CountryValidator();
-        validator.setAppService(appService);
+        validator.setKeywordService(keywordService);
         Errors errors = new BindException(this.country, "country");
         validator.validate(this.country, errors);
         
