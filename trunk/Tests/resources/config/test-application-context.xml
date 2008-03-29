@@ -12,7 +12,8 @@
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>classpath:jdbc.properties</value>
+                <value>classpath:jdbc.properties</value>
+				<value>classpath:test.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -61,15 +62,30 @@
         </property>
     </bean>
 
-    <bean id="auditService" autowire="byName" dependency-check="objects" class="org.tonguetied.service.AuditServiceImpl" />
+    <bean id="auditService" autowire="byName" dependency-check="objects" class="org.tonguetied.audit.AuditServiceImpl" />
     
-    <bean id="appService" autowire="byName" dependency-check="objects" class="org.tonguetied.service.ApplicationServiceImpl" />
+    <bean id="exportService" dependency-check="objects" class="org.tonguetied.datatransfer.ExportServiceImpl" init-method="init">
+        <property name="transferRepository" ref="transferRepository"/>
+        <property name="sourceRoot" value="${source.root}"/>
+        <property name="outputRoot" value="${output.root}"/>
+    </bean>
     
-    <bean id="userService" autowire="byName" dependency-check="objects" class="org.tonguetied.service.UserServiceImpl" />
+    <bean id="keywordService" autowire="byName" dependency-check="objects" class="org.tonguetied.keywordmanagement.KeywordServiceImpl" />
+    
+    <bean id="userService" autowire="byName" dependency-check="objects" class="org.tonguetied.usermanagement.UserServiceImpl" />
 
-    <bean id="userDetailsService" autowire="byName" dependency-check="objects" class="org.tonguetied.service.UserDetailsServiceImpl" />
+    <bean id="userDetailsService" autowire="byName" dependency-check="objects" class="org.tonguetied.usermanagement.UserDetailsServiceImpl" />
     
-	<bean id="daoRepository" class="org.tonguetied.dao.DaoRepositoryImpl">
+    <bean id="auditRepository" class="org.tonguetied.audit.AuditRepositoryImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="keywordRepository" class="org.tonguetied.keywordmanagement.KeywordRepositoryImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="transferRepository" class="org.tonguetied.datatransfer.TransferRepositoryImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+	<bean id="userRepository" class="org.tonguetied.usermanagement.UserRepositoryImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 </beans>
