@@ -26,8 +26,10 @@ import static org.tonguetied.server.ServerConstants.KEY_SECURE_SERVER_PORT;
 import static org.tonguetied.server.ServerConstants.KEY_SERVER_PORT;
 import static org.tonguetied.server.ServerConstants.KEY_TEMP_DIR;
 import static org.tonguetied.server.ServerConstants.KEY_UNPACK_WAR;
+import static org.tonguetied.server.ServerConstants.KEY_USE_FILE_MAPPED_BUFFER;
 import static org.tonguetied.server.ServerConstants.KEY_WORKING_LOC;
 import static org.tonguetied.server.ServerConstants.SERVER_CONFIGURATION_CLASSES;
+import static org.tonguetied.server.ServerConstants.USE_FILE_MAPPED_BUFFER;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -68,9 +70,9 @@ import org.mortbay.thread.BoundedThreadPool;
  * This class implements a simple HTTP Server using Jetty, providing a HTTP 
  * listener and handle incoming requests. This class will start an embedded 
  * jetty server initialized from a properties file. The default is 
- * <code>server.properties</code> or an alternative can be passed in at runtime.
- * Default values are derived from {@link ServerConstants}. By default the 
- * server does not join the thread pool. To enable this behaviour set 
+ * <code>embeddedServer.properties</code> or an alternative can be passed in at
+ * runtime. Default values are derived from {@link ServerConstants}. By default
+ * the server does not join the thread pool. To enable this behaviour set 
  * the {@link ServerConstants#KEY_JOIN_THREAD_POOL} in the server properties
  * file.
  * 
@@ -140,8 +142,8 @@ public class Server
     /**
      * Configure the embedded jetty server. This method sets all the start up 
      * parameters for the jetty server based on the values in the 
-     * <code>server.properties</code>. If no values are found in this file, 
-     * then the default values are used.
+     * <code>embeddedServer.properties</code>. If no values are found in this 
+     * file, then the default values are used.
      * 
      * @exception Exception if the embedded server fails to initialize
      * @see ServerConstants
@@ -207,6 +209,7 @@ public class Server
         deployer.setExtract(unpackWebArchive());
         deployer.setConfigurationClasses(SERVER_CONFIGURATION_CLASSES);
         deployer.setParentLoaderPriority(false);
+        deployer.setAllowDuplicates(false);
         
         return deployer;
     }
@@ -251,6 +254,13 @@ public class Server
             WebAppContext context = 
                 (WebAppContext)contexts.getChildHandlerByClass(WebAppContext.class);
         context.setTempDirectory(getTempDirectory());            
+        
+        Map<String, String> initParams = new HashMap<String, String>();
+        // see http://docs.codehaus.org/display/JETTY/Files+locked+on+Windows
+        // for reasons on why we do this
+        if (useFileMappedBuffer() != null)
+        	initParams.put(USE_FILE_MAPPED_BUFFER, useFileMappedBuffer());
+        context.setInitParams(initParams);
         
         if(contextPathDef != null) {
             // This is one way of doing it, another way would be to use another
@@ -346,6 +356,10 @@ public class Server
                         properties.getProperty(KEY_MIN_THREADS, DEFAULT_MIN_THREADS));
     }
     
+    private String useFileMappedBuffer() {
+    	return properties.getProperty(KEY_USE_FILE_MAPPED_BUFFER);
+    }
+    
     /**
      * Starts the embedded Jetty server.
      * 
@@ -402,8 +416,8 @@ public class Server
     /**
      * Entry point for the embedded server. Starts the embedded web server, 
      * deploying the war file. The server settings are configured in the
-     * <code>server.properties</code> by default. If another properties file is
-     * to be used specify the location as an argument with the
+     * <code>embeddedServer.properties</code> by default. If another properties
+     * file is to be used specify the location as an argument with the
      * <code>-p</code> option.
      *
      * @param args the list of arguments to start the application
@@ -426,11 +440,11 @@ public class Server
     private static void readArguments(String[] args) throws IllegalArgumentException
     {
         Option help = new Option("help", "print this message");
-        OptionBuilder.withArgName("file");
-        OptionBuilder.hasArg();
-        OptionBuilder.withDescription(
-                "the name and location of the properties file to use");
-        Option propertiesFile = OptionBuilder.create("p");
+        Option propertiesFile = OptionBuilder.withArgName("file").
+                                hasArg().
+                                withDescription("the name and location of " +
+                                                "the properties file to use").
+                                create("p");
         
         Options options = new Options();
         options.addOption(help);

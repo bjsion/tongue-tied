@@ -25,6 +25,8 @@ public interface ServerConstants {
     static final String KEY_REQUEST_LOG_FILE = "tonguetied.server.request.log.file";
     static final String KEY_MAX_THREADS = "tonguetied.server.max.threads";
     static final String KEY_MIN_THREADS = "tonguetied.server.min.threads";
+    static final String KEY_USE_FILE_MAPPED_BUFFER = 
+    	"tonguetied.server.useFileMappedBuffer";
     
     /**
      * The default location to look for the war file or an extracted war file.
@@ -90,6 +92,13 @@ public interface ServerConstants {
      */
     static final String DEFAULT_MIN_THREADS = "10";
     
+    /**
+     * @see <a href="http://docs.codehaus.org/display/JETTY/Files+locked+on+Windows">Files locked on windows</a>
+     * @see org.mortbay.jetty.servlet.DefaultServlet
+     */
+    static final String USE_FILE_MAPPED_BUFFER = 
+                "org.mortbay.jetty.servlet.Default.useFileMappedBuffer";
+        
     /**
      * The default name of the properties file used to configure the embedded
      * servers
