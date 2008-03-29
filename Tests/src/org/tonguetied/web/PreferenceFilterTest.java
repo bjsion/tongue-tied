@@ -11,13 +11,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import org.tonguetied.domain.Bundle;
-import org.tonguetied.domain.Country;
-import org.tonguetied.domain.Keyword;
-import org.tonguetied.domain.Language;
-import org.tonguetied.domain.Translation;
-import org.tonguetied.domain.Country.CountryCode;
-import org.tonguetied.domain.Language.LanguageCode;
+import org.tonguetied.keywordmanagement.Bundle;
+import org.tonguetied.keywordmanagement.Country;
+import org.tonguetied.keywordmanagement.Keyword;
+import org.tonguetied.keywordmanagement.Language;
+import org.tonguetied.keywordmanagement.Translation;
+import org.tonguetied.keywordmanagement.Country.CountryCode;
+import org.tonguetied.keywordmanagement.Language.LanguageCode;
 
 
 /**

@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.tonguetied.domain.Country;
-import org.tonguetied.domain.Country.CountryCode;
+import org.tonguetied.keywordmanagement.Country;
+import org.tonguetied.keywordmanagement.Country.CountryCode;
 
 
 /**
