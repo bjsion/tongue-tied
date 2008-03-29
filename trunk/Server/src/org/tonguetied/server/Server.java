@@ -440,11 +440,11 @@ public class Server
     private static void readArguments(String[] args) throws IllegalArgumentException
     {
         Option help = new Option("help", "print this message");
-        Option propertiesFile = OptionBuilder.withArgName("file").
-                                hasArg().
-                                withDescription("the name and location of " +
-                                                "the properties file to use").
-                                create("p");
+        OptionBuilder.withArgName("file");
+        OptionBuilder.hasArg();
+        OptionBuilder.withDescription(
+                "the name and location of the properties file to use");
+        Option propertiesFile = OptionBuilder.create("p");
         
         Options options = new Options();
         options.addOption(help);
