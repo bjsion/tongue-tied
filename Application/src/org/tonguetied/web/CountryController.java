@@ -12,9 +12,9 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.CancellableFormController;
-import org.tonguetied.domain.Country;
-import org.tonguetied.domain.Country.CountryCode;
-import org.tonguetied.service.ApplicationService;
+import org.tonguetied.keywordmanagement.Country;
+import org.tonguetied.keywordmanagement.KeywordService;
+import org.tonguetied.keywordmanagement.Country.CountryCode;
 
 
 /**
@@ -23,7 +23,7 @@ import org.tonguetied.service.ApplicationService;
  */
 public class CountryController extends CancellableFormController {
     
-    private ApplicationService appService;
+    private KeywordService keywordService;
     
     private static final Logger logger = 
         Logger.getLogger(CountryController.class);
@@ -42,7 +42,7 @@ public class CountryController extends CancellableFormController {
         Long id = null;
         if (stringId != null)
             id = Long.parseLong(stringId);
-        Country  country = appService.getCountry (id);
+        Country  country = keywordService.getCountry (id);
         if (country == null)
             country = new Country();
         
@@ -57,7 +57,7 @@ public class CountryController extends CancellableFormController {
         if (logger.isDebugEnabled()) logger.debug("saving country");
         Country country = (Country) command;
         
-        appService.saveOrUpdate(country);
+        keywordService.saveOrUpdate(country);
         
         return new ModelAndView(getSuccessView());
     }
@@ -89,11 +89,11 @@ public class CountryController extends CancellableFormController {
     }
 
     /**
-     * Assign the {@link ApplicationService}.
+     * Assign the {@link KeywordService}.
      * 
-     * @param appService the {@link ApplicationService} to set.
+     * @param keywordService the {@link KeywordService} to set.
      */
-    public void setAppService(ApplicationService appService) {
-        this.appService = appService;
+    public void setKeywordService(KeywordService keywordService) {
+        this.keywordService = keywordService;
     }
 }

@@ -3,7 +3,7 @@ package org.tonguetied.web;
 import java.beans.PropertyEditorSupport;
 
 import org.apache.commons.lang.StringUtils;
-import org.tonguetied.domain.Country.CountryCode;
+import org.tonguetied.keywordmanagement.Country.CountryCode;
 
 /**
  * Support class to map enum {@link CountryCode} to a string key in the web

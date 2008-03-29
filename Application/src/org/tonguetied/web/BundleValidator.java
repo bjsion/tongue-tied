@@ -5,8 +5,8 @@ import static org.tonguetied.web.Constants.FIELD_NAME;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import org.tonguetied.domain.Bundle;
-import org.tonguetied.service.ApplicationService;
+import org.tonguetied.keywordmanagement.Bundle;
+import org.tonguetied.keywordmanagement.KeywordService;
 
 
 /**
@@ -17,7 +17,7 @@ import org.tonguetied.service.ApplicationService;
  */
 public class BundleValidator implements Validator {
 
-    private ApplicationService appService;
+    private KeywordService keywordService;
 
     /* (non-Javadoc)
      * @see org.springframework.validation.Validator#supports(java.lang.Class)
@@ -56,7 +56,7 @@ public class BundleValidator implements Validator {
     private void validateDuplicates(Bundle bundle, Errors errors) {
         // check for duplicates of new records only
         if (bundle.getId() == null) {
-            Bundle other = appService.getBundle(bundle.getName());
+            Bundle other = keywordService.getBundle(bundle.getName());
             if (other != null) {
                 errors.rejectValue(
                         FIELD_NAME, 
@@ -68,11 +68,11 @@ public class BundleValidator implements Validator {
     }
 
     /**
-     * Set the {@link ApplicationService} instance.
+     * Set the {@link KeywordService} instance.
      * 
-     * @param appService the appService instance.
+     * @param keywordService the keywordService instance.
      */
-    public void setAppService(ApplicationService appService) {
-        this.appService = appService;
+    public void setKeywordService(KeywordService keywordService) {
+        this.keywordService = keywordService;
     }
 }

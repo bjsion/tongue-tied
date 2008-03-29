@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.tonguetied.domain.Bundle;
+import org.tonguetied.keywordmanagement.Bundle;
 
 
 /**

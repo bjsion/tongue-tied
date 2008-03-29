@@ -6,10 +6,10 @@ import static org.tonguetied.web.Constants.FIELD_NAME;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import org.tonguetied.domain.Country;
-import org.tonguetied.domain.Language;
-import org.tonguetied.domain.Language.LanguageCode;
-import org.tonguetied.service.ApplicationService;
+import org.tonguetied.keywordmanagement.Country;
+import org.tonguetied.keywordmanagement.KeywordService;
+import org.tonguetied.keywordmanagement.Language;
+import org.tonguetied.keywordmanagement.Language.LanguageCode;
 
 
 /**
@@ -20,7 +20,7 @@ import org.tonguetied.service.ApplicationService;
  */
 public class LanguageValidator implements Validator {
     
-    private ApplicationService appService;
+    private KeywordService keywordService;
 
     /* (non-Javadoc)
      * @see org.springframework.validation.Validator#supports(java.lang.Class)
@@ -61,7 +61,7 @@ public class LanguageValidator implements Validator {
     private void validateDuplicates(Language language, Errors errors) {
         // check for duplicates of new records only
         if (language.getId() == null) {
-            Language other = appService.getLanguage(language.getCode());
+            Language other = keywordService.getLanguage(language.getCode());
             if (other != null) {
                 errors.rejectValue(
                         FIELD_CODE, 
@@ -73,11 +73,11 @@ public class LanguageValidator implements Validator {
     }
 
     /**
-     * Set the {@link ApplicationService} instance.
+     * Set the {@link KeywordService} instance.
      * 
-     * @param appService the appService instance.
+     * @param keywordService the keywordService instance.
      */
-    public void setAppService(ApplicationService appService) {
-        this.appService = appService;
+    public void setKeywordService(KeywordService keywordService) {
+        this.keywordService = keywordService;
     }
 }
