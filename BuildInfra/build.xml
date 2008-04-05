@@ -13,23 +13,19 @@
 	<property name="build.debug" value="true"/>
 
     <!-- temporary directories -->
-    <property name="classes.dir" value="${infra.home}/classes"/>
-	<property name="generated.dir" value="${infra.home}/generated"/>
-	<property name="build.dir" value="${infra.home}/builds"/>
+    <property name="output.dir" value="${infra.home}/output"/>
 
     <target name="build" depends="init">
         <description>presently does nothing</description>
   	</target>
 
 	<target name="init">
-		<mkdir dir="${classes.dir}"/>
-		<mkdir dir="${build.dir}"/>
+  	    <mkdir dir="${output.dir}"/>
 	</target>
 
 	<target name="clean">
 		<echo message="Cleaning ${ant.project.name} ..."/>	
-		<delete dir="${classes.dir}" failonerror="false" quiet="true"/>	
-        <delete dir="${generated.dir}" failonerror="false" quiet="true"/> 
+  	    <delete dir="${output.dir}" failonerror="false" quiet="true"/>
 	</target>
 	
 	<!--useful when perhaps move the source to a machine that is living in the past -->
@@ -38,6 +34,7 @@
 			<fileset dir="${application.home}"/>
 			<fileset dir="${infra.home}"/>
 			<fileset dir="${server.home}"/>
+		    <fileset dir="${tests.home}"/>
 		</touch>		
 	</target>
 	
