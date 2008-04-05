@@ -497,47 +497,6 @@
         <!--/java-->
     </target>
     
-    <target name="code.metrics" depends="init" description="Analyze package dependencies and perform quality metrics on architecture">
-        <echo message="Performing code metrics on module ${ant.project.name}..."/>
-        <jdepend format="xml" outputfile="${output.dir}/jdepend_metrics.xml">
-            <exclude name="fmpp*"/>
-            <exclude name="freemarker*"/>
-            <exclude name="java.*"/>
-            <exclude name="javax.*"/>
-            <exclude name="org.acegisecurity*"/>
-            <exclude name="org.apache.*"/>
-            <exclude name="org.hibernate*"/>
-            <exclude name="org.mortbay.*"/>
-            <exclude name="org.springframework.*"/>
-            <classespath>
-                <pathelement location="${classes.dir}"/>
-            </classespath>
-            <classpath refid="compile.classpath"/>   
-        </jdepend>
-        
-        <echo message="creating html output of code metrics"/>
-        <xslt in="${output.dir}/jdepend_metrics.xml"
-              out="${output.dir}/jdepend.html" 
-              style="${ant.home}/etc/jdepend.xsl">
-            <outputproperty name="method" value="html"/>
-        </xslt>
-        
-        <echo message="creating diagram of code metrics"/>
-        <xslt in="${output.dir}/jdepend_metrics.xml"
-              out="${output.dir}/jdepend.dot"
-              style="${3rdparty.home}/jDepend/2.9.1/jdepend2dot.xsl">
-        </xslt>
-        
-        <!-- Cannot guarentee that every machine has Graphviz installed so don't
-             fail the task if the graph cannot be generated. -->
-        <exec executable="dot" failifexecutionfails="false" dir="${output.dir}">
-            <arg value="-Tjpg"/>
-            <arg value="-o"/>
-            <arg value="jdepend-${ant.project.name}.jpg"/>
-            <arg value="jdepend.dot"/>
-        </exec>
-    </target>
-     
     <target name="hot.deploy" description="deploy the web components into a running server. This is for developers only">
         <echo message="deploying files to ${web.server.webinf}..."/>
         <copy todir="${web.server.webinf}/jsp">
