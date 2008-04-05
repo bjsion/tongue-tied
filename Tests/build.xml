@@ -155,19 +155,10 @@
                 <dtd publicid="datatypes" 
                     location="${3rdparty.home}/XMLEntities/datatypes.dtd"/>
             </xmlcatalog>
-            <schema namespace="http://www.w3.org/XML/1998/namespace"
-            	file="${3rdparty.home}/XMLEntities/xml.xsd"/>
-            <schema namespace="http://www.w3.org/2001/XMLSchema"
-  				file="${3rdparty.home}/XMLEntities/XMLSchema.xsd" />
-            <schema namespace="$http://www.springframework.org/schema/beans"
+            <schema namespace="http://www.springframework.org/schema/beans"
             	file="${3rdparty.home}/XMLEntities/spring-beans-2.5.xsd"/>
-            <schema namespace="http://www.springframework.org/schema/aop" 
-            	file="${3rdparty.home}/XMLEntities/spring-aop-2.5.xsd"/>
-            <schema namespace="http://www.springframework.org/schema/tx"
-            	file="${3rdparty.home}/XMLEntities/spring-tx-2.5.xsd"/>
             <fileset dir="${config.dir}" id="xml.resources">
                 <include name="**/*-context.xml"/>
-                <include name="**/web-servlet.xml"/>
             </fileset>
         </schemavalidate>
     </target>
