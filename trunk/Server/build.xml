@@ -91,15 +91,6 @@
         </jar>
     </target>
 
-    <target name="manage.build.properties" depends="init">
-        <propertyfile file="${build.details.file}" comment="Last tonguetied build">
-            <entry key="build.date" type="date" value="now"/>
-            <entry key="version" type="string" value="${shortversion}"/>
-            <entry key="build.number" type="string" value="@@${label}"/>
-        </propertyfile>
-        <replace file="${build.details.file}" token="@@build." value=""/>
-    </target>
-    
     <target name="build" depends="validate.xml, jar" description="Compile entire module and validate xml files"/>
  
     <target name="validate.xml" description="Validate XML configuration files" >
