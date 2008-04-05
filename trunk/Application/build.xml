@@ -351,17 +351,7 @@
                  location="${3rdparty.home}/XMLEntities/hibernate-configuration-3.0.dtd"/>
         </xmlcatalog>
         <schemavalidate>
-            <xmlcatalog>
-                <dtd publicid="-//W3C//DTD XMLSCHEMA 200102//EN" 
-                    location="${3rdparty.home}/XMLEntities/XMLSchema.dtd"/>
-                <dtd publicid="datatypes" 
-                    location="${3rdparty.home}/XMLEntities/datatypes.dtd"/>
-            </xmlcatalog>
-            <schema namespace="http://www.w3.org/XML/1998/namespace"
-            	file="${3rdparty.home}/XMLEntities/xml.xsd"/>
-            <schema namespace="http://www.w3.org/2001/XMLSchema"
-  				file="${3rdparty.home}/XMLEntities/XMLSchema.xsd" />
-            <schema namespace="$http://www.springframework.org/schema/beans"
+            <schema namespace="http://www.springframework.org/schema/beans"
             	file="${3rdparty.home}/XMLEntities/spring-beans-2.5.xsd"/>
             <schema namespace="http://www.springframework.org/schema/aop" 
             	file="${3rdparty.home}/XMLEntities/spring-aop-2.5.xsd"/>
@@ -375,16 +365,10 @@
         <schemavalidate file="${config.dir}/web.xml">
             <schema namespace="http://www.w3.org/2001/XMLSchema"
                       file="${3rdparty.home}/XMLEntities/XMLSchema.xsd" />
-            <xmlcatalog>
-                <entity publicId="http://java.sun.com/xml/ns/j2ee"
-                	location="${3rdparty.home}/XMLEntities/web-app_2_4.xsd"/>
-                <entity publicId="http://java.sun.com/xml/ns/j2ee"
-                	location="${3rdparty.home}/XMLEntities/j2ee_1_4.xsd"/>
-            </xmlcatalog>
-            <!--schema namespace="http://java.sun.com/xml/ns/j2ee"
-            	file="${3rdparty.home}/XMLEntities/web-app_2_4.xsd"/>
-            <schema namespace="http://java.sun.com/xml/ns/j2ee"
-            	file="${3rdparty.home}/XMLEntities/j2ee_1_4.xsd"/-->
+            <schema namespace="http://www.w3.org/XML/1998/namespace"
+            	file="${3rdparty.home}/XMLEntities/xml.xsd"/>
+            <schema namespace="http://java.sun.com/xml/ns/javaee"
+            	file="${3rdparty.home}/XMLEntities/web-app_2_5.xsd"/>
     	</schemavalidate>
         <xmlvalidate warn="yes" failonerror="true">
             <fileset dir="${config.dir}" id="xml.resources">
@@ -516,11 +500,13 @@
     <target name="code.metrics" depends="init" description="Analyze package dependencies and perform quality metrics on architecture">
         <echo message="Performing code metrics on module ${ant.project.name}..."/>
         <jdepend format="xml" outputfile="${output.dir}/jdepend_metrics.xml">
+            <exclude name="fmpp*"/>
+            <exclude name="freemarker*"/>
             <exclude name="java.*"/>
             <exclude name="javax.*"/>
+            <exclude name="org.acegisecurity*"/>
             <exclude name="org.apache.*"/>
-            <exclude name="org.hibernate"/>
-            <exclude name="org.hibernate.*"/>
+            <exclude name="org.hibernate*"/>
             <exclude name="org.mortbay.*"/>
             <exclude name="org.springframework.*"/>
             <classespath>

@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
-        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 <!--
   - Application context containing authentication, channel security and web URI
   - beans.
@@ -9,8 +7,10 @@
   -
   - $Id: security-context.xml,v 1.3 2007/11/17 09:32:18 bsion Exp $
   -->
-
-<beans>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
    <!-- ======================== FILTER CHAIN ======================= -->
 
