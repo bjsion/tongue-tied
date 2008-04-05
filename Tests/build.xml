@@ -181,41 +181,6 @@
         </xslt>
     </target>
      
-    <target name="code.metrics" depends="init" description="Analyze package dependencies and perform quality metrics on architecture">
-        <echo message="Performing code metrics on module ${ant.project.name}..."/>
-        <jdepend format="xml" outputfile="${output.dir}/jdepend_metrics.xml">
-            <exclude name="java.*"/>
-            <exclude name="javax.*"/>
-            <classespath>
-                <pathelement location="${classes.dir}"/>
-                <pathelement location="${server.home}/classes"/>
-            </classespath>
-            <classpath refid="compile.classpath"/>   
-        </jdepend>
-        
-        <echo message="creating html output of code metrics"/>
-        <xslt in="${output.dir}/jdepend_metrics.xml"
-              out="${output.dir}/jdepend.html" 
-              style="${ant.home}/etc/jdepend.xsl">
-            <outputproperty name="method" value="html"/>
-        </xslt>
-        
-        <echo message="creating diagram of code metrics"/>
-        <xslt in="${output.dir}/jdepend_metrics.xml"
-              out="${output.dir}/jdepend.dot"
-              style="${3rdparty.home}/jDepend/2.9.1/jdepend2dot.xsl">
-        </xslt>
-        
-        <!-- Cannot guarentee that every machine has Graphviz installed so don't
-             fail the task if the graph cannot be generated. -->
-        <exec executable="dot" failifexecutionfails="false" dir="${output.dir}">
-            <arg value="-Tjpg"/>
-            <arg value="-o"/>
-            <arg value="jdepend-${ant.project.name}.jpg"/>
-            <arg value="jdepend.dot"/>
-        </exec>
-    </target>
-     
     <target name="javadoc" depends="init" description="generate the javadoc for this module">
         <echo message="Generating java api documentation for module ${ant.project.name}..."/>
         <javadoc destdir="${docs.api.dir}" 
