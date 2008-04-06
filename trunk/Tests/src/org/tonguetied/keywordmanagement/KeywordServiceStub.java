@@ -127,6 +127,24 @@ public class KeywordServiceStub implements KeywordService {
     }
 
     /* (non-Javadoc)
+     * @see org.tonguetied.keywordmanagement.KeywordService#getDefaultBundle()
+     */
+    public Bundle getDefaultBundle() {
+        Predicate bundleCodeFilter = new Predicate() {
+
+            /* (non-Javadoc)
+             * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
+             */
+            public boolean evaluate(Object object) {
+                return ((Bundle) object).isDefault();
+            }
+        }; 
+        Bundle bundle= 
+            (Bundle) CollectionUtils.find(bundles.values(), bundleCodeFilter);
+        return bundle;
+    }
+
+    /* (non-Javadoc)
      * @see org.tonguetied.service.KeywordService#getCountries()
      */
     public List<Country> getCountries() {
@@ -275,4 +293,10 @@ public class KeywordServiceStub implements KeywordService {
         }
     }
 
+    /* (non-Javadoc)
+     * @see org.tonguetied.keywordmanagement.KeywordService#saveOrUpdate(org.tonguetied.keywordmanagement.Bundle)
+     */
+    public void saveOrUpdate(Bundle bundle) {
+        this.saveOrUpdate((Object) bundle);
+    }
 }

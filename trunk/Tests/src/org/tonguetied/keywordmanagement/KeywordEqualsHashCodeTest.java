@@ -30,7 +30,6 @@ public class KeywordEqualsHashCodeTest extends EqualsHashCodeTestCase {
         Bundle bundle = new Bundle();
         bundle.setName("bundle1");
         bundle.setDescription("resources");
-        bundle.setResourceDestination("home");
         bundle.setResourceName("bundle1");
 
         Language language = new Language();
@@ -60,7 +59,6 @@ public class KeywordEqualsHashCodeTest extends EqualsHashCodeTestCase {
         Bundle bundle = new Bundle();
         bundle.setName("Bundle 2");
         bundle.setDescription("resources");
-        bundle.setResourceDestination("home");
         bundle.setResourceName("bundle2");
 
         Language language = new Language();

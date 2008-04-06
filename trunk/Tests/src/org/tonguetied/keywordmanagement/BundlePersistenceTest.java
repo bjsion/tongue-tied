@@ -25,8 +25,8 @@ public class BundlePersistenceTest extends PersistenceTestBase {
         Bundle bundle = new Bundle();
         bundle.setName("tonguetied Server");
         bundle.setDescription("tonguetied resources");
-        bundle.setResourceDestination("/home");
         bundle.setResourceName("tonguetied");
+        bundle.setDefault(false);
         session.saveOrUpdate(bundle);
         session.close();
         

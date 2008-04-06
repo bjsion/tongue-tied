@@ -64,7 +64,6 @@ public class KeywordPersistenceTest extends PersistenceTestBase {
         Bundle bundle = new Bundle();
         bundle.setName("TongueTied Server");
         bundle.setDescription("tonguetied resources");
-        bundle.setResourceDestination("/home");
         bundle.setResourceName("tonguetied");
 
         Language language = new Language();
@@ -123,7 +122,6 @@ public class KeywordPersistenceTest extends PersistenceTestBase {
         Bundle bundle = new Bundle();
         bundle.setName("tonguetied Server");
         bundle.setDescription("tonguetied resources");
-        bundle.setResourceDestination("/home");
         bundle.setResourceName("tonguetied");
 
         Language language = new Language();

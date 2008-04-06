@@ -20,8 +20,8 @@ public class BundleEqualsHashCodeTest extends EqualsHashCodeTestCase {
         Bundle bundle = new Bundle();
         bundle.setName("tonguetied Server");
         bundle.setDescription("tonguetied resources");
-        bundle.setResourceDestination("/home");
         bundle.setResourceName("tonguetied");
+        bundle.setDefault(false);
         
         return bundle;
     }
@@ -31,8 +31,8 @@ public class BundleEqualsHashCodeTest extends EqualsHashCodeTestCase {
         Bundle bundle = new Bundle();
         bundle.setName("tonguetied Server");
         bundle.setDescription("tonguetied resources");
-        bundle.setResourceDestination("somewhere");
-        bundle.setResourceName("tonguetied");
+        bundle.setResourceName("tonguetied2");
+        bundle.setDefault(false);
         
         return bundle;
     }

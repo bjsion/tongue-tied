@@ -59,7 +59,6 @@ public class TranslationPersistenceTest extends PersistenceTestBase {
         Bundle bundle = new Bundle();
         bundle.setName("tonguetied Server");
         bundle.setDescription("tonguetied resources");
-        bundle.setResourceDestination("/home");
         bundle.setResourceName("tonguetied");
         session.saveOrUpdate(bundle);
         

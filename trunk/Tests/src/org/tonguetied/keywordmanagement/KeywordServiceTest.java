@@ -226,7 +226,7 @@ public class KeywordServiceTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getBundle(Long)}.
      */
     @Test
-    public final void testGetBundle() {
+    public final void testGetBundleById() {
         Bundle retrieved = keywordService.getBundle(bundle.getId());
         
         assertEquals(bundle, retrieved);
@@ -260,6 +260,88 @@ public class KeywordServiceTest extends AbstractServiceTest {
         Bundle retrieved = keywordService.getBundle("invalid");
         
         assertNull(retrieved);
+    }
+    
+    @Test
+    public final void testGetDefaultBundle() {
+        Bundle defaultBundle = new Bundle();
+        defaultBundle.setDefault(true);
+        defaultBundle.setDescription("default bundle");
+        defaultBundle.setName("default");
+        defaultBundle.setResourceName("default");
+        keywordService.saveOrUpdate(defaultBundle);
+        
+        Bundle retrieved = keywordService.getDefaultBundle();
+        
+        assertEquals(defaultBundle, retrieved);
+    }
+    
+    @Test
+    public final void testGetDefaultBundleWithNoDefault() {
+        Bundle retrieved = keywordService.getDefaultBundle();
+        
+        assertNull(retrieved);
+    }
+    
+    @Test
+    public final void testSaveOrUpdateDefaultBundle() {
+        Bundle defaultBundle = new Bundle();
+        defaultBundle.setDefault(true);
+        defaultBundle.setDescription("bundle2");
+        defaultBundle.setName("bundle2");
+        defaultBundle.setResourceName("bundle2");
+        keywordService.saveOrUpdate(defaultBundle);
+        
+        List<Bundle> bundles = keywordService.getBundles();
+        assertEquals(2, bundles.size());
+        validateBundles(defaultBundle, bundles);
+        
+        Bundle newBundle = new Bundle();
+        newBundle.setDefault(true);
+        newBundle.setDescription("bundle3");
+        newBundle.setName("bundle3");
+        newBundle.setResourceName("bundle3");
+        keywordService.saveOrUpdate(newBundle);
+        
+        bundles = keywordService.getBundles();
+        assertEquals(3, bundles.size());
+        validateBundles(newBundle, bundles);
+        
+        Bundle anotherBundle = new Bundle();
+        anotherBundle.setDefault(false);
+        anotherBundle.setDescription("bundle4");
+        anotherBundle.setName("bundle4");
+        anotherBundle.setResourceName("bundle4");
+        keywordService.saveOrUpdate(anotherBundle);
+        
+        bundles = keywordService.getBundles();
+        assertEquals(4, bundles.size());
+        validateBundles(newBundle, bundles);
+    }
+
+    private void validateBundles(Bundle defaultBundle, List<Bundle> bundles) {
+        for (Bundle testBundle : bundles) {
+            if (testBundle.getName().equals(defaultBundle.getName()))
+                assertTrue(testBundle.isDefault());
+            else
+                assertFalse(testBundle.isDefault());
+        }
+    }
+    
+    @Test
+    public final void testSaveOrUpdateBundleWithNoDefault() {
+        Bundle newBundle = new Bundle();
+        newBundle.setDefault(false);
+        newBundle.setDescription("bundle2");
+        newBundle.setName("bundle2");
+        newBundle.setResourceName("bundle2");
+        keywordService.saveOrUpdate(newBundle);
+        
+        List<Bundle> bundles = keywordService.getBundles();
+        assertEquals(2, bundles.size());
+        for (Bundle testBundle : bundles) {
+            assertFalse(testBundle.isDefault());
+        }
     }
     
     /**

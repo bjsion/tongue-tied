@@ -24,7 +24,6 @@ public class KeywordByLanguageEqualsHashCodeTest extends EqualsHashCodeTestCase 
         Bundle bundle = new Bundle();
         bundle.setName("test");
         bundle.setDescription("resources");
-        bundle.setResourceDestination("/home");
         bundle.setResourceName("test");
         
         Country country = new Country();
@@ -57,7 +56,6 @@ public class KeywordByLanguageEqualsHashCodeTest extends EqualsHashCodeTestCase 
         Bundle bundle = new Bundle();
         bundle.setName("test");
         bundle.setDescription("resources");
-        bundle.setResourceDestination("/home");
         bundle.setResourceName("test");
         
         Country country = new Country();
