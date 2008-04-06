@@ -86,19 +86,14 @@
             <exclude name="freemarker*"/>
             <exclude name="java.*"/>
             <exclude name="javax.*"/>
-            <exclude name="jdepend.*"/>
-            <exclude name="junit*"/>
             <exclude name="org.acegisecurity*"/>
             <exclude name="org.apache.*"/>
             <exclude name="org.hibernate*"/>
-            <exclude name="org.hsqldb*"/>
-            <exclude name="org.junit*"/>
             <exclude name="org.mortbay.*"/>
             <exclude name="org.springframework.*"/>
             <classespath>
                 <pathelement location="${application.home}/classes"/>
                 <pathelement location="${server.home}/classes"/>
-                <pathelement location="${tests.home}/classes"/>
             </classespath>
         </jdepend>
         
