@@ -38,8 +38,8 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
  * {@link Country}
  *  
  * @author bsion
- * @see KeywordFactory#createKeyword(java.util.List, Country)
- * @see KeywordFactory#createKeyword(java.util.List, Language)
+ * @see KeywordFactory#createKeyword(java.util.List, Country, Bundle)
+ * @see KeywordFactory#createKeyword(java.util.List, Language, Bundle)
  */
 public class KeywordController extends CancellableFormController {
     
@@ -65,15 +65,16 @@ public class KeywordController extends CancellableFormController {
         Keyword keyword = keywordService.getKeyword(id);
         if (keyword == null) {
             String creationType = request.getParameter("creationType");
+            Bundle bundle = keywordService.getDefaultBundle();
             if (LANGUAGE.equals(creationType)) {
                 keyword = 
                     KeywordFactory.createKeyword(keywordService.getLanguages(), 
-                        keywordService.getCountry(CountryCode.DEFAULT));
+                        keywordService.getCountry(CountryCode.DEFAULT), bundle);
             }
             else if (COUNTRY.equals(creationType)) {
                 keyword = 
                     KeywordFactory.createKeyword(keywordService.getCountries(), 
-                        keywordService.getLanguage(LanguageCode.DEFAULT));
+                        keywordService.getLanguage(LanguageCode.DEFAULT), bundle);
             } 
         }
         

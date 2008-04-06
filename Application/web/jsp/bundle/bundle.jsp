@@ -25,9 +25,9 @@
                 <form:errors path="resourceName" cssClass="error"/>
             </div>
             <div>
-                <form:label path="resourceDestination" cssClass="content"><fmt:message key="bundleResourceDestination"/></form:label>
-                <form:input path="resourceDestination"/>
-                <form:errors path="resourceDestination" cssClass="error"/>
+                <form:label path="default" cssClass="content"><fmt:message key="bundle.default"/></form:label>
+                <form:checkbox path="default"/>
+                <form:errors path="default" cssClass="error"/>
             </div>
         </fieldset>
         <div class="submit">

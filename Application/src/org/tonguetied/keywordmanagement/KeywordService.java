@@ -137,6 +137,14 @@ public interface KeywordService
     Bundle getBundle(final String name);
     
     /**
+     * Find and return the default {@link Bundle} if one exists.
+     * 
+     * @return the {@link Bundle} marked as the default or <code>null</code> if
+     * no bundle is set as the default.  
+     */
+    Bundle getDefaultBundle();
+    
+    /**
      * Get all the {@link Bundle}s in the system.
      * 
      * @return all {@link Bundle}s in the system.
@@ -150,6 +158,13 @@ public interface KeywordService
      */
     void saveOrUpdate(Object object);
 
+    /**
+     * Save or update the bundle.
+     * 
+     * @param bundle the {@linkplain Bundle} to be persisted.
+     */
+    void saveOrUpdate(Bundle bundle);
+    
     /**
      * Remove the {@link Keyword} matching the <code>id</code>.
      * 

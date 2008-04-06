@@ -9,7 +9,7 @@
                 <c:out value="${bundle.name}"/>
             </display:column>
             <display:column property="resourceName" titleKey="bundleResourceName" sortable="true"/>
-            <display:column property="resourceDestination" titleKey="bundleResourceDestination"/>
+            <display:column property="default" titleKey="bundle.default"/>
             <display:column titleKey="action"/>
         </display:table>
     </div>

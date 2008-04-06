@@ -5,9 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
@@ -19,7 +21,10 @@ import org.hibernate.annotations.AccessType;
  */
 @Entity
 @AccessType("field")
-@NamedQuery(name="get.bundles",query="from Bundle b order by b.name")
+@NamedQueries({
+    @NamedQuery(name="get.bundles",query="from Bundle b order by b.name"),
+    @NamedQuery(name="get.default.bundle",query="from Bundle b where b.isDefault = true")
+})
 public class Bundle implements Comparable<Object>
 {
     @Id
@@ -29,7 +34,11 @@ public class Bundle implements Comparable<Object>
     private String name;
     private String description;
     private String resourceName;
-    private String resourceDestination;
+    
+    /**
+     * Only one bundle will have a value of true
+     */
+    private boolean isDefault;
     
     public String getDescription() {
     	return description;
@@ -49,17 +58,17 @@ public class Bundle implements Comparable<Object>
     public void setName(String name) {
     	this.name = name;
     }
-    public String getResourceDestination() {
-    	return resourceDestination;
-    }
-    public void setResourceDestination(String resourceDestination) {
-    	this.resourceDestination = resourceDestination;
-    }
     public String getResourceName() {
     	return resourceName;
     }
     public void setResourceName(String resourceName) {
     	this.resourceName = resourceName;
+    }
+    public boolean isDefault() {
+        return isDefault;
+    }
+    public void setDefault(boolean isDefault) {
+        this.isDefault = isDefault;
     }
     
     /* (non-Javadoc)
@@ -69,7 +78,7 @@ public class Bundle implements Comparable<Object>
         final Bundle other = (Bundle) object;
         return new CompareToBuilder().append(name, other.name).
                 append(resourceName, other.resourceName).
-                append(resourceDestination, other.resourceDestination).
+                append(isDefault, other.isDefault).
                 toComparison();
     }
     
@@ -84,18 +93,12 @@ public class Bundle implements Comparable<Object>
         else if (obj instanceof Bundle)
         {
             final Bundle other = (Bundle)obj;
-            
-            isEqual = (this.description == null? 
-                            other.description == null: 
-                            description.equals(other.description))
-                    && (this.resourceName == null?
-                            other.resourceName == null: 
-                            resourceName.equals(other.resourceName))
-                    && (this.resourceDestination == null? 
-                            other.resourceDestination == null:
-                            resourceDestination.equals(other.resourceDestination))
-                    && (this.name == null? 
-                            other.name == null: name.equals(other.name));
+            EqualsBuilder builder = new EqualsBuilder();
+            builder.append(this.description, other.description).
+                append(this.name, other.name).
+                append(this.resourceName, other.resourceName).
+                append(this.isDefault, other.isDefault);
+            isEqual = builder.isEquals();
         }
         
         return isEqual;
@@ -105,9 +108,9 @@ public class Bundle implements Comparable<Object>
     public int hashCode() {
         HashCodeBuilder builder = new HashCodeBuilder(19, 11);
         builder.append(resourceName).
-            append(resourceDestination).
             append(name).
-            append(description);
+            append(description).
+            append(isDefault);
 
         return builder.toHashCode();
     }
