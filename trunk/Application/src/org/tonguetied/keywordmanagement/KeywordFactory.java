@@ -6,6 +6,8 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
 
 /**
+ * Implementation of Factory pattern to externalize the creation of keywords.
+ * 
  * @author bsion
  *
  */
@@ -21,12 +23,14 @@ public class KeywordFactory {
      * should be created
      * @param country the default {@link Country} for which each translation 
      * should be created
+     * @param bundle the default {@link Bundle} for which each translation 
+     * should be created
      * @return A new {@link Keyword} with a list of predefined 
-     * {@link Translation}s.
+     * {@link Translation}s
      * @throws IllegalArgumentException if the list of {@link Language}s is 
      * <code>null</code>
      */
-    public static Keyword createKeyword(List<Language> languages, Country country) 
+    public static Keyword createKeyword(List<Language> languages, Country country, Bundle bundle) 
             throws IllegalArgumentException {
         if (languages == null) {
             throw new IllegalArgumentException(
@@ -39,6 +43,7 @@ public class KeywordFactory {
             translation.setLanguage(language);
             translation.setCountry(country);
             translation.setState(TranslationState.UNVERIFIED);
+            translation.setBundle(bundle);
             keyword.addTranslation(translation);
         }
         
@@ -55,12 +60,14 @@ public class KeywordFactory {
      * should be created
      * @param language the default {@link Language} for which each translation 
      * should be created
+     * @param bundle the default {@link Bundle} for which each translation 
+     * should be created
      * @return A new {@link Keyword} with a list of predefined 
-     * {@link Translation}s.
+     * {@link Translation}s
      * @throws IllegalArgumentException if the list of {@link Country}s is 
      * <code>null</code>
      */
-    public static Keyword createKeyword(List<Country> countries, Language language) 
+    public static Keyword createKeyword(List<Country> countries, Language language, Bundle bundle) 
             throws IllegalArgumentException {
         if (countries == null) {
             throw new IllegalArgumentException(
@@ -73,6 +80,7 @@ public class KeywordFactory {
             translation.setCountry(country);
             translation.setLanguage(language);
             translation.setState(TranslationState.UNVERIFIED);
+            translation.setBundle(bundle);
             keyword.addTranslation(translation);
         }
         

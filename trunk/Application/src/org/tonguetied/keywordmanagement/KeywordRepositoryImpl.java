@@ -42,6 +42,11 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements Keywor
         return (Bundle) criteria.uniqueResult();
     }
 
+    public Bundle getDefaultBundle() {
+        Query query = getSession().getNamedQuery("get.default.bundle");
+        return (Bundle) query.uniqueResult();
+    }
+
     public List<Bundle> getBundles() 
     {
         Query query = getSession().getNamedQuery("get.bundles");
@@ -209,7 +214,21 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements Keywor
         getHibernateTemplate().saveOrUpdate(object);
         getHibernateTemplate().flush();
     }
-    
+
+    public void saveOrUpdate(Bundle bundle) throws DataAccessException {
+        if (bundle.isDefault()) {
+            Bundle defaultBundle = getDefaultBundle();
+            if (defaultBundle != null && 
+                    !defaultBundle.getName().equals(bundle.getName())) 
+            {
+                defaultBundle.setDefault(false);
+                getHibernateTemplate().save(defaultBundle);
+            }
+        }
+        getHibernateTemplate().saveOrUpdate(bundle);
+        getHibernateTemplate().flush();
+    }
+
     public void delete(Object object) {
         getSession().delete(object);
     }

@@ -32,6 +32,10 @@ public class KeywordServiceImpl implements KeywordService
         return keywordRepository.getBundle(name);
     }
 
+    public Bundle getDefaultBundle() {
+        return keywordRepository.getDefaultBundle();
+    }
+
     public List<Bundle> getBundles() 
     {
     	return keywordRepository.getBundles();
@@ -103,5 +107,9 @@ public class KeywordServiceImpl implements KeywordService
     public void saveOrUpdate(Object object) 
     {
     	keywordRepository.saveOrUpdate(object);
+    }
+
+    public void saveOrUpdate(Bundle bundle) {
+        keywordRepository.saveOrUpdate(bundle);
     }
 }
