@@ -1,4 +1,4 @@
-package org.tonguetied.server;
+package org.tonguetied.architecture;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
@@ -13,6 +13,8 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
+    ConstraintTest.class,
+    CycleTest.class
 })
 public class AllTests {
 
