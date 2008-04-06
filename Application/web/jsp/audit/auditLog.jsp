@@ -5,7 +5,7 @@
 
     <div class="content">
         <display:table name="auditLog" id="record" sort="page" requestURI="">
-            <display:column property="user.username" titleKey="user" sortable="true"/>
+            <display:column property="username" titleKey="username" sortable="true"/>
             <display:column property="entityId" titleKey="id" sortable="true"/>
             <display:column property="entityClass" titleKey="class" sortable="true"/>
             <display:column property="created" titleKey="created" sortable="true"/>

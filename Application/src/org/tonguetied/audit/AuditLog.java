@@ -7,7 +7,6 @@ import org.acegisecurity.userdetails.UserDetails;
 import org.hibernate.CallbackException;
 import org.hibernate.Session;
 import org.hibernate.engine.SessionFactoryImplementor;
-import org.tonguetied.usermanagement.User;
 
 
 /**
@@ -32,7 +31,7 @@ public class AuditLog {
     {
         Session tempSession = implementor.openTemporarySession();
         try {
-            AuditLogRecord record = new AuditLogRecord(message, entity, getUser());
+            AuditLogRecord record = new AuditLogRecord(message, entity, getUsername());
             
             tempSession.save(record);
             tempSession.flush();
@@ -47,23 +46,24 @@ public class AuditLog {
     }
     
     /**
-     * Gets the current user from the Acegi secureContext
+     * Gets the current user name from the Acegi secureContext
      * 
      * @return current user, or <tt>null</tt> if no user is currently logged in
      */
-    private static synchronized User getUser() {
+    private static synchronized String getUsername() {
         SecurityContext secureContext = SecurityContextHolder.getContext();
 
-        User user = null;
+        String username = null;
         // secure context will be null when running unit tests so leave userId
         // as null
         if (secureContext != null) {
             Authentication auth = secureContext.getAuthentication();
 
             if (auth.getPrincipal() instanceof UserDetails) {
-                user = (User) auth.getPrincipal();
+                username = ((UserDetails) auth.getPrincipal()).getUsername();
             }
         }
-        return user;
+        
+        return username;
     }
 }
