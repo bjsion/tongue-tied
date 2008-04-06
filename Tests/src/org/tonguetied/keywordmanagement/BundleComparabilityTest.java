@@ -21,7 +21,8 @@ public class BundleComparabilityTest extends ComparabilityTestCase {
         Bundle bundle = new Bundle();
         bundle.setName("bundle");
         bundle.setDescription("description");
-        bundle.setResourceDestination("bbb");
+        bundle.setResourceName("bbb");
+        bundle.setDefault(false);
         return bundle;
     }
 
@@ -33,7 +34,8 @@ public class BundleComparabilityTest extends ComparabilityTestCase {
         Bundle bundle = new Bundle();
         bundle.setName("bundle");
         bundle.setDescription("description");
-        bundle.setResourceDestination("ccc");
+        bundle.setResourceName("ccc");
+        bundle.setDefault(false);
         return bundle;
     }
 
@@ -45,7 +47,8 @@ public class BundleComparabilityTest extends ComparabilityTestCase {
         Bundle bundle = new Bundle();
         bundle.setName("bundle");
         bundle.setDescription("description");
-        bundle.setResourceDestination("aaa");
+        bundle.setResourceName("aaa");
+        bundle.setDefault(false);
         return bundle;
     }
 

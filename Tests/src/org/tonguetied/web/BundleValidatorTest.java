@@ -34,23 +34,23 @@ public class BundleValidatorTest {
     @Parameters
     public static final Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-                {null, null, null, null, FIELD_NAME},
-                {"", null, null, null, FIELD_NAME},
-                {"   ", null, null, null, FIELD_NAME},
-                {"test", "description", null, null, FIELD_NAME}
+                {null, null, null, true, FIELD_NAME},
+                {"", null, null, false, FIELD_NAME},
+                {"   ", null, null, true, FIELD_NAME},
+                {"test", "description", null, true, FIELD_NAME}
                 });
     }
     
     public BundleValidatorTest(String name,
                                String description,
                                String resourceName,
-                               String resourceDestination,
+                               boolean isDefault,
                                String fieldName) {
         this.bundle = new Bundle();
         this.bundle.setName(name);
         this.bundle.setDescription(description);
         this.bundle.setResourceName(resourceName);
-        this.bundle.setResourceDestination(resourceDestination);
+        this.bundle.setDefault(isDefault);
         this.fieldName = fieldName;
     }
     

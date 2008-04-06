@@ -27,7 +27,6 @@ public class TranslationEqualsHashCodeTest extends EqualsHashCodeTestCase {
         Bundle bundle = new Bundle();
         bundle.setName("tonguetied Server");
         bundle.setDescription("tonguetied resources");
-        bundle.setResourceDestination("/home");
         bundle.setResourceName("tonguetied");
         
         Country country = new Country();
@@ -58,7 +57,6 @@ public class TranslationEqualsHashCodeTest extends EqualsHashCodeTestCase {
         Bundle bundle = new Bundle();
         bundle.setName("tonguetied Server");
         bundle.setDescription("tonguetied resources");
-        bundle.setResourceDestination("/home");
         bundle.setResourceName("tonguetied");
         
         Country country = new Country();
