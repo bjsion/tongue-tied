@@ -8,13 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import org.tonguetied.usermanagement.User;
 
 /**
  * @author bsion
@@ -28,7 +26,7 @@ public class AuditLogRecord {
     private String message;
     private Long entityId;
     private Class<?> entityClass;
-    private User user;
+    private String username;
     private Date created;
     
     AuditLogRecord() {
@@ -37,13 +35,13 @@ public class AuditLogRecord {
     /**
      * @param message
      * @param entity
-     * @param user
+     * @param username
      */
-    public AuditLogRecord(String message, Auditable entity, User user) {
+    public AuditLogRecord(final String message, final Auditable entity, final String username) {
         this.message = message;
         this.entityId = entity.getId();
         this.entityClass = entity.getClass();
-        this.user = user;
+        this.username = username;
         this.created = new Date();
     }
 
@@ -74,7 +72,7 @@ public class AuditLogRecord {
     /**
      * @param message the message to set
      */
-    public void setMessage(String message) {
+    public void setMessage(final String message) {
         this.message = message;
     }
 
@@ -89,7 +87,7 @@ public class AuditLogRecord {
     /**
      * @param entityId the entityId to set
      */
-    public void setEntityId(Long entityId) {
+    public void setEntityId(final Long entityId) {
         this.entityId = entityId;
     }
 
@@ -109,20 +107,18 @@ public class AuditLogRecord {
     }
 
     /**
-     * @return the user who made the change, or <tt>null</tt> if it was done
+     * @return the username who made the change, or <tt>null</tt> if it was done
      * anonymously
      */
-    @OneToOne
-//    @PrimaryKeyJoinColumn
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
     /**
-     * @param user the user to set
+     * @param username the username to set
      */
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsername(final String username) {
+        this.username = username;
     }
 
     /**
@@ -160,7 +156,7 @@ public class AuditLogRecord {
             isEqual = builder.append(message, other.message).
                     append(entityId, other.entityId).
                     append(entityClass, other.entityClass).
-                    append(user, other.user).
+                    append(username, other.username).
                     append(created, other.created).
                     isEquals();  
         }
@@ -177,7 +173,7 @@ public class AuditLogRecord {
         int hashCode = builder.append(message).
                     append(entityId).
                     append(entityClass).
-                    append(user).
+                    append(username).
                     append(created).
                     toHashCode();
         
