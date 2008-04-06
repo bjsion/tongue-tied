@@ -1,10 +1,8 @@
 package org.tonguetied.audit;
 
-import org.tonguetied.audit.AuditLogRecord;
-import org.tonguetied.keywordmanagement.Keyword;
-import org.tonguetied.usermanagement.User;
-
 import junitx.extensions.EqualsHashCodeTestCase;
+
+import org.tonguetied.keywordmanagement.Keyword;
 
 
 /**
@@ -19,24 +17,20 @@ public class AuditLogRecordEqualsHashCodeTest extends EqualsHashCodeTestCase {
 
     @Override
     protected Object createInstance() throws Exception {
-        User user = new User("username", "password", "firstName", "lastName", "test@test.com", true, true, true, true);
-        
         Keyword keyword = new Keyword();
         keyword.setKeyword("test");
         
-        AuditLogRecord record = new AuditLogRecord("new", keyword, user);
+        AuditLogRecord record = new AuditLogRecord("new", keyword, "user");
 
         return record;
     }
 
     @Override
     protected Object createNotEqualInstance() throws Exception {
-        User user = new User("username", "password", "firstName", "lastName", "test@test.com", true, true, true, true);
-        
         Keyword keyword = new Keyword();
         keyword.setKeyword("test");
         
-        AuditLogRecord record = new AuditLogRecord("delete", keyword, user);
+        AuditLogRecord record = new AuditLogRecord("delete", keyword, "user");
 
         return record;
     }
