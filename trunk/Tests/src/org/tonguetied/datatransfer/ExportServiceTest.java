@@ -6,18 +6,11 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
-import org.junit.AfterClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.test.annotation.ExpectedException;
-import org.tonguetied.datatransfer.ExportParameters;
-import org.tonguetied.datatransfer.ExportService;
-import org.tonguetied.datatransfer.FormatType;
-import org.tonguetied.datatransfer.TransferRepository;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
-import org.tonguetied.keywordmanagement.KeywordService;
 import org.tonguetied.keywordmanagement.Language;
 import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.keywordmanagement.Country.CountryCode;
@@ -53,43 +46,42 @@ public class ExportServiceTest extends AbstractServiceTest {
     private Translation translation3_2;
     private Translation translation3_3;
 
-    private KeywordService keywordService;
     private TransferRepository transferRepository;
     
 //    private static final String SOURCE_ROOT = System.getProperty("user.dir") +
 //        File.separator + ".." + File.separator + "Application" + File.separator + 
 //        "resources" + File.separator + "templates" + File.separator + 
 //        "freemarker" + File.separator + "export";
-    private static final File OUTPUT_ROOT = 
-        new File (System.getProperty("user.dir") + File.separator + "exports");
+//    private static final File OUTPUT_ROOT = 
+//        new File (System.getProperty("user.dir") + File.separator + "exports");
     
     @Override
     protected void onSetUpInTransaction() throws Exception {
         singapore = new Country();
         singapore.setCode(CountryCode.SG);
         singapore.setName("Singapore");
-        keywordService.saveOrUpdate(singapore);
+        getKeywordRepository().saveOrUpdate(singapore);
         
         australia = new Country();
         australia.setCode(CountryCode.AU);
         australia.setName("Australia");
-        keywordService.saveOrUpdate(australia);
+        getKeywordRepository().saveOrUpdate(australia);
         
         english = new Language();
         english.setCode(LanguageCode.en);
         english.setName("English");
-        keywordService.saveOrUpdate(english);
+        getKeywordRepository().saveOrUpdate(english);
         
         chinese = new Language();
         chinese.setCode(LanguageCode.zh);
         chinese.setName("Simplified Chinese");
-        keywordService.saveOrUpdate(chinese);
+        getKeywordRepository().saveOrUpdate(chinese);
         
         bundle = new Bundle();
         bundle.setName("testBundle");
         bundle.setResourceName("test");
         bundle.setDescription("this is a test bundle");
-        keywordService.saveOrUpdate(bundle);
+        getKeywordRepository().saveOrUpdate(bundle);
         
         keyword1 = new Keyword();
         keyword1.setKeyword("akeyword");
@@ -147,20 +139,23 @@ public class ExportServiceTest extends AbstractServiceTest {
         keyword4.setKeyword("oneOtherKeyword");
         keyword4.setContext("Keyword 4");
         
-        keywordService.saveOrUpdate(translation1_1);
-        keywordService.saveOrUpdate(translation1_2);
-        keywordService.saveOrUpdate(translation2_1);
-        keywordService.saveOrUpdate(translation3_1);
-        keywordService.saveOrUpdate(translation3_2);
+        getKeywordRepository().saveOrUpdate(keyword1);
+        getKeywordRepository().saveOrUpdate(keyword2);
+        getKeywordRepository().saveOrUpdate(keyword3);
+        getKeywordRepository().saveOrUpdate(keyword4);
     }
     
-    @AfterClass
-    public static void cleanUp() {
-        for (File file: OUTPUT_ROOT.listFiles()) {
+    @Override
+    protected void onTearDownAfterTransaction() throws Exception {
+        super.onTearDownAfterTransaction();
+        
+        final String exportPath = exportService.getExportPath();
+        File exportDir = new File(exportPath);
+        for (File file: exportDir.listFiles()) {
             assertTrue("Failed to remove " + file, file.delete());
         }
         
-        assertTrue("Failed to remove " + OUTPUT_ROOT, OUTPUT_ROOT.delete());
+        assertTrue("Failed to remove " + exportDir, exportDir.delete());
     }
 
 //    @Override
@@ -182,7 +177,9 @@ public class ExportServiceTest extends AbstractServiceTest {
         parameters.setFormatType(FormatType.xls);
         exportService.exportData(parameters);
         
-        File[] files = OUTPUT_ROOT.listFiles(
+        final String exportPath = exportService.getExportPath();
+        File exportDir = new File(exportPath);
+        File[] files = exportDir.listFiles(
                 new FileExtensionFilter(FormatType.xls.getDefaultFileExtension()));
 //        assertEquals(1, files.length);
         String actualXML = FileUtils.loadFile(files[0]);
@@ -205,7 +202,9 @@ public class ExportServiceTest extends AbstractServiceTest {
         parameters.setFormatType(FormatType.xlsLanguage);
         exportService.exportData(parameters);
         
-        File[] files = OUTPUT_ROOT.listFiles(
+        final String exportPath = exportService.getExportPath();
+        File exportDir = new File(exportPath);
+        File[] files = exportDir.listFiles(
                 new FileExtensionFilter(FormatType.xlsLanguage.getDefaultFileExtension()));
 //        assertEquals(1, files.length);
         String actualXML = FileUtils.loadFile(files[0]);
@@ -239,7 +238,9 @@ public class ExportServiceTest extends AbstractServiceTest {
             append(t.getValue() != null? t.getValue(): "");
         }
         
-        File[] files = OUTPUT_ROOT.listFiles(
+        final String exportPath = exportService.getExportPath();
+        File exportDir = new File(exportPath);
+        File[] files = exportDir.listFiles(
                 new FileExtensionFilter(FormatType.csv.getDefaultFileExtension()));
         assertEquals(1, files.length);
         String actual = FileUtils.loadFile(files[0]);
@@ -248,12 +249,12 @@ public class ExportServiceTest extends AbstractServiceTest {
     }
     
     @Test
-    @Ignore("failing right now")
-    public final void atestExportToProperties() throws Exception {
+    public final void testExportToProperties() throws Exception {
         ExportParameters parameters = new ExportParameters();
         parameters.addLanguage(english);
         parameters.addLanguage(chinese);
         parameters.addBundle(bundle);
+        parameters.addCountry(australia);
         parameters.addCountry(singapore);
         parameters.setFormatType(FormatType.properties);
         exportService.exportData(parameters);
@@ -261,13 +262,17 @@ public class ExportServiceTest extends AbstractServiceTest {
         Properties expected_en_AU = new Properties();
         expected_en_AU.setProperty(translation1_1.getKeyword().getKeyword(), translation1_1.getValue());
         expected_en_AU.setProperty(translation2_1.getKeyword().getKeyword(), translation2_1.getValue());
+        expected_en_AU.setProperty(translation3_3.getKeyword().getKeyword(), translation3_3.getValue());
         Properties expected_en_SG = new Properties();
         expected_en_SG.setProperty(translation1_2.getKeyword().getKeyword(), translation1_2.getValue());
+//        expected_en_SG.setProperty(translation3_2.getKeyword().getKeyword(), translation3_2.getValue());
         Properties expected_zh_SG = new Properties();
         expected_zh_SG.setProperty(translation3_1.getKeyword().getKeyword(), translation3_1.getValue());
         
+        final String exportPath = exportService.getExportPath();
+        File exportDir = new File(exportPath);
         File[] files = 
-            OUTPUT_ROOT.listFiles(new FileExtensionFilter(".rawproperties"));
+            exportDir.listFiles(new FileExtensionFilter(".rawproperties"));
         assertEquals(3, files.length);
         Properties actual;
         for (File file: files) {
@@ -318,10 +323,6 @@ public class ExportServiceTest extends AbstractServiceTest {
         }
     }
     
-    public void setKeywordService(KeywordService keywordService) {
-        this.keywordService = keywordService;
-    }
-
     public void setExportService(ExportService exportService) {
         this.exportService = exportService;
     }

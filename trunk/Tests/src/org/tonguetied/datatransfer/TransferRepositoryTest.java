@@ -3,12 +3,9 @@ package org.tonguetied.datatransfer;
 import java.util.List;
 
 import org.springframework.test.annotation.ExpectedException;
-import org.tonguetied.datatransfer.ExportParameters;
-import org.tonguetied.datatransfer.TransferRepository;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
-import org.tonguetied.keywordmanagement.KeywordRepository;
 import org.tonguetied.keywordmanagement.Language;
 import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.keywordmanagement.Country.CountryCode;
@@ -40,7 +37,6 @@ public class TransferRepositoryTest extends AbstractServiceTest {
     private Translation translation4_2;
     
     private TransferRepository transferRepository;
-    private KeywordRepository keywordRepository;
     
     @Override
     protected void onSetUpInTransaction() throws Exception {
@@ -64,11 +60,11 @@ public class TransferRepositoryTest extends AbstractServiceTest {
         bundle.setName("testBundle");
         bundle.setDescription("this is a test bundle");
         
-        keywordRepository.saveOrUpdate(singapore);
-        keywordRepository.saveOrUpdate(australia);
-        keywordRepository.saveOrUpdate(english);
-        keywordRepository.saveOrUpdate(chinese);
-        keywordRepository.saveOrUpdate(bundle);
+        getKeywordRepository().saveOrUpdate(singapore);
+        getKeywordRepository().saveOrUpdate(australia);
+        getKeywordRepository().saveOrUpdate(english);
+        getKeywordRepository().saveOrUpdate(chinese);
+        getKeywordRepository().saveOrUpdate(bundle);
         
         keyword1 = new Keyword();
         keyword1.setKeyword("akeyword");
@@ -131,10 +127,10 @@ public class TransferRepositoryTest extends AbstractServiceTest {
         translation4_2.setState(TranslationState.UNVERIFIED);
         keyword4.addTranslation(translation4_2);
         
-        keywordRepository.saveOrUpdate(keyword1);
-        keywordRepository.saveOrUpdate(keyword2);
-        keywordRepository.saveOrUpdate(keyword3);
-        keywordRepository.saveOrUpdate(keyword4);
+        getKeywordRepository().saveOrUpdate(keyword1);
+        getKeywordRepository().saveOrUpdate(keyword2);
+        getKeywordRepository().saveOrUpdate(keyword3);
+        getKeywordRepository().saveOrUpdate(keyword4);
     }
 
     @ExpectedException(IllegalArgumentException.class)
@@ -180,9 +176,5 @@ public class TransferRepositoryTest extends AbstractServiceTest {
 
     public void setTransferRepository(TransferRepository transferRepository) {
         this.transferRepository = transferRepository;
-    }
-
-    public void setKeywordRepository(KeywordRepository keywordRepository) {
-        this.keywordRepository = keywordRepository;
     }
 }
