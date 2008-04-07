@@ -38,7 +38,7 @@ public class TransferRepositoryImpl extends HibernateDaoSupport implements Trans
         if (CollectionUtils.isEmpty(parameters.getLanguages())) {
             throw new IllegalArgumentException("languages cannot be null or empty");
         }
-        Query query = getSession().getNamedQuery("findTranslations");
+        Query query = getSession().getNamedQuery(Translation.QUERY_FIND_TRANSLATIONS);
         query.setParameterList("countries", parameters.getCountries());
         query.setParameterList("bundles", parameters.getBundles());
         query.setParameterList("languages", parameters.getLanguages());
