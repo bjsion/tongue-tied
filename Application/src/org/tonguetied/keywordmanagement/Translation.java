@@ -31,7 +31,7 @@ import org.hibernate.annotations.AccessType;
 @Entity
 @AccessType("property")
 @NamedQueries({
-    @NamedQuery(name="findTranslations",
+    @NamedQuery(name=Translation.QUERY_FIND_TRANSLATIONS,
                 query="select translation " +
                       "from Translation translation " +
                       "where translation.country in (:countries) " +
@@ -56,6 +56,10 @@ public class Translation implements Cloneable, Comparable<Object>
     // This attribute is used for optimistic concurrency control in DB    
     private Integer version;
     
+    /**
+     * Name of the query to search for translations.
+     */
+    public static final String QUERY_FIND_TRANSLATIONS = "find.translations";
     
     /**
      * Create a new instance of Translation. This constructor initialises all
