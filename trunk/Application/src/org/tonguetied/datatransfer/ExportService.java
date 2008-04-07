@@ -23,11 +23,15 @@ public interface ExportService {
     void exportData(final ExportParameters parameters) throws ExportException;
     
     /**
-     * Get the location on the file system where export files are saved to.
+     * Returns the absolute pathname of the the directory where exported files 
+     * from the most recently executed export are saved. This method pass in a
+     * value of false to {@link #getExportPath(boolean)} so as not to reset the
+     * output path.
      * 
-     * @return the export directory
+     * @return the absolute path of the output directory
+     * @see #getExportPath(boolean) 
      */
-    File getExportDirectory();
+    String getExportPath();
     
     /**
      * Perform a bulk update/insert of data from an external source.

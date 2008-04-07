@@ -8,7 +8,10 @@ import static fmpp.setting.Settings.NAME_SOURCES;
 import static fmpp.setting.Settings.NAME_SOURCE_ROOT;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +42,9 @@ public class ExportServiceImpl implements ExportService {
         new File(System.getProperty("user.dir"));
     private static final Logger logger = 
         Logger.getLogger(ExportServiceImpl.class);
+    private static final DateFormat DATE_FORMAT = 
+        new SimpleDateFormat("yyyy-MM-dd_hh_ss");
+    private String outputDir;
 
     /**
      * Create a new instance of the ExportServiceImpl. After this constructor
@@ -57,7 +63,7 @@ public class ExportServiceImpl implements ExportService {
         try {
             settings = new Settings(BASE_DIR);
             settings.set(NAME_SOURCE_ROOT, sourceRoot);
-            settings.set(NAME_OUTPUT_ROOT, outputRoot);
+//            settings.set(NAME_OUTPUT_ROOT, outputRoot);
             settings.set(NAME_OUTPUT_ENCODING, "UTF-8");
             freemarker.log.Logger.selectLoggerLibrary(
                     freemarker.log.Logger.LIBRARY_LOG4J);
@@ -87,6 +93,7 @@ public class ExportServiceImpl implements ExportService {
             logger.debug("exporting based on filter " + parameters);
         
         try {
+            settings.set(NAME_OUTPUT_ROOT, getExportPath(true));
             settings.set(NAME_SOURCES, 
                     getTemplateName(parameters.getFormatType()));
             String[] replaceExtensions = 
@@ -124,12 +131,33 @@ public class ExportServiceImpl implements ExportService {
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.ExportService#getExportDir()
+    /**
+     * Returns the absolute pathname of the the directory where exported files 
+     * from the most recently executed export are saved. This method pass in a
+     * value of false to {@link #getExportPath(boolean)} so as not to reset the
+     * output path.
+     * 
+     * @return the absolute path of the output directory
+     * @see #getExportPath(boolean) 
      */
-    public File getExportDirectory() {
-        File exportDir = new File(outputRoot);
-        return exportDir;
+    public String getExportPath() {
+        return getExportPath(false);
+    }
+
+    /**
+     * Returns the absolute pathname of the the directory where exported files 
+     * from the most recently executed export are saved.
+     * 
+     * @param reset flag indicating that the output directory should be 
+     * re-initialised.
+     * @return the absolute path of the output directory 
+     */
+    private String getExportPath(final boolean reset) {
+        if (reset) {
+            outputDir = outputRoot + File.separator + DATE_FORMAT.format(new Date());
+        }
+        
+        return outputDir;
     }
 
     /* (non-Javadoc)
