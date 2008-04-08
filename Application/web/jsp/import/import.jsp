@@ -10,7 +10,7 @@
             <legend><fmt:message key="importDetails"/></legend>
             <div>
                 <form:label path="file" cssClass="content"><fmt:message key="file"/></form:label>
-                <input type="file" name="file">
+                <input type="file" name="file" id="file"/>
             </div>
             <div>
                 <form:label path="formatType" cssClass="content"><fmt:message key="fileType"/></form:label>
