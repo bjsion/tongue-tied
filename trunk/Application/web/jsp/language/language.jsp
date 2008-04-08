@@ -6,9 +6,9 @@
     <div class="content">
     <c:url value="/language.htm" var="languageUrl" scope="page"/>
     <form:form id="languageForm" method="post" action="${languageUrl}" commandName="language">
-        <%-- We need to bind the id as the form is in the request and would be lost when submitted --%>
-        <form:hidden path="id"/>
         <fieldset>
+            <%-- We need to bind the id as the form is in the request and would be lost when submitted --%>
+            <form:hidden path="id"/>
             <legend><fmt:message key="languageDetails"/></legend>
             <div>
                 <form:label path="code" cssClass="content"><fmt:message key="languageCode"/></form:label>

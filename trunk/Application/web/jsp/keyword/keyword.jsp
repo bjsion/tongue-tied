@@ -8,12 +8,12 @@
     <c:url value="/keyword.htm" var="keywordAction" scope="page"/>
     <form:form id="keywordForm" method="post" action="${keywordAction}" commandName="keyword">
         <%-- We need to bind the id as the form is in the request and would be lost when submitted --%>
-        <form:hidden path="id"/>
-        <form:hidden path="version"/>
         <fmt:message key="confirmKeywordDelete" var="confirmDeleteKeywordMsg" scope="page">
             <fmt:param value="${keyword.keyword}"/>
         </fmt:message>
         <fieldset>
+            <form:hidden path="id"/>
+            <form:hidden path="version"/>
             <legend><fmt:message key="keywordDetails"/></legend>
             <div>
                 <form:label path="keyword" cssClass="content"><fmt:message key="keywordId"/></form:label>

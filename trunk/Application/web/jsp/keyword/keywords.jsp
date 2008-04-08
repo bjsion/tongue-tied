@@ -131,7 +131,7 @@
                         <form:input path="translatedText"/>
                     </div>
                     <div class="checkbox">
-                        <form:checkbox path="ignoreCase"/>
+                        <form:checkbox path="ignoreCase" id="ignoreCase"/>
                         <form:label path="ignoreCase"><fmt:message key="ignoreCase"/></form:label>
                     </div>
                 </fieldset>

@@ -42,19 +42,19 @@
             </div>
             <div>
                 <form:label path="accountNonExpired" cssClass="content"><fmt:message key="isAccountNonExpired"/></form:label>
-                <form:checkbox path="accountNonExpired"/>
+                <form:checkbox path="accountNonExpired" id="accountNonExpired"/>
             </div>
             <div>
                 <form:label path="accountNonLocked" cssClass="content"><fmt:message key="isAccountNonLocked"/></form:label>
-                <form:checkbox path="accountNonLocked"/>
+                <form:checkbox path="accountNonLocked" id="accountNonLocked"/>
             </div>
             <div>
                 <form:label path="enabled" cssClass="content"><fmt:message key="isEnabled"/></form:label>
-                <form:checkbox path="enabled"/>
+                <form:checkbox path="enabled" id="enabled"/>
             </div>
             <div>
                 <form:label path="credentialsNonExpired" cssClass="content"><fmt:message key="isCredentialsNonExpired"/></form:label>
-                <form:checkbox path="credentialsNonExpired"/>
+                <form:checkbox path="credentialsNonExpired" id="credentialsNonExpired"/>
             </div>
         </fieldset>
         <fieldset>
@@ -62,7 +62,7 @@
             <c:forEach items="${user.userRights}" var="userRight" varStatus="index">
             <form:hidden path="userRights[${index.index}].user.id" id="userRight${index.index}.user.id"/>
             <div>
-                <form:label path="userRights[${index.index}].permission" id="userRight${index.index}.permission" cssClass="content"><fmt:message key="permission"/></form:label>
+                <form:label path="userRights[${index.index}].permission" id="userRight${index.index}.permission.label" cssClass="content"><fmt:message key="permission"/></form:label>
                 <form:select path="userRights[${index.index}].permission" id="userRight${index.index}.permission" size="1">
                     <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
                     <form:options items="${permissions}"/>

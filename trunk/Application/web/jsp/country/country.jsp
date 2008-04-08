@@ -6,15 +6,13 @@
     <div class="content">
     <c:url value="/country.htm" var="countryAction" scope="page"/>
     <form:form id="countryForm" method="post" action="${countryAction}" commandName="country">
-        <form:hidden path="id" />
         <fieldset>
+            <form:hidden path="id" />
             <legend><fmt:message key="countryDetails"/></legend>
             <div>
                 <form:label path="code" cssClass="content"><fmt:message key="countryCode"/></form:label>
                 <form:select path="code" size="1">
-                    <optgroup style="display: inline; background-image: url(images/flags/ad.gif);">
                     <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
-                    </optgroup>
                     <form:options items="${countryCodes}"/>
                 </form:select>
                 <form:errors path="code" cssClass="error"/>

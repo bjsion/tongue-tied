@@ -22,6 +22,7 @@
 <link rel="stylesheet" media="all" type="text/css" href="<c:url value="/css/tonguetied.css"/>"/>
 <link rel="stylesheet" media="all" type="text/css" href="<c:url value="/css/displaytag.css"/>"/>
 <link rel="stylesheet" media="screen" type="text/css" href="<c:url value="/css/tabs.css"/>"/>
+<link rel="icon" type="image/png" href="<c:url value="/images/favicon.ico"/>"/>
 <title><fmt:message key="application.short.name"/></title>
 </head>
 
@@ -29,12 +30,6 @@
     <div>
         <div class="productDesc">
             <form id="langForm" method="get" action="<c:url value="/tonguetiedHome.htm"/>">
-                <p>
-                    <img id="bablefishImage" src="<c:url value="images/bablefish-logo.gif"/>" alt="<fmt:message key="bableFish"/>" class="imgLink"/>
-                    <a href="http://babelfish.altavista.com/" title="<fmt:message key="bableFishTranslater"/>">
-                        <fmt:message key="bableFishTranslater"/>(<fmt:message key="openNewWindow"/>)</a>
-                    <img id="openNewWindow" src="<c:url value="images/new-win-icon.png"/>" alt="<fmt:message key="openNewWindow"/>" title="<fmt:message key="openNewWindow"/>"/>
-                </p>
                 <div>
                     <label for="siteLanguage" class="content"><fmt:message key="language"/></label>
                     <fmt:bundle basename="language">
@@ -58,8 +53,6 @@
                     <input type="submit" id="logout" name="logout" value="<fmt:message key="logout"/>" class="button"/>
                 </div>
             </form>
-            <hr/>
-            <p><fmt:message key="product.description"/></p>
         </div>
     </div>
     <menu:useMenuDisplayer name="TabbedMenu" bundle="tonguetied" permissions="rolesAdapter">
@@ -81,7 +74,7 @@
         <fmt:message key="version"/>&nbsp;#<fmt:message key="build.number"/>
         </fmt:bundle>)
     </div>
+    <script type="text/javascript" src="<c:url value="/scripts/tabs.js"/>"></script>
 </body>
 </fmt:bundle>
-<script type="text/javascript" src="<c:url value="/scripts/tabs.js"/>"></script>
 </html>

@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -5,9 +6,9 @@
     <div class="content">
     <c:url value="/bundle.htm" var="bundleAction" scope="page"/>
     <form:form id="bundleForm" method="post" action="${bundleAction}" commandName="bundle">
-        <%-- We need to bind the id as the form is in the request and would be lost when submitted --%>
-        <form:hidden path="id"/>
         <fieldset>
+            <%-- We need to bind the id as the form is in the request and would be lost when submitted --%>
+            <form:hidden path="id"/>
             <legend><fmt:message key="bundleDetails"/></legend>
             <div>
                 <form:label path="name" cssClass="content"><fmt:message key="bundleName"/></form:label>
@@ -26,7 +27,7 @@
             </div>
             <div>
                 <form:label path="default" cssClass="content"><fmt:message key="bundle.default"/></form:label>
-                <form:checkbox path="default"/>
+                <form:checkbox path="default" id="default"/>
                 <form:errors path="default" cssClass="error"/>
             </div>
         </fieldset>
