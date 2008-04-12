@@ -152,6 +152,7 @@
     
     <bean id="exportService" dependency-check="objects" class="org.tonguetied.datatransfer.ExportServiceImpl" init-method="init">
         <property name="transferRepository" ref="transferRepository"/>
+        <property name="keywordService" ref="keywordService"/>
         <property name="sourceRoot" value="${sourceRoot}"/>
         <property name="outputRoot" value="${outputRoot}"/>
     </bean>
