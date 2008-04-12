@@ -74,7 +74,7 @@ public class Translation implements Cloneable, Comparable<Object>
     public Long getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
     
@@ -83,7 +83,7 @@ public class Translation implements Cloneable, Comparable<Object>
     public Bundle getBundle() {
     	return bundle;
     }
-    public void setBundle(Bundle bundle) {
+    public void setBundle(final Bundle bundle) {
     	this.bundle = bundle;
     }
     
@@ -92,7 +92,7 @@ public class Translation implements Cloneable, Comparable<Object>
     public Country getCountry() {
     	return country;
     }
-    public void setCountry(Country country) {
+    public void setCountry(final Country country) {
     	this.country = country;
     }
 
@@ -101,7 +101,7 @@ public class Translation implements Cloneable, Comparable<Object>
     public Keyword getKeyword() {
     	return keyword;
     }
-    public void setKeyword(Keyword keyword) {
+    public void setKeyword(final Keyword keyword) {
     	this.keyword = keyword;
     }
     
@@ -110,13 +110,13 @@ public class Translation implements Cloneable, Comparable<Object>
     public Language getLanguage() {
     	return language;
     }
-    public void setLanguage(Language language) {
+    public void setLanguage(final Language language) {
     	this.language = language;
     }
     public String getValue() {
     	return value;
     }
-    public void setValue(String value) {
+    public void setValue(final String value) {
     	this.value = value;
     }
     
@@ -132,7 +132,7 @@ public class Translation implements Cloneable, Comparable<Object>
     /**
      * @param state the {@link TranslationState} to set
      */
-    public void setState(TranslationState state) {
+    public void setState(final TranslationState state) {
         this.state = state;
     }
     
