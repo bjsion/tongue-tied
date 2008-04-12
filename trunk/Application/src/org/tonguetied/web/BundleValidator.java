@@ -1,7 +1,9 @@
 package org.tonguetied.web;
 
 import static org.tonguetied.web.Constants.FIELD_NAME;
+import static org.tonguetied.web.Constants.*;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -31,6 +33,7 @@ public class BundleValidator implements Validator {
      */
     public void validate(Object target, Errors errors) {
         validateMandatoryFields((Bundle) target, errors);
+        validateCharacterSet((Bundle) target, errors);
         validateDuplicates((Bundle) target, errors);
     }
     
@@ -44,6 +47,8 @@ public class BundleValidator implements Validator {
     private void validateMandatoryFields(Bundle bundle, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(
                 errors, FIELD_NAME, "errorBundleNameRequired", null, "default");
+        ValidationUtils.rejectIfEmptyOrWhitespace(
+                errors, FIELD_RESOURCE_NAME, "errorBundleResourceNameRequired", null, "default");
     }
     
     /**
@@ -56,7 +61,7 @@ public class BundleValidator implements Validator {
     private void validateDuplicates(Bundle bundle, Errors errors) {
         // check for duplicates of new records only
         if (bundle.getId() == null) {
-            Bundle other = keywordService.getBundle(bundle.getName());
+            Bundle other = keywordService.getBundleByName(bundle.getName());
             if (other != null) {
                 errors.rejectValue(
                         FIELD_NAME, 
@@ -64,6 +69,31 @@ public class BundleValidator implements Validator {
                         new String[] {bundle.getName()},
                         "default");
             }
+            other = keywordService.getBundleByResourceName(bundle.getResourceName());
+            if (other != null) {
+                errors.rejectValue(
+                        FIELD_RESOURCE_NAME, 
+                        "errorBundleAlreadyExists",
+                        new String[] {bundle.getResourceName()},
+                        "default");
+            }
+        }
+    }
+    
+    /**
+     * This validation method checks if the bundle resource name contains any
+     * invalid characters.
+     *  
+     * @param bundle the {@link Bundle} object to validate
+     * @param errors contextual state about the validation process (never null)
+     * @see Character#isWhitespace(char)
+     */
+    private void validateCharacterSet(Bundle bundle, Errors errors) {
+        if (StringUtils.containsAny(bundle.getResourceName(), WHITESPACE_CHARS)) {
+            errors.rejectValue(FIELD_RESOURCE_NAME, 
+                    "errorResourceNameContainsInvalidChar",
+                    new String[] {bundle.getResourceName()},
+                    "default");
         }
     }
 
