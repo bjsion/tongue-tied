@@ -46,19 +46,15 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 
    <bean id="daoAuthenticationProvider" class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
       <property name="userDetailsService" ref="userDetailsService"/>
-      <property name="userCache"><ref local="userCache"/></property>
-      <property name="passwordEncoder"><ref local="passwordEncoder"/></property>
+      <property name="userCache" ref="userCache"/>
+      <property name="passwordEncoder" ref="passwordEncoder"/>
    </bean>
 
    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"/>
     
    <bean id="userCacheBackend" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
-      <property name="cacheManager">
-         <ref local="cacheManager"/>
-      </property>
-      <property name="cacheName">
-         <value>userCache</value>
-      </property>
+      <property name="cacheManager" ref="cacheManager"/>
+      <property name="cacheName" value="userCache"/>
    </bean>
    
    <bean id="userCache" class="org.acegisecurity.providers.dao.cache.EhCacheBasedUserCache">
@@ -95,12 +91,12 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
    </bean>
 
    <bean id="rememberMeServices" class="org.acegisecurity.ui.rememberme.TokenBasedRememberMeServices">
-      <property name="userDetailsService"><ref local="userDetailsService"/></property>
-      <property name="key"><value>tongueTied</value></property>
+      <property name="userDetailsService" ref="userDetailsService"/>
+      <property name="key" value="tongueTied"/>
    </bean>
    
    <bean id="rememberMeAuthenticationProvider" class="org.acegisecurity.providers.rememberme.RememberMeAuthenticationProvider">
-      <property name="key"><value>tongueTied</value></property>
+      <property name="key" value="tongueTied"/>
    </bean>
    
    <bean id="logoutFilter" class="org.acegisecurity.ui.logout.LogoutFilter">
@@ -140,7 +136,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
    </bean>
 
     <bean id="httpRequestAccessDecisionManager" class="org.acegisecurity.vote.AffirmativeBased">
-        <property name="allowIfAllAbstainDecisions"><value>false</value></property>
+        <property name="allowIfAllAbstainDecisions" value="false"/>
         <property name="decisionVoters">
             <list>
                 <ref bean="roleVoter"/>
@@ -181,9 +177,9 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
    <!-- In this example 'marissa' has ROLE_SUPERVISOR that can switch to regular ROLE_USER(s) -->
    <bean id="switchUserProcessingFilter" class="org.acegisecurity.ui.switchuser.SwitchUserProcessingFilter">
       <property name="userDetailsService" ref="userDetailsService" />
-      <property name="switchUserUrl"><value>/j_acegi_switch_user</value></property>
-      <property name="exitUserUrl"><value>/j_acegi_exit_user</value></property>
-      <property name="targetUrl"><value>/acegi-security-sample-contacts-filter/secure/index.htm</value></property>
+      <property name="switchUserUrl" value="/j_acegi_switch_user"/>
+      <property name="exitUserUrl" value="/j_acegi_exit_user"/>
+      <property name="targetUrl" value="/acegi-security-sample-contacts-filter/secure/index.htm"/>
    </bean>    
 
 </beans>
