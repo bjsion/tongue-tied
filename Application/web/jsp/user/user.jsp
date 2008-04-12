@@ -62,7 +62,7 @@
             <c:forEach items="${user.userRights}" var="userRight" varStatus="index">
             <form:hidden path="userRights[${index.index}].user.id" id="userRight${index.index}.user.id"/>
             <div>
-                <form:label path="userRights[${index.index}].permission" id="userRight${index.index}.permission.label" cssClass="content"><fmt:message key="permission"/></form:label>
+                <form:label path="userRights[${index.index}].permission" id="userRight${index.index}.permission.label" for="userRight${index.index}.permission" cssClass="content"><fmt:message key="permission"/></form:label>
                 <form:select path="userRights[${index.index}].permission" id="userRight${index.index}.permission" size="1">
                     <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
                     <form:options items="${permissions}"/>
