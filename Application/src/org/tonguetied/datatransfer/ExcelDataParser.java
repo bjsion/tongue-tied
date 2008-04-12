@@ -133,7 +133,7 @@ public class ExcelDataParser implements HSSFListener {
                             baseTranslation = new Translation();
                             baseTranslation.setKeyword(keyword);
                             String name = sstrec.getString(lrec.getSSTIndex());
-                            Bundle bundle = keywordService.getBundle(name);
+                            Bundle bundle = keywordService.getBundleByName(name);
                             baseTranslation.setBundle(bundle);
                         }
                         else if (lrec.getColumn() == 3) {

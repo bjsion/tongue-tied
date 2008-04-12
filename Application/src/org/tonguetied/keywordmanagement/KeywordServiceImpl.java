@@ -7,7 +7,6 @@ import org.tonguetied.keywordmanagement.Language.LanguageCode;
 
 /**
  * 
- * @author mforslund
  * @author bsion
  */
 public class KeywordServiceImpl implements KeywordService
@@ -28,8 +27,12 @@ public class KeywordServiceImpl implements KeywordService
         return keywordRepository.getBundle(id);
     }
     
-    public Bundle getBundle(String name) {
-        return keywordRepository.getBundle(name);
+    public Bundle getBundleByName(String name) {
+        return keywordRepository.getBundleByName(name);
+    }
+
+    public Bundle getBundleByResourceName(String resourceName) {
+        return keywordRepository.getBundleByResourceName(resourceName);
     }
 
     public Bundle getDefaultBundle() {

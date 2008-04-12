@@ -8,7 +8,7 @@ import org.tonguetied.keywordmanagement.Language.LanguageCode;
 /**
  * Facade exposing business functions of the TongueTied.
  * 
- * @author mforslund
+ * @author bsion
  */
 public interface KeywordService 
 {
@@ -134,7 +134,16 @@ public interface KeywordService
      * @return the {@link Bundle} matching the <code>name</code> or 
      * <code>null</code> if no match is found
      */
-    Bundle getBundle(final String name);
+    Bundle getBundleByName(final String name);
+    
+    /**
+     * Get the {@link Bundle} matching the <code>resourceName</code>.
+     * 
+     * @param resourceName the string uniquely identifying the {@link Bundle}
+     * @return the {@link Bundle} matching the <code>name</code> or 
+     * <code>null</code> if no match is found
+     */
+    Bundle getBundleByResourceName(final String resourceName);
     
     /**
      * Find and return the default {@link Bundle} if one exists.
