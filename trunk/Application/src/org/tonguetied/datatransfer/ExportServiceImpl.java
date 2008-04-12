@@ -192,6 +192,13 @@ public class ExportServiceImpl implements ExportService {
     }
 
     /**
+     * @param keywordService the keywordService to set
+     */
+    public void setKeywordService(KeywordService keywordService) {
+        this.keywordService = keywordService;
+    }
+
+    /**
      * @param outputRoot the base directory on the file system where all 
      * generated export files should be saved.
      */
