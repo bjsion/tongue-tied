@@ -107,7 +107,7 @@ public class KeywordServiceStub implements KeywordService {
     /* (non-Javadoc)
      * @see org.tonguetied.service.KeywordService#getBundle(java.lang.String)
      */
-    public Bundle getBundle(final String name) {
+    public Bundle getBundleByName(final String name) {
         Predicate bundleCodeFilter = new Predicate() {
 
             /* (non-Javadoc)
@@ -117,6 +117,28 @@ public class KeywordServiceStub implements KeywordService {
                 boolean result = false;
                 if (name != null) {
                     result = name.equals(((Bundle) object).getName());
+                }
+                return result;
+            }
+        }; 
+        Bundle bundle= 
+            (Bundle) CollectionUtils.find(bundles.values(), bundleCodeFilter);
+        return bundle;
+    }
+
+    /* (non-Javadoc)
+     * @see org.tonguetied.keywordmanagement.KeywordService#getBundleByResourceName(java.lang.String)
+     */
+    public Bundle getBundleByResourceName(final String resourceName) {
+        Predicate bundleCodeFilter = new Predicate() {
+
+            /* (non-Javadoc)
+             * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
+             */
+            public boolean evaluate(Object object) {
+                boolean result = false;
+                if (resourceName != null) {
+                    result = resourceName.equals(((Bundle) object).getResourceName());
                 }
                 return result;
             }

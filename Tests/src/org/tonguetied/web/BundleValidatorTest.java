@@ -1,5 +1,6 @@
 package org.tonguetied.web;
 
+import static org.tonguetied.web.Constants.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -29,28 +30,35 @@ public class BundleValidatorTest {
     private Bundle bundle;
     private String fieldName;
 
-    private static final String FIELD_NAME = "name";
-    
     @Parameters
     public static final Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-                {null, null, null, true, FIELD_NAME},
-                {"", null, null, false, FIELD_NAME},
-                {"   ", null, null, true, FIELD_NAME},
-                {"test", "description", null, true, FIELD_NAME}
+                {null, null, "resource", true, false, FIELD_NAME},
+                {"", null, "resource", false, false, FIELD_NAME},
+                {"   ", null, "resource", true, true, FIELD_NAME},
+                {"test", "description", "resource", true, false, FIELD_NAME},
+                {"new", "description", null, true, false, FIELD_RESOURCE_NAME},
+                {"new", "description", "", true, false, FIELD_RESOURCE_NAME},
+                {"new", "description", "    ", true, false, FIELD_RESOURCE_NAME},
+                {"new", "description", "test", true, false, FIELD_RESOURCE_NAME},
+                {"new", "description", "has whitespace", true, false, FIELD_RESOURCE_NAME},
+//              {"new", "description", "has\nwhitespace", true, false, FIELD_RESOURCE_NAME},
+                {"new", "description", "has\twhitespace", true, false, FIELD_RESOURCE_NAME}
                 });
     }
     
-    public BundleValidatorTest(String name,
-                               String description,
-                               String resourceName,
-                               boolean isDefault,
-                               String fieldName) {
+    public BundleValidatorTest(final String name,
+                               final String description,
+                               final String resourceName,
+                               final boolean isDefault,
+                               final boolean isGlobal,
+                               final String fieldName) {
         this.bundle = new Bundle();
         this.bundle.setName(name);
         this.bundle.setDescription(description);
         this.bundle.setResourceName(resourceName);
         this.bundle.setDefault(isDefault);
+        this.bundle.setGlobal(isGlobal);
         this.fieldName = fieldName;
     }
     
@@ -60,6 +68,7 @@ public class BundleValidatorTest {
         Bundle existing = new Bundle();
         existing.setId(1256L);
         existing.setName("test");
+        existing.setResourceName("test");
         existing.setDescription("description");
         this.keywordService.saveOrUpdate(existing);
     }
@@ -78,6 +87,9 @@ public class BundleValidatorTest {
         FieldError error = errors.getFieldError(fieldName);
         if (FIELD_NAME.equals(fieldName)) {
             assertEquals(this.bundle.getName(), error.getRejectedValue());
+        }
+        else if (FIELD_RESOURCE_NAME.equals(fieldName)) {
+            assertEquals(this.bundle.getResourceName(), error.getRejectedValue());
         }
         assertFalse(error.isBindingFailure());
     }

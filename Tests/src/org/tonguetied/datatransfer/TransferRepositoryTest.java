@@ -58,6 +58,7 @@ public class TransferRepositoryTest extends AbstractServiceTest {
         
         bundle = new Bundle();
         bundle.setName("testBundle");
+        bundle.setResourceName("test");
         bundle.setDescription("this is a test bundle");
         
         getKeywordRepository().saveOrUpdate(singapore);

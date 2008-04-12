@@ -87,9 +87,13 @@ public class ExcelDataParserTest extends AbstractServiceTest {
         
         bundle1 = new Bundle();
         bundle1.setName("bundle1");
+        bundle1.setResourceName("bundle1");
+        bundle1.setGlobal(false);
 
         bundle2 = new Bundle();
         bundle2.setName("bundle2");
+        bundle2.setResourceName("bundle2");
+        bundle2.setGlobal(false);
         
         keyword1 = new Keyword();
         keyword1.setKeyword("Fri");
