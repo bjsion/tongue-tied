@@ -56,7 +56,10 @@ public class KeywordServiceTest extends AbstractServiceTest {
         
         bundle = new Bundle();
         bundle.setName("testBundle");
+        bundle.setResourceName("test");
         bundle.setDescription("this is a test bundle");
+        bundle.setDefault(false);
+        bundle.setGlobal(false);
         
         keyword1 = new Keyword();
         keyword1.setKeyword("akeyword");
@@ -247,7 +250,7 @@ public class KeywordServiceTest extends AbstractServiceTest {
      */
     @Test
     public final void testGetBundleByName() {
-        Bundle retrieved = keywordService.getBundle(bundle.getName());
+        Bundle retrieved = keywordService.getBundleByName(bundle.getName());
         
         assertEquals(bundle, retrieved);
     }
@@ -257,7 +260,7 @@ public class KeywordServiceTest extends AbstractServiceTest {
      */
     @Test
     public final void testGetBundleWithInvalidName() {
-        Bundle retrieved = keywordService.getBundle("invalid");
+        Bundle retrieved = keywordService.getBundleByName("invalid");
         
         assertNull(retrieved);
     }
