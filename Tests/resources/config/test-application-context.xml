@@ -62,6 +62,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     
     <bean id="exportService" dependency-check="objects" class="org.tonguetied.datatransfer.ExportServiceImpl" init-method="init">
         <property name="transferRepository" ref="transferRepository"/>
+        <property name="keywordService" ref="keywordService"/>
         <property name="sourceRoot" value="${source.root}"/>
         <property name="outputRoot" value="${output.root}"/>
     </bean>
