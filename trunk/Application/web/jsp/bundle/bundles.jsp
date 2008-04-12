@@ -8,7 +8,8 @@
             <display:column sortable="true" titleKey="bundleName" url="/bundle.htm" paramId="bundleId" paramProperty="id">
                 <c:out value="${bundle.name}"/>
             </display:column>
-            <display:column property="resourceName" titleKey="bundleResourceName" sortable="true"/>
+            <display:column property="resourceName" titleKey="bundle.resource.name" sortable="true"/>
+            <display:column property="global" titleKey="bundle.global"/>
             <display:column property="default" titleKey="bundle.default"/>
             <display:column titleKey="action"/>
         </display:table>
