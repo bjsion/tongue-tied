@@ -11,17 +11,17 @@
             <form:hidden path="id"/>
             <legend><fmt:message key="bundleDetails"/></legend>
             <div>
-                <form:label path="name" cssClass="content"><fmt:message key="bundleName"/></form:label>
+                <form:label path="name" cssClass="content"><fmt:message key="bundle.name"/></form:label>
                 <form:input path="name"/>
                 <form:errors path="name" cssClass="error"/>
             </div>
             <div>
-                <form:label path="description" cssClass="content"><fmt:message key="bundleDescription"/></form:label>
+                <form:label path="description" cssClass="content"><fmt:message key="bundle.description"/></form:label>
                 <form:input path="description"/>
                 <form:errors path="description" cssClass="error"/>
             </div>
             <div>
-                <form:label path="resourceName" cssClass="content"><fmt:message key="bundleResourceName"/></form:label>
+                <form:label path="resourceName" cssClass="content"><fmt:message key="bundle.resource.name"/></form:label>
                 <form:input path="resourceName"/>
                 <form:errors path="resourceName" cssClass="error"/>
             </div>
@@ -29,6 +29,11 @@
                 <form:label path="default" cssClass="content"><fmt:message key="bundle.default"/></form:label>
                 <form:checkbox path="default" id="default"/>
                 <form:errors path="default" cssClass="error"/>
+            </div>
+            <div>
+                <form:label path="global" cssClass="content"><fmt:message key="bundle.global"/></form:label>
+                <form:checkbox path="global" id="global"/>
+                <form:errors path="global" cssClass="error"/>
             </div>
         </fieldset>
         <div class="submit">
