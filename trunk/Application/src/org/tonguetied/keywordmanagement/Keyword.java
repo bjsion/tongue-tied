@@ -59,7 +59,7 @@ public class Keyword implements Cloneable, Comparable<Object>, Auditable
         return id;
     }
         
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
     
@@ -72,7 +72,7 @@ public class Keyword implements Cloneable, Comparable<Object>, Auditable
         return keyword;
     }
     
-    public void setKeyword(String keyword) {
+    public void setKeyword(final String keyword) {
         this.keyword = keyword;
     }
     
@@ -84,7 +84,7 @@ public class Keyword implements Cloneable, Comparable<Object>, Auditable
         return context;
     }
     
-    public void setContext(String context) {
+    public void setContext(final String context) {
         this.context = context;
     }
     
@@ -122,7 +122,7 @@ public class Keyword implements Cloneable, Comparable<Object>, Auditable
      * 
      * @param translationId the id of the {@link Translation} to remove
      */
-    public void removeTranslation(Long translationId) {
+    public void removeTranslation(final Long translationId) {
         Translation translation = (Translation) CollectionUtils.find(
                 translations, new TranslationPredicate(translationId));
         remove(translation);
@@ -247,7 +247,7 @@ public class Keyword implements Cloneable, Comparable<Object>, Auditable
          * 
          * @param id the <code>id</code> of the translation to find
          */
-        public TranslationPredicate(Long id) {
+        public TranslationPredicate(final Long id) {
             this.id = id;
         }
         
