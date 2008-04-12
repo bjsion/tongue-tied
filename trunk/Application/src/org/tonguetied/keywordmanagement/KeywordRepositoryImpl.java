@@ -5,6 +5,8 @@ import static org.hibernate.criterion.Order.asc;
 import static org.hibernate.criterion.Restrictions.conjunction;
 import static org.hibernate.criterion.Restrictions.eq;
 import static org.hibernate.criterion.Restrictions.idEq;
+import static org.tonguetied.keywordmanagement.Bundle.QUERY_GET_BUNDLES;
+import static org.tonguetied.keywordmanagement.Bundle.QUERY_GET_DEFAULT_BUNDLE;
 
 import java.util.List;
 import java.util.SortedSet;
@@ -36,20 +38,26 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements Keywor
         return (Bundle) criteria.uniqueResult();
     }
     
-    public Bundle getBundle(String name) {
+    public Bundle getBundleByName(String name) {
         Criteria criteria = getSession().createCriteria(Bundle.class);
         criteria.add(eq("name", name));
         return (Bundle) criteria.uniqueResult();
     }
 
+    public Bundle getBundleByResourceName(String resourceName) {
+        Criteria criteria = getSession().createCriteria(Bundle.class);
+        criteria.add(eq("resourceName", resourceName));
+        return (Bundle) criteria.uniqueResult();
+    }
+
     public Bundle getDefaultBundle() {
-        Query query = getSession().getNamedQuery("get.default.bundle");
+        Query query = getSession().getNamedQuery(QUERY_GET_DEFAULT_BUNDLE);
         return (Bundle) query.uniqueResult();
     }
 
     public List<Bundle> getBundles() 
     {
-        Query query = getSession().getNamedQuery("get.bundles");
+        Query query = getSession().getNamedQuery(QUERY_GET_BUNDLES);
         return query.list();
     }
     

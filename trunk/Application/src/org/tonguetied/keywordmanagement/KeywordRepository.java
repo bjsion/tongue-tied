@@ -10,7 +10,7 @@ import org.tonguetied.keywordmanagement.Language.LanguageCode;
 /**
  * Interface defining DAO facade for TongueTied storage.
  * 
- * @author mforslund
+ * @author bsion
  */
 public interface KeywordRepository 
 {
@@ -155,7 +155,16 @@ public interface KeywordRepository
      * @return the {@link Bundle} matching the <code>name</code> or 
      * <code>null<code> if no match is found.
      */
-    Bundle getBundle(final String name);
+    Bundle getBundleByName(final String name);
+    
+    /**
+     * Retrieve the {@link Bundle} from permanent storage.
+     * 
+     * @param resourceName the unique name identifying the {@link Bundle}.
+     * @return the {@link Bundle} matching the <code>name</code> or 
+     * <code>null<code> if no match is found.
+     */
+    Bundle getBundleByResourceName(final String resourceName);
     
     /**
      * Retrieve the {@link Bundle} marked as the default from permanent 

@@ -22,8 +22,8 @@ import org.hibernate.annotations.AccessType;
 @Entity
 @AccessType("field")
 @NamedQueries({
-    @NamedQuery(name="get.bundles",query="from Bundle b order by b.name"),
-    @NamedQuery(name="get.default.bundle",query="from Bundle b where b.isDefault = true")
+    @NamedQuery(name=Bundle.QUERY_GET_BUNDLES,query="from Bundle b order by b.name"),
+    @NamedQuery(name=Bundle.QUERY_GET_DEFAULT_BUNDLE,query="from Bundle b where b.isDefault = true")
 })
 public class Bundle implements Comparable<Object>
 {
@@ -33,17 +33,27 @@ public class Bundle implements Comparable<Object>
     @Column(unique=true,nullable=false)
     private String name;
     private String description;
+    @Column(unique=true,nullable=false)
     private String resourceName;
-    
     /**
      * Only one bundle will have a value of true
      */
+    @Column(nullable=false)
     private boolean isDefault;
+    /**
+     * Flag indicating this is a global bundle. Any entries marked as global
+     * should be included in all exports.
+     */
+    @Column(nullable=false)
+    private boolean isGlobal;
+    
+    protected static final String QUERY_GET_DEFAULT_BUNDLE = "get.default.bundle";
+    protected static final String QUERY_GET_BUNDLES = "get.bundles";
     
     public String getDescription() {
     	return description;
     }
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
     	this.description = description;
     }
     public Long getId() {
@@ -55,20 +65,39 @@ public class Bundle implements Comparable<Object>
     public String getName() {
     	return name;
     }
-    public void setName(String name) {
+    public void setName(final String name) {
     	this.name = name;
     }
     public String getResourceName() {
     	return resourceName;
     }
-    public void setResourceName(String resourceName) {
+    /**
+     * Set the resource bundle name.
+     * 
+     * @param resourceName the name of the resource bundle.
+     */
+    public void setResourceName(final String resourceName) {
     	this.resourceName = resourceName;
     }
     public boolean isDefault() {
         return isDefault;
     }
-    public void setDefault(boolean isDefault) {
+    public void setDefault(final boolean isDefault) {
         this.isDefault = isDefault;
+    }
+    
+    /**
+     * @return the flag indicating if {@link Translation}s associated with 
+     * Bundle should be in considered part of every bundle.
+     */
+    public boolean isGlobal() {
+        return isGlobal;
+    }
+    /**
+     * @param isGlobal the isGlobal to set
+     */
+    public void setGlobal(boolean isGlobal) {
+        this.isGlobal = isGlobal;
     }
     
     /* (non-Javadoc)
@@ -78,6 +107,7 @@ public class Bundle implements Comparable<Object>
         final Bundle other = (Bundle) object;
         return new CompareToBuilder().append(name, other.name).
                 append(resourceName, other.resourceName).
+                append(isGlobal, other.isGlobal).
                 append(isDefault, other.isDefault).
                 toComparison();
     }
@@ -97,6 +127,7 @@ public class Bundle implements Comparable<Object>
             builder.append(this.description, other.description).
                 append(this.name, other.name).
                 append(this.resourceName, other.resourceName).
+                append(this.isGlobal, other.isGlobal).
                 append(this.isDefault, other.isDefault);
             isEqual = builder.isEquals();
         }
@@ -110,6 +141,7 @@ public class Bundle implements Comparable<Object>
         builder.append(resourceName).
             append(name).
             append(description).
+            append(isGlobal).
             append(isDefault);
 
         return builder.toHashCode();
