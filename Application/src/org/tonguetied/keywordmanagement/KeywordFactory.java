@@ -39,11 +39,8 @@ public class KeywordFactory {
         
         Keyword keyword = new Keyword();
         for(Language language: languages) {
-            Translation translation = new Translation();
-            translation.setLanguage(language);
-            translation.setCountry(country);
-            translation.setState(TranslationState.UNVERIFIED);
-            translation.setBundle(bundle);
+            Translation translation = 
+                new Translation(bundle, country, language, null, TranslationState.UNVERIFIED);
             keyword.addTranslation(translation);
         }
         
@@ -76,11 +73,8 @@ public class KeywordFactory {
         
         Keyword keyword = new Keyword();
         for(Country country: countries) {
-            Translation translation = new Translation();
-            translation.setCountry(country);
-            translation.setLanguage(language);
-            translation.setState(TranslationState.UNVERIFIED);
-            translation.setBundle(bundle);
+            Translation translation = 
+                new Translation(bundle, country, language, null, TranslationState.UNVERIFIED);
             keyword.addTranslation(translation);
         }
         
