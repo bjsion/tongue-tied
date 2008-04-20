@@ -7,20 +7,20 @@ import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.poi.hssf.eventusermodel.HSSFEventFactory;
 import org.apache.poi.hssf.eventusermodel.HSSFListener;
 import org.apache.poi.hssf.eventusermodel.HSSFRequest;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.tonguetied.keywordmanagement.Bundle;
-import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
 import org.tonguetied.keywordmanagement.KeywordService;
-import org.tonguetied.keywordmanagement.Language;
 import org.tonguetied.keywordmanagement.Translation;
+import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
 
 /**
+ * Data importer that handles input in excel format. The excel file is read and
+ * rows are transformed into {@link Translation}s  
+ * 
  * @author bsion
  *
  */
@@ -29,13 +29,14 @@ public class ExcelImporter extends Importer {
     /**
      * Create a new instance of ExcelImporter.
      * 
-     * @param keywordService the interface to persistent storage
+     * @param keywordService the interface to keyword functions
      */
     protected ExcelImporter(KeywordService keywordService) {
         super(keywordService);
     }
 
-    public void importData(byte[] input) {
+    @Override
+    public void doImport(byte[] input, TranslationState state) throws ImportException {
         ExcelDataParser parser = new ExcelDataParser(getKeywordService());
         loadData(parser, input);
         doImport(parser.getKeywords());
@@ -57,7 +58,7 @@ public class ExcelImporter extends Importer {
             // create a new org.apache.poi.poifs.filesystem.Filesystem
             POIFSFileSystem poifs = new POIFSFileSystem(bais);
             // get the Workbook (excel part) stream in a InputStream
-            InputStream din = poifs.createDocumentInputStream("Workbook");
+            dis = poifs.createDocumentInputStream("Workbook");
             // construct out HSSFRequest object
             HSSFRequest req = new HSSFRequest();
             // lazy listen for ALL records with the listener shown above
@@ -65,7 +66,7 @@ public class ExcelImporter extends Importer {
             // create our event factory
             HSSFEventFactory factory = new HSSFEventFactory();
             // process our events based on the document input stream
-            factory.processEvents(req, din);
+            factory.processEvents(req, dis);
         } catch (IOException ioe) {
             throw new ImportException(ioe);
         } finally {
@@ -127,52 +128,6 @@ public class ExcelImporter extends Importer {
         }
         catch (IOException ioe) {
             throw new ImportException(ioe);
-        }
-    }
-    
-    /**
-     * This predicate is used to find {@link Translation}s based off its 
-     * business keys.
-     * 
-     * @author bsion
-     *
-     */
-    protected static class TranslationPredicate implements Predicate {
-        private Bundle bundle;
-        private Country country;
-        private Language language;
-        
-        /**
-         * Create a new instance of TranslationPredicate.
-         * 
-         * @param bundle the {@link Bundle} on which to search
-         * @param country the {@link Country} on which to search
-         * @param language the {@link Language} on which to search
-         */
-        public TranslationPredicate(Bundle bundle, Country country, Language language) {
-            this.bundle = bundle;
-            this.country = country;
-            this.language = language;
-        }
-        
-        /** 
-         * Evaluate if a {@link Translation}s business keys are equal. This  
-         * method evaluates if the {@link Language}, {@link Bundle} and
-         * {@link Country} are equal
-         * 
-         * @return <code>true</code> if the {@link Translation} business keys
-         * match. <code>false</code> otherwise
-         * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
-         */
-        public boolean evaluate(Object object) {
-            Translation translation = (Translation) object;
-            
-            EqualsBuilder builder = new EqualsBuilder();
-            builder.append(language, translation.getLanguage()).
-                append(country, translation.getCountry()).
-                append(bundle, translation.getBundle());
-            
-            return builder.isEquals();
         }
     }
 }
