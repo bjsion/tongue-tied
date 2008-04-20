@@ -69,6 +69,30 @@ public class Translation implements Cloneable, Comparable<Object>
         this.state = TranslationState.UNVERIFIED;
     }
     
+    /**
+     * Create a new instance of Translation.
+     * 
+     * @param bundle the {@link Bundle} of this Translation
+     * @param country the {@link Country} of this Translation
+     * @param language the {@link Language} of this Translation
+     * @param value the translated value
+     * @param state the state of this Translation
+     * @throws IllegalArgumentException if the <code>state</code> parameter is
+     * <code>null</code>
+     */
+    public Translation(Bundle bundle, Country country, Language language,
+            String value, TranslationState state) 
+    {
+        if (state == null) 
+            throw new IllegalArgumentException("state cannot be null");
+        
+        this.value = value;
+        this.language = language;
+        this.country = country;
+        this.bundle = bundle;
+        this.state = state;
+    }
+
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     public Long getId() {
