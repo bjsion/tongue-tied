@@ -60,7 +60,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 
     <bean id="auditService" autowire="byName" dependency-check="objects" class="org.tonguetied.audit.AuditServiceImpl" />
     
-    <bean id="exportService" dependency-check="objects" class="org.tonguetied.datatransfer.ExportServiceImpl" init-method="init">
+    <bean id="dataService" dependency-check="objects" class="org.tonguetied.datatransfer.DataServiceImpl" init-method="init">
         <property name="transferRepository" ref="transferRepository"/>
         <property name="keywordService" ref="keywordService"/>
         <property name="sourceRoot" value="${source.root}"/>
