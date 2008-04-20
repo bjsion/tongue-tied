@@ -41,6 +41,7 @@
         <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-logging.jar"/>
         <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-collections-3.2.jar"/>
         <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-lang-2.4.jar"/>
+        <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-io-1.4.jar"/>
         <pathelement location="${3rdparty.home}/FreeMarker/2.3.9/freemarker.jar"/>
         <pathelement location="${3rdparty.home}/FreeMarker/FMPP/0.9.11/fmpp_teamworks.jar"/>
         <pathelement location="${3rdparty.home}/xmlunit/1.0/xmlunit.jar"/>
