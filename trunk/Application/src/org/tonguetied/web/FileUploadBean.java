@@ -1,7 +1,7 @@
 package org.tonguetied.web;
 
 import org.springframework.web.multipart.MultipartFile;
-import org.tonguetied.datatransfer.FormatType;
+import org.tonguetied.datatransfer.ImportParameters;
 
 
 /**
@@ -14,7 +14,14 @@ import org.tonguetied.datatransfer.FormatType;
 public class FileUploadBean {
 
     private MultipartFile file;
-    private FormatType formatType;
+    private ImportParameters parameters;
+
+    /**
+     * Create a new instance of FileUploadBean.
+     */
+    public FileUploadBean() {
+        this.parameters = new ImportParameters();
+    }
 
     /**
      * @return a representation of the uploaded file 
@@ -31,16 +38,16 @@ public class FileUploadBean {
     }
 
     /**
-     * @return the format of the uploaded file
+     * @return the parameters of the import
      */
-    public FormatType getFormatType() {
-        return formatType;
+    public ImportParameters getParameters() {
+        return parameters;
     }
 
     /**
-     * @param formatType the format of the uploaded file
+     * @param parameters the parameters to set
      */
-    public void setFormatType(FormatType formatType) {
-        this.formatType = formatType;
+    public void setParameters(ImportParameters parameters) {
+        this.parameters = parameters;
     }
 }

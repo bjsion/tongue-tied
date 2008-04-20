@@ -1,6 +1,7 @@
 package org.tonguetied.web;
 
 import static org.tonguetied.web.Constants.FORMAT_TYPES;
+import static org.tonguetied.web.Constants.STATES;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,14 +9,17 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.CancellableFormController;
-import org.tonguetied.datatransfer.ExportService;
+import org.tonguetied.datatransfer.DataService;
 import org.tonguetied.datatransfer.FormatType;
+import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
 
 /**
@@ -27,7 +31,7 @@ import org.tonguetied.datatransfer.FormatType;
  */
 public class ImportController extends CancellableFormController {
     
-    private ExportService exportService;
+    private DataService dataService;
     
     private static final Logger logger = 
         Logger.getLogger(ImportController.class);
@@ -57,7 +61,9 @@ public class ImportController extends CancellableFormController {
         // let's see if there's content there
         MultipartFile file = bean.getFile();
         if (file != null) {
-            exportService.importData(file.getBytes(), bean.getFormatType());
+            bean.getParameters().setFileName(FilenameUtils.getBaseName(file.getOriginalFilename()));
+            bean.getParameters().setData(file.getBytes());
+            dataService.importData(bean.getParameters());
         }
         else {
             // hmm, that's strange, the user did not upload anything
@@ -77,8 +83,13 @@ public class ImportController extends CancellableFormController {
     @Override
     protected void initBinder(HttpServletRequest request,
                               ServletRequestDataBinder binder) 
-            throws Exception {
+            throws Exception 
+    {
+        // to actually be able to convert Multipart instance to byte[]
+        // we have to register a custom editor
+        binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
         binder.registerCustomEditor(FormatType.class, new FormatTypeSupport()); 
+        binder.registerCustomEditor(TranslationState.class, new TranslationStateSupport()); 
     }
 
     @Override
@@ -87,16 +98,17 @@ public class ImportController extends CancellableFormController {
     {
         Map<String, Object> model = new HashMap<String, Object>();
         model.put(FORMAT_TYPES, FormatType.values());
+        model.put(STATES, TranslationState.values());
         
         return model;
     }
 
     /**
-     * Assign the {@link ExportService}.
+     * Assign the {@link DataService}.
      * 
-     * @param exportService the {@link ExportService} to set.
+     * @param dataService the {@link DataService} to set.
      */
-    public void setExportService(ExportService exportService) {
-        this.exportService = exportService;
+    public void setDataService(DataService dataService) {
+        this.dataService = dataService;
     }
 }

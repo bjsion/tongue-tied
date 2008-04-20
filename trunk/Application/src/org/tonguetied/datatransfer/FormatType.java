@@ -1,5 +1,7 @@
 package org.tonguetied.datatransfer;
 
+import org.tonguetied.keywordmanagement.KeywordService;
+
 
 /**
  * The type of output format the results of the export query should take. 
@@ -29,6 +31,14 @@ public enum FormatType {
         public ExportDataPostProcessor getPostProcessor() {
             return null;
         }
+
+        /* (non-Javadoc)
+         * @see org.tonguetied.datatransfer.FormatType#getImporter(org.tonguetied.keywordmanagement.KeywordService)
+         */
+        @Override
+        public Importer getImporter(KeywordService keywordService) {
+            return new CsvImporter(keywordService);
+        }
     },
     /**
      * Excel spreadsheet
@@ -48,6 +58,14 @@ public enum FormatType {
         @Override
         public ExportDataPostProcessor getPostProcessor() {
             return null;
+        }
+
+        /* (non-Javadoc)
+         * @see org.tonguetied.datatransfer.FormatType#getImporter(org.tonguetied.keywordmanagement.KeywordService)
+         */
+        @Override
+        public Importer getImporter(KeywordService keywordService) {
+            return new ExcelImporter(keywordService);
         }
     },
     /**
@@ -69,6 +87,14 @@ public enum FormatType {
         public ExportDataPostProcessor getPostProcessor() {
             return new LanguageCentricProcessor();
         }
+
+        /* (non-Javadoc)
+         * @see org.tonguetied.datatransfer.FormatType#getImporter(org.tonguetied.keywordmanagement.KeywordService)
+         */
+        @Override
+        public Importer getImporter(KeywordService keywordService) {
+            return new ExcelImporter(keywordService);
+        }
     },
     /**
      * Java properties file
@@ -88,6 +114,14 @@ public enum FormatType {
         @Override
         public ExportDataPostProcessor getPostProcessor() {
             return null;
+        }
+
+        /* (non-Javadoc)
+         * @see org.tonguetied.datatransfer.FormatType#getImporter(org.tonguetied.keywordmanagement.KeywordService)
+         */
+        @Override
+        public Importer getImporter(KeywordService keywordService) {
+            return new PropertiesImporter(keywordService);
         }
     },
     /**
@@ -109,9 +143,25 @@ public enum FormatType {
         public ExportDataPostProcessor getPostProcessor() {
             return null;
         }
+
+        /* (non-Javadoc)
+         * @see org.tonguetied.datatransfer.FormatType#getImporter(org.tonguetied.keywordmanagement.KeywordService)
+         */
+        @Override
+        public Importer getImporter(KeywordService keywordService) {
+            return null;
+        }
     };
     
     public abstract String getDefaultFileExtension();
     
     public abstract ExportDataPostProcessor getPostProcessor();
+    
+    /**
+     * Factory method to create the appropriate <code>Importer</code>
+     * 
+     * @param keywordService interface to persistent storage
+     * @return The newly created <code>Importer</code>
+     */
+    public abstract Importer getImporter(KeywordService keywordService);
 }
