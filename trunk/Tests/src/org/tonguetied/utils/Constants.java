@@ -40,5 +40,5 @@ public interface Constants {
     /**
      * The database port number
      */
-    public static final int DB_PORT = 9001;
+    public static final int DB_PORT = 9011;
 }
