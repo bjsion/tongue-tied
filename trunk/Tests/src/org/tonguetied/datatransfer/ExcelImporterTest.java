@@ -1,12 +1,11 @@
 package org.tonguetied.datatransfer;
 
+import static org.tonguetied.datatransfer.Constants.TEST_DATA_DIR;
+
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.List;
 
-import org.tonguetied.datatransfer.FormatType;
-import org.tonguetied.datatransfer.Importer;
+import org.apache.commons.io.FileUtils;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
@@ -175,43 +174,18 @@ public class ExcelImporterTest extends AbstractServiceTest {
     }
     
     /**
-     * Test method for {@link org.tonguetied.datatransfer.ExcelImporter#importData(byte[])}.
+     * Test method for {@link org.tonguetied.datatransfer.ExcelImporter#importData(ImportParameters)}.
      */
-    public void testImportData() throws Exception {
-        File input = new File(System.getProperty("user.dir") + 
-                File.separator + "resources" + File.separator + "data" +
-                File.separator + "LanguageCentricImportData.xls");
+    public final void testImportData() throws Exception {
+        File input = new File(TEST_DATA_DIR + "LanguageCentricImportData.xls");
+        byte[] bytes = FileUtils.readFileToByteArray(input);
         
-        FileInputStream fis = new FileInputStream(input);
-        
-//      Get the size of the file
-        long length = input.length();
-    
-        if (length > Integer.MAX_VALUE) {
-            // File is too large
-        }
-    
-        // Create the byte array to hold the data
-        byte[] bytes = new byte[(int)length];
-    
-        // Read in the bytes
-        int offset = 0;
-        int numRead = 0;
-        while (offset < bytes.length
-               && (numRead=fis.read(bytes, offset, bytes.length-offset)) >= 0) {
-            offset += numRead;
-        }
-    
-        // Ensure all the bytes have been read in
-        if (offset < bytes.length) {
-            throw new IOException("Could not completely read file "+input.getName());
-        }
-    
-        // Close the input stream and return bytes
-        fis.close();
-        
-        Importer importer = Importer.createInstance(keywordService, FormatType.xlsLanguage);
-        importer.importData(bytes);
+        Importer importer = FormatType.xlsLanguage.getImporter(keywordService);
+        TranslationState expectedState = TranslationState.VERIFIED;
+        ImportParameters parameters = new ImportParameters();
+        parameters.setData(bytes);
+        parameters.setTranslationState(expectedState);
+        importer.importData(parameters);
 
         List<Keyword> keywords = keywordService.getKeywords(0, null);
         assertEquals(8, keywords.size());
@@ -219,9 +193,11 @@ public class ExcelImporterTest extends AbstractServiceTest {
         Keyword actual = keywordService.getKeyword(keyword1.getKeyword());
         Object[] actranslations = actual.getTranslations().toArray();
         Object[] extranslations = keyword1.getTranslations().toArray();
+        Translation expectedTrans; 
+        Translation actualTrans; 
         for (int i = 0; i < actranslations.length; i++) {
-            Translation expectedTrans = (Translation)extranslations[i]; 
-            Translation actualTrans = (Translation)actranslations[i]; 
+            expectedTrans = (Translation)extranslations[i]; 
+            actualTrans = (Translation)actranslations[i]; 
             assertEquals(expectedTrans.getValue(), actualTrans.getValue());
             assertEquals(expectedTrans.getBundle(), actualTrans.getBundle());
             assertEquals(expectedTrans.getCountry(), actualTrans.getCountry());
@@ -237,7 +213,6 @@ public class ExcelImporterTest extends AbstractServiceTest {
         assertEquals("\u661F\u671F\u516D", ((Translation)translations[2]).getValue());
         assertEquals("\u661F\u671F\u516D", ((Translation)translations[3]).getValue());
     }
-
     
     public void setKeywordService(KeywordService keywordService) {
         this.keywordService = keywordService;
