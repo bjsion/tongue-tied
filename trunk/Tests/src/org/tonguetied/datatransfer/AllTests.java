@@ -16,7 +16,10 @@ import org.junit.runners.Suite.SuiteClasses;
     ExcelDataParserTest.class,
     ExcelImporterTest.class,
     ExportServiceTest.class,
+    FormatTypeTest.class,
+    ImporterTest.class,
     LanguageCentricProcessorTest.class,
+    PropertiesImporterTest.class,
     TransferRepositoryTest.class,
     TranslationPredicateTest.class
 })
