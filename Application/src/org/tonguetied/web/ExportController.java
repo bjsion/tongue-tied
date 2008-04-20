@@ -17,7 +17,7 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.CancellableFormController;
 import org.tonguetied.datatransfer.ExportParameters;
-import org.tonguetied.datatransfer.ExportService;
+import org.tonguetied.datatransfer.DataService;
 import org.tonguetied.datatransfer.FormatType;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
@@ -35,7 +35,7 @@ import org.tonguetied.keywordmanagement.Language;
 public class ExportController extends CancellableFormController {
     
     private KeywordService keywordService;
-    private ExportService exportService;
+    private DataService dataService;
     
     private static final Logger logger = 
         Logger.getLogger(ExportController.class);
@@ -63,7 +63,7 @@ public class ExportController extends CancellableFormController {
         if (logger.isDebugEnabled()) logger.debug("beginning export");
         ExportParameters parameters = (ExportParameters) command;
         
-        exportService.exportData(parameters);
+        dataService.exportData(parameters);
         
         return new ModelAndView(getSuccessView());
     }
@@ -104,11 +104,11 @@ public class ExportController extends CancellableFormController {
     }
     
     /**
-     * Assign the {@link ExportService}.
+     * Assign the {@link DataService}.
      * 
-     * @param exportService the {@link ExportService} to set.
+     * @param dataService the {@link DataService} to set.
      */
-    public void setExportService(ExportService exportService) {
-        this.exportService = exportService;
+    public void setDataService(DataService dataService) {
+        this.dataService = dataService;
     }
 }
