@@ -9,12 +9,14 @@ import static org.tonguetied.utils.Constants.JDBC_URL;
 import static org.tonguetied.utils.Constants.JDBC_USER_NAME;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.hsqldb.Server;
 
@@ -24,7 +26,7 @@ import org.hsqldb.Server;
  * controllable fashion. The creation of this class was inspired by the ANT sql
  * task where the execution of a SQL is continued even though there is an error.
  * This typically happens when executing a DDL and an ALTER statement fails due
- * to a non exsting table for example. This is not an error situation and can
+ * to a non existing table for example. This is not an error situation and can
  * easily be recovered from.
  *
  * @author mforslund
@@ -98,7 +100,8 @@ public class DBUtils
             // If the server is not running then start the server
             if (log.isInfoEnabled()) log.info("Db server has not been started. Attempting to start");
             // load jdbc props
-            props = FileUtils.loadProperties("/jdbc.properties");
+            props = new Properties();
+            loadProperties("/jdbc.properties");
             
             // initialize DB...
             dbServer.setDatabasePath(0, DB_SERVER_PATH);//+";shutdown=true");
@@ -136,6 +139,21 @@ public class DBUtils
 //            });
         }
     }
+
+    /**
+     * @param fileName the name of the resource to load
+     * @throws IOException
+     */
+    private static void loadProperties(String fileName) throws IOException {
+        InputStream is = null;
+        try {
+            is = DBUtils.class.getResourceAsStream(fileName);
+            props.load(is);
+        }
+        finally {
+            IOUtils.closeQuietly(is);
+        }
+    }
     
     public static void stopDatabase() {
         if (log.isInfoEnabled()) log.info("Attempting to stop database");
@@ -149,8 +167,16 @@ public class DBUtils
      */
     private static String getDDLSQL() throws IOException
     {
-        if("".equals(ddlSql))
-            ddlSql = FileUtils.loadFile(DDL_FILE);
+        if("".equals(ddlSql)) {
+            InputStream is = null;
+            try {
+                is = DBUtils.class.getResourceAsStream(DDL_FILE);
+                ddlSql = IOUtils.toString(is);
+            }
+            finally {
+                IOUtils.closeQuietly(is);
+            }
+        }
 
         return ddlSql;
     }
