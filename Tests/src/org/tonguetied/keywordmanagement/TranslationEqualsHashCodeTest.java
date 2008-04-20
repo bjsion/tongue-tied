@@ -41,13 +41,9 @@ public class TranslationEqualsHashCodeTest extends EqualsHashCodeTestCase {
         keyword.setKeyword("keyword");
         keyword.setContext("context");
 
-        Translation translation = new Translation();
-        translation.setValue("translated value");
-        translation.setBundle(bundle);
-        translation.setCountry(country);
-        translation.setLanguage(language);
+        Translation translation = new Translation(bundle, country, language,
+                "translated value", TranslationState.UNVERIFIED);
         translation.setKeyword(keyword);
-        translation.setState(TranslationState.UNVERIFIED);
         
         return translation;
     }
@@ -71,13 +67,9 @@ public class TranslationEqualsHashCodeTest extends EqualsHashCodeTestCase {
         keyword.setKeyword("keyword");
         keyword.setContext("context");
 
-        Translation translation = new Translation();
-        translation.setValue("another translated value");
-        translation.setBundle(bundle);
-        translation.setCountry(country);
-        translation.setLanguage(language);
+        Translation translation = new Translation(bundle, country, language,
+                "another translated value", TranslationState.UNVERIFIED);
         translation.setKeyword(keyword);
-        translation.setState(TranslationState.UNVERIFIED);
         
         return translation;
     }
