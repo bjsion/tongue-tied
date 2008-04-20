@@ -31,7 +31,7 @@ import fmpp.setting.Settings;
  * @author bsion
  *
  */
-public class ExportServiceImpl implements ExportService {
+public class DataServiceImpl implements DataService {
     private Settings settings;
     private TransferRepository transferRepository;
     private KeywordService keywordService;
@@ -41,20 +41,20 @@ public class ExportServiceImpl implements ExportService {
     private static final File BASE_DIR = 
         new File(System.getProperty("user.dir"));
     private static final Logger logger = 
-        Logger.getLogger(ExportServiceImpl.class);
+        Logger.getLogger(DataServiceImpl.class);
     private static final DateFormat DATE_FORMAT = 
         new SimpleDateFormat("yyyy-MM-dd_hh_ss");
     private String outputDir;
 
     /**
-     * Create a new instance of the ExportServiceImpl. After this constructor
+     * Create a new instance of the DataServiceImpl. After this constructor
      * has been called the {@link #init()} method should be called.
      */
-    public ExportServiceImpl() {
+    public DataServiceImpl() {
     }
     
     /**
-     * Initialize an instance of the ExportServiceImpl. This method configures
+     * Initialize an instance of the DataServiceImpl. This method configures
      * the exporter for use.
      *  
      * @throws ExportException if the exporter is fails to configure
@@ -76,9 +76,6 @@ public class ExportServiceImpl implements ExportService {
         }
     }
     
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.ExportService#export(org.tonguetied.domain.ExportParameters)
-     */
     public void exportData(final ExportParameters parameters) throws ExportException {
         if (parameters == null) {
             throw new IllegalArgumentException("cannot perform export with " +
@@ -160,12 +157,9 @@ public class ExportServiceImpl implements ExportService {
         return outputDir;
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.ExportService#importData()
-     */
-    public void importData(byte[] data, FormatType formatType) {
-        Importer importer = Importer.createInstance(keywordService, formatType);
-        importer.importData(data);
+    public void importData(ImportParameters parameters) {
+        Importer importer = parameters.getFormatType().getImporter(keywordService);
+        importer.importData(parameters);
     }
 
     /**

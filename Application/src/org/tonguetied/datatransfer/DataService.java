@@ -1,6 +1,5 @@
 package org.tonguetied.datatransfer;
 
-import java.io.File;
 
 
 
@@ -10,7 +9,7 @@ import java.io.File;
  * @author bsion
  *
  */
-public interface ExportService {
+public interface DataService {
 
     /**
      * Create a snapshot of data from persistence and transform it into the 
@@ -36,10 +35,9 @@ public interface ExportService {
     /**
      * Perform a bulk update/insert of data from an external source.
      * 
-     * @param data the data to process and then add to persistence
-     * @param formatType the format the input file is in
+     * @param parameters the parameters used to import data into the system
      * @throws ImportException if an error occurs during the import data 
      * process
      */
-    void importData(byte[] data, FormatType formatType);
+    void importData(final ImportParameters parameters);
 }
