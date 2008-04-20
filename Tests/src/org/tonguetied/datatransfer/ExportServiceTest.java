@@ -1,10 +1,14 @@
 package org.tonguetied.datatransfer;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.springframework.test.annotation.ExpectedException;
@@ -16,7 +20,6 @@ import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
 import org.tonguetied.test.common.AbstractServiceTest;
-import org.tonguetied.utils.FileUtils;
 
 
 /**
@@ -24,7 +27,7 @@ import org.tonguetied.utils.FileUtils;
  *
  */
 public class ExportServiceTest extends AbstractServiceTest {
-    private ExportService exportService;
+    private DataService dataService;
     
     private Country singapore;
     private Country australia;
@@ -149,7 +152,7 @@ public class ExportServiceTest extends AbstractServiceTest {
     protected void onTearDownAfterTransaction() throws Exception {
         super.onTearDownAfterTransaction();
         
-        final String exportPath = exportService.getExportPath();
+        final String exportPath = dataService.getExportPath();
         File exportDir = new File(exportPath);
         for (File file: exportDir.listFiles()) {
             assertTrue("Failed to remove " + file, file.delete());
@@ -157,15 +160,6 @@ public class ExportServiceTest extends AbstractServiceTest {
         
         assertTrue("Failed to remove " + exportDir, exportDir.delete());
     }
-
-//    @Override
-//    protected void onSetUpInTransaction() throws Exception {
-//        this.exportService = new ExportServiceImpl();
-////        ((ExportServiceImpl)this.exportService).setKeywordService(keywordService);
-//        ((ExportServiceImpl)this.exportService).setSourceRoot(SOURCE_ROOT);
-//        ((ExportServiceImpl)this.exportService).setOutputRoot(OUTPUT_ROOT.getAbsolutePath());
-//        ((ExportServiceImpl)this.exportService).init();
-//    }
 
     @Test
     public final void testExportToExcel() throws Exception {
@@ -175,14 +169,14 @@ public class ExportServiceTest extends AbstractServiceTest {
         parameters.addBundle(bundle);
         parameters.addCountry(singapore);
         parameters.setFormatType(FormatType.xls);
-        exportService.exportData(parameters);
+        dataService.exportData(parameters);
         
-        final String exportPath = exportService.getExportPath();
+        final String exportPath = dataService.getExportPath();
         File exportDir = new File(exportPath);
         File[] files = exportDir.listFiles(
                 new FileExtensionFilter(FormatType.xls.getDefaultFileExtension()));
 //        assertEquals(1, files.length);
-        String actualXML = FileUtils.loadFile(files[0]);
+        String actualXML = FileUtils.readFileToString(files[0]);
         assertNotNull(actualXML);
 //        assertXMLValid(actualXML);
 //        CountingNodeTester countingNodeTester = new CountingNodeTester(271);
@@ -200,14 +194,14 @@ public class ExportServiceTest extends AbstractServiceTest {
         parameters.addBundle(bundle);
         parameters.addCountry(singapore);
         parameters.setFormatType(FormatType.xlsLanguage);
-        exportService.exportData(parameters);
+        dataService.exportData(parameters);
         
-        final String exportPath = exportService.getExportPath();
+        final String exportPath = dataService.getExportPath();
         File exportDir = new File(exportPath);
         File[] files = exportDir.listFiles(
                 new FileExtensionFilter(FormatType.xlsLanguage.getDefaultFileExtension()));
 //        assertEquals(1, files.length);
-        String actualXML = FileUtils.loadFile(files[0]);
+        String actualXML = FileUtils.readFileToString(files[0]);
         assertNotNull(actualXML);
 //        assertXMLValid(actualXML);
 //        CountingNodeTester countingNodeTester = new CountingNodeTester(271);
@@ -225,7 +219,7 @@ public class ExportServiceTest extends AbstractServiceTest {
         parameters.addBundle(bundle);
         parameters.addCountry(singapore);
         parameters.setFormatType(FormatType.csv);
-        exportService.exportData(parameters);
+        dataService.exportData(parameters);
         
         List<Translation> translations = transferRepository.findTranslations(parameters);
         StringBuilder expected = new StringBuilder();
@@ -235,15 +229,16 @@ public class ExportServiceTest extends AbstractServiceTest {
             append(t.getLanguage().getName()).append(",").
             append(t.getCountry().getName()).append(",").
             append(t.getBundle().getName()).append(",").
-            append(t.getValue() != null? t.getValue(): "");
+            append(t.getValue() != null? t.getValue(): "").
+            append("\r\n");
         }
         
-        final String exportPath = exportService.getExportPath();
+        final String exportPath = dataService.getExportPath();
         File exportDir = new File(exportPath);
         File[] files = exportDir.listFiles(
                 new FileExtensionFilter(FormatType.csv.getDefaultFileExtension()));
         assertEquals(1, files.length);
-        String actual = FileUtils.loadFile(files[0]);
+        String actual = FileUtils.readFileToString(files[0]);
         
         assertEquals(expected.toString(), actual);
     }
@@ -257,7 +252,7 @@ public class ExportServiceTest extends AbstractServiceTest {
         parameters.addCountry(australia);
         parameters.addCountry(singapore);
         parameters.setFormatType(FormatType.properties);
-        exportService.exportData(parameters);
+        dataService.exportData(parameters);
         
         Properties expected_en_AU = new Properties();
         expected_en_AU.setProperty(translation1_1.getKeyword().getKeyword(), translation1_1.getValue());
@@ -269,31 +264,43 @@ public class ExportServiceTest extends AbstractServiceTest {
         Properties expected_zh_SG = new Properties();
         expected_zh_SG.setProperty(translation3_1.getKeyword().getKeyword(), translation3_1.getValue());
         
-        final String exportPath = exportService.getExportPath();
+        final String exportPath = dataService.getExportPath();
         File exportDir = new File(exportPath);
         File[] files = 
             exportDir.listFiles(new FileExtensionFilter(".rawproperties"));
         assertEquals(3, files.length);
         Properties actual;
+        InputStream is = null;
+        Properties expected = null;
         for (File file: files) {
-            if (file.getName().contains("en_AU")) {
-                actual = FileUtils.loadProperties(file);
-                assertEquals(expected_en_AU, actual);
+            try {
+                if (file.getName().contains("en_AU")) {
+                    expected = expected_en_AU;
+                }
+                else if (file.getName().contains("en_SG")) {
+                    expected = expected_en_SG;
+                }
+                else if (file.getName().contains("zh_SG")) {
+                    expected = expected_zh_SG;
+                }
+                if (expected != null) {
+                    is = FileUtils.openInputStream(file);
+                    is = new BufferedInputStream(is);
+                    actual = new Properties();
+                    actual.load(is);
+                    assertEquals(expected, actual);
+                }
             }
-            else if (file.getName().contains("en_SG")) {
-                actual = FileUtils.loadProperties(file);
-                assertEquals(expected_en_SG, actual);
-            }
-            else if (file.getName().contains("zh_SG")) {
-                actual = FileUtils.loadProperties(file);
-                assertEquals(expected_zh_SG, actual);
+            finally {
+                expected = null;
+                IOUtils.closeQuietly(is);
             }
         }
     }
     
     @ExpectedException(IllegalArgumentException.class)
     public final void testExportWithNullParameters() throws Exception {
-        exportService.exportData(null);
+        dataService.exportData(null);
     }
     
     @ExpectedException(IllegalArgumentException.class)
@@ -304,7 +311,7 @@ public class ExportServiceTest extends AbstractServiceTest {
         parameters.addBundle(bundle);
         parameters.addCountry(singapore);
         parameters.setFormatType(null);
-        exportService.exportData(parameters);
+        dataService.exportData(parameters);
     }
     
     private class FileExtensionFilter implements FilenameFilter {
@@ -323,8 +330,8 @@ public class ExportServiceTest extends AbstractServiceTest {
         }
     }
     
-    public void setExportService(ExportService exportService) {
-        this.exportService = exportService;
+    public void setExportService(DataService dataService) {
+        this.dataService = dataService;
     }
 
     public void setTransferRepository(TransferRepository transferRepository) {
