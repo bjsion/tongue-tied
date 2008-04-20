@@ -67,13 +67,9 @@ public class TranslationComparabilityTest extends ComparabilityTestCase {
      */
     @Override
     protected Comparable<?> createEqualInstance() throws Exception {
-        Translation translation = new Translation();
+        Translation translation = 
+            new Translation(bundle, israel, hebrew, "value", TranslationState.QUERIED);
         translation.setKeyword(keyword1);
-        translation.setLanguage(hebrew);
-        translation.setCountry(israel);
-        translation.setBundle(bundle);
-        translation.setValue("value");
-        translation.setState(TranslationState.QUERIED);
         return translation;
     }
 
@@ -82,13 +78,9 @@ public class TranslationComparabilityTest extends ComparabilityTestCase {
      */
     @Override
     protected Comparable<?> createGreaterInstance() throws Exception {
-        Translation translation = new Translation();
+        Translation translation = 
+            new Translation(bundle, israel, russian, "value", TranslationState.QUERIED);
         translation.setKeyword(keyword1);
-        translation.setLanguage(russian);
-        translation.setCountry(israel);
-        translation.setBundle(bundle);
-        translation.setValue("value");
-        translation.setState(TranslationState.QUERIED);
         return translation;
     }
 
@@ -97,12 +89,9 @@ public class TranslationComparabilityTest extends ComparabilityTestCase {
      */
     @Override
     protected Comparable<?> createLessInstance() throws Exception {
-        Translation translation = new Translation();
+        Translation translation = 
+            new Translation(bundle, defaultCountry, hebrew, "value", TranslationState.UNVERIFIED);
         translation.setKeyword(keyword1);
-        translation.setLanguage(hebrew);
-        translation.setCountry(defaultCountry);
-        translation.setBundle(bundle);
-        translation.setValue("value");
         return translation;
     }
 

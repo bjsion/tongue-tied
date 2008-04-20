@@ -7,6 +7,7 @@ import org.tonguetied.keywordmanagement.Language;
 import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
+import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
 import junitx.extensions.EqualsHashCodeTestCase;
 
@@ -36,11 +37,8 @@ public class KeywordEqualsHashCodeTest extends EqualsHashCodeTestCase {
         language.setCode(LanguageCode.en);
         language.setName("English");
 
-        Translation translation = new Translation();
-        translation.setValue("translated value");
-        translation.setBundle(bundle);
-        translation.setCountry(country);
-        translation.setLanguage(language);
+        Translation translation = 
+            new Translation(bundle, country, language, "translated value", TranslationState.UNVERIFIED);
         
         Keyword keyword = new Keyword();
         keyword.setContext("description of the keyword");
@@ -65,11 +63,8 @@ public class KeywordEqualsHashCodeTest extends EqualsHashCodeTestCase {
         language.setCode(LanguageCode.en);
         language.setName("English");
 
-        Translation translation = new Translation();
-        translation.setValue("another translated value");
-        translation.setBundle(bundle);
-        translation.setCountry(country);
-        translation.setLanguage(language);
+        Translation translation = 
+            new Translation(bundle, country, language, "another translated value", TranslationState.UNVERIFIED);
         
         Keyword keyword = new Keyword();
         keyword.setContext("description of the keyword");
