@@ -9,8 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import org.tonguetied.datatransfer.ExcelImporter;
-import org.tonguetied.datatransfer.ExcelImporter.TranslationPredicate;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
@@ -89,12 +87,7 @@ public class TranslationPredicateTest {
         this.expectedWithNullBundle = expectedWithNullBundle;
         this.expectedWithNullCountry = expectedWithNullCountry;
         this.expectedWithNullLanguage = expectedWithNullLanguage;
-        this.translation = new Translation();
-        this.translation.setCountry(country);
-        this.translation.setLanguage(language);
-        this.translation.setBundle(bundle);
-        this.translation.setState(TranslationState.VERIFIED);
-        this.translation.setValue("test");
+        this.translation = new Translation(bundle, country, language, "test", TranslationState.VERIFIED);
         Keyword keyword = new Keyword();
         keyword.setKeyword("test");
         keyword.addTranslation(translation);
@@ -102,12 +95,12 @@ public class TranslationPredicateTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.datatransfer.ExcelImporter.TranslationPredicate#evaluate(java.lang.Object)}.
+     * Test method for {@link org.tonguetied.datatransfer.TranslationPredicate#evaluate(java.lang.Object)}.
      */
     @Test
     public final void testEvaluate() {
         TranslationPredicate predicate =
-            new ExcelImporter.TranslationPredicate(bundle1, mexico, spanish);
+            new TranslationPredicate(bundle1, mexico, spanish);
         boolean actual = predicate.evaluate(translation);
         assertEquals(expected, actual);
     }
@@ -115,7 +108,7 @@ public class TranslationPredicateTest {
     @Test
     public final void testEvaluateWithNullBundle() {
         TranslationPredicate predicate = 
-            new ExcelImporter.TranslationPredicate(null, mexico, spanish);
+            new TranslationPredicate(null, mexico, spanish);
         boolean actual = predicate.evaluate(translation);
         assertEquals(expectedWithNullBundle, actual);
     }
@@ -123,7 +116,7 @@ public class TranslationPredicateTest {
     @Test
     public final void testEvaluateWithNullCountry() {
         TranslationPredicate predicate = 
-            new ExcelImporter.TranslationPredicate(bundle1, null, spanish);
+            new TranslationPredicate(bundle1, null, spanish);
         boolean actual = predicate.evaluate(translation);
         assertEquals(expectedWithNullCountry, actual);
     }
@@ -131,7 +124,7 @@ public class TranslationPredicateTest {
     @Test
     public final void testEvaluateWithNullLanguage() {
         TranslationPredicate predicate = 
-            new ExcelImporter.TranslationPredicate(bundle1, mexico, null);
+            new TranslationPredicate(bundle1, mexico, null);
         boolean actual = predicate.evaluate(translation);
         assertEquals(expectedWithNullLanguage, actual);
     }
