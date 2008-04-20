@@ -98,73 +98,32 @@ public class ExcelDataParserTest extends AbstractServiceTest {
         keyword1 = new Keyword();
         keyword1.setKeyword("Fri");
         keyword1.setContext("Acronym for Friday");
-        translation1_1 = new Translation();
-        translation1_1.setBundle(bundle1);
-        translation1_1.setCountry(defaultCountry);
-        translation1_1.setKeyword(keyword1);
-        translation1_1.setValue("Fri");
-        translation1_1.setLanguage(defaultLanguage);
-        translation1_1.setState(TranslationState.UNVERIFIED);
+        translation1_1 = new Translation(bundle1,defaultCountry, defaultLanguage, "Fri", TranslationState.UNVERIFIED);
         keyword1.addTranslation(translation1_1);
-        translation1_2 = new Translation();
-        translation1_2.setBundle(bundle1);
-        translation1_2.setCountry(defaultCountry);
-        translation1_2.setKeyword(keyword1);
-        translation1_2.setLanguage(hebrew);
-        translation1_2.setValue("\u05D9\u05D5\u05DD\u0020\u05D5\u0027");
-        translation1_2.setState(TranslationState.UNVERIFIED);
+        translation1_2 = new Translation(bundle1, defaultCountry, hebrew, 
+            "\u05D9\u05D5\u05DD\u0020\u05D5\u0027", TranslationState.UNVERIFIED);
         keyword1.addTranslation(translation1_2);
-        translation1_3 = new Translation();
-        translation1_3.setBundle(bundle1);
-        translation1_3.setCountry(defaultCountry);
-        translation1_3.setKeyword(keyword1);
-        translation1_3.setValue("\u661F\u671F\u4E94");
-        translation1_3.setLanguage(simplifiedChinese);
-        translation1_3.setState(TranslationState.UNVERIFIED);
+        translation1_3 = new Translation(bundle1, defaultCountry, simplifiedChinese,  
+                "\u661F\u671F\u4E94", TranslationState.UNVERIFIED);
         keyword1.addTranslation(translation1_3);
-        translation1_4 = new Translation();
-        translation1_4.setBundle(bundle1);
-        translation1_4.setCountry(taiwan);
-        translation1_4.setKeyword(keyword1);
-        translation1_4.setLanguage(simplifiedChinese);
-        translation1_4.setValue("\u661F\u671F\u4E94");
-        translation1_4.setState(TranslationState.UNVERIFIED);
+        translation1_4 = new Translation(bundle1, taiwan, simplifiedChinese,
+                "\u661F\u671F\u4E94", TranslationState.UNVERIFIED);
         keyword1.addTranslation(translation1_4);
 
         keyword2 = new Keyword();
         keyword2.setKeyword("Sat");
         keyword2.setContext("Acronym for Saturday");
-        translation2_1 = new Translation();
-        translation2_1.setBundle(bundle1);
-        translation2_1.setCountry(defaultCountry);
-        translation2_1.setKeyword(keyword1);
-        translation2_1.setValue("Sat");
-        translation2_1.setLanguage(defaultLanguage);
-        translation2_1.setState(TranslationState.UNVERIFIED);
+        translation2_1 = new Translation(bundle1, defaultCountry, defaultLanguage, 
+                "Sat", TranslationState.UNVERIFIED);
         keyword2.addTranslation(translation2_1);
-        translation2_2 = new Translation();
-        translation2_2.setBundle(bundle1);
-        translation2_2.setCountry(defaultCountry);
-        translation2_2.setKeyword(keyword1);
-        translation2_2.setLanguage(hebrew);
-        translation2_2.setValue("\u05D9\u05D5\u05DD\u0020\u05E9\u0027");
-        translation2_2.setState(TranslationState.UNVERIFIED);
+        translation2_2 = new Translation(bundle1, defaultCountry, hebrew,
+                "\u05D9\u05D5\u05DD\u0020\u05E9\u0027", TranslationState.UNVERIFIED);
         keyword2.addTranslation(translation2_2);
-        translation2_3 = new Translation();
-        translation2_3.setBundle(bundle1);
-        translation2_3.setCountry(defaultCountry);
-        translation2_3.setKeyword(keyword1);
-        translation2_3.setLanguage(simplifiedChinese);
-        translation2_3.setValue("\u661F\u671F\u516D");
-        translation2_3.setState(TranslationState.UNVERIFIED);
+        translation2_3 = new Translation(bundle1, defaultCountry, simplifiedChinese,
+                "\u661F\u671F\u516D", TranslationState.UNVERIFIED);
         keyword2.addTranslation(translation2_3);
-        translation2_4 = new Translation();
-        translation2_4.setBundle(bundle1);
-        translation2_4.setCountry(taiwan);
-        translation2_4.setKeyword(keyword1);
-        translation2_4.setLanguage(simplifiedChinese);
-        translation2_4.setValue("\u661F\u671F\u516D");
-        translation2_4.setState(TranslationState.UNVERIFIED);
+        translation2_4 = new Translation(bundle1, taiwan, simplifiedChinese,
+                "\u661F\u671F\u516D", TranslationState.UNVERIFIED);
         keyword2.addTranslation(translation2_4);
         
         keywordService.saveOrUpdate(defaultLanguage);
