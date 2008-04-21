@@ -303,9 +303,9 @@ public class Server
     }
     
     private File getTempDirectory() {
-        String tempDirStr = 
-            properties.getProperty(KEY_TEMP_DIR, DEFAULT_TEMP_DIR);
-        File tempDir = new File(tempDirStr);
+        String tempDirStr =  properties.getProperty(KEY_TEMP_DIR); 
+        File tempDir = (tempDirStr == null || "".equals(tempDirStr))? 
+                DEFAULT_TEMP_DIR: new File(tempDirStr);
 
         return tempDir;
     }

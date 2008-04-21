@@ -37,8 +37,8 @@ public interface ServerConstants {
      * The default location where the server will extract files and where the
      * embedded server will operate.
      */
-    static final String DEFAULT_TEMP_DIR = 
-        System.getProperty("user.dir") + File.separator + "tonguetied";
+    static final File DEFAULT_TEMP_DIR = 
+        new File(System.getProperty("user.dir"), "tonguetied");
     
     /**
      * The default name and location of the keystore file.
