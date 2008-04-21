@@ -1,5 +1,7 @@
 package org.tonguetied.datatransfer;
 
+import static org.tonguetied.datatransfer.Constants.TEST_DATA_DIR;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -148,9 +150,7 @@ public class ExcelDataParserTest extends AbstractServiceTest {
         try {
             // create a new file input stream with the input file specified
             // at the command line
-            File input = new File(System.getProperty("user.dir") + 
-                    File.separator + "resources" + File.separator + "data" +
-                    File.separator + "LanguageCentricImportData.xls");
+            File input = new File(TEST_DATA_DIR, "LanguageCentricImportData.xls");
             
             fis = new FileInputStream(input);
             // create a new org.apache.poi.poifs.filesystem.Filesystem

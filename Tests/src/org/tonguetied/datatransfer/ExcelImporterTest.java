@@ -50,8 +50,6 @@ public class ExcelImporterTest extends AbstractServiceTest {
     
     private KeywordService keywordService;
     
-//    private static final String INPUT_FILE = "/LanguageCentricImportData.xls";
-    
     @Override
     protected void onSetUpInTransaction() throws Exception {
         defaultLanguage = new Language();
@@ -177,7 +175,7 @@ public class ExcelImporterTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.datatransfer.ExcelImporter#importData(ImportParameters)}.
      */
     public final void testImportData() throws Exception {
-        File input = new File(TEST_DATA_DIR + "LanguageCentricImportData.xls");
+        File input = new File(TEST_DATA_DIR, "LanguageCentricImportData.xls");
         byte[] bytes = FileUtils.readFileToByteArray(input);
         
         Importer importer = FormatType.xlsLanguage.getImporter(keywordService);
