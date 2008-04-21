@@ -1,5 +1,7 @@
 package org.tonguetied.datatransfer;
 
+import java.io.File;
+
 
 
 
@@ -22,15 +24,12 @@ public interface DataService {
     void exportData(final ExportParameters parameters) throws ExportException;
     
     /**
-     * Returns the absolute pathname of the the directory where exported files 
-     * from the most recently executed export are saved. This method pass in a
-     * value of false to {@link #getExportPath(boolean)} so as not to reset the
-     * output path.
+     * Returns the the directory where exported files from the most recently 
+     * executed export are saved. 
      * 
-     * @return the absolute path of the output directory
-     * @see #getExportPath(boolean) 
+     * @return the output directory
      */
-    String getExportPath();
+    File getExportPath();
     
     /**
      * Perform a bulk update/insert of data from an external source.
