@@ -51,13 +51,6 @@ public class ExportServiceTest extends AbstractServiceTest {
 
     private TransferRepository transferRepository;
     
-//    private static final String SOURCE_ROOT = System.getProperty("user.dir") +
-//        File.separator + ".." + File.separator + "Application" + File.separator + 
-//        "resources" + File.separator + "templates" + File.separator + 
-//        "freemarker" + File.separator + "export";
-//    private static final File OUTPUT_ROOT = 
-//        new File (System.getProperty("user.dir") + File.separator + "exports");
-    
     @Override
     protected void onSetUpInTransaction() throws Exception {
         singapore = new Country();
@@ -152,8 +145,7 @@ public class ExportServiceTest extends AbstractServiceTest {
     protected void onTearDownAfterTransaction() throws Exception {
         super.onTearDownAfterTransaction();
         
-        final String exportPath = dataService.getExportPath();
-        File exportDir = new File(exportPath);
+        final File exportDir = dataService.getExportPath();
         for (File file: exportDir.listFiles()) {
             assertTrue("Failed to remove " + file, file.delete());
         }
@@ -171,8 +163,7 @@ public class ExportServiceTest extends AbstractServiceTest {
         parameters.setFormatType(FormatType.xls);
         dataService.exportData(parameters);
         
-        final String exportPath = dataService.getExportPath();
-        File exportDir = new File(exportPath);
+        final File exportDir = dataService.getExportPath();
         File[] files = exportDir.listFiles(
                 new FileExtensionFilter(FormatType.xls.getDefaultFileExtension()));
 //        assertEquals(1, files.length);
@@ -196,8 +187,7 @@ public class ExportServiceTest extends AbstractServiceTest {
         parameters.setFormatType(FormatType.xlsLanguage);
         dataService.exportData(parameters);
         
-        final String exportPath = dataService.getExportPath();
-        File exportDir = new File(exportPath);
+        final File exportDir = dataService.getExportPath();
         File[] files = exportDir.listFiles(
                 new FileExtensionFilter(FormatType.xlsLanguage.getDefaultFileExtension()));
 //        assertEquals(1, files.length);
@@ -233,8 +223,7 @@ public class ExportServiceTest extends AbstractServiceTest {
             append("\r\n");
         }
         
-        final String exportPath = dataService.getExportPath();
-        File exportDir = new File(exportPath);
+        final File exportDir = dataService.getExportPath();
         File[] files = exportDir.listFiles(
                 new FileExtensionFilter(FormatType.csv.getDefaultFileExtension()));
         assertEquals(1, files.length);
@@ -264,8 +253,7 @@ public class ExportServiceTest extends AbstractServiceTest {
         Properties expected_zh_SG = new Properties();
         expected_zh_SG.setProperty(translation3_1.getKeyword().getKeyword(), translation3_1.getValue());
         
-        final String exportPath = dataService.getExportPath();
-        File exportDir = new File(exportPath);
+        final File exportDir = dataService.getExportPath();
         File[] files = 
             exportDir.listFiles(new FileExtensionFilter(".rawproperties"));
         assertEquals(3, files.length);
