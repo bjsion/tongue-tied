@@ -97,36 +97,36 @@ public class PropertiesImporter extends Importer {
     protected void validate(final String fileName, List<ImportErrorCode> errorCodes)
             throws ImportException 
     {
-        String[] fileNameParts = fileName.split("_");
+        String[] tokens = fileName.split("_");
         
         CountryCode countryCode = null;
         LanguageCode languageCode = null;
-        switch (fileNameParts.length) {
+        switch (tokens.length) {
             case 1:
                 // this is the default bundle, so no country or language
                 countryCode = CountryCode.DEFAULT;
                 languageCode = LanguageCode.DEFAULT;
                 break;
             case 2:
-                if (isCountryCode(fileNameParts[1])) {
-                    countryCode = getCountryCode(fileNameParts[1], errorCodes);
+                if (isCountryCode(tokens[1])) {
+                    countryCode = getCountryCode(tokens[1], errorCodes);
                     languageCode = LanguageCode.DEFAULT;
                 }
                 else {
                     countryCode = CountryCode.DEFAULT;
-                    languageCode = getLanguageCode(fileNameParts[1], errorCodes);
+                    languageCode = getLanguageCode(tokens[1], errorCodes);
                 }
                 break;
             case 3:
-                countryCode = getCountryCode(fileNameParts[2], errorCodes);
-                languageCode = getLanguageCode(fileNameParts[1], errorCodes);
+                countryCode = getCountryCode(tokens[2], errorCodes);
+                languageCode = getLanguageCode(tokens[1], errorCodes);
                 break;
             default:
-//                resourceName = null;
+                errorCodes.add(ImportErrorCode.invalidNameFormat);
                 break;
         }
 
-        bundle = getKeywordService().getBundleByResourceName(fileNameParts[0]);
+        bundle = getKeywordService().getBundleByResourceName(tokens[0]);
         if (bundle == null)
             errorCodes.add(ImportErrorCode.unknownBundle);
         
