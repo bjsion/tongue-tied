@@ -116,8 +116,8 @@ public class PropertiesImporterTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.datatransfer.PropertiesImporter#importData(ImportParameters)}.
      */
     public final void testImportData() throws Exception {
-        String fileName = "PropertiesImporterTest";
-        File file = new File(TEST_DATA_DIR + fileName + "." + FormatType.properties.getDefaultFileExtension());
+        final String fileName = "PropertiesImporterTest";
+        File file = new File(TEST_DATA_DIR, fileName + "." + FormatType.properties.getDefaultFileExtension());
         byte[] input = FileUtils.readFileToByteArray(file);
         Importer importer = FormatType.properties.getImporter(keywordService);
         TranslationState expectedState = TranslationState.VERIFIED;
@@ -191,7 +191,7 @@ public class PropertiesImporterTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.datatransfer.PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithIllegalCountry() throws Exception {
-        String fileName = "PropertiesImporterTest_XX";
+        final String fileName = "PropertiesImporterTest_XX";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         Importer importer = FormatType.properties.getImporter(keywordService);
         importer.validate(fileName, errorCodes);
@@ -204,7 +204,7 @@ public class PropertiesImporterTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.datatransfer.PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithUnknownCountry() throws Exception {
-        String fileName = "PropertiesImporterTest_AL";
+        final String fileName = "PropertiesImporterTest_AL";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         Importer importer = FormatType.properties.getImporter(keywordService);
         importer.validate(fileName, errorCodes);
@@ -216,7 +216,7 @@ public class PropertiesImporterTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.datatransfer.PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithKnownCountry() throws Exception {
-        String fileName = "PropertiesImporterTest_IL";
+        final String fileName = "PropertiesImporterTest_IL";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         PropertiesImporter importer = (PropertiesImporter)
             FormatType.properties.getImporter(keywordService);
@@ -231,7 +231,7 @@ public class PropertiesImporterTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.datatransfer.PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithIllegalLanguage() throws Exception {
-        String fileName = "PropertiesImporterTest_xx";
+        final String fileName = "PropertiesImporterTest_xx";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         Importer importer = FormatType.properties.getImporter(keywordService);
         importer.validate(fileName, errorCodes);
@@ -244,7 +244,7 @@ public class PropertiesImporterTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.datatransfer.PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithUnknownLanguage() throws Exception {
-        String fileName = "PropertiesImporterTest_es";
+        final String fileName = "PropertiesImporterTest_es";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         Importer importer = FormatType.properties.getImporter(keywordService);
         importer.validate(fileName, errorCodes);
@@ -256,7 +256,7 @@ public class PropertiesImporterTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.datatransfer.PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithKnownLanguage() throws Exception {
-        String fileName = "PropertiesImporterTest_he";
+        final String fileName = "PropertiesImporterTest_he";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         PropertiesImporter importer = (PropertiesImporter)
             FormatType.properties.getImporter(keywordService);
@@ -271,7 +271,7 @@ public class PropertiesImporterTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.datatransfer.PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithUnknownBundle() throws Exception {
-        String fileName = "unknown.properties";
+        final String fileName = "unknown.properties";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         Importer importer = FormatType.properties.getImporter(keywordService);
         importer.validate(fileName, errorCodes);
@@ -283,7 +283,7 @@ public class PropertiesImporterTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.datatransfer.PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithKnownBundle() throws Exception {
-        String fileName = "PropertiesImporterTest";
+        final String fileName = "PropertiesImporterTest";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         PropertiesImporter importer = (PropertiesImporter)
             FormatType.properties.getImporter(keywordService);
@@ -298,7 +298,7 @@ public class PropertiesImporterTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.datatransfer.PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithUnknownCountryKnownLanguage() throws Exception {
-        String fileName = "PropertiesImporterTest_ar_AL";
+        final String fileName = "PropertiesImporterTest_ar_AL";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         Importer importer = FormatType.properties.getImporter(keywordService);
         importer.validate(fileName, errorCodes);
@@ -310,7 +310,7 @@ public class PropertiesImporterTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.datatransfer.PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithIllegalCountryKnownLanguage() throws Exception {
-        String fileName = "PropertiesImporterTest_ar_AL";
+        final String fileName = "PropertiesImporterTest_ar_AL";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         Importer importer = FormatType.properties.getImporter(keywordService);
         importer.validate(fileName, errorCodes);
@@ -322,7 +322,7 @@ public class PropertiesImporterTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.datatransfer.PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithKnownCountryUnknownLanguage() throws Exception {
-        String fileName = "PropertiesImporterTest_es_YE";
+        final String fileName = "PropertiesImporterTest_es_YE";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         Importer importer = FormatType.properties.getImporter(keywordService);
         importer.validate(fileName, errorCodes);
@@ -334,7 +334,7 @@ public class PropertiesImporterTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.datatransfer.PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithKnownCountryIllegalLanguage() throws Exception {
-        String fileName = "PropertiesImporterTest_xx_YE";
+        final String fileName = "PropertiesImporterTest_xx_YE";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         Importer importer = FormatType.properties.getImporter(keywordService);
         importer.validate(fileName, errorCodes);
@@ -347,7 +347,7 @@ public class PropertiesImporterTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.datatransfer.PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithKnownCountryKnownLanguage() throws Exception {
-        String fileName = "PropertiesImporterTest_he_IL";
+        final String fileName = "PropertiesImporterTest_he_IL";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         PropertiesImporter importer = (PropertiesImporter)
             FormatType.properties.getImporter(keywordService);
@@ -356,6 +356,20 @@ public class PropertiesImporterTest extends AbstractServiceTest {
         assertEquals(bundle1, importer.getBundle());
         assertEquals(israel, importer.getCountry());
         assertEquals(hebrew, importer.getLanguage());
+    }
+
+    /**
+     * Test method for {@link org.tonguetied.datatransfer.PropertiesImporter#validate(String, List)}.
+     */
+    public final void testValidateWithInvalidFilenameFormat() throws Exception {
+        final String fileName = "PropertiesImporterTest_ar_YE_DD";
+        List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
+        Importer importer = FormatType.properties.getImporter(keywordService);
+        importer.validate(fileName, errorCodes);
+        assertEquals(3, errorCodes.size());
+        assertTrue(errorCodes.contains(ImportErrorCode.unknownCountry));
+        assertTrue(errorCodes.contains(ImportErrorCode.unknownLanguage));
+        assertTrue(errorCodes.contains(ImportErrorCode.invalidNameFormat));
     }
 
     /**
