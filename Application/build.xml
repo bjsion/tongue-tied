@@ -86,6 +86,7 @@
         <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-lang-2.4.jar"/>
         <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-collections-3.2.jar"/>
         <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-cli-1.1.jar"/>
+        <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-io-1.4.jar"/>
         <path refid="fmpp.classpath"/>
         <pathelement location="${3rdparty.home}/POI/2.5.1/poi.jar"/>
         <pathelement location="${3rdparty.home}/Spring/acegi-security/1.0.4/acegi-security.jar"/>
