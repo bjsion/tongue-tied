@@ -37,6 +37,7 @@ public class DataServiceImpl implements DataService {
     private KeywordService keywordService;
     private String sourceRoot;
     private String outputRoot;
+    private File outputDir;
     
     private static final File BASE_DIR = 
         new File(System.getProperty("user.dir"));
@@ -44,7 +45,6 @@ public class DataServiceImpl implements DataService {
         Logger.getLogger(DataServiceImpl.class);
     private static final DateFormat DATE_FORMAT = 
         new SimpleDateFormat("yyyy-MM-dd_hh_ss");
-    private String outputDir;
 
     /**
      * Create a new instance of the DataServiceImpl. After this constructor
@@ -90,7 +90,7 @@ public class DataServiceImpl implements DataService {
             logger.debug("exporting based on filter " + parameters);
         
         try {
-            settings.set(NAME_OUTPUT_ROOT, getExportPath(true));
+            settings.set(NAME_OUTPUT_ROOT, getExportPath(true).getAbsolutePath());
             settings.set(NAME_SOURCES, 
                     getTemplateName(parameters.getFormatType()));
             String[] replaceExtensions = 
@@ -129,29 +129,28 @@ public class DataServiceImpl implements DataService {
     }
 
     /**
-     * Returns the absolute pathname of the the directory where exported files 
-     * from the most recently executed export are saved. This method pass in a
-     * value of false to {@link #getExportPath(boolean)} so as not to reset the
-     * output path.
+     * Returns the the directory where exported files from the most recently 
+     * executed export are saved. This method passes a value of false to 
+     * {@link #getExportPath(boolean)} so as not to reset the output path.
      * 
-     * @return the absolute path of the output directory
+     * @return the output directory
      * @see #getExportPath(boolean) 
      */
-    public String getExportPath() {
+    public File getExportPath() {
         return getExportPath(false);
     }
 
     /**
-     * Returns the absolute pathname of the the directory where exported files 
-     * from the most recently executed export are saved.
+     * Returns the the directory where exported files from the most recently 
+     * executed export are saved.
      * 
      * @param reset flag indicating that the output directory should be 
      * re-initialised.
-     * @return the absolute path of the output directory 
+     * @return the output directory 
      */
-    private String getExportPath(final boolean reset) {
+    private File getExportPath(final boolean reset) {
         if (reset) {
-            outputDir = outputRoot + File.separator + DATE_FORMAT.format(new Date());
+            outputDir = new File(outputRoot, DATE_FORMAT.format(new Date()));
         }
         
         return outputDir;
