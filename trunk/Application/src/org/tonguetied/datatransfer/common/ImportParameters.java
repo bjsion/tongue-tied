@@ -1,6 +1,5 @@
-package org.tonguetied.datatransfer.importing;
+package org.tonguetied.datatransfer.common;
 
-import org.tonguetied.datatransfer.common.FormatType;
 import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
