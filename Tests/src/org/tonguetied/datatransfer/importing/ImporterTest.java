@@ -6,6 +6,7 @@ import static junit.framework.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.tonguetied.datatransfer.common.ImportParameters;
 import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
 import org.tonguetied.keywordmanagement.KeywordService;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;

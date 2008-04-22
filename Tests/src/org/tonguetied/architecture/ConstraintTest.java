@@ -95,8 +95,6 @@ public class ConstraintTest {
         web.dependsUpon(usermanagement);
         web.dependsUpon(datatransfer);
         web.dependsUpon(datatransferCommon);
-        // TODO Web should not have a direct dependency on org.tonguetied.datatransfer.importing
-        web.dependsUpon(datatransferImport);
         web.dependsUpon(keywordmanagement);
         web.dependsUpon(audit);
     

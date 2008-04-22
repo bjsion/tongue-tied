@@ -9,6 +9,7 @@ import java.util.SortedSet;
 
 import org.apache.commons.io.FileUtils;
 import org.tonguetied.datatransfer.common.FormatType;
+import org.tonguetied.datatransfer.common.ImportParameters;
 import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
