@@ -1,4 +1,4 @@
-package org.tonguetied.datatransfer;
+package org.tonguetied.datatransfer.importing;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
@@ -13,7 +13,12 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-    ExportServiceTest.class
+    ExcelDataParserTest.class,
+    ExcelImporterTest.class,
+    ImporterFactoryTest.class,
+    ImporterTest.class,
+    PropertiesImporterTest.class,
+    TranslationPredicateTest.class
 })
 public class AllTests {
 

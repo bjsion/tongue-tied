@@ -79,7 +79,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean id="keywordRepository" class="org.tonguetied.keywordmanagement.KeywordRepositoryImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-    <bean id="transferRepository" class="org.tonguetied.datatransfer.TransferRepositoryImpl">
+    <bean id="transferRepository" class="org.tonguetied.datatransfer.dao.TransferRepositoryImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 	<bean id="userRepository" class="org.tonguetied.usermanagement.UserRepositoryImpl">
