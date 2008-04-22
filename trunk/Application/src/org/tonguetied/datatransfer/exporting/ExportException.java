@@ -1,4 +1,4 @@
-package org.tonguetied.datatransfer;
+package org.tonguetied.datatransfer.exporting;
 
 /**
  * Exception thrown when an error occurs during a data export. This exception

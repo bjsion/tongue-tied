@@ -1,7 +1,8 @@
-package org.tonguetied.datatransfer;
+package org.tonguetied.datatransfer.dao;
 
 import java.util.List;
 
+import org.tonguetied.datatransfer.common.ExportParameters;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.keywordmanagement.Country.CountryCode;

@@ -1,4 +1,4 @@
-package org.tonguetied.datatransfer;
+package org.tonguetied.datatransfer.importing;
 
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.builder.EqualsBuilder;

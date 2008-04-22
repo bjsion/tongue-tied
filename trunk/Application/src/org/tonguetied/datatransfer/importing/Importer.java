@@ -1,10 +1,10 @@
-package org.tonguetied.datatransfer;
+package org.tonguetied.datatransfer.importing;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.lucene.Keyword;
-import org.tonguetied.datatransfer.ImportException.ImportErrorCode;
+import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
 import org.tonguetied.keywordmanagement.KeywordService;
 import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;

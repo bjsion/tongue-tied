@@ -1,8 +1,10 @@
-package org.tonguetied.datatransfer;
+package org.tonguetied.datatransfer.exporting;
 
 import java.util.List;
 import java.util.Map;
 
+import org.tonguetied.datatransfer.common.ExportParameters;
+import org.tonguetied.datatransfer.dao.TransferRepository;
 import org.tonguetied.keywordmanagement.Translation;
 
 

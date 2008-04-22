@@ -1,4 +1,4 @@
-package org.tonguetied.datatransfer;
+package org.tonguetied.datatransfer.dao;
 
 import static org.hibernate.criterion.Restrictions.eq;
 
@@ -8,6 +8,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.tonguetied.datatransfer.common.ExportParameters;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.keywordmanagement.Country.CountryCode;
