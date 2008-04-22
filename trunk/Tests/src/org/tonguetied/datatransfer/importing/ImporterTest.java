@@ -1,4 +1,4 @@
-package org.tonguetied.datatransfer;
+package org.tonguetied.datatransfer.importing;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -6,7 +6,7 @@ import static junit.framework.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.tonguetied.datatransfer.ImportException.ImportErrorCode;
+import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
 import org.tonguetied.keywordmanagement.KeywordService;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
@@ -36,7 +36,7 @@ public class ImporterTest {
     }
     
     /**
-     * Test method for {@link org.tonguetied.datatransfer.Importer#importData(ImportParameters)}.
+     * Test method for {@link org.tonguetied.datatransfer.importing.Importer#importData(ImportParameters)}.
      */
     @Test
     public final void testImportDataWithNoData() {
@@ -55,7 +55,7 @@ public class ImporterTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.datatransfer.Importer#importData(ImportParameters)}.
+     * Test method for {@link org.tonguetied.datatransfer.importing.Importer#importData(ImportParameters)}.
      */
     @Test
     public final void testImportDataWithNull() {
@@ -74,7 +74,7 @@ public class ImporterTest {
     }
     
     /**
-     * Test method for {@link org.tonguetied.datatransfer.Importer#importData(ImportParameters)}.
+     * Test method for {@link org.tonguetied.datatransfer.importing.Importer#importData(ImportParameters)}.
      */
     @Test
     public final void testImportDataWithNullState() {

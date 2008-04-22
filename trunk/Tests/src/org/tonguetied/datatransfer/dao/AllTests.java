@@ -1,4 +1,4 @@
-package org.tonguetied.datatransfer;
+package org.tonguetied.datatransfer.dao;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
@@ -13,7 +13,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-    ExportServiceTest.class
+    TransferRepositoryTest.class
 })
 public class AllTests {
 

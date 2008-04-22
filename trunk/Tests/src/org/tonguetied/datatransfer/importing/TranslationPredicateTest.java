@@ -1,4 +1,4 @@
-package org.tonguetied.datatransfer;
+package org.tonguetied.datatransfer.importing;
 
 import static org.junit.Assert.assertEquals;
 
@@ -95,7 +95,7 @@ public class TranslationPredicateTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.datatransfer.TranslationPredicate#evaluate(java.lang.Object)}.
+     * Test method for {@link org.tonguetied.datatransfer.importing.TranslationPredicate#evaluate(java.lang.Object)}.
      */
     @Test
     public final void testEvaluate() {

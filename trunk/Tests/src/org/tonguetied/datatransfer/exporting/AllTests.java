@@ -1,4 +1,4 @@
-package org.tonguetied.datatransfer;
+package org.tonguetied.datatransfer.exporting;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
@@ -13,7 +13,8 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-    ExportServiceTest.class
+    ExportDataPostProcessorFactoryTest.class,
+    LanguageCentricProcessorTest.class
 })
 public class AllTests {
 

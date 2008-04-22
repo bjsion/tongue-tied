@@ -1,4 +1,4 @@
-package org.tonguetied.datatransfer;
+package org.tonguetied.datatransfer.exporting;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,6 +7,9 @@ import java.util.Map;
 
 import org.junit.Test;
 import org.springframework.test.annotation.ExpectedException;
+import org.tonguetied.datatransfer.common.ExportParameters;
+import org.tonguetied.datatransfer.dao.TransferRepository;
+import org.tonguetied.datatransfer.exporting.LanguageCentricProcessor;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
@@ -149,7 +152,7 @@ public class LanguageCentricProcessorTest extends AbstractServiceTest {
     }
     
     /**
-     * Test method for {@link org.tonguetied.datatransfer.LanguageCentricProcessor#transformData(List, TransferRepository)}.
+     * Test method for {@link org.tonguetied.datatransfer.exporting.LanguageCentricProcessor#transformData(List, TransferRepository)}.
      */
     @Test
     public final void testTransformDataWithNullList() {
@@ -159,7 +162,7 @@ public class LanguageCentricProcessorTest extends AbstractServiceTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.datatransfer.LanguageCentricProcessor#transformData(List, TransferRepository)}.
+     * Test method for {@link org.tonguetied.datatransfer.exporting.LanguageCentricProcessor#transformData(List, TransferRepository)}.
      */
     @ExpectedException(NullPointerException.class)
     public final void testTransformDataWithNullRepository() {
@@ -177,7 +180,7 @@ public class LanguageCentricProcessorTest extends AbstractServiceTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.datatransfer.LanguageCentricProcessor#transformData(List, TransferRepository)}.
+     * Test method for {@link org.tonguetied.datatransfer.exporting.LanguageCentricProcessor#transformData(List, TransferRepository)}.
      */
     @Test
     public final void testTransformDataWithEmptyList() {
@@ -187,7 +190,7 @@ public class LanguageCentricProcessorTest extends AbstractServiceTest {
     }
     
     /**
-     * Test method for {@link org.tonguetied.datatransfer.LanguageCentricProcessor#transformData(List, TransferRepository)}.
+     * Test method for {@link org.tonguetied.datatransfer.exporting.LanguageCentricProcessor#transformData(List, TransferRepository)}.
      */
     @Test
     public final void testTransformData() {

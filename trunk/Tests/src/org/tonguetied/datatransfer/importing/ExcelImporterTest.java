@@ -1,18 +1,12 @@
-package org.tonguetied.datatransfer;
+package org.tonguetied.datatransfer.importing;
 
 import static org.tonguetied.datatransfer.Constants.TEST_DATA_DIR;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.poi.hssf.eventusermodel.HSSFEventFactory;
-import org.apache.poi.hssf.eventusermodel.HSSFRequest;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.junit.Test;
-import org.tonguetied.datatransfer.ExcelDataParser;
+import org.apache.commons.io.FileUtils;
+import org.tonguetied.datatransfer.common.FormatType;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
@@ -29,8 +23,8 @@ import org.tonguetied.test.common.AbstractServiceTest;
  * @author bsion
  *
  */
-public class ExcelDataParserTest extends AbstractServiceTest {
-    
+public class ExcelImporterTest extends AbstractServiceTest {
+
     private Language defaultLanguage;
     private Language hebrew;
     private Language simplifiedChinese;
@@ -100,32 +94,70 @@ public class ExcelDataParserTest extends AbstractServiceTest {
         keyword1 = new Keyword();
         keyword1.setKeyword("Fri");
         keyword1.setContext("Acronym for Friday");
-        translation1_1 = new Translation(bundle1,defaultCountry, defaultLanguage, "Fri", TranslationState.UNVERIFIED);
+        translation1_1 = new Translation();
+        translation1_1.setBundle(bundle1);
+        translation1_1.setCountry(defaultCountry);
+        translation1_1.setKeyword(keyword1);
+        translation1_1.setValue("Fri");
+        translation1_1.setLanguage(defaultLanguage);
+        translation1_1.setState(TranslationState.QUERIED);
         keyword1.addTranslation(translation1_1);
-        translation1_2 = new Translation(bundle1, defaultCountry, hebrew, 
-            "\u05D9\u05D5\u05DD\u0020\u05D5\u0027", TranslationState.UNVERIFIED);
+        translation1_2 = new Translation();
+        translation1_2.setBundle(bundle1);
+        translation1_2.setCountry(defaultCountry);
+        translation1_2.setKeyword(keyword1);
+        translation1_2.setLanguage(hebrew);
+        translation1_2.setValue("\u05D9\u05D5\u05DD\u0020\u05D5\u0027");
+        translation1_2.setState(TranslationState.QUERIED);
         keyword1.addTranslation(translation1_2);
-        translation1_3 = new Translation(bundle1, defaultCountry, simplifiedChinese,  
-                "\u661F\u671F\u4E94", TranslationState.UNVERIFIED);
+        translation1_3 = new Translation();
+        translation1_3.setBundle(bundle1);
+        translation1_3.setCountry(defaultCountry);
+        translation1_3.setKeyword(keyword1);
+        translation1_3.setValue("\u661F\u671F\u4E94");
+        translation1_3.setLanguage(simplifiedChinese);
+        translation1_3.setState(TranslationState.VERIFIED);
         keyword1.addTranslation(translation1_3);
-        translation1_4 = new Translation(bundle1, taiwan, simplifiedChinese,
-                "\u661F\u671F\u4E94", TranslationState.UNVERIFIED);
+        translation1_4 = new Translation();
+        translation1_4.setBundle(bundle1);
+        translation1_4.setCountry(taiwan);
+        translation1_4.setKeyword(keyword1);
+        translation1_4.setLanguage(simplifiedChinese);
+        translation1_4.setValue("\u661F\u671F\u4E94");
+        translation1_4.setState(TranslationState.UNVERIFIED);
         keyword1.addTranslation(translation1_4);
 
         keyword2 = new Keyword();
         keyword2.setKeyword("Sat");
         keyword2.setContext("Acronym for Saturday");
-        translation2_1 = new Translation(bundle1, defaultCountry, defaultLanguage, 
-                "Sat", TranslationState.UNVERIFIED);
+        translation2_1 = new Translation();
+        translation2_1.setBundle(bundle1);
+        translation2_1.setCountry(defaultCountry);
+        translation2_1.setKeyword(keyword1);
+        translation2_1.setValue("Sat");
+        translation2_1.setLanguage(defaultLanguage);
+        translation2_1.setState(TranslationState.QUERIED);
         keyword2.addTranslation(translation2_1);
-        translation2_2 = new Translation(bundle1, defaultCountry, hebrew,
-                "\u05D9\u05D5\u05DD\u0020\u05E9\u0027", TranslationState.UNVERIFIED);
+        translation2_2 = new Translation();
+        translation2_2.setBundle(bundle1);
+        translation2_2.setCountry(defaultCountry);
+        translation2_2.setKeyword(keyword1);
+        translation2_2.setLanguage(hebrew);
+        translation2_2.setState(TranslationState.VERIFIED);
         keyword2.addTranslation(translation2_2);
-        translation2_3 = new Translation(bundle1, defaultCountry, simplifiedChinese,
-                "\u661F\u671F\u516D", TranslationState.UNVERIFIED);
+        translation2_3 = new Translation();
+        translation2_3.setBundle(bundle1);
+        translation2_3.setCountry(defaultCountry);
+        translation2_3.setKeyword(keyword1);
+        translation2_3.setLanguage(simplifiedChinese);
+        translation2_3.setState(TranslationState.QUERIED);
         keyword2.addTranslation(translation2_3);
-        translation2_4 = new Translation(bundle1, taiwan, simplifiedChinese,
-                "\u661F\u671F\u516D", TranslationState.UNVERIFIED);
+        translation2_4 = new Translation();
+        translation2_4.setBundle(bundle1);
+        translation2_4.setCountry(taiwan);
+        translation2_4.setKeyword(keyword1);
+        translation2_4.setLanguage(simplifiedChinese);
+        translation2_4.setState(TranslationState.QUERIED);
         keyword2.addTranslation(translation2_4);
         
         keywordService.saveOrUpdate(defaultLanguage);
@@ -137,70 +169,34 @@ public class ExcelDataParserTest extends AbstractServiceTest {
         keywordService.saveOrUpdate(defaultCountry);
         keywordService.saveOrUpdate(southAfrica);
         keywordService.saveOrUpdate(taiwan);
+        keywordService.saveOrUpdate(keyword1);
     }
-
+    
     /**
-     * Test method for {@link org.tonguetied.datatransfer.ExcelDataParser#processRecord(org.apache.poi.hssf.record.Record)}.
+     * Test method for {@link org.tonguetied.datatransfer.importing.ExcelImporter#importData(ImportParameters)}.
      */
-    @Test
-    public final void testProcessRecord() throws Exception {
-        ExcelDataParser parser = new ExcelDataParser(keywordService);
-        FileInputStream fis = null;
-        InputStream dis = null;
-        try {
-            // create a new file input stream with the input file specified
-            // at the command line
-            File input = new File(TEST_DATA_DIR, "LanguageCentricImportData.xls");
-            
-            fis = new FileInputStream(input);
-            // create a new org.apache.poi.poifs.filesystem.Filesystem
-            POIFSFileSystem poifs = new POIFSFileSystem(fis);
-            // get the Workbook (excel part) stream in a InputStream
-            InputStream din = poifs.createDocumentInputStream("Workbook");
-            // construct out HSSFRequest object
-            HSSFRequest req = new HSSFRequest();
-            // lazy listen for ALL records with the listener shown above
-            req.addListenerForAllRecords(parser);
-            // create our event factory
-            HSSFEventFactory factory = new HSSFEventFactory();
-            // process our events based on the document input stream
-            factory.processEvents(req, din);
-        } finally {
-            // and our document input stream (don't want to leak these!)
-            if (dis != null)
-                dis.close();
-            // once all the events are processed close our file input stream
-            if (fis != null)
-                fis.close();
-        }
+    public final void testImportData() throws Exception {
+        File input = new File(TEST_DATA_DIR, "LanguageCentricImportData.xls");
+        byte[] bytes = FileUtils.readFileToByteArray(input);
         
-        List<Language> languages = parser.getLanguages(); 
-        assertEquals(4, languages.size());
-        assertTrue(languages.contains(defaultLanguage));
-        assertTrue(languages.contains(hebrew));
-        assertTrue(languages.contains(simplifiedChinese));
-        assertTrue(languages.contains(traditionalChinese));
-        
-        Map<String, Keyword> keywords = parser.getKeywords();
+        Importer importer = ImporterFactory.getImporter(FormatType.xlsLanguage, keywordService);
+        TranslationState expectedState = TranslationState.VERIFIED;
+        ImportParameters parameters = new ImportParameters();
+        parameters.setData(bytes);
+        parameters.setTranslationState(expectedState);
+        importer.importData(parameters);
+
+        List<Keyword> keywords = keywordService.getKeywords(0, null);
         assertEquals(8, keywords.size());
-        Keyword actual = keywords.get(keyword1.getKeyword());
-        assessKeyword(keyword1, actual);
         
-        actual = keywords.get(keyword2.getKeyword());
-        assessKeyword(keyword2, actual);
-    }
-
-    /**
-     * @param keywords
-     */
-    private void assessKeyword(Keyword expected, Keyword actual) {
-        assertEquals(expected.getKeyword(), actual.getKeyword());
-        assertEquals(expected.getContext(), actual.getContext());
+        Keyword actual = keywordService.getKeyword(keyword1.getKeyword());
         Object[] actranslations = actual.getTranslations().toArray();
-        Object[] extranslations = expected.getTranslations().toArray();
+        Object[] extranslations = keyword1.getTranslations().toArray();
+        Translation expectedTrans; 
+        Translation actualTrans; 
         for (int i = 0; i < actranslations.length; i++) {
-            Translation expectedTrans = (Translation)extranslations[i]; 
-            Translation actualTrans = (Translation)actranslations[i]; 
+            expectedTrans = (Translation)extranslations[i]; 
+            actualTrans = (Translation)actranslations[i]; 
             assertEquals(expectedTrans.getValue(), actualTrans.getValue());
             assertEquals(expectedTrans.getBundle(), actualTrans.getBundle());
             assertEquals(expectedTrans.getCountry(), actualTrans.getCountry());
@@ -208,9 +204,16 @@ public class ExcelDataParserTest extends AbstractServiceTest {
             assertNotNull(actualTrans.getState());
             assertEquals(expectedTrans.getState(), actualTrans.getState());
         }
+        
+        actual = keywordService.getKeyword(keyword2.getKeyword());
+        Object[] translations = actual.getTranslations().toArray();
+        assertEquals("Sat", ((Translation)translations[0]).getValue());
+        assertEquals("\u05D9\u05D5\u05DD\u0020\u05E9\u0027", ((Translation)translations[1]).getValue());
+        assertEquals("\u661F\u671F\u516D", ((Translation)translations[2]).getValue());
+        assertEquals("\u661F\u671F\u516D", ((Translation)translations[3]).getValue());
     }
-
-    public void setKeywordService(final KeywordService keywordService) {
+    
+    public void setKeywordService(KeywordService keywordService) {
         this.keywordService = keywordService;
     }
 }
