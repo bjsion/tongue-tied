@@ -1,4 +1,4 @@
-package org.tonguetied.datatransfer;
+package org.tonguetied.datatransfer.common;
 
 import java.util.ArrayList;
 import java.util.List;

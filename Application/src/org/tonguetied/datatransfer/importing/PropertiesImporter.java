@@ -1,4 +1,4 @@
-package org.tonguetied.datatransfer;
+package org.tonguetied.datatransfer.importing;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.tonguetied.datatransfer.ImportException.ImportErrorCode;
+import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
@@ -37,7 +37,7 @@ public class PropertiesImporter extends Importer {
      * 
      * @param keywordService the interface to keyword functions
      */
-    protected PropertiesImporter(KeywordService keywordService) {
+    public PropertiesImporter(KeywordService keywordService) {
         super(keywordService);
     }
 

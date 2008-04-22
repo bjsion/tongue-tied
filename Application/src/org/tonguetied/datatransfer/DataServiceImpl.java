@@ -17,6 +17,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.tonguetied.datatransfer.common.ExportParameters;
+import org.tonguetied.datatransfer.common.FormatType;
+import org.tonguetied.datatransfer.dao.TransferRepository;
+import org.tonguetied.datatransfer.exporting.ExportDataPostProcessor;
+import org.tonguetied.datatransfer.exporting.ExportDataPostProcessorFactory;
+import org.tonguetied.datatransfer.exporting.ExportException;
+import org.tonguetied.datatransfer.importing.ImportParameters;
+import org.tonguetied.datatransfer.importing.Importer;
+import org.tonguetied.datatransfer.importing.ImporterFactory;
 import org.tonguetied.keywordmanagement.KeywordService;
 import org.tonguetied.keywordmanagement.Language;
 import org.tonguetied.keywordmanagement.Translation;
@@ -43,8 +52,7 @@ public class DataServiceImpl implements DataService {
         new File(System.getProperty("user.dir"));
     private static final Logger logger = 
         Logger.getLogger(DataServiceImpl.class);
-    private static final DateFormat DATE_FORMAT = 
-        new SimpleDateFormat("yyyy-MM-dd_hh_ss");
+    private static final String DATE_FORMAT = "yyyy-MM-dd_hh_mm_ss";
 
     /**
      * Create a new instance of the DataServiceImpl. After this constructor
@@ -100,7 +108,8 @@ public class DataServiceImpl implements DataService {
             List<Translation> translations = 
                 transferRepository.findTranslations(parameters);
             Map<String, Object> root = new HashMap<String, Object>();
-            ExportDataPostProcessor postProcessor = parameters.getFormatType().getPostProcessor();
+            ExportDataPostProcessor postProcessor = 
+                ExportDataPostProcessorFactory.getPostProcessor(parameters.getFormatType());
             if (postProcessor != null) {
                 List<?> results = 
                     postProcessor.transformData(translations, transferRepository);
@@ -150,14 +159,16 @@ public class DataServiceImpl implements DataService {
      */
     private File getExportPath(final boolean reset) {
         if (reset) {
-            outputDir = new File(outputRoot, DATE_FORMAT.format(new Date()));
+            final DateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
+            outputDir = new File(outputRoot, formatter.format(new Date()));
         }
         
         return outputDir;
     }
 
     public void importData(ImportParameters parameters) {
-        Importer importer = parameters.getFormatType().getImporter(keywordService);
+        Importer importer = 
+            ImporterFactory.getImporter(parameters.getFormatType(), keywordService);
         importer.importData(parameters);
     }
 

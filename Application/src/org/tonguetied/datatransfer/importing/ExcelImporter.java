@@ -1,4 +1,4 @@
-package org.tonguetied.datatransfer;
+package org.tonguetied.datatransfer.importing;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -31,7 +31,7 @@ public class ExcelImporter extends Importer {
      * 
      * @param keywordService the interface to keyword functions
      */
-    protected ExcelImporter(KeywordService keywordService) {
+    public ExcelImporter(KeywordService keywordService) {
         super(keywordService);
     }
 
