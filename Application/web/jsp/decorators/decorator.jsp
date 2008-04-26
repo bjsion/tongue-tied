@@ -29,11 +29,11 @@
 <body>
     <div>
         <div class="productDesc">
-            <form id="langForm" method="get" action="<c:url value="/tonguetiedHome.htm"/>">
+            <form id="langForm" method="get" action="${pageContext.request.requestURL}">
                 <div>
-                    <label for="siteLanguage" class="content"><fmt:message key="language"/></label>
+                    <label id="siteLanguageLabel" for="siteLanguage" class="content"><fmt:message key="language"/></label>
                     <fmt:bundle basename="language">
-                    <select id="siteLanguage" name="siteLanguage" size="1" onchange="document.langForm.submit();">
+                    <select id="siteLanguage" name="siteLanguage" size="1" onchange="document.getElementById('langForm').submit();">
                         <c:forEach items="${applicationScope.supportedLanguages}" var="langCode">
                         <option value="<c:out value="${langCode}"/>" <c:if test="${langCode == rc.locale}">selected="selected"</c:if>><fmt:message key="${langCode}"/></option>
                         </c:forEach>

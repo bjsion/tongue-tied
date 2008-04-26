@@ -76,6 +76,12 @@ public class KeywordController extends CancellableFormController {
                     KeywordFactory.createKeyword(keywordService.getCountries(), 
                         keywordService.getLanguage(LanguageCode.DEFAULT), bundle);
             } 
+            else {
+                // catch all if neither is specified. This is a rare occurence
+                // and generally will not occur. This case is only to prevent
+                // NPE when rendering the form
+                keyword = new Keyword();
+            }
         }
         
         return keyword;
