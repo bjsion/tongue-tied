@@ -505,6 +505,11 @@
                 <exclude name="ROOT/*"/>
             </fileset>
         </copy>
+        <copy todir="${web.server.root}">
+            <fileset dir="${web.jsp.dir}/ROOT">
+                <include name="/*"/>
+            </fileset>
+        </copy>
         <copy todir="${web.server.css}">
             <fileset dir="${web.css.dir}">
                 <include name="**/*.css"/>

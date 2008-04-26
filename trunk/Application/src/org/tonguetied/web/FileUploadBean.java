@@ -1,7 +1,7 @@
 package org.tonguetied.web;
 
 import org.springframework.web.multipart.MultipartFile;
-import org.tonguetied.datatransfer.importing.ImportParameters;
+import org.tonguetied.datatransfer.common.ImportParameters;
 
 
 /**
