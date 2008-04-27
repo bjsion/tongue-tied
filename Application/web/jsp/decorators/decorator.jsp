@@ -29,7 +29,7 @@
 <body>
     <div>
         <div class="productDesc">
-            <img src="<c:url value="/images/application-logo.png"/>" alt="<fmt:message key="application.logo"/>" title="<fmt:message key="application.logo"/>"/>
+            <img src="<c:url value="/images/application_logo.png"/>" alt="<fmt:message key="application.logo"/>" title="<fmt:message key="application.logo"/>"/>
             <form id="langForm" method="get" action="${pageContext.request.requestURL}">
                 <div>
                     <label id="siteLanguageLabel" for="siteLanguage" class="content"><fmt:message key="language"/></label>
