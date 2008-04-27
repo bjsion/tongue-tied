@@ -6,6 +6,7 @@
     <div class="content">
         <display:table name="users" id="user" sort="page" requestURI="">
             <display:column sortable="true" titleKey="username" url="/user.htm" paramId="id" paramProperty="id">
+                <img src="<c:url value="/images/user.png"/>" alt="" title="${user.username}}" class="imgLink"/>
                 <c:out value="${user.username}"/>
             </display:column>
             <display:column titleKey="roles" sortable="false">

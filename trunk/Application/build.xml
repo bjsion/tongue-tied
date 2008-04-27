@@ -517,7 +517,7 @@
         </copy>
         <copy todir="${web.server.images}">
             <fileset dir="${web.images.dir}">
-                <include name="**/*.gif"/>
+                <include name="**/*.ico"/>
                 <include name="**/*.png"/>
             </fileset>
         </copy>
