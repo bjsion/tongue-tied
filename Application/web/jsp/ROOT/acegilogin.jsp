@@ -5,20 +5,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="org.acegisecurity.ui.AbstractProcessingFilter" %>
-<%@ page import="org.acegisecurity.ui.webapp.AuthenticationProcessingFilter" %>
 <%@ page import="org.acegisecurity.AuthenticationException" %>
-<%@ page import="org.acegisecurity.context.SecurityContextHolder" %>
-<%@ page import="org.acegisecurity.Authentication" %>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <fmt:bundle basename="tonguetied">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" media="all" type="text/css" href="<c:url value="/css/tonguetied.css"/>"/>
+<link rel="icon" type="image/png" href="<c:url value="/images/favicon.ico"/>"/>
 <title><fmt:message key="application.short.name"/></title>
 </head>
 
 <body>
+    <img src="<c:url value="/images/application_logo.png"/>" alt="<fmt:message key="application.logo"/>" title="<fmt:message key="application.logo"/>"/>
     <h1><fmt:message key="login"/></h1>
     <%-- this form-login-page form is also used as the 
          form-error-page to ask for a login again.
@@ -29,8 +28,8 @@
             <legend><fmt:message key="login"/></legend>
             <c:if test="${not empty param.login_error}">
               <span class="error">
-                Your login attempt was not successful, try again.
-                Reason: <%= ((AuthenticationException) session.getAttribute(AbstractProcessingFilter.ACEGI_SECURITY_LAST_EXCEPTION_KEY)).getMessage() %>
+                <fmt:message key="login.unsuccessful"/>
+                FIXME Reason: <%= ((AuthenticationException) session.getAttribute(AbstractProcessingFilter.ACEGI_SECURITY_LAST_EXCEPTION_KEY)).getMessage() %>
               </span>
             </c:if>
             <div>
