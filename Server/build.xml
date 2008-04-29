@@ -37,8 +37,8 @@
     <property name="build.debug" value="on"/>
 
     <path id="compile.classpath">
-        <pathelement location="${3rdparty.home}/Jetty/6.1.1/jetty.jar"/>
-        <pathelement location="${3rdparty.home}/Jetty/6.1.1/jetty-util.jar"/>
+        <pathelement location="${3rdparty.home}/Jetty/6.1.9/jetty.jar"/>
+        <pathelement location="${3rdparty.home}/Jetty/6.1.9/jetty-util.jar"/>
         <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-cli-1.1.jar"/>
         <pathelement location="${3rdparty.home}/Log4j/1.2.14/log4j.jar"/>
     </path>
