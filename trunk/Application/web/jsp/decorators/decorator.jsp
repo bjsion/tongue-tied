@@ -44,7 +44,7 @@
             </form>
             <form id="logoutForm" method="post" action="<c:url value="j_acegi_exit_user"/>">
                 <div>
-                    <fmt:message key="currentUser"/><c:out value="${ACEGI_SECURITY_LAST_USERNAME}"/>
+                    <fmt:message key="current.user"/><c:out value="${ACEGI_SECURITY_LAST_USERNAME}"/>
     <% 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
