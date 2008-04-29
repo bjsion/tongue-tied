@@ -23,6 +23,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.hibernate.annotations.AccessType;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * 
@@ -43,6 +45,7 @@ import org.hibernate.annotations.AccessType;
                           "translation.bundle")
 })
 @Table(name="Translation",uniqueConstraints={@UniqueConstraint(columnNames={"keyword_id","language_id","country_id","bundle_id"})})
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class Translation implements Cloneable, Comparable<Object>
 {
     private Long id;

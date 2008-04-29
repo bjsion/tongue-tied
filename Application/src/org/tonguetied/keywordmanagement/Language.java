@@ -13,6 +13,8 @@ import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.hibernate.annotations.AccessType;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * Object describing the features of a language. The language is one aspect 
@@ -23,6 +25,7 @@ import org.hibernate.annotations.AccessType;
 @Entity
 @AccessType("field")
 @NamedQuery(name="get.languages",query="from Language l order by l.name")
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class Language implements Comparable<Object> 
 {
     @Id

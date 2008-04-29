@@ -13,6 +13,8 @@ import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.hibernate.annotations.AccessType;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * 
@@ -21,6 +23,7 @@ import org.hibernate.annotations.AccessType;
 @Entity
 @AccessType("field")
 @NamedQuery(name="get.countries",query="from Country c order by c.name")
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class Country implements Comparable<Object> 
 {
     @Id

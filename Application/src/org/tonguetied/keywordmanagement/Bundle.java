@@ -14,6 +14,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.hibernate.annotations.AccessType;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * 
@@ -25,6 +27,7 @@ import org.hibernate.annotations.AccessType;
     @NamedQuery(name=Bundle.QUERY_GET_BUNDLES,query="from Bundle b order by b.name"),
     @NamedQuery(name=Bundle.QUERY_GET_DEFAULT_BUNDLE,query="from Bundle b where b.isDefault = true")
 })
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class Bundle implements Comparable<Object>
 {
     @Id

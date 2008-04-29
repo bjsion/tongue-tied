@@ -13,6 +13,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.hibernate.annotations.AccessType;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Parent;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
@@ -27,6 +29,7 @@ import org.tonguetied.keywordmanagement.Language;
  */
 @Embeddable
 @AccessType("property")
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class UserRight implements Comparable<Object>, Serializable {
     private Permission permission;
     private Language language;

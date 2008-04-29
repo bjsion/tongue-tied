@@ -43,7 +43,7 @@ import org.hibernate.annotations.SortType;
 @Entity
 @AccessType("property")
 @NamedQuery(name="get.users",query="from User u order by u.username")
-@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class User implements UserDetails {
     private Long id;
     private String username;
@@ -56,6 +56,7 @@ public class User implements UserDetails {
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
+    @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
     private SortedSet<UserRight> userRights;
     private GrantedAuthority[] grantedAuthorities;
     
