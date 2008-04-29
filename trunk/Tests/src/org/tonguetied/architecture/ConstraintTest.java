@@ -1,9 +1,8 @@
 package org.tonguetied.architecture;
 
 import static org.junit.Assert.assertEquals;
-
-import java.io.File;
-
+import static org.tonguetied.architecture.Constants.APPLICATION_CLASSES;
+import static org.tonguetied.architecture.Constants.SERVER_CLASSES;
 import jdepend.framework.DependencyConstraint;
 import jdepend.framework.JDepend;
 import jdepend.framework.JavaPackage;
@@ -22,12 +21,6 @@ import org.junit.Test;
 public class ConstraintTest {
 
     private JDepend jDepend;
-    
-    private static final File APPLICATION_CLASSES = 
-        new File(System.getProperty("user.dir")+"/../Application/classes");
-    private static final File SERVER_CLASSES = 
-        new File(System.getProperty("user.dir")+"/../Server/classes");
-
     
     private static final String[] PACKAGE_FILTER = new String[] {
         "fmpp*", "freemarker*", "java.*", "javax.*", "org.acegisecurity*",
