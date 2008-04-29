@@ -44,7 +44,6 @@ public class Keyword implements Cloneable, Comparable<Object>, Auditable
     private Long id;
     private String keyword;
     private String context;
-    @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
     private SortedSet<Translation> translations;
     
     // This attribute is used for optimistic concurrency control in DB    
@@ -96,7 +95,7 @@ public class Keyword implements Cloneable, Comparable<Object>, Auditable
     @OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
     @Sort(type=SortType.NATURAL)
     @JoinColumn(name="KEYWORD_ID")
-    @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
     public SortedSet<Translation> getTranslations() {
     	return translations;
     }

@@ -56,7 +56,6 @@ public class User implements UserDetails {
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
-    @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
     private SortedSet<UserRight> userRights;
     private GrantedAuthority[] grantedAuthorities;
     
@@ -220,6 +219,7 @@ public class User implements UserDetails {
     @Sort(type=SortType.NATURAL)
     @JoinTable(name="authorities", joinColumns=@JoinColumn(name="userid"))
     @Cascade(CascadeType.ALL)
+    @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
     public SortedSet<UserRight> getUserRights() {
         return userRights;
     }
