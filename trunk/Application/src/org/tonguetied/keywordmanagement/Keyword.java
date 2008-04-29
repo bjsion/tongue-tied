@@ -38,12 +38,13 @@ import org.tonguetied.audit.Auditable;
 @Entity
 @AccessType("property")
 @NamedQuery(name="get.keywords",query="from Keyword k order by k.keyword")
-@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class Keyword implements Cloneable, Comparable<Object>, Auditable
 {
     private Long id;
     private String keyword;
     private String context;
+    @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
     private SortedSet<Translation> translations;
     
     // This attribute is used for optimistic concurrency control in DB    
