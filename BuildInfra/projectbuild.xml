@@ -133,12 +133,12 @@
             <zipfileset dir="${3rdparty.home}/HSQLDB/1.8.0" prefix="${version}/libs">
                 <include name="hsqldb.jar"/>
             </zipfileset>
-            <zipfileset dir="${3rdparty.home}/Jetty/6.1.1" prefix="${version}/libs">
+            <zipfileset dir="${3rdparty.home}/Jetty/6.1.9" prefix="${version}/libs">
                 <include name="jetty.jar"/>
                 <include name="jetty-util.jar"/>
                 <include name="servlet-api-2.5.jar"/>
             </zipfileset>   
-            <zipfileset dir="${3rdparty.home}/Jetty/6.1.1/jsp-2.1" prefix="${version}/libs">
+            <zipfileset dir="${3rdparty.home}/Jetty/6.1.9/jsp-2.1" prefix="${version}/libs">
                 <include name="core-3.1.1.jar"/>
                 <include name="jsp-2.1.jar"/>
                 <include name="jsp-api-2.1.jar"/>
