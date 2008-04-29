@@ -38,15 +38,15 @@
     
     <path id="tonguetied.server.classpath">
         <pathelement location="${server.home}/builds/jettyServer.jar"/>
-        <pathelement location="${3rdparty.home}/Jetty/6.1.1/jetty.jar"/>
+        <pathelement location="${3rdparty.home}/Jetty/6.1.9/jetty.jar"/>
         <pathelement location="${3rdparty.home}/Log4j/1.2.14/log4j.jar"/>
         <pathelement location="${3rdparty.home}/Jetty/5.1.5/javax.servlet.jar"/>
         <pathelement location="${3rdparty.home}/Ant/1.7.0/ant.jar"/>
         <pathelement location="${server.home}/builds/server.jar"/>
-        <pathelement location="${3rdparty.home}/Spring/2.5/spring.jar"/>
+        <pathelement location="${3rdparty.home}/Spring/2.5.3/spring.jar"/>
         <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-logging.jar"/>
         <pathelement location="${3rdparty.home}/Quartz/1.5.2/quartz.jar"/>
-        <pathelement location="${3rdparty.home}/Hibernate/3.2.0/hibernate3.jar"/>
+        <pathelement location="${3rdparty.home}/Hibernate/3.2.6/hibernate3.jar"/>
     </path>
     
     <taskdef name="fmpp" 
