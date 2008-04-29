@@ -167,6 +167,8 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
                 /language*.*=ROLE_ADMIN
                 /deletekeyword.*=ROLE_ADMIN,ROLE_USER
                 /user*.*=ROLE_ADMIN
+                /css/**/*.css=ROLE_ANONYMOUS,ROLE_USER,ROLE_ADMIN,ROLE_VERIFIER
+                /images/**/*.png=ROLE_ANONYMOUS,ROLE_USER,ROLE_ADMIN,ROLE_VERIFIER
                 /**=ROLE_USER,ROLE_ADMIN,ROLE_VERIFIER
          </value>
       </property>
