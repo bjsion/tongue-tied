@@ -1,5 +1,7 @@
 package org.tonguetied.architecture;
 
+import static org.tonguetied.architecture.Constants.APPLICATION_CLASSES;
+import static org.tonguetied.architecture.Constants.SERVER_CLASSES;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
@@ -36,16 +38,8 @@ public class CycleTest {
         
         this.jDepend = new JDepend(filter);
         
-        jDepend.addDirectory("D:/work/TongueTied/Application/classes");
-        jDepend.addDirectory("D:/work/TongueTied/Server/classes");
-//        jDepend.addDirectory("D:/work/TongueTied/Build3rdParty/Spring/2.5");
-//        jDepend.addDirectory("D:/work/TongueTied/Build3rdParty/Spring/acegi-security/1.0.4");
-//        jDepend.addDirectory("D:/work/TongueTied/Build3rdParty/Hibernate/3.2.0");
-//        jDepend.addDirectory("D:/work/TongueTied/Build3rdParty/Hibernate/annotations/3.2.0");
-//        jDepend.addDirectory("D:/work/TongueTied/Build3rdParty/FreeMarker/2.3.9");
-//        jDepend.addDirectory("D:/work/TongueTied/Build3rdParty/FreeMarker/FMPP/0.9.11");
-//        jDepend.addDirectory("D:/work/TongueTied/Build3rdParty/Jetty/6.1.1");
-//        jDepend.addDirectory("");
+        jDepend.addDirectory(APPLICATION_CLASSES.getAbsolutePath());
+        jDepend.addDirectory(SERVER_CLASSES.getAbsolutePath());
     }
 
     /**
