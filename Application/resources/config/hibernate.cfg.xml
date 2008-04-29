@@ -15,20 +15,26 @@
 			org.hibernate.dialect.HSQLDialect
 		</property>
         
-		<property name="hibernate.show_sql">true</property>
-		
-		<property name="hibernate.cache.use_second_level_cache">true</property>
-		<property name="hibernate.cache.use_query_cache">true</property>
-		<property name="hibernate.cache.provider_class">
-			org.hibernate.cache.EhCacheProvider
-		</property>
-		<!--
-		<property name="generate_statistics">true</property>	
-		<property name="hibernate.use_outer_join">false</property>
-		<property name="hibernate.max_fetch_depth">0</property>
-		<property name="hibernate.default_batch_fetch_size">4</property>
-		-->
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.generate_statistics">true</property>
+        <property name="hibernate.cache.use_structured_entries">false</property>        
+        <property name="hibernate.cache.use_second_level_cache">true</property>
+        <property name="hibernate.cache.use_query_cache">true</property>
 
+        <property name="hibernate.cache.provider_class">
+            org.hibernate.cache.EhCacheProvider
+        </property>
+        <property name="provider_configuration_file_resource_path">
+            ehcache.xml
+        </property>
+
+        <property name="hibernate.use_outer_join">true</property>
+        
+        <property name="generate_statistics">true</property>    
+        <property name="hibernate.max_fetch_depth">1</property>
+        <property name="hibernate.default_batch_fetch_size">16</property>
+        <property name="hibernate.jdbc.batch_size">20</property>
+        
 		<!-- need to manually add all persistable classes -->
         <mapping class="org.tonguetied.audit.AuditLogRecord"/>
         <mapping class="org.tonguetied.keywordmanagement.Bundle" />
@@ -38,5 +44,8 @@
         <mapping class="org.tonguetied.keywordmanagement.Translation" />
         <mapping class="org.tonguetied.usermanagement.User" />
         <mapping class="org.tonguetied.usermanagement.UserRight"/>
+        
+        <collection-cache collection="org.tonguetied.keywordmanagement.Keyword.translations" usage="read-write"/>
+        <collection-cache collection="org.tonguetied.usermanagement.User.userRights" usage="read-write"/>
 	</session-factory>
 </hibernate-configuration>
