@@ -34,8 +34,6 @@ public class ImporterFactory {
                 importer = new ResourceImporter(keywordService);
                 break;
             case xls:
-                importer = new ExcelImporter(keywordService);
-                break;
             case xlsLanguage:
                 importer = new ExcelImporter(keywordService);
                 break;
