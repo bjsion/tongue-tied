@@ -131,7 +131,7 @@ public class Server
     public static Map<String, String> getServerInfo()
     {
         Map<String, String> info = new HashMap<String, String>();
-        info.put("serverVersion", embeddedServer.getVersion());
+        info.put("serverVersion", org.mortbay.jetty.Server.getVersion());
         long uptime = System.currentTimeMillis() - startTime;
         info.put("uptime", Long.toString(uptime));
   
