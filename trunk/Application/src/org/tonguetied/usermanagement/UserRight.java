@@ -32,9 +32,9 @@ import org.tonguetied.keywordmanagement.Language;
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class UserRight implements Comparable<Object>, Serializable {
     private Permission permission;
-    private Language language;
-    private Country country;
-    private Bundle bundle;
+//    private Language language;
+//    private Country country;
+//    private Bundle bundle;
     private User user;
     
     private static final long serialVersionUID = -6950838004679280636L;
@@ -57,9 +57,9 @@ public class UserRight implements Comparable<Object>, Serializable {
             Bundle bundle) {
         super();
         this.permission = permission;
-        this.language = language;
-        this.country = country;
-        this.bundle = bundle;
+//        this.language = language;
+//        this.country = country;
+//        this.bundle = bundle;
     }
 
     /**
@@ -158,10 +158,10 @@ public class UserRight implements Comparable<Object>, Serializable {
     public int hashCode() {
         HashCodeBuilder builder = new HashCodeBuilder(27, 31);
         int hashCode = builder.append(permission).
-                    append(language).
+//                    append(language).
 //                    append(user).
-                    append(country).
-                    append(bundle).
+//                    append(country).
+//                    append(bundle).
                     toHashCode();
         
         return hashCode;
@@ -182,9 +182,9 @@ public class UserRight implements Comparable<Object>, Serializable {
             EqualsBuilder builder = new EqualsBuilder();
             isEqual = builder.append(permission, other.permission).
 //                    append(user, other.user).
-                    append(language, other.language).
-                    append(country, other.country).
-                    append(bundle, other.bundle).
+//                    append(language, other.language).
+//                    append(country, other.country).
+//                    append(bundle, other.bundle).
                     isEquals();  
         }
             

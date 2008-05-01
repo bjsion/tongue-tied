@@ -48,7 +48,7 @@ public class User implements UserDetails {
     private Long id;
     private String username;
     transient private String password;
-    transient private String repeatedPassword; 
+    transient private String repeatedPassword = null; 
     private String firstName;
     private String lastName;
     private boolean isEnabled;
