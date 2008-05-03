@@ -1,15 +1,12 @@
 package org.tonguetied.usermanagement;
 
-import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.GrantedAuthorityImpl;
-import org.acegisecurity.userdetails.UserDetails;
-import org.acegisecurity.userdetails.UserDetailsService;
-import org.acegisecurity.userdetails.UsernameNotFoundException;
+import org.springframework.security.GrantedAuthority;
+import org.springframework.security.GrantedAuthorityImpl;
+import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.userdetails.UserDetailsService;
+import org.springframework.security.userdetails.UsernameNotFoundException;
 import org.springframework.test.annotation.ExpectedException;
 import org.tonguetied.test.common.AbstractServiceTest;
-import org.tonguetied.usermanagement.User;
-import org.tonguetied.usermanagement.UserRight;
-import org.tonguetied.usermanagement.UserService;
 import org.tonguetied.usermanagement.UserRight.Permission;
 
 

@@ -2,6 +2,7 @@ package org.tonguetied.architecture;
 
 import static org.junit.Assert.assertEquals;
 import static org.tonguetied.architecture.Constants.APPLICATION_CLASSES;
+import static org.tonguetied.architecture.Constants.PACKAGE_FILTER;
 import static org.tonguetied.architecture.Constants.SERVER_CLASSES;
 import jdepend.framework.DependencyConstraint;
 import jdepend.framework.JDepend;
@@ -22,12 +23,6 @@ public class ConstraintTest {
 
     private JDepend jDepend;
     
-    private static final String[] PACKAGE_FILTER = new String[] {
-        "fmpp*", "freemarker*", "java.*", "javax.*", "org.acegisecurity*",
-        "org.apache.*", "org.hibernate*", "org.mortbay.*",
-        "org.springframework.*"
-    };
-
     @Before
     public void setUp() throws Exception {
 //        PackageFilter filter = new PackageFilter(Arrays.asList(PACKAGE_FILTER));
