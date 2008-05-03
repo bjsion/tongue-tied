@@ -86,7 +86,6 @@
             <exclude name="freemarker*"/>
             <exclude name="java.*"/>
             <exclude name="javax.*"/>
-            <exclude name="org.acegisecurity*"/>
             <exclude name="org.apache.*"/>
             <exclude name="org.hibernate*"/>
             <exclude name="org.mortbay.*"/>
