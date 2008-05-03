@@ -31,7 +31,7 @@
             <list>
                 <value>tonguetied</value>
                 <value>language</value>
-                <value>classpath:/org/acegisecurity/messages</value>
+                <value>classpath:/org/springframework/security/messages</value>
             </list>
         </property>
     </bean>
