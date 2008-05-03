@@ -9,17 +9,17 @@
         <fieldset>
             <%-- We need to bind the id as the form is in the request and would be lost when submitted --%>
             <form:hidden path="id"/>
-            <legend><fmt:message key="languageDetails"/></legend>
+            <legend><fmt:message key="language.details"/></legend>
             <div>
-                <form:label path="code" cssClass="content"><fmt:message key="languageCode"/></form:label>
+                <form:label path="code" cssClass="content"><fmt:message key="language.code"/></form:label>
                 <form:select path="code" size="1">
-                    <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
+                    <form:option value=""><fmt:message key="please.select"/></form:option>
                     <form:options items="${languageCodes}"/>
                 </form:select>
                 <form:errors path="code" cssClass="error"/>
             </div>
             <div>
-                <form:label path="name" cssClass="content"><fmt:message key="languageName"/></form:label>
+                <form:label path="name" cssClass="content"><fmt:message key="language.name"/></form:label>
                 <form:input path="name"/>
                 <form:errors path="name" cssClass="error"/>
             </div>

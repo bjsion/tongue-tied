@@ -9,7 +9,7 @@
         <fieldset>
             <%-- We need to bind the id as the form is in the request and would be lost when submitted --%>
             <form:hidden path="id"/>
-            <legend><fmt:message key="bundleDetails"/></legend>
+            <legend><fmt:message key="bundle.details"/></legend>
             <div>
                 <form:label path="name" cssClass="content"><fmt:message key="bundle.name"/></form:label>
                 <form:input path="name"/>

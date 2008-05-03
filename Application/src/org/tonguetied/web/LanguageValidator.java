@@ -46,9 +46,9 @@ public class LanguageValidator implements Validator {
      */
     private void validateMandatoryFields(Language language, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, FIELD_NAME, "errorLanguageNameRequired", null, "default");
+                errors, FIELD_NAME, "error.language.name.required", null, "default");
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, FIELD_CODE, "errorLanguageCodeRequired", null, "default");
+                errors, FIELD_CODE, "error.language.code.required", null, "default");
     }
     
     /**
@@ -65,7 +65,7 @@ public class LanguageValidator implements Validator {
             if (other != null) {
                 errors.rejectValue(
                         FIELD_CODE, 
-                        "errorLanguageAlreadyExists",
+                        "error.language.already.exists",
                         new String[] {language.getCode().name()},
                         "default");
             }

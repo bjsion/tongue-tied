@@ -7,7 +7,7 @@
     <c:url value="/export.htm" var="exportAction" scope="page"/>
     <form:form id="exportForm" method="post" action="${exportAction}" commandName="export">
         <fieldset>
-            <legend><fmt:message key="exportDetails"/></legend>
+            <legend><fmt:message key="export.details"/></legend>
             <div>
                 <form:label path="countries" cssClass="content"><fmt:message key="country"/></form:label>
                 <form:select path="countries" multiple="true" size="5">
@@ -30,9 +30,9 @@
                 <form:errors path="bundles" cssClass="error"/>
             </div>
             <div>
-                <form:label path="formatType" cssClass="content"><fmt:message key="exportType"/></form:label>
+                <form:label path="formatType" cssClass="content"><fmt:message key="export.type"/></form:label>
                 <form:select path="formatType" size="1">
-                    <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
+                    <form:option value=""><fmt:message key="please.select"/></form:option>
                     <form:options items="${formatTypes}"/>
                 </form:select>
             </div>

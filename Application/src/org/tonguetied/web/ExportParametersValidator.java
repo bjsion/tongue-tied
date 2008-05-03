@@ -27,16 +27,16 @@ public class ExportParametersValidator implements Validator {
     public void validate(Object target, Errors errors) {
         ExportParameters parameters = (ExportParameters) target;
         if (parameters.getFormatType() == null) {
-            errors.rejectValue("formatType", "errorExportTypeRequired");
+            errors.rejectValue("formatType", "error.export.type.required");
         }
         if (CollectionUtils.isEmpty(parameters.getLanguages())) {
-            errors.rejectValue("languages", "errorLanguageSelection");
+            errors.rejectValue("languages", "error.language.selection");
         }
         if (CollectionUtils.isEmpty(parameters.getBundles())) {
-            errors.rejectValue("bundles", "errorBundleSelection");
+            errors.rejectValue("bundles", "error.bundle.selection");
         }
         if (CollectionUtils.isEmpty(parameters.getCountries())) {
-            errors.rejectValue("countries", "errorCountrySelection");
+            errors.rejectValue("countries", "error.country.selection");
         }
     }
 }
