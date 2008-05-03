@@ -1,12 +1,12 @@
 package org.tonguetied.audit;
 
-import org.acegisecurity.Authentication;
-import org.acegisecurity.context.SecurityContext;
-import org.acegisecurity.context.SecurityContextHolder;
-import org.acegisecurity.userdetails.UserDetails;
 import org.hibernate.CallbackException;
 import org.hibernate.Session;
 import org.hibernate.engine.SessionFactoryImplementor;
+import org.springframework.security.Authentication;
+import org.springframework.security.context.SecurityContext;
+import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.userdetails.UserDetails;
 
 
 /**
@@ -46,7 +46,7 @@ public class AuditLog {
     }
     
     /**
-     * Gets the current user name from the Acegi secureContext
+     * Gets the current user name from the Spring Security SecurityContext.
      * 
      * @return current user, or <tt>null</tt> if no user is currently logged in
      */

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.tonguetied.web.servlet;
 
 import java.util.Collections;

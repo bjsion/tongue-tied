@@ -9,11 +9,11 @@
 <%@ taglib uri="http://struts-menu.sf.net/tag" prefix="menu" %>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/page" prefix="page" %>
-<%@ page import="org.acegisecurity.context.SecurityContextHolder" %>
-<%@ page import="org.acegisecurity.Authentication" %>
-<%@ page import="org.acegisecurity.ui.AbstractProcessingFilter" %>
-<%@ page import="org.acegisecurity.ui.webapp.AuthenticationProcessingFilter" %>
-<%@ page import="org.acegisecurity.AuthenticationException" %>
+<%@ page import="org.springframework.security.ui.AbstractProcessingFilter" %>
+<%@ page import="org.springframework.security.ui.webapp.AuthenticationProcessingFilter" %>
+<%@ page import="org.springframework.security.AuthenticationException" %>
+<%@ page import="org.springframework.security.Authentication" %>
+<%@ page import="org.springframework.security.context.SecurityContextHolder" %>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <fmt:bundle basename="tonguetied">
@@ -42,15 +42,16 @@
                     </fmt:bundle>
                 </div>
             </form>
-            <form id="logoutForm" method="post" action="<c:url value="j_acegi_exit_user"/>">
+            <form id="logoutForm" method="post" action="<c:url value="j_spring_security_logout"/>">
                 <div>
-                    <fmt:message key="current.user"/><c:out value="${ACEGI_SECURITY_LAST_USERNAME}"/>
-    <% 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            auth.getPrincipal().toString();
-        }
-    %>
+                    <fmt:message key="current.user"/>
+         <%
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			if (auth != null) { %>
+
+			<%= auth.getPrincipal().toString() %>
+
+		<% } %>
                     <input type="submit" id="logout" name="logout" value="<fmt:message key="logout"/>" class="button"/>
                 </div>
             </form>

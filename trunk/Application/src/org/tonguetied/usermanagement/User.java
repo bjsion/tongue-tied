@@ -18,9 +18,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.GrantedAuthorityImpl;
-import org.acegisecurity.userdetails.UserDetails;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
@@ -33,6 +30,9 @@ import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.Sort;
 import org.hibernate.annotations.SortType;
+import org.springframework.security.GrantedAuthority;
+import org.springframework.security.GrantedAuthorityImpl;
+import org.springframework.security.userdetails.UserDetails;
 
 /**
  * A user of the system.
@@ -270,9 +270,6 @@ public class User implements UserDetails {
                 new GrantedAuthority[authorities.size()]));
     }
 
-    /* (non-Javadoc)
-     * @see org.acegisecurity.userdetails.UserDetails#isAccountNonExpired()
-     */
     @Column(nullable=false)
     public boolean isAccountNonExpired() {
         return isAccountNonExpired;
@@ -286,9 +283,6 @@ public class User implements UserDetails {
         this.isAccountNonExpired = isAccountNonExpired;
     }
 
-    /* (non-Javadoc)
-     * @see org.acegisecurity.userdetails.UserDetails#isAccountNonLocked()
-     */
     @Column(nullable=false)
     public boolean isAccountNonLocked() {
         return isAccountNonLocked;
@@ -301,9 +295,6 @@ public class User implements UserDetails {
         this.isAccountNonLocked = isAccountNonLocked;
     }
 
-    /* (non-Javadoc)
-     * @see org.acegisecurity.userdetails.UserDetails#isCredentialsNonExpired()
-     */
     @Column(nullable=false)
     public boolean isCredentialsNonExpired() {
         return isCredentialsNonExpired;

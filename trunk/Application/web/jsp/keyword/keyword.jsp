@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="authz" uri="http://acegisecurity.org/authz" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
     <div class="content">
     <c:url value="/keyword.htm" var="keywordAction" scope="page"/>
@@ -17,13 +17,13 @@
             <legend><fmt:message key="keywordDetails"/></legend>
             <div>
                 <form:label path="keyword" cssClass="content"><fmt:message key="keywordId"/></form:label>
-                <authz:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+                <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
                 <form:input path="keyword"/>
                 <form:errors path="keyword" cssClass="error"/>
-                </authz:authorize>
-                <authz:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
+                </security:authorize>
+                <security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
                 ${keyword.keyword}
-                </authz:authorize>
+                </security:authorize>
             </div>
             <div>
                 <form:label path="context" cssClass="content"><fmt:message key="keywordContext"/></form:label>
@@ -63,53 +63,53 @@
                         <td>
                             <form:hidden path="translations[${index.index}].id" id="translation${index.index}.id"/>
                             <form:hidden path="translations[${index.index}].version" id="translation${index.index}.version"/>
-                            <authz:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+                            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
                             <input type="image" src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" name="deleteTranslation" value="${translation.id}"/>
-                            </authz:authorize>
+                            </security:authorize>
                         </td>
                         <td>
-                            <authz:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+                            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
                             <form:select path="translations[${index.index}].language" id="translation${index.index}.language" size="1">
                                 <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
                                 <form:options items="${languages}" itemValue="id" itemLabel="name"/>
                             </form:select>
-                            </authz:authorize>
-                            <authz:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
+                            </security:authorize>
+                            <security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
                             ${translation.language.name}
-                            </authz:authorize>
+                            </security:authorize>
                         </td>
                         <td>
-                            <authz:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+                            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
                             <form:select path="translations[${index.index}].country" id="translation${index.index}.country" size="1">
                                 <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
                                 <form:options items="${countries}" itemValue="id" itemLabel="name"/>
                             </form:select>
-                            </authz:authorize>
-                            <authz:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
+                            </security:authorize>
+                            <security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
                             ${translation.country.name}
-                            </authz:authorize>
+                            </security:authorize>
                         </td>
                         <td>
-                            <authz:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+                            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
                             <form:select path="translations[${index.index}].bundle" id="translation${index.index}.bundle" size="1">
                                 <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
                                 <form:options items="${bundles}" itemValue="id" itemLabel="name"/>
                             </form:select>
-                            </authz:authorize>
-                            <authz:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
+                            </security:authorize>
+                            <security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
                             ${translation.bundle.name}
-                            </authz:authorize>
+                            </security:authorize>
                         </td>
                         <td>
-                            <authz:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+                            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
                             <form:textarea path="translations[${index.index}].value" id="translation${index.index}.value" rows="4" cols="100%"/>
-                            </authz:authorize>
-                            <authz:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
+                            </security:authorize>
+                            <security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
                             <c:out value="${translation.value}" escapeXml="true"/>
-                            </authz:authorize>
+                            </security:authorize>
                         </td>
                         <td>
-                            <authz:authorize ifAnyGranted="ROLE_VERIFIER">
+                            <security:authorize ifAnyGranted="ROLE_VERIFIER">
                             <form:select path="translations[${index.index}].state" id="translation${index.index}.state" size="1">
                                 <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
                                 <c:forEach items="${states}" var="state">
@@ -120,10 +120,10 @@
                                     <c:remove var="selected"/>
                                 </c:forEach>
                             </form:select>
-                            </authz:authorize>
-                            <authz:authorize ifNotGranted="ROLE_VERIFIER">
+                            </security:authorize>
+                            <security:authorize ifNotGranted="ROLE_VERIFIER">
                             <fmt:message key="${translation.state}"/>
-                            </authz:authorize>
+                            </security:authorize>
                         </td>
                     </tr>
                     </c:forEach>
@@ -131,15 +131,15 @@
             </table>
         </fieldset>
         <div class="submit">
-            <authz:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
             <input type="submit" id="add" name="add" value="<fmt:message key="addTranslation"/>" class="button"/>
-            </authz:authorize>
+            </security:authorize>
             <input type="submit" id="save" name="save" value="<fmt:message key="save"/>" class="button"/>
             <input type="submit" id="_cancel" name="_cancel" value="<fmt:message key="cancel"/>" class="button"/>
             <input type="reset" id="reset" name="reset" value="<fmt:message key="reset"/>" class="button"/>
-            <authz:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
             <input type="submit" id="delete" name="delete" value="<fmt:message key="removeKeyword"/>" class="button" onclick="return confirm('${confirmDeleteKeywordMsg}')"/>
-            </authz:authorize>
+            </security:authorize>
         </div>
     </form:form>
     </div>
