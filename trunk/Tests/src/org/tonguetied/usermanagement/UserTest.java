@@ -8,17 +8,15 @@ import static org.junit.Assert.fail;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.GrantedAuthorityImpl;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.security.GrantedAuthority;
+import org.springframework.security.GrantedAuthorityImpl;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Language;
 import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
-import org.tonguetied.usermanagement.User;
-import org.tonguetied.usermanagement.UserRight;
 import org.tonguetied.usermanagement.UserRight.Permission;
 
 

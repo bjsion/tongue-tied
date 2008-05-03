@@ -1,9 +1,10 @@
 package org.tonguetied.architecture;
 
-import static org.tonguetied.architecture.Constants.APPLICATION_CLASSES;
-import static org.tonguetied.architecture.Constants.SERVER_CLASSES;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.tonguetied.architecture.Constants.APPLICATION_CLASSES;
+import static org.tonguetied.architecture.Constants.PACKAGE_FILTER;
+import static org.tonguetied.architecture.Constants.SERVER_CLASSES;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -26,12 +27,6 @@ public class CycleTest {
 
     private JDepend jDepend;
     
-    private static final String[] PACKAGE_FILTER = new String[] {
-        "fmpp*", "freemarker*", "java.*", "javax.*", "org.acegisecurity*",
-        "org.apache.*", "org.hibernate*", "org.mortbay.*",
-        "org.springframework.*"
-    };
-
     @Before
     public void setUp() throws Exception {
         PackageFilter filter = new PackageFilter(Arrays.asList(PACKAGE_FILTER));
