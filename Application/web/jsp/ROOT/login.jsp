@@ -17,13 +17,15 @@
 </head>
 
 <body>
-    <img src="<c:url value="/images/application_logo.png"/>" alt="<fmt:message key="application.logo"/>" title="<fmt:message key="application.logo"/>"/>
+    <div>
+        <img src="<c:url value="/images/application_logo.png"/>" alt="<fmt:message key="application.logo"/>" title="<fmt:message key="application.logo"/>"/>
+    </div>
     <h1><fmt:message key="login"/></h1>
     <%-- this form-login-page form is also used as the 
          form-error-page to ask for a login again.
          --%>
 
-    <form name="loginForm" action="<c:url value='j_spring_security_check'/>" method="post">
+    <form id="loginForm" action="<c:url value='j_spring_security_check'/>" method="post">
         <fieldset>
             <legend><fmt:message key="login"/></legend>
             <c:if test="${not empty param.login_error}">
@@ -50,6 +52,13 @@
            <input name="reset" type="reset" value="<fmt:message key="reset"/>"/>
         </div>
     </form>
+    <div class="pagefooter">
+        <fmt:message key="application.short.name"/> 
+        (<fmt:message key="version"/> : 
+        <fmt:bundle basename="buildNumber">
+        <fmt:message key="version"/>&nbsp;#<fmt:message key="build.number"/>
+        </fmt:bundle>)
+    </div>
 </body>
 </fmt:bundle>
 </html>

@@ -17,9 +17,21 @@
 </head>
 
 <body>
-    <img src="<c:url value="/images/application_logo.png"/>" alt="<fmt:message key="application.logo"/>" title="<fmt:message key="application.logo"/>"/>
+    <div>
+        <img src="<c:url value="/images/application_logo.png"/>" alt="<fmt:message key="application.logo"/>" title="<fmt:message key="application.logo"/>"/>
+    </div>
     <h1><fmt:message key="logout.successful"/></h1>
-    <a href="<c:url value="/index.jsp"/>"><fmt:message key="login.again"/></a>
+    <p>
+        <fmt:message key="logout.successful.text"/>
+        <a href="<c:url value="/index.jsp"/>"><fmt:message key="login.again"/></a>
+    </p>
+    <div class="pagefooter">
+        <fmt:message key="application.short.name"/> 
+        (<fmt:message key="version"/> : 
+        <fmt:bundle basename="buildNumber">
+        <fmt:message key="version"/>&nbsp;#<fmt:message key="build.number"/>
+        </fmt:bundle>)
+    </div>
 </body>
 </fmt:bundle>
 </html>
