@@ -44,12 +44,12 @@
             </div>
             <div>
                 <input type="checkbox" id="_spring_security_remember_me" name="_spring_security_remember_me"/>
-                <label id="labelRememberMe" for="_spring_security_remember_me"><fmt:message key="rememberMe"/></label>
+                <label id="labelRememberMe" for="_spring_security_remember_me"><fmt:message key="remember.me"/></label>
             </div>
         </fieldset>
         <div>
-    	   <input name="submit" type="submit" value="<fmt:message key="login"/>"/>
-           <input name="reset" type="reset" value="<fmt:message key="reset"/>"/>
+    	   <input name="submit" type="submit" value="<fmt:message key="login"/>" class="button"/>
+           <input name="reset" type="reset" value="<fmt:message key="reset"/>" class="button"/>
         </div>
     </form>
     <div class="pagefooter">

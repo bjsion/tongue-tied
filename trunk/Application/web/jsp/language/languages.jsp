@@ -5,10 +5,10 @@
 
     <div class="content">
         <display:table name="languages" id="language" sort="page" requestURI="">
-            <display:column sortable="true" titleKey="languageName" url="/language.htm" paramId="languageId" paramProperty="id">
+            <display:column sortable="true" titleKey="language.name" url="/language.htm" paramId="languageId" paramProperty="id">
                 <c:out value="${language.name}"/>
             </display:column>
-            <display:column property="code" titleKey="languageCode" sortable="true"/>
+            <display:column property="code" titleKey="language.code" sortable="true"/>
             <display:column titleKey="action"/>
         </display:table>
     </div>

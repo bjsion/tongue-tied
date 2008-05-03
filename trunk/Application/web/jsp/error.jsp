@@ -15,10 +15,10 @@
 <title><fmt:message key="application.short.name"/></title>
 </head>
 <body>
-    <h1><fmt:message key="errorSystemError"/></h1>
+    <h1><fmt:message key="error.system.error"/></h1>
     <p>
         <dl id="errorList">
-            <dt class="error"><fmt:message key="errorPageMessage"/></dt>
+            <dt class="error"><fmt:message key="error.page.message"/></dt>
             <dd>
                 <p class="error"><c:out value="${exception}"/></p>
                 <code>

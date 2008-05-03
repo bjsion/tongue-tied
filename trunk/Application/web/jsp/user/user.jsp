@@ -21,17 +21,17 @@
                 <form:errors path="password" cssClass="error"/>
             </div>
             <div>
-                <form:label path="repeatedPassword" cssClass="content"><fmt:message key="repeatedPassword"/></form:label>
+                <form:label path="repeatedPassword" cssClass="content"><fmt:message key="repeated.password"/></form:label>
                 <form:password path="repeatedPassword"/>
                 <form:errors path="repeatedPassword" cssClass="error"/>
             </div>
             <div>
-                <form:label path="firstName" cssClass="content"><fmt:message key="firstName"/></form:label>
+                <form:label path="firstName" cssClass="content"><fmt:message key="first.name"/></form:label>
                 <form:input path="firstName"/>
                 <form:errors path="firstName" cssClass="error"/>
             </div>
             <div>
-                <form:label path="lastName" cssClass="content"><fmt:message key="lastName"/></form:label>
+                <form:label path="lastName" cssClass="content"><fmt:message key="last.name"/></form:label>
                 <form:input path="lastName"/>
                 <form:errors path="lastName" cssClass="error"/>
             </div>
@@ -41,19 +41,19 @@
                 <form:errors path="email" cssClass="error"/>
             </div>
             <div>
-                <form:label path="accountNonExpired" cssClass="content"><fmt:message key="isAccountNonExpired"/></form:label>
+                <form:label path="accountNonExpired" cssClass="content"><fmt:message key="is.account.non.expired"/></form:label>
                 <form:checkbox path="accountNonExpired" id="accountNonExpired"/>
             </div>
             <div>
-                <form:label path="accountNonLocked" cssClass="content"><fmt:message key="isAccountNonLocked"/></form:label>
+                <form:label path="accountNonLocked" cssClass="content"><fmt:message key="is.account.non.locked"/></form:label>
                 <form:checkbox path="accountNonLocked" id="accountNonLocked"/>
             </div>
             <div>
-                <form:label path="enabled" cssClass="content"><fmt:message key="isEnabled"/></form:label>
+                <form:label path="enabled" cssClass="content"><fmt:message key="is.enabled"/></form:label>
                 <form:checkbox path="enabled" id="enabled"/>
             </div>
             <div>
-                <form:label path="credentialsNonExpired" cssClass="content"><fmt:message key="isCredentialsNonExpired"/></form:label>
+                <form:label path="credentialsNonExpired" cssClass="content"><fmt:message key="is.credentials.non.expired"/></form:label>
                 <form:checkbox path="credentialsNonExpired" id="credentialsNonExpired"/>
             </div>
         </fieldset>

@@ -50,13 +50,13 @@ public class UserValidator implements Validator {
      */
     private void validateMandatoryFields(final User user, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, "username", "errorUserNameRequired", null, "default");
+                errors, "username", "error.username.required", null, "default");
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, "firstName", "errorFirstNameRequired", null, "default");
+                errors, "firstName", "error.first.name.required", null, "default");
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, "lastName", "errorLastNameRequired", null, "default");
+                errors, "lastName", "error.last.name.required", null, "default");
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, "email", "errorEmailNameRequired", null, "default");
+                errors, "email", "error.email.required", null, "default");
     }
     
     /**
@@ -73,7 +73,7 @@ public class UserValidator implements Validator {
             if (other != null) {
                 errors.rejectValue(
                         "username", 
-                        "errorUserAlreadyExists",
+                        "error.user.already.exists",
                         new String[] {user.getUsername()},
                         "default");
             }
@@ -92,7 +92,7 @@ public class UserValidator implements Validator {
             //Match the given string with the pattern
             Matcher m = emailPattern.matcher(email);
             if (!m.matches())
-                errors.rejectValue("email", "errorInvalidEmail");
+                errors.rejectValue("email", "error.invalid.email");
         }
     }
 

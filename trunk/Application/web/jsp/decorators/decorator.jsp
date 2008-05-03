@@ -6,14 +6,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://struts-menu.sf.net/tag" prefix="menu" %>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/page" prefix="page" %>
-<%@ page import="org.springframework.security.ui.AbstractProcessingFilter" %>
-<%@ page import="org.springframework.security.ui.webapp.AuthenticationProcessingFilter" %>
-<%@ page import="org.springframework.security.AuthenticationException" %>
-<%@ page import="org.springframework.security.Authentication" %>
-<%@ page import="org.springframework.security.context.SecurityContextHolder" %>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <fmt:bundle basename="tonguetied">
@@ -44,14 +40,7 @@
             </form>
             <form id="logoutForm" method="post" action="<c:url value="j_spring_security_logout"/>">
                 <div>
-                    <fmt:message key="current.user"/>
-         <%
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			if (auth != null) { %>
-
-			<%= auth.getPrincipal().toString() %>
-
-		<% } %>
+                    <fmt:message key="current.user"/>&nbsp;<security:authentication property="principal.username"/>
                     <input type="submit" id="logout" name="logout" value="<fmt:message key="logout"/>" class="button"/>
                 </div>
             </form>
@@ -62,7 +51,7 @@
         <menu:displayMenu name="TabbedCountries"/>
         <menu:displayMenu name="TabbedLanguages"/>
         <menu:displayMenu name="TabbedBundles"/>
-        <menu:displayMenu name="TabbedExport"/>
+        <menu:displayMenu name="TabbedImportExport"/>
         <menu:displayMenu name="TabbedUsers"/>
         <menu:displayMenu name="TabbedAuditLog"/>
     </menu:useMenuDisplayer>

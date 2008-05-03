@@ -12,10 +12,10 @@
                 <img src="<c:url value="/images/flags/${fn:toLowerCase(country.code)}.png"/>" alt="${country.name}" title="${country.name}"/>
                 </c:if>
             </display:column>
-            <display:column sortable="true" titleKey="countryName" url="/country.htm" paramId="countryId" paramProperty="id">
+            <display:column sortable="true" titleKey="country.name" url="/country.htm" paramId="countryId" paramProperty="id">
                 <c:out value="${country.name}"/>
             </display:column>
-            <display:column property="code" titleKey="countryCode" sortable="true"/>
+            <display:column property="code" titleKey="country.code" sortable="true"/>
             <display:column titleKey="action"/>
         </display:table>
     </div>

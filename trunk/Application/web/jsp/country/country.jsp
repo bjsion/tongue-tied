@@ -8,17 +8,17 @@
     <form:form id="countryForm" method="post" action="${countryAction}" commandName="country">
         <fieldset>
             <form:hidden path="id" />
-            <legend><fmt:message key="countryDetails"/></legend>
+            <legend><fmt:message key="country.details"/></legend>
             <div>
-                <form:label path="code" cssClass="content"><fmt:message key="countryCode"/></form:label>
+                <form:label path="code" cssClass="content"><fmt:message key="country.code"/></form:label>
                 <form:select path="code" size="1">
-                    <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
+                    <form:option value=""><fmt:message key="please.select"/></form:option>
                     <form:options items="${countryCodes}"/>
                 </form:select>
                 <form:errors path="code" cssClass="error"/>
             </div>
             <div>
-                <form:label path="name" cssClass="content"><fmt:message key="countryName"/></form:label>
+                <form:label path="name" cssClass="content"><fmt:message key="country.name"/></form:label>
                 <form:input path="name"/>
                 <form:errors path="name" cssClass="error"/>
             </div>

@@ -28,7 +28,7 @@ public class KeywordValidator implements Validator {
      */
     public void validate(Object target, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, "keyword", "errorKeywordRequired", null, "default");
+                errors, "keyword", "error.keyword.required", null, "default");
         validateDuplicates((Keyword) target, errors);
     }
 
@@ -46,7 +46,7 @@ public class KeywordValidator implements Validator {
             if (other != null) {
                 errors.rejectValue(
                         "keyword", 
-                        "errorKeywordAlreadyExists", 
+                        "error.keyword.already.exists", 
                         new String[] {keyword.getKeyword()}, 
                         "default");
             }

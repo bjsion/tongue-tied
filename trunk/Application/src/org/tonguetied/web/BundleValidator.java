@@ -46,9 +46,9 @@ public class BundleValidator implements Validator {
      */
     private void validateMandatoryFields(Bundle bundle, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, FIELD_NAME, "errorBundleNameRequired", null, "default");
+                errors, FIELD_NAME, "error.bundle.name.required", null, "default");
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, FIELD_RESOURCE_NAME, "errorBundleResourceNameRequired", null, "default");
+                errors, FIELD_RESOURCE_NAME, "error.bundle.resource.name.required", null, "default");
     }
     
     /**
@@ -65,7 +65,7 @@ public class BundleValidator implements Validator {
             if (other != null) {
                 errors.rejectValue(
                         FIELD_NAME, 
-                        "errorBundleAlreadyExists",
+                        "error.bundle.already.exists",
                         new String[] {bundle.getName()},
                         "default");
             }
@@ -73,7 +73,7 @@ public class BundleValidator implements Validator {
             if (other != null) {
                 errors.rejectValue(
                         FIELD_RESOURCE_NAME, 
-                        "errorBundleAlreadyExists",
+                        "error.bundle.already.exists",
                         new String[] {bundle.getResourceName()},
                         "default");
             }
@@ -91,7 +91,7 @@ public class BundleValidator implements Validator {
     private void validateCharacterSet(Bundle bundle, Errors errors) {
         if (StringUtils.containsAny(bundle.getResourceName(), WHITESPACE_CHARS)) {
             errors.rejectValue(FIELD_RESOURCE_NAME, 
-                    "errorResourceNameContainsInvalidChar",
+                    "error.resource.name.contains.invalid.char",
                     new String[] {bundle.getResourceName()},
                     "default");
         }

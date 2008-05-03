@@ -7,7 +7,7 @@
     <c:url value="/import.htm" var="importAction" scope="page"/>
     <form:form id="importForm" method="post" action="${importAction}" commandName="import" enctype="multipart/form-data">
         <fieldset>
-            <legend><fmt:message key="importDetails"/></legend>
+            <legend><fmt:message key="import.details"/></legend>
             <div>
                 <form:label path="file" cssClass="content"><fmt:message key="file"/></form:label>
                 <input type="file" name="file" id="file"/>
@@ -15,14 +15,14 @@
             <div>
                 <form:label path="parameters.formatType" cssClass="content"><fmt:message key="file.type"/></form:label>
                 <form:select path="parameters.formatType" size="1">
-                    <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
+                    <form:option value=""><fmt:message key="please.select"/></form:option>
                     <form:options items="${formatTypes}"/>
                 </form:select>
             </div>
             <div>
                 <form:label path="parameters.translationState" cssClass="content"><fmt:message key="translation.state"/></form:label>
                 <form:select path="parameters.translationState" size="1">
-                    <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
+                    <form:option value=""><fmt:message key="please.select"/></form:option>
                     <form:options items="${states}"/>
                 </form:select>
             </div>

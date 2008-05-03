@@ -15,7 +15,7 @@
                     <legend><fmt:message key="preferences"/></legend>
                     <div>
                         <spring:bind path="viewPreferences.maxResults">
-                        <label for="${status.expression}"><fmt:message key="maxResults"/></label>
+                        <label for="${status.expression}"><fmt:message key="max.results"/></label>
                         <select name="<c:out value="${status.expression}"/>" id="<c:out value="${status.expression}"/>" size="1">
                             <c:forEach var="size" begin="20" end="100" step="20">
                             <option <c:if test="${size == status.value}">selected="selected"</c:if> value="${size}"><c:out value="${size}"/></option>
@@ -95,28 +95,28 @@
                     <div>
                         <form:label path="bundle" cssClass="sidepanel"><fmt:message key="bundle"/></form:label>
                         <form:select path="bundle" size="1" cssClass="sidepanel">
-                            <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
+                            <form:option value=""><fmt:message key="please.select"/></form:option>
                             <form:options items="${bundles}" itemValue="id" itemLabel="name"/>
                         </form:select>
                     </div>
                     <div>
                         <form:label path="country" cssClass="sidepanel"><fmt:message key="country"/></form:label>
                         <form:select path="country" size="1" cssClass="sidepanel">
-                            <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
+                            <form:option value=""><fmt:message key="please.select"/></form:option>
                             <form:options items="${countries}" itemValue="id" itemLabel="name"/>
                         </form:select>
                     </div>
                     <div>
                         <form:label path="language" cssClass="sidepanel"><fmt:message key="language"/></form:label>
                         <form:select path="language" size="1" cssClass="sidepanel">
-                            <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
+                            <form:option value=""><fmt:message key="please.select"/></form:option>
                             <form:options items="${languages}" itemValue="id" itemLabel="name"/>
                         </form:select>
                     </div>
                     <div>
-                        <form:label path="translationState" cssClass="sidepanel"><fmt:message key="translationState"/></form:label>
+                        <form:label path="translationState" cssClass="sidepanel"><fmt:message key="translation.state"/></form:label>
                         <form:select path="translationState" size="1" cssClass="sidepanel">
-                            <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
+                            <form:option value=""><fmt:message key="please.select"/></form:option>
                             <c:forEach items="${states}" var="state">
                                 <c:if test="${translationState == state}">
                                     <c:set var="selected" value="true"/>
@@ -127,12 +127,12 @@
                         </form:select>
                     </div>
                     <div>
-                        <form:label path="translatedText" cssClass="sidepanel"><fmt:message key="translatedText"/></form:label>
+                        <form:label path="translatedText" cssClass="sidepanel"><fmt:message key="translated.text"/></form:label>
                         <form:input path="translatedText"/>
                     </div>
                     <div class="checkbox">
                         <form:checkbox path="ignoreCase" id="ignoreCase"/>
-                        <form:label path="ignoreCase"><fmt:message key="ignoreCase"/></form:label>
+                        <form:label path="ignoreCase"><fmt:message key="ignore.case"/></form:label>
                     </div>
                 </fieldset>
                 <div class="submit">
@@ -145,7 +145,7 @@
 
     <div class="contentPanel">
         <h1><em><fmt:message key="language"/></em><fmt:message key="content"/></h1>
-        <a href="<c:url value="keywords.htm"><c:param name="showAll" value="true"/></c:url>" title="<fmt:message key="getAllKeywords"/>"><fmt:message key="show.all.keywords"/></a>
+        <a href="<c:url value="keywords.htm"><c:param name="showAll" value="true"/></c:url>" title="<fmt:message key="get.all.keywords"/>"><fmt:message key="all.keywords"/></a>
         <display:table name="translations" id="translation" sort="page" requestURI="">
             <display:column titleKey="action" group="1" class="actions">
                 <c:url value="deleteKeyword.htm" var="deleteKeywordUrl" scope="page"><c:param name="keywordId" value="${translation.keyword.id}"/></c:url>
