@@ -2,6 +2,10 @@ package org.tonguetied.web;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.tonguetied.web.ExportParametersValidator.FIELD_BUNDLES;
+import static org.tonguetied.web.ExportParametersValidator.FIELD_COUNTRIES;
+import static org.tonguetied.web.ExportParametersValidator.FIELD_FORMAT_TYPE;
+import static org.tonguetied.web.ExportParametersValidator.FIELD_LANGUAGES;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -31,11 +35,6 @@ public class ExportParametersValidatorTest {
 
     private ExportParameters parameters;
     private String fieldName;
-    
-    private static final String FIELD_BUNDLES = "bundles";
-    private static final String FIELD_COUNTRIES = "countries";
-    private static final String FIELD_LANGUAGES = "languages";
-    private static final String FIELD_FORMAT_TYPE = "formatType";
     
     @Parameters
     public static final Collection<Object[]> data() {

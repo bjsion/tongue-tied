@@ -2,6 +2,10 @@ package org.tonguetied.web;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.tonguetied.web.UserValidator.FIELD_EMAIL;
+import static org.tonguetied.web.UserValidator.FIELD_FIRSTNAME;
+import static org.tonguetied.web.UserValidator.FIELD_LASTNAME;
+import static org.tonguetied.web.UserValidator.FIELD_USERNAME;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -29,11 +33,6 @@ public class UserValidatorTest {
     private User user;
     private String fieldName;
 
-    private static final String FIELD_EMAIL = "email";
-    private static final String FIELD_FIRSTNAME = "firstName";
-    private static final String FIELD_LASTNAME = "lastName";
-    private static final String FIELD_USERNAME = "username";
-    
     @Parameters
     public static final Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
