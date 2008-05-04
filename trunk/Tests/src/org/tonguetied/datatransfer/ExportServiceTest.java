@@ -2,10 +2,13 @@ package org.tonguetied.datatransfer;
 
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -15,6 +18,7 @@ import org.springframework.test.annotation.ExpectedException;
 import org.tonguetied.datatransfer.common.ExportParameters;
 import org.tonguetied.datatransfer.common.FormatType;
 import org.tonguetied.datatransfer.dao.TransferRepository;
+import org.tonguetied.datatransfer.exporting.ExportException;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
@@ -53,6 +57,11 @@ public class ExportServiceTest extends AbstractServiceTest {
     private Translation translation3_3;
 
     private TransferRepository transferRepository;
+    
+    private File archiveTestDirectory = null;
+
+    private static final File USER_DIR = new File(System.getProperty("user.dir"));
+
     
     @Override
     protected void onSetUpInTransaction() throws Exception {
@@ -148,12 +157,23 @@ public class ExportServiceTest extends AbstractServiceTest {
     protected void onTearDownAfterTransaction() throws Exception {
         super.onTearDownAfterTransaction();
         
-        final File exportDir = dataService.getExportPath();
-        for (File file: exportDir.listFiles()) {
-            assertTrue("Failed to remove " + file, file.delete());
+        clearDirectory(dataService.getExportPath());
+        clearDirectory(archiveTestDirectory);
+    }
+
+    private void clearDirectory(File directory) {
+        if (directory != null) {
+            final String name = directory.getName(); 
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file: files) {
+                    assertTrue("Failed to remove " + file, file.delete());
+                }
+            }
+            
+            if (directory.exists())
+                assertTrue("Failed to remove " + name, directory.delete());
         }
-        
-        assertTrue("Failed to remove " + exportDir, exportDir.delete());
     }
 
     @Test
@@ -287,6 +307,76 @@ public class ExportServiceTest extends AbstractServiceTest {
                 IOUtils.closeQuietly(is);
             }
         }
+    }
+    
+    public final void testCreateArchiveWithEmptyDir() throws Exception {
+        archiveTestDirectory = new File(USER_DIR, "testCreateArchiveWithEmptyDir");
+        FileUtils.forceMkdir(archiveTestDirectory);
+        assertEquals(0, archiveTestDirectory.listFiles().length);
+        assertTrue(archiveTestDirectory.isDirectory());
+        dataService.createArchive(archiveTestDirectory);
+        assertEquals(0, archiveTestDirectory.listFiles().length);
+    }
+    
+    public final void testCreateArchiveWithEmptyFiles() throws Exception {
+        archiveTestDirectory = new File(USER_DIR, "testCreateArchiveWithEmptyFiles");
+        FileUtils.forceMkdir(archiveTestDirectory);
+        FileUtils.touch(new File(archiveTestDirectory, "temp"));
+        assertEquals(1, archiveTestDirectory.listFiles().length);
+        assertTrue(archiveTestDirectory.isDirectory());
+        dataService.createArchive(archiveTestDirectory);
+        assertEquals(2, archiveTestDirectory.listFiles().length);
+        // examine zip file
+        File[] files = archiveTestDirectory.listFiles(new FileExtensionFilter(".zip"));
+        assertEquals(1, files.length);
+        ZipInputStream zis = null;
+        try {
+            zis = new ZipInputStream(new FileInputStream(files[0]));
+            ZipEntry zipEntry = zis.getNextEntry();
+            assertEquals("temp", zipEntry.getName());
+            zis.closeEntry();
+        } 
+        finally {
+            IOUtils.closeQuietly(zis);
+        }
+    }
+    
+    public final void testCreateArchiveWithFiles() throws Exception {
+        archiveTestDirectory = new File(USER_DIR, "testCreateArchiveWithFiles");
+        FileUtils.forceMkdir(archiveTestDirectory);
+        FileUtils.writeStringToFile(new File(archiveTestDirectory, "temp"), "test.value=value");
+        FileUtils.writeStringToFile(new File(archiveTestDirectory, "temp_en"), "test.value=valyoo");
+        assertEquals(2, archiveTestDirectory.listFiles().length);
+        assertTrue(archiveTestDirectory.isDirectory());
+        dataService.createArchive(archiveTestDirectory);
+        assertEquals(3, archiveTestDirectory.listFiles().length);
+        // examine zip file
+        File[] files = archiveTestDirectory.listFiles(new FileExtensionFilter(".zip"));
+        assertEquals(1, files.length);
+        ZipInputStream zis = null;
+        try {
+            zis = new ZipInputStream(new FileInputStream(files[0]));
+            ZipEntry zipEntry = zis.getNextEntry();
+            assertEquals("temp", zipEntry.getName());
+            zis.closeEntry();
+            zipEntry = zis.getNextEntry();
+            assertEquals("temp_en", zipEntry.getName());
+            zis.closeEntry();
+        } 
+        finally {
+            IOUtils.closeQuietly(zis);
+        }
+    }
+    
+    @ExpectedException(IllegalArgumentException.class)
+    public final void testCreateArchiveFromFile() throws Exception {
+        archiveTestDirectory = new File(USER_DIR, "testCreateArchiveWithFiles");
+        FileUtils.forceMkdir(archiveTestDirectory);
+        File testFile = new File(archiveTestDirectory, "temp");
+        FileUtils.writeStringToFile(testFile, "test.value=value");
+        assertEquals(1, archiveTestDirectory.listFiles().length);
+        assertTrue(archiveTestDirectory.isDirectory());
+        dataService.createArchive(testFile);
     }
     
     @ExpectedException(IllegalArgumentException.class)
