@@ -2,6 +2,8 @@ package org.tonguetied.web;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.tonguetied.web.Constants.FIELD_CODE;
+import static org.tonguetied.web.Constants.FIELD_NAME;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -30,9 +32,6 @@ public class CountryValidatorTest {
     private Country country;
     private String fieldName;
 
-    private static final String FIELD_CODE = "code";
-    private static final String FIELD_NAME = "name";
-    
     @Parameters
     public static final Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {

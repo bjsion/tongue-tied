@@ -2,6 +2,7 @@ package org.tonguetied.datatransfer.importing;
 
 import static org.tonguetied.datatransfer.Constants.TEST_DATA_DIR;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -144,16 +145,15 @@ public class ExcelDataParserTest extends AbstractServiceTest {
     @Test
     public final void testProcessRecord() throws Exception {
         ExcelDataParser parser = new ExcelDataParser(keywordService);
-        FileInputStream fis = null;
-        InputStream dis = null;
+        InputStream is = null;
         try {
             // create a new file input stream with the input file specified
             // at the command line
             File input = new File(TEST_DATA_DIR, "LanguageCentricImportData.xls");
             
-            fis = new FileInputStream(input);
+            is = new BufferedInputStream(new FileInputStream(input));
             // create a new org.apache.poi.poifs.filesystem.Filesystem
-            POIFSFileSystem poifs = new POIFSFileSystem(fis);
+            POIFSFileSystem poifs = new POIFSFileSystem(is);
             // get the Workbook (excel part) stream in a InputStream
             InputStream din = poifs.createDocumentInputStream("Workbook");
             // construct out HSSFRequest object
@@ -165,12 +165,9 @@ public class ExcelDataParserTest extends AbstractServiceTest {
             // process our events based on the document input stream
             factory.processEvents(req, din);
         } finally {
-            // and our document input stream (don't want to leak these!)
-            if (dis != null)
-                dis.close();
             // once all the events are processed close our file input stream
-            if (fis != null)
-                fis.close();
+            if (is != null)
+                is.close();
         }
         
         List<Language> languages = parser.getLanguages(); 

@@ -55,7 +55,7 @@ public class DBUtils
         {
             Statement statement = conn.createStatement();
 
-            for(String ddlStatement : getStatements(ddlString))
+            for(final String ddlStatement : getStatements(ddlString))
             {
                 try
                 {

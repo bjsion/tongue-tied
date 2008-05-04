@@ -2,6 +2,7 @@ package org.tonguetied.web;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.tonguetied.web.KeywordValidator.FIELD_KEYWORD;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,8 +38,6 @@ public class KeywordValidatorTest {
     
     private static Translation translation;
 
-    private static final String FIELD_KEYWORD = "keyword";
-    
     @Parameters
     public static final Collection<Object[]> data() {
         Country country = new Country();
