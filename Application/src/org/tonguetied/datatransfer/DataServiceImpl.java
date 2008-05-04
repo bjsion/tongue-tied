@@ -8,6 +8,8 @@ import static fmpp.setting.Settings.NAME_SOURCES;
 import static fmpp.setting.Settings.NAME_SOURCE_ROOT;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -15,7 +17,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.tonguetied.datatransfer.common.ExportParameters;
 import org.tonguetied.datatransfer.common.FormatType;
@@ -98,7 +104,8 @@ public class DataServiceImpl implements DataService {
             logger.debug("exporting based on filter " + parameters);
         
         try {
-            settings.set(NAME_OUTPUT_ROOT, getExportPath(true).getAbsolutePath());
+            File exportPath = getExportPath(true);
+            settings.set(NAME_OUTPUT_ROOT, exportPath.getAbsolutePath());
             settings.set(NAME_SOURCES, 
                     getTemplateName(parameters.getFormatType()));
             String[] replaceExtensions = 
@@ -107,33 +114,81 @@ public class DataServiceImpl implements DataService {
             
             List<Translation> translations = 
                 transferRepository.findTranslations(parameters);
-            Map<String, Object> root = new HashMap<String, Object>();
-            ExportDataPostProcessor postProcessor = 
-                ExportDataPostProcessorFactory.getPostProcessor(parameters.getFormatType());
-            if (postProcessor != null) {
-                List<?> results = 
-                    postProcessor.transformData(translations, transferRepository);
-                root.put("items", results);
-//                if (parameters.getLanguages().contains(arg0))
-                Language traditionalChinese = new Language();
-                traditionalChinese.setCode(LanguageCode.zht);
-                traditionalChinese.setName("Traditional Chinese");
-                parameters.addLanguage(traditionalChinese);
-                Collections.sort(parameters.getLanguages());
-                root.put("languages", parameters.getLanguages());
-            }
-            else {
-                root.put("translations", translations);
-            }
+            Map<String, Object> root = postProcess(parameters, translations);
             settings.set(NAME_DATA, root);
             settings.addProgressListener(new LoggerProgressListener());
             settings.execute();
+            
+            if (parameters.isResultPackaged()) {
+                createArchive(exportPath);
+            }
         }
         catch (SettingException se) {
             throw new ExportException(se);
         }
         catch (ProcessingException pe) {
             throw new ExportException(pe);
+        }
+    }
+
+    /**
+     * Post process the result translations to put them into a desired format 
+     * if needed.
+     * 
+     * @param parameters the parameters used to filter and format the data
+     * @param translations the {@link Translation}s to process
+     * @return a map of parameters used by the templating mechanism
+     */
+    private Map<String, Object> postProcess(final ExportParameters parameters,
+            List<Translation> translations) {
+        Map<String, Object> root = new HashMap<String, Object>();
+        ExportDataPostProcessor postProcessor = 
+            ExportDataPostProcessorFactory.getPostProcessor(parameters.getFormatType());
+        if (postProcessor != null) {
+            if (logger.isDebugEnabled()) 
+                logger.debug("post processing results using: " + postProcessor.getClass());
+            
+            List<?> results = 
+                postProcessor.transformData(translations, transferRepository);
+            root.put("items", results);
+//                if (parameters.getLanguages().contains(arg0))
+            Language traditionalChinese = new Language();
+            traditionalChinese.setCode(LanguageCode.zht);
+            traditionalChinese.setName("Traditional Chinese");
+            parameters.addLanguage(traditionalChinese);
+            Collections.sort(parameters.getLanguages());
+            root.put("languages", parameters.getLanguages());
+        }
+        else {
+            root.put("translations", translations);
+        }
+        
+        return root;
+    }
+    
+    public void createArchive(File directory) throws ExportException, IllegalArgumentException {
+        if (!directory.isDirectory())
+            throw new IllegalArgumentException("expecting a directory");
+        
+        ZipOutputStream zos = null;
+        try {
+            File[] files = directory.listFiles();
+            if (files.length > 0) {
+                File archive = new File(directory, directory.getName()+".zip");
+                zos = new ZipOutputStream(
+                        new FileOutputStream(archive));
+                for (File file : files) {
+                    zos.putNextEntry(new ZipEntry(file.getName()));
+                    IOUtils.write(FileUtils.readFileToByteArray(file), zos);
+                    zos.closeEntry();
+                }
+            }
+        }
+        catch (IOException ioe) {
+            throw new ExportException(ioe);
+        }
+        finally {
+            IOUtils.closeQuietly(zos);
         }
     }
 
@@ -167,6 +222,9 @@ public class DataServiceImpl implements DataService {
     }
 
     public void importData(ImportParameters parameters) {
+        if (logger.isDebugEnabled()) 
+            logger.debug("importing based on filter " + parameters);
+        
         Importer importer = 
             ImporterFactory.getImporter(parameters.getFormatType(), keywordService);
         importer.importData(parameters);

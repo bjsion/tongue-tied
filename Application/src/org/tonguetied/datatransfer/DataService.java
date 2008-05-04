@@ -35,6 +35,17 @@ public interface DataService {
      * @return the output directory
      */
     File getExportPath();
+
+    /**
+     * Create an archive file with the contents of the directory supplied.
+     *   
+     * @param directory the directory containing the files to archive
+     * @throws IllegalArgumentException if <code>directory</code> is not a 
+     * directory
+     * @throws ExportException if an error occurs during the export data 
+     * process or if the directory is not a directory
+     */
+    void createArchive(File directory) throws ExportException, IllegalArgumentException;
     
     /**
      * Perform a bulk update/insert of data from an external source.
