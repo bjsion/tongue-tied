@@ -1,6 +1,6 @@
 package org.tonguetied.datatransfer.importing;
 
-import static org.tonguetied.datatransfer.Constants.TEST_DATA_DIR;
+import static org.tonguetied.datatransfer.importing.Constants.TEST_DATA_DIR;
 
 import java.io.BufferedInputStream;
 import java.io.File;
