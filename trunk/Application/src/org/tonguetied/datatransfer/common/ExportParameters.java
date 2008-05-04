@@ -24,6 +24,7 @@ public class ExportParameters {
     private List<Language> languages;
     private TranslationState translationState;
     private FormatType formatType;
+    private boolean isResultPackaged;
     
     /**
      * Create a new instance of the export parameters.  
@@ -116,9 +117,21 @@ public class ExportParameters {
         this.translationState = translationState;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
+    /**
+     * @return the a flag indicating if the resultant export files should be
+     * packaged and compressed into one file
      */
+    public boolean isResultPackaged() {
+        return isResultPackaged;
+    }
+
+    /**
+     * @param isResultPackaged the isResultPackaged to set
+     */
+    public void setResultPackaged(boolean isResultPackaged) {
+        this.isResultPackaged = isResultPackaged;
+    }
+
     @Override
     public String toString() {
         return new ReflectionToStringBuilder(this, 

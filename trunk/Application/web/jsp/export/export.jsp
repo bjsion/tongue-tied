@@ -36,6 +36,10 @@
                     <form:options items="${formatTypes}"/>
                 </form:select>
             </div>
+            <div>
+                <form:label path="resultPackaged" cssClass="content"><fmt:message key="package.result"/></form:label>
+                <form:checkbox path="resultPackaged" id="resultPackaged"/>
+            </div>
         </fieldset>
         <div class="submit">
             <input type="submit" id="export" name="export" value="<fmt:message key="export"/>" class="button"/>
