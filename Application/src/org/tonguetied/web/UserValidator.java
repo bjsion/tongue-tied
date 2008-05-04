@@ -20,6 +20,11 @@ public class UserValidator implements Validator {
 
     private UserService userService;
 
+    static final String FIELD_EMAIL = "email";
+    static final String FIELD_FIRSTNAME = "firstName";
+    static final String FIELD_LASTNAME = "lastName";
+    static final String FIELD_USERNAME = "username";
+    
     //Set the email pattern string
     private static final Pattern emailPattern = 
         Pattern.compile(".+@.+\\.[a-z]+");
@@ -50,13 +55,13 @@ public class UserValidator implements Validator {
      */
     private void validateMandatoryFields(final User user, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, "username", "error.username.required", null, "default");
+                errors, FIELD_USERNAME, "error.username.required", null, "default");
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, "firstName", "error.first.name.required", null, "default");
+                errors, FIELD_FIRSTNAME, "error.first.name.required", null, "default");
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, "lastName", "error.last.name.required", null, "default");
+                errors, FIELD_LASTNAME, "error.last.name.required", null, "default");
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, "email", "error.email.required", null, "default");
+                errors, FIELD_EMAIL, "error.email.required", null, "default");
     }
     
     /**
@@ -72,7 +77,7 @@ public class UserValidator implements Validator {
             User other = userService.getUser(user.getUsername());
             if (other != null) {
                 errors.rejectValue(
-                        "username", 
+                        FIELD_USERNAME, 
                         "error.user.already.exists",
                         new String[] {user.getUsername()},
                         "default");
@@ -92,7 +97,7 @@ public class UserValidator implements Validator {
             //Match the given string with the pattern
             Matcher m = emailPattern.matcher(email);
             if (!m.matches())
-                errors.rejectValue("email", "error.invalid.email");
+                errors.rejectValue(FIELD_EMAIL, "error.invalid.email");
         }
     }
 

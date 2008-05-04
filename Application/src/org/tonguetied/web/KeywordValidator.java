@@ -15,6 +15,8 @@ import org.tonguetied.keywordmanagement.KeywordService;
  */
 public class KeywordValidator implements Validator {
     private KeywordService keywordService;
+    
+    static final String FIELD_KEYWORD = "keyword";
 
     /* (non-Javadoc)
      * @see org.springframework.validation.Validator#supports(java.lang.Class)
@@ -28,7 +30,7 @@ public class KeywordValidator implements Validator {
      */
     public void validate(Object target, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, "keyword", "error.keyword.required", null, "default");
+                errors, FIELD_KEYWORD, "error.keyword.required", null, "default");
         validateDuplicates((Keyword) target, errors);
     }
 
@@ -45,7 +47,7 @@ public class KeywordValidator implements Validator {
             Keyword other = keywordService.getKeyword(keyword.getKeyword());
             if (other != null) {
                 errors.rejectValue(
-                        "keyword", 
+                        FIELD_KEYWORD, 
                         "error.keyword.already.exists", 
                         new String[] {keyword.getKeyword()}, 
                         "default");
