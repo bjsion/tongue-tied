@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.io.IOUtils;
 import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
@@ -84,7 +85,7 @@ public class PropertiesImporter extends Importer {
             throw new ImportException(ioe);
         }
         finally {
-            
+            IOUtils.closeQuietly(bais);
         }
     }
 
