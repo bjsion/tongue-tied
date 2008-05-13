@@ -14,7 +14,9 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
     ExportDataPostProcessorFactoryTest.class,
-    LanguageCentricProcessorTest.class
+    LanguageCentricProcessorTest.class,
+    Native2AsciiDirectiveTest.class,
+    Native2AsciiWriterTest.class
 })
 public class AllTests {
 
