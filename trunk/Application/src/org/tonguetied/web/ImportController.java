@@ -40,13 +40,13 @@ public class ImportController extends CancellableFormController {
      * Create new instance of CountryController 
      */
     public ImportController() {
-        setCommandClass(FileUploadBean.class);
+        setCommandClass(ImportBean.class);
     }
 
     @Override
     protected Object formBackingObject(HttpServletRequest request) 
             throws Exception {
-        return new FileUploadBean();
+        return new ImportBean();
     }
 
     @Override
@@ -56,10 +56,10 @@ public class ImportController extends CancellableFormController {
                                     BindException errors) throws Exception {
         if (logger.isDebugEnabled()) logger.debug("beginning import");
         // cast the bean
-        FileUploadBean bean = (FileUploadBean) command;
+        ImportBean bean = (ImportBean) command;
 
         // let's see if there's content there
-        MultipartFile file = bean.getFile();
+        MultipartFile file = bean.getFileUploadBean().getFile();
         if (file != null) {
             bean.getParameters().setFileName(FilenameUtils.getBaseName(file.getOriginalFilename()));
             bean.getParameters().setData(file.getBytes());
