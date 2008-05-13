@@ -9,8 +9,8 @@
         <fieldset>
             <legend><fmt:message key="import.details"/></legend>
             <div>
-                <form:label path="file" cssClass="content"><fmt:message key="file"/></form:label>
-                <input type="file" name="file" id="file"/>
+                <form:label path="fileUploadBean.file" cssClass="content"><fmt:message key="file"/></form:label>
+                <input type="file" name="fileUploadBean.file" id="fileUploadBean.file"/>
             </div>
             <div>
                 <form:label path="parameters.formatType" cssClass="content"><fmt:message key="file.type"/></form:label>
