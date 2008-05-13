@@ -1,7 +1,6 @@
 package org.tonguetied.web;
 
 import org.springframework.web.multipart.MultipartFile;
-import org.tonguetied.datatransfer.common.ImportParameters;
 
 
 /**
@@ -14,13 +13,11 @@ import org.tonguetied.datatransfer.common.ImportParameters;
 public class FileUploadBean {
 
     private MultipartFile file;
-    private ImportParameters parameters;
 
     /**
      * Create a new instance of FileUploadBean.
      */
     public FileUploadBean() {
-        this.parameters = new ImportParameters();
     }
 
     /**
@@ -35,19 +32,5 @@ public class FileUploadBean {
      */
     public void setFile(MultipartFile file) {
         this.file = file;
-    }
-
-    /**
-     * @return the parameters of the import
-     */
-    public ImportParameters getParameters() {
-        return parameters;
-    }
-
-    /**
-     * @param parameters the parameters to set
-     */
-    public void setParameters(ImportParameters parameters) {
-        this.parameters = parameters;
     }
 }
