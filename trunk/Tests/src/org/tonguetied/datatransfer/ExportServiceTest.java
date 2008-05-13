@@ -13,12 +13,12 @@ import java.util.zip.ZipInputStream;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.SystemUtils;
 import org.junit.Test;
 import org.springframework.test.annotation.ExpectedException;
 import org.tonguetied.datatransfer.common.ExportParameters;
 import org.tonguetied.datatransfer.common.FormatType;
 import org.tonguetied.datatransfer.dao.TransferRepository;
-import org.tonguetied.datatransfer.exporting.ExportException;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
@@ -60,7 +60,7 @@ public class ExportServiceTest extends AbstractServiceTest {
     
     private File archiveTestDirectory = null;
 
-    private static final File USER_DIR = new File(System.getProperty("user.dir"));
+    private static final File USER_DIR = SystemUtils.getUserDir();
 
     
     @Override
@@ -278,7 +278,7 @@ public class ExportServiceTest extends AbstractServiceTest {
         
         final File exportDir = dataService.getExportPath();
         File[] files = 
-            exportDir.listFiles(new FileExtensionFilter(".rawproperties"));
+            exportDir.listFiles(new FileExtensionFilter(".properties"));
         assertEquals(3, files.length);
         Properties actual;
         InputStream is = null;

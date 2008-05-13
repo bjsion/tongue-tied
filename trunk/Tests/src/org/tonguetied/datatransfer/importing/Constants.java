@@ -2,13 +2,14 @@ package org.tonguetied.datatransfer.importing;
 
 import java.io.File;
 
+import org.apache.commons.lang.SystemUtils;
+
 /**
  * @author bsion
  *
  */
 public interface Constants {
+    static final File TEST_RESOURCES_DIR = new File(SystemUtils.getUserDir(), "resources");
 
-    static final String TEST_DATA_DIR = System.getProperty("user.dir") + 
-        File.separator + "resources" + File.separator + "data" +
-        File.separator;
+    static final File TEST_DATA_DIR = new File(TEST_RESOURCES_DIR, "data");
 }
