@@ -144,13 +144,12 @@
     </div>
 
     <div class="contentPanel">
-        <h1><em><fmt:message key="language"/></em><fmt:message key="content"/></h1>
         <a href="<c:url value="keywords.htm"><c:param name="showAll" value="true"/></c:url>" title="<fmt:message key="get.all.keywords"/>"><fmt:message key="all.keywords"/></a>
         <display:table name="translations" id="translation" sort="page" requestURI="">
             <display:column titleKey="action" group="1" class="actions">
                 <c:url value="deleteKeyword.htm" var="deleteKeywordUrl" scope="page"><c:param name="keywordId" value="${translation.keyword.id}"/></c:url>
-                <fmt:message key="confirmKeywordDelete" var="confirmDeleteKeywordMsg" scope="page"><fmt:param value="${keyword.keyword}"/></fmt:message>
-                <a href="${deleteKeywordUrl}" onclick="return confirm('${confirmDeleteKeywordMsg}')">
+                <fmt:message key="confirm.keyword.delete" var="confirmDeleteKeywordMsg" scope="page" ><fmt:param value="${translation.keyword.keyword}"/></fmt:message>
+                <a href="${deleteKeywordUrl}" onclick="return confirm('${fn:escapeXml(confirmDeleteKeywordMsg)}')">
                     <img src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" class="imgLink"/>
                 </a>
             </display:column>
