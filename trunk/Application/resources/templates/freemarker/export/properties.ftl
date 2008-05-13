@@ -1,4 +1,6 @@
-<#assign currentFileName = "">
+<#if pp.outputFileName="properties.properties">
+    <@pp.dropOutputFile/>
+</#if>
 <#list translations as translation>
     <#switch translation.language.code>
         <#case "he">
@@ -15,12 +17,11 @@
     <#else>
         <#assign country = "">
     </#if>
-    <#assign newFileName = "${translation.bundle.resourceName}${lang?default('')}${country?default('')}.rawproperties">
-    <#if newFileName != currentFileName>
-        <#assign currentFileName = "${newFileName}">
-        <@pp.changeOutputFile name="${currentFileName}" append=true/>
+    <#assign newFileName = "${translation.bundle.resourceName}${lang?default('')}${country?default('')}.properties">
+    <#if newFileName != pp.outputFileName>
+        <@pp.changeOutputFile name="${newFileName}" append=true/>
     </#if>
     <#if (translation.value!)?length gt 0>
-${translation.keyword.keyword}=${translation.value}
+<@native2ascii>${translation.keyword.keyword}</@native2ascii>=<@native2ascii>${translation.value}</@native2ascii>
     </#if>
 </#list>
