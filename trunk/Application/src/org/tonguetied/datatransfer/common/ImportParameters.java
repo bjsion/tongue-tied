@@ -1,5 +1,7 @@
 package org.tonguetied.datatransfer.common;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
@@ -78,5 +80,11 @@ public class ImportParameters {
      */
     public void setTranslationState(final TranslationState translationState) {
         this.translationState = translationState;
+    }
+
+    @Override
+    public String toString() {
+        return new ReflectionToStringBuilder(this, 
+                ToStringStyle.SHORT_PREFIX_STYLE).toString();
     }
 }
