@@ -6,6 +6,7 @@ import static fmpp.setting.Settings.NAME_OUTPUT_ROOT;
 import static fmpp.setting.Settings.NAME_REPLACE_EXTENSIONS;
 import static fmpp.setting.Settings.NAME_SOURCES;
 import static fmpp.setting.Settings.NAME_SOURCE_ROOT;
+import static freemarker.log.Logger.LIBRARY_LOG4J;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -22,6 +23,7 @@ import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.SystemUtils;
 import org.apache.log4j.Logger;
 import org.tonguetied.datatransfer.common.ExportParameters;
 import org.tonguetied.datatransfer.common.FormatType;
@@ -30,6 +32,7 @@ import org.tonguetied.datatransfer.dao.TransferRepository;
 import org.tonguetied.datatransfer.exporting.ExportDataPostProcessor;
 import org.tonguetied.datatransfer.exporting.ExportDataPostProcessorFactory;
 import org.tonguetied.datatransfer.exporting.ExportException;
+import org.tonguetied.datatransfer.exporting.Native2AsciiDirective;
 import org.tonguetied.datatransfer.importing.Importer;
 import org.tonguetied.datatransfer.importing.ImporterFactory;
 import org.tonguetied.keywordmanagement.KeywordService;
@@ -54,8 +57,7 @@ public class DataServiceImpl implements DataService {
     private String outputRoot;
     private File outputDir;
     
-    private static final File BASE_DIR = 
-        new File(System.getProperty("user.dir"));
+    private static final File BASE_DIR = SystemUtils.getUserDir();
     private static final Logger logger = 
         Logger.getLogger(DataServiceImpl.class);
     private static final String DATE_FORMAT = "yyyy-MM-dd_hh_mm_ss";
@@ -79,8 +81,7 @@ public class DataServiceImpl implements DataService {
             settings.set(NAME_SOURCE_ROOT, sourceRoot);
 //            settings.set(NAME_OUTPUT_ROOT, outputRoot);
             settings.set(NAME_OUTPUT_ENCODING, "UTF-8");
-            freemarker.log.Logger.selectLoggerLibrary(
-                    freemarker.log.Logger.LIBRARY_LOG4J);
+            freemarker.log.Logger.selectLoggerLibrary(LIBRARY_LOG4J);
         }
         catch (SettingException se) {
             throw new ExportException(se);
@@ -99,6 +100,7 @@ public class DataServiceImpl implements DataService {
             throw new IllegalArgumentException("cannot perform export without" +
                     " an export type set");
         }
+        long start = System.currentTimeMillis();
         
         if (logger.isDebugEnabled()) 
             logger.debug("exporting based on filter " + parameters);
@@ -115,6 +117,9 @@ public class DataServiceImpl implements DataService {
             List<Translation> translations = 
                 transferRepository.findTranslations(parameters);
             Map<String, Object> root = postProcess(parameters, translations);
+            // TODO: follow best practice and put in the configuration as a 
+            // shared variable, see: http://freemarker.sourceforge.net/docs/pgui_datamodel_directive.html
+            root.put("native2ascii", new Native2AsciiDirective());
             settings.set(NAME_DATA, root);
             settings.addProgressListener(new LoggerProgressListener());
             settings.execute();
@@ -129,6 +134,12 @@ public class DataServiceImpl implements DataService {
         catch (ProcessingException pe) {
             throw new ExportException(pe);
         }
+        
+        if (logger.isInfoEnabled()) {
+            long totalMillis = System.currentTimeMillis() - start;
+            logger.info("import complete in " + (totalMillis/1000) + " seconds");
+        }
+
     }
 
     /**
@@ -182,6 +193,10 @@ public class DataServiceImpl implements DataService {
                     IOUtils.write(FileUtils.readFileToByteArray(file), zos);
                     zos.closeEntry();
                 }
+                
+                if (logger.isDebugEnabled())
+                    logger.debug("archived " + files.length + " files to " 
+                            + archive);
             }
         }
         catch (IOException ioe) {
@@ -222,12 +237,18 @@ public class DataServiceImpl implements DataService {
     }
 
     public void importData(ImportParameters parameters) {
+        long start = System.currentTimeMillis();
         if (logger.isDebugEnabled()) 
             logger.debug("importing based on filter " + parameters);
         
         Importer importer = 
             ImporterFactory.getImporter(parameters.getFormatType(), keywordService);
         importer.importData(parameters);
+        
+        if (logger.isInfoEnabled()) {
+            long totalMillis = System.currentTimeMillis() - start;
+            logger.info("import complete in " + (totalMillis/1000) + " seconds");
+        }
     }
 
     /**
