@@ -3,6 +3,7 @@ package org.tonguetied.datatransfer.importing;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.tonguetied.datatransfer.common.ImportParameters;
 import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
 import org.tonguetied.keywordmanagement.KeywordService;
@@ -20,6 +21,8 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
  */
 public abstract class Importer {
     private KeywordService keywordService;
+    
+    protected final static Logger logger = Logger.getLogger(Importer.class);
     
     /**
      * Create a new instance of Importer.
