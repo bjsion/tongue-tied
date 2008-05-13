@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -8,15 +9,15 @@
     <c:url value="/keyword.htm" var="keywordAction" scope="page"/>
     <form:form id="keywordForm" method="post" action="${keywordAction}" commandName="keyword">
         <%-- We need to bind the id as the form is in the request and would be lost when submitted --%>
-        <fmt:message key="confirmKeywordDelete" var="confirmDeleteKeywordMsg" scope="page">
+        <fmt:message key="confirm.keyword.delete" var="confirmDeleteKeywordMsg" scope="page">
             <fmt:param value="${keyword.keyword}"/>
         </fmt:message>
         <fieldset>
             <form:hidden path="id"/>
             <form:hidden path="version"/>
-            <legend><fmt:message key="keywordDetails"/></legend>
+            <legend><fmt:message key="keyword.details"/></legend>
             <div>
-                <form:label path="keyword" cssClass="content"><fmt:message key="keywordId"/></form:label>
+                <form:label path="keyword" cssClass="content"><fmt:message key="keyword.id"/></form:label>
                 <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
                 <form:input path="keyword"/>
                 <form:errors path="keyword" cssClass="error"/>
@@ -26,7 +27,7 @@
                 </security:authorize>
             </div>
             <div>
-                <form:label path="context" cssClass="content"><fmt:message key="keywordContext"/></form:label>
+                <form:label path="context" cssClass="content"><fmt:message key="keyword.context"/></form:label>
                 <form:textarea path="context" rows="2" cols="100%"/>
                 <form:errors path="context" cssClass="error"/>
             </div>
@@ -70,7 +71,7 @@
                         <td>
                             <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
                             <form:select path="translations[${index.index}].language" id="translation${index.index}.language" size="1">
-                                <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
+                                <form:option value=""><fmt:message key="please.select"/></form:option>
                                 <form:options items="${languages}" itemValue="id" itemLabel="name"/>
                             </form:select>
                             </security:authorize>
@@ -81,7 +82,7 @@
                         <td>
                             <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
                             <form:select path="translations[${index.index}].country" id="translation${index.index}.country" size="1">
-                                <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
+                                <form:option value=""><fmt:message key="please.select"/></form:option>
                                 <form:options items="${countries}" itemValue="id" itemLabel="name"/>
                             </form:select>
                             </security:authorize>
@@ -92,7 +93,7 @@
                         <td>
                             <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
                             <form:select path="translations[${index.index}].bundle" id="translation${index.index}.bundle" size="1">
-                                <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
+                                <form:option value=""><fmt:message key="please.select"/></form:option>
                                 <form:options items="${bundles}" itemValue="id" itemLabel="name"/>
                             </form:select>
                             </security:authorize>
@@ -132,13 +133,13 @@
         </fieldset>
         <div class="submit">
             <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
-            <input type="submit" id="add" name="add" value="<fmt:message key="addTranslation"/>" class="button"/>
+            <input type="submit" id="add" name="add" value="<fmt:message key="add.translation"/>" class="button"/>
             </security:authorize>
             <input type="submit" id="save" name="save" value="<fmt:message key="save"/>" class="button"/>
             <input type="submit" id="_cancel" name="_cancel" value="<fmt:message key="cancel"/>" class="button"/>
             <input type="reset" id="reset" name="reset" value="<fmt:message key="reset"/>" class="button"/>
             <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
-            <input type="submit" id="delete" name="delete" value="<fmt:message key="removeKeyword"/>" class="button" onclick="return confirm('${confirmDeleteKeywordMsg}')"/>
+            <input type="submit" id="delete" name="delete" value="<fmt:message key="remove.keyword"/>" class="button" onclick="return confirm('${fn:escapeXml(confirmDeleteKeywordMsg)}')"/>
             </security:authorize>
         </div>
     </form:form>
