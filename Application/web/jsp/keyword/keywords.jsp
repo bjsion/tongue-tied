@@ -163,7 +163,7 @@
             <display:column property="language.name" titleKey="language" class="language"/>
             <display:column titleKey="country" class="country">
                 <c:if test="${translation.country.code != \"DEFAULT\"}">
-                <img src="<c:url value="/images/flags/${fn:toLowerCase(translation.country.code)}.png"/>" alt="${translation.country.name}" title="${translation.country.name}"/>
+                <img src="<c:url value="/images/flags/${fn:toLowerCase(translation.country.code)}.png"/>" alt="" title="${translation.country.name}"/>
                 </c:if>
                 <c:out value="${translation.country.name}"/>
             </display:column>
