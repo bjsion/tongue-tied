@@ -29,7 +29,7 @@
 
     <path id="fmpp.classpath">
         <pathelement location="${3rdparty.home}/FreeMarker/FMPP/0.9.11/fmpp_teamworks.jar"/>
-        <pathelement location="${3rdparty.home}/FreeMarker/2.3.9/freemarker.jar"/>
+        <pathelement location="${3rdparty.home}/FreeMarker/2.3.13/freemarker.jar"/>
         <pathelement location="${3rdparty.home}/FreeMarker/FMPP/0.9.11/bsh.jar"/>
         <!--pathelement location="${3rdparty.home}/FreeMarker/FMPP/0.9.11/resolver.jar"/-->
         <pathelement location="${3rdparty.home}/oro/2.0.8/jakarta-oro-2.0.8.jar"/>
