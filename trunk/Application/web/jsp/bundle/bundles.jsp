@@ -8,7 +8,7 @@
             <display:column sortable="true" titleKey="bundle.name" url="/bundle.htm" paramId="bundleId" paramProperty="id">
                 <c:out value="${bundle.name}"/>
                 <c:if test="${bundle.default}">
-                <img src="<c:url value="/images/asterisk_yellow.png"/>" alt="${bundle.default}" title="<fmt:message key="bundle.default"/>" class="imgLink"/>
+                <img src="<c:url value="/images/asterisk_yellow.png"/>" alt="*" title="<fmt:message key="bundle.default"/>" class="imgLink"/>
                 </c:if>
             </display:column>
             <display:column property="resourceName" titleKey="bundle.resource.name" sortable="true"/>
