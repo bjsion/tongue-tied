@@ -18,7 +18,7 @@
             <Item name="CountryList" title="countries" page="/countries.htm" toolTip="helpCountries.sub.menu"/>
             <Item name="NewCountry" title="new.country" page="/country.htm" toolTip="helpNewCountry.sub.menu"/>
         </Menu>
-        <Menu name="TabbedLanguages" title="languages.tab" page="/languages.htm" toolTip="helpLanguages.tab" roles="ROLE_ADMIN">
+        <Menu name="TabbedLanguages" title="languages.tab" page="/languages.htm" toolTip="help.languages.tab" roles="ROLE_ADMIN">
             <Item name="LanguageList" title="languages" page="/languages.htm" toolTip="help.languages.sub.menu"/>
             <Item name="NewLanguage" title="new.language" page="/language.htm" toolTip="help.new.language.sub.menu"/>
         </Menu>
