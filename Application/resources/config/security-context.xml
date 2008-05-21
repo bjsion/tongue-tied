@@ -12,6 +12,7 @@
         <intercept-url pattern="/css/*.css" filters="none"/>
         <intercept-url pattern="/login.*" filters="none"/>
         <intercept-url pattern="/logout.jsp" filters="none"/>
+        <intercept-url pattern="/auditLog*.*" access="ROLE_ADMIN"/>
         <intercept-url pattern="/bundle*.*" access="ROLE_ADMIN"/>
         <intercept-url pattern="/country*.*" access="ROLE_ADMIN"/>
         <intercept-url pattern="/import.*" access="ROLE_ADMIN,ROLE_USER"/>
