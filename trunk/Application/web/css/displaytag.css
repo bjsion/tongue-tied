@@ -4,6 +4,7 @@ table {
   border-spacing: 0;
   width: 80%;
   margin: 20px 0 20px 0 !important;
+  font-size: 80%;
 }
 
 th,td {

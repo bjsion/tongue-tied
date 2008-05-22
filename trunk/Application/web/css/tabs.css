@@ -1,16 +1,10 @@
-body {
-    background: #ffffff;
-    font-family: Verdana, Helvetica, Arial, sans-serif;
-    font-size: 80%;
-    margin: 10px;
-    padding: 0px;
-}
-
+@CHARSET "ISO-8859-1";
 .menuList {
     border-bottom: 1px solid #cccccc;
     margin: 0;
     padding-bottom: 19px;
     padding-left: 10px;
+    clear: both;
 }
 
 .menuList a:link, .menuList a:visited	{

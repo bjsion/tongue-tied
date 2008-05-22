@@ -23,12 +23,14 @@
 </head>
 
 <body>
-    <div>
-        <div class="productDesc">
-            <img src="<c:url value="/images/application_logo.png"/>" alt="<fmt:message key="application.logo"/>" title="<fmt:message key="application.logo"/>"/>
-            <form id="langForm" method="get" action="${pageContext.request.requestURL}">
-                <div>
-                    <label id="siteLanguageLabel" for="siteLanguage" class="content"><fmt:message key="language"/></label>
+    <div class="header-container">
+        <div class="left-element">
+            <img src="<c:url value="/images/application_logo.png"/>" alt="<fmt:message key="application.short.name"/>" title="<fmt:message key="application.short.name"/>" class="logo"/>
+        </div>
+        <div class="right-element">
+            <form id="langForm" method="get" action="${pageContext.request.requestURL}" class="header">
+                <fieldset class="header">
+                    <label id="siteLanguageLabel" for="siteLanguage" class="header"><fmt:message key="language"/></label>
                     <fmt:bundle basename="language">
                     <select id="siteLanguage" name="siteLanguage" size="1" onchange="document.getElementById('langForm').submit();">
                         <c:forEach items="${applicationScope.supportedLanguages}" var="langCode">
@@ -36,13 +38,13 @@
                         </c:forEach>
                     </select>
                     </fmt:bundle>
-                </div>
+                </fieldset>
             </form>
-            <form id="logoutForm" method="post" action="<c:url value="j_spring_security_logout"/>">
-                <div>
-                    <fmt:message key="current.user"/>&nbsp;<security:authentication property="principal.username"/>
+            <form id="logoutForm" method="post" action="<c:url value="j_spring_security_logout"/>" class="header">
+                <fieldset class="header">
+                    <span class="welcome"><fmt:message key="current.user"/>&nbsp;<security:authentication property="principal.username"/></span>
                     <input type="submit" id="logout" name="logout" value="<fmt:message key="logout"/>" class="button"/>
-                </div>
+                </fieldset>
             </form>
         </div>
     </div>
