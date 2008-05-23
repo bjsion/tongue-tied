@@ -6,6 +6,7 @@ import static org.tonguetied.web.ExportParametersValidator.FIELD_BUNDLES;
 import static org.tonguetied.web.ExportParametersValidator.FIELD_COUNTRIES;
 import static org.tonguetied.web.ExportParametersValidator.FIELD_FORMAT_TYPE;
 import static org.tonguetied.web.ExportParametersValidator.FIELD_LANGUAGES;
+import static org.tonguetied.web.ExportParametersValidator.FIELD_TRANSLATION_STATE;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,6 +25,7 @@ import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Language;
 import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
+import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
 
 /**
@@ -67,22 +69,23 @@ public class ExportParametersValidatorTest {
         bundle2.setResourceName("bundle2");
         
         return Arrays.asList(new Object[][] {
-            {new Language[] {chinese}, new Country[] {china, hongKong}, new Bundle[] {bundle1}, null, FIELD_FORMAT_TYPE},
-            {new Language[] {}, new Country[] {china, hongKong}, new Bundle[] {bundle1}, FormatType.csv, FIELD_LANGUAGES},
-            {null, new Country[] {china, hongKong}, new Bundle[] {bundle1}, FormatType.resources, FIELD_LANGUAGES},
-            {new Language[] {chinese, japanese}, new Country[] {}, new Bundle[] {bundle1}, FormatType.xls, FIELD_COUNTRIES},
-            {new Language[] {chinese, japanese}, null, new Bundle[] {bundle1, bundle2}, FormatType.resources, FIELD_COUNTRIES},
-            {new Language[] {chinese}, new Country[] {china, hongKong}, new Bundle[] {}, FormatType.xls, FIELD_BUNDLES},
-            {new Language[] {chinese, japanese}, new Country[] {china, hongKong, japan}, null, FormatType.properties, FIELD_BUNDLES},
-//            {new Language[] {chinese}, new Country[] {china, hongKong}, new Bundle[] {bundle1}, ExportType.xls, FIELD_FORMAT_TYPE},
-//            {new Language[] {chinese}, new Country[] {china, hongKong}, new Bundle[] {bundle1}, ExportType.xls, FIELD_FORMAT_TYPE},
-//            {new Language[] {chinese}, new Country[] {china, hongKong}, new Bundle[] {bundle1}, ExportType.xls, FIELD_FORMAT_TYPE},
-//            {new Language[] {chinese}, new Country[] {china, hongKong}, new Bundle[] {bundle1}, ExportType.xls, FIELD_FORMAT_TYPE},
+            {new Language[] {chinese}, new Country[] {china, hongKong}, new Bundle[] {bundle1}, null, TranslationState.QUERIED, FIELD_FORMAT_TYPE},
+            {new Language[] {}, new Country[] {china, hongKong}, new Bundle[] {bundle1}, FormatType.csv, TranslationState.VERIFIED, FIELD_LANGUAGES},
+            {null, new Country[] {china, hongKong}, new Bundle[] {bundle1}, FormatType.resx, TranslationState.UNVERIFIED, FIELD_LANGUAGES},
+            {new Language[] {chinese, japanese}, new Country[] {}, new Bundle[] {bundle1}, FormatType.xls, TranslationState.UNVERIFIED, FIELD_COUNTRIES},
+            {new Language[] {chinese, japanese}, null, new Bundle[] {bundle1, bundle2}, FormatType.resx, TranslationState.QUERIED, FIELD_COUNTRIES},
+            {new Language[] {chinese}, new Country[] {china, hongKong}, new Bundle[] {}, FormatType.xls, TranslationState.QUERIED, FIELD_BUNDLES},
+            {new Language[] {chinese, japanese}, new Country[] {china, hongKong, japan}, null, FormatType.properties, TranslationState.VERIFIED, FIELD_BUNDLES},
+            {new Language[] {chinese}, new Country[] {china, hongKong}, new Bundle[] {bundle1}, FormatType.xls, null, FIELD_TRANSLATION_STATE},
+//            {new Language[] {chinese}, new Country[] {china, hongKong}, new Bundle[] {bundle1}, ExportType.xls, TranslationState., FIELD_FORMAT_TYPE},
+//            {new Language[] {chinese}, new Country[] {china, hongKong}, new Bundle[] {bundle1}, ExportType.xls, TranslationState., FIELD_FORMAT_TYPE},
+//            {new Language[] {chinese}, new Country[] {china, hongKong}, new Bundle[] {bundle1}, ExportType.xls, TranslationState., FIELD_FORMAT_TYPE},
         });
     }
     
     public ExportParametersValidatorTest(Language[] langauges,
-            Country[] countries, Bundle[] bundles, FormatType formatType, String fieldName)
+            Country[] countries, Bundle[] bundles, FormatType formatType, 
+            TranslationState translationState, String fieldName)
     {
         parameters = new ExportParameters();
         if (langauges == null) {
@@ -107,6 +110,7 @@ public class ExportParametersValidatorTest {
                 parameters.addBundle(bundle);
             }
         }
+        parameters.setTranslationState(translationState);
         parameters.setFormatType(formatType);
         
         this.fieldName = fieldName;
@@ -134,6 +138,9 @@ public class ExportParametersValidatorTest {
         }
         else if (FIELD_FORMAT_TYPE.equals(fieldName)) {
             assertEquals(this.parameters.getFormatType(), error.getRejectedValue());
+        }
+        else if (FIELD_TRANSLATION_STATE.equals(fieldName)) {
+            assertEquals(this.parameters.getTranslationState(), error.getRejectedValue());
         }
         
         assertFalse(error.isBindingFailure());

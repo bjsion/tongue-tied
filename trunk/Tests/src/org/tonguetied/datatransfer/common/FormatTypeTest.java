@@ -27,7 +27,7 @@ public class FormatTypeTest {
                 {FormatType.xlsLanguage, "xls"},
                 {FormatType.properties, "properties"},
                 {FormatType.csv, "csv"},
-                {FormatType.resources, "resx"}
+                {FormatType.resx, "resx"}
         });
     }
 
