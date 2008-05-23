@@ -1,6 +1,6 @@
 package org.tonguetied.web;
 
-import static org.tonguetied.web.Constants.BUNDLES;
+import static org.tonguetied.web.Constants.*;
 import static org.tonguetied.web.Constants.COUNTRIES;
 import static org.tonguetied.web.Constants.FORMAT_TYPES;
 import static org.tonguetied.web.Constants.LANGUAGES;
@@ -23,6 +23,7 @@ import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.KeywordService;
 import org.tonguetied.keywordmanagement.Language;
+import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
 
 /**
@@ -79,6 +80,7 @@ public class ExportController extends CancellableFormController {
         binder.registerCustomEditor(Bundle.class, 
                 new BundleSupport(keywordService.getBundles()));
         binder.registerCustomEditor(FormatType.class, new FormatTypeSupport()); 
+        binder.registerCustomEditor(TranslationState.class, new TranslationStateSupport()); 
     }
 
     @Override
@@ -90,6 +92,7 @@ public class ExportController extends CancellableFormController {
         model.put(COUNTRIES, keywordService.getCountries());
         model.put(BUNDLES, keywordService.getBundles());
         model.put(FORMAT_TYPES, FormatType.values());
+        model.put(STATES, TranslationState.values());
         
         return model;
     }

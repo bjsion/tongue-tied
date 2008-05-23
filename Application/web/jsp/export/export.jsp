@@ -30,11 +30,20 @@
                 <form:errors path="bundles" cssClass="error"/>
             </div>
             <div>
+                <form:label path="translationState" cssClass="content"><fmt:message key="translation.state"/></form:label>
+                <form:select path="translationState" size="1">
+                    <form:option value=""><fmt:message key="please.select"/></form:option>
+                    <form:options items="${states}"/>
+                </form:select>
+                <form:errors path="translationState" cssClass="error"/>
+            </div>
+            <div>
                 <form:label path="formatType" cssClass="content"><fmt:message key="export.type"/></form:label>
                 <form:select path="formatType" size="1">
                     <form:option value=""><fmt:message key="please.select"/></form:option>
                     <form:options items="${formatTypes}"/>
                 </form:select>
+                <form:errors path="formatType" cssClass="error"/>
             </div>
             <div>
                 <form:label path="resultPackaged" cssClass="content"><fmt:message key="package.result"/></form:label>
