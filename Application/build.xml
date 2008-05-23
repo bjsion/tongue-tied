@@ -104,7 +104,7 @@
         <path refid="hibernate.classpath"/>
         <pathelement location="${metadata.home}/builds/metadata.jar"/>
         <pathelement location="${3rdparty.home}/Hibernate/tools/3.2.0.beta8/hibernate-tools.jar"/>
-        <pathelement location="${3rdparty.home}/FreeMarker/2.3.9/freemarker.jar"/>
+        <pathelement location="${3rdparty.home}/FreeMarker/2.3.13/freemarker.jar"/>
         <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-collections-3.2.jar"/>
         <pathelement location="${3rdparty.home}/dom4j/1.6.1/dom4j.jar"/>
         <pathelement location="${3rdparty.home}/cglib/2.1.3/cglib-nodep-2.1_3.jar"/>
@@ -113,7 +113,7 @@
 
     <path id="fmpp.classpath">
         <pathelement location="${3rdparty.home}/FreeMarker/FMPP/0.9.11/fmpp_teamworks.jar"/>
-        <pathelement location="${3rdparty.home}/FreeMarker/2.3.9/freemarker.jar"/>
+        <pathelement location="${3rdparty.home}/FreeMarker/2.3.13/freemarker.jar"/>
         <pathelement location="${3rdparty.home}/FreeMarker/FMPP/0.9.11/bsh.jar"/>
         <pathelement location="${3rdparty.home}/oro/2.0.8/jakarta-oro.jar"/>
         <path refid="hsql.classpath"/>
@@ -249,8 +249,9 @@
                 <include name="ehcache.jar"/>
                 <include name="backport-util-concurrent-3.0.jar"/>
             </lib>
-            <lib dir="${3rdparty.home}/FreeMarker/2.3.9">
+            <lib dir="${3rdparty.home}/FreeMarker/2.3.13">
                 <include name="freemarker.jar"/>
+                <include name="LICENSE.freemarker.txt"/>
             </lib>
             <lib dir="${3rdparty.home}/FreeMarker/FMPP/0.9.11">
                 <include name="fmpp_teamworks.jar"/>
@@ -336,6 +337,7 @@
             <zipfileset dir="${web.jsp.dir}/ROOT">
                 <include name="*.jsp"/>
             </zipfileset>
+            <zipfileset dir="${web.dir}/export" prefix="export"/>
             <zipfileset dir="${web.images.dir}" prefix="images"/>
             <zipfileset dir="${web.css.dir}" prefix="css"/>
             <zipfileset dir="${web.scripts.dir}" prefix="scripts"/>
@@ -528,6 +530,11 @@
         <copy todir="${web.server.scripts}">
             <fileset dir="${web.scripts.dir}">
                 <include name="**/*.js"/>
+            </fileset>
+        </copy>
+        <copy todir="${web.server.root}/templates">
+            <fileset dir="${templates.dir}/freemarker/export">
+                <include name="*.ftl"/>
             </fileset>
         </copy>
     </target>
