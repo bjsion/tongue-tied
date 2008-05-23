@@ -139,12 +139,13 @@
 </#list>
 <#assign rowCounter = rowCounter + (translations?size)+ 1 >
     <Worksheet ss:Name="Translations">
-        <Table ss:ExpandedColumnCount="6" ss:ExpandedRowCount="${rowCounter}" x:FullColumns="1" x:FullRows="1">
+        <Table ss:ExpandedColumnCount="7" ss:ExpandedRowCount="${rowCounter}" x:FullColumns="1" x:FullRows="1">
             <Column ss:AutoFitWidth="0" ss:Width="60"/>
             <Column ss:AutoFitWidth="0" ss:Width="19.5"/>
             <Column ss:StyleID="s38" ss:AutoFitWidth="0" ss:Width="96.75"/>
             <Column ss:AutoFitWidth="0" ss:Width="94.5"/>
             <Column ss:AutoFitWidth="0" ss:Width="103.5"/>
+            <Column ss:AutoFitWidth="0" ss:Width="94.5"/>
             <Column ss:AutoFitWidth="1" ss:Width="148.5"/>
             <Row ss:Height="15">
                 <Cell ss:StyleID="s45"/>
@@ -152,6 +153,7 @@
                 <Cell ss:StyleID="s44"><Data ss:Type="String">Language</Data></Cell>
                 <Cell ss:StyleID="s44"><Data ss:Type="String">Country</Data></Cell>
                 <Cell ss:StyleID="s44"><Data ss:Type="String">Bundle</Data></Cell>
+                <Cell ss:StyleID="s44"><Data ss:Type="String">Translation State</Data></Cell>
                 <Cell ss:StyleID="s44"><Data ss:Type="String">Translation</Data></Cell>
             </Row>
             <#assign currentKeyword = "">
@@ -161,11 +163,11 @@
                     <#assign currentKeyword = "${newKeyword}">
             <Row ss:Height="15">
                 <Cell ss:StyleID="s46"><Data ss:Type="String">Keyword</Data></Cell>
-                <Cell ss:MergeAcross="4" ss:StyleID="s47"><Data ss:Type="String">${translation.keyword.keyword?xml}</Data></Cell>
+                <Cell ss:MergeAcross="5" ss:StyleID="s47"><Data ss:Type="String">${translation.keyword.keyword?xml}</Data></Cell>
             </Row>
             <Row ss:Height="15">
                 <Cell ss:StyleID="s46"><Data ss:Type="String">Context</Data></Cell>
-                <Cell ss:MergeAcross="4" ss:StyleID="s48"><Data ss:Type="String">${(translation.keyword.context!)?xml}</Data></Cell>
+                <Cell ss:MergeAcross="5" ss:StyleID="s48"><Data ss:Type="String">${(translation.keyword.context!)?xml}</Data></Cell>
             </Row>
                 </#if>
             <Row ss:Height="15">
@@ -174,6 +176,7 @@
                 <Cell ss:StyleID="s50"><Data ss:Type="String">${translation.language.name}</Data></Cell>
                 <Cell ss:StyleID="s50"><Data ss:Type="String">${translation.country.name}</Data></Cell>
                 <Cell ss:StyleID="s50"><Data ss:Type="String">${translation.bundle.name}</Data></Cell>
+                <Cell ss:StyleID="s50"><Data ss:Type="String">${translation.state}</Data></Cell>
                 <Cell ss:StyleID="s59"><Data ss:Type="String">${(translation.value!)?xml}</Data></Cell>
             </Row>
             </#list>

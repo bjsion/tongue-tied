@@ -39,6 +39,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
                       "where translation.country in (:countries) " +
                       "and translation.bundle in (:bundles) " +
                       "and translation.language in (:languages) " +
+                      "and translation.state = :state " +
                       "order by lower(translation.keyword.keyword), " +
                           "translation.language, " +
                           "translation.country, " +

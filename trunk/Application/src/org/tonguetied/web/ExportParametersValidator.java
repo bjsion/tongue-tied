@@ -18,6 +18,7 @@ public class ExportParametersValidator implements Validator {
     static final String FIELD_BUNDLES = "bundles";
     static final String FIELD_LANGUAGES = "languages";
     static final String FIELD_FORMAT_TYPE = "formatType";
+    static final String FIELD_TRANSLATION_STATE = "translationState";
 
     /* (non-Javadoc)
      * @see org.springframework.validation.Validator#supports(java.lang.Class)
@@ -33,6 +34,9 @@ public class ExportParametersValidator implements Validator {
         ExportParameters parameters = (ExportParameters) target;
         if (parameters.getFormatType() == null) {
             errors.rejectValue(FIELD_FORMAT_TYPE, "error.export.type.required");
+        }
+        if (parameters.getTranslationState() == null) {
+            errors.rejectValue(FIELD_TRANSLATION_STATE, "error.translation.state.required");
         }
         if (CollectionUtils.isEmpty(parameters.getLanguages())) {
             errors.rejectValue(FIELD_LANGUAGES, "error.language.selection");

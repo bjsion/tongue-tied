@@ -62,7 +62,7 @@ public enum FormatType {
     /**
      * C# resources file
      */
-    resources {
+    resx {
         /* (non-Javadoc)
          * @see org.tonguetied.web.ExportParameters.FormatType#getDefaultFileExtension()
          */
