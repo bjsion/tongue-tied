@@ -30,7 +30,7 @@ public class ImporterFactoryTest {
                 {FormatType.xlsLanguage, ExcelImporter.class},
                 {FormatType.properties, PropertiesImporter.class},
                 {FormatType.csv, CsvImporter.class},
-                {FormatType.resources, ResourceImporter.class}
+                {FormatType.resx, ResourceImporter.class}
         });
     }
 
