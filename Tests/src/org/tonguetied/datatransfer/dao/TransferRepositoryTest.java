@@ -110,7 +110,7 @@ public class TransferRepositoryTest extends AbstractServiceTest {
         translation3_1.setLanguage(chinese);
         translation3_1.setKeyword(keyword3);
         translation3_1.setValue("different keyword");
-        translation3_1.setState(TranslationState.UNVERIFIED);
+        translation3_1.setState(TranslationState.QUERIED);
         keyword3.addTranslation(translation3_1);
         
         keyword4 = new Keyword();
@@ -122,7 +122,7 @@ public class TransferRepositoryTest extends AbstractServiceTest {
         translation4_1.setLanguage(chinese);
         translation4_1.setKeyword(keyword4);
         translation4_1.setValue("one other keyword");
-        translation4_1.setState(TranslationState.UNVERIFIED);
+        translation4_1.setState(TranslationState.QUERIED);
         keyword4.addTranslation(translation4_1);
         translation4_2 = new Translation();
         translation4_2.setKeyword(keyword4);
@@ -141,6 +141,7 @@ public class TransferRepositoryTest extends AbstractServiceTest {
         ExportParameters parameters = new ExportParameters();
         parameters.addCountry(singapore);
         parameters.addBundle(bundle);
+        parameters.setTranslationState(TranslationState.VERIFIED);
         transferRepository.findTranslations(parameters);
     }
 
@@ -149,12 +150,23 @@ public class TransferRepositoryTest extends AbstractServiceTest {
         ExportParameters parameters = new ExportParameters();
         parameters.addLanguage(english);
         parameters.addBundle(bundle);
+        parameters.setTranslationState(TranslationState.VERIFIED);
         transferRepository.findTranslations(parameters);
     }
 
     @ExpectedException(IllegalArgumentException.class)
     public final void testFindTranslationsWithNoBundle() {
         ExportParameters parameters = new ExportParameters();
+        parameters.addCountry(singapore);
+        parameters.addLanguage(english);
+        parameters.setTranslationState(TranslationState.VERIFIED);
+        transferRepository.findTranslations(parameters);
+    }
+
+    @ExpectedException(IllegalArgumentException.class)
+    public final void testFindTranslationsWithNoTranslationState() {
+        ExportParameters parameters = new ExportParameters();
+        parameters.addBundle(bundle);
         parameters.addCountry(singapore);
         parameters.addLanguage(english);
         transferRepository.findTranslations(parameters);
@@ -166,6 +178,7 @@ public class TransferRepositoryTest extends AbstractServiceTest {
         parameters.addLanguage(english);
         parameters.addCountry(singapore);
         parameters.addBundle(bundle);
+        parameters.setTranslationState(TranslationState.QUERIED);
         List<Translation> translations = 
             transferRepository.findTranslations(parameters);
         assertEquals(3, translations.size());

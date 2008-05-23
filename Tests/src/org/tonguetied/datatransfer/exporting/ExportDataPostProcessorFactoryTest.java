@@ -29,7 +29,7 @@ public class ExportDataPostProcessorFactoryTest {
                 {FormatType.xlsLanguage, LanguageCentricProcessor.class},
                 {FormatType.properties, null},
                 {FormatType.csv, null},
-                {FormatType.resources, null}
+                {FormatType.resx, null}
         });
     }
 

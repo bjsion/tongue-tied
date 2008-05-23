@@ -26,6 +26,7 @@ import org.tonguetied.keywordmanagement.Language;
 import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
+import org.tonguetied.keywordmanagement.Translation.TranslationState;
 import org.tonguetied.test.common.AbstractServiceTest;
 
 
@@ -100,6 +101,7 @@ public class ExportServiceTest extends AbstractServiceTest {
         translation1_1.setLanguage(english);
         translation1_1.setKeyword(keyword1);
         translation1_1.setValue("a keyword");
+        translation1_1.setState(TranslationState.VERIFIED);
         keyword1.addTranslation(translation1_1);
         translation1_2 = new Translation();
         translation1_2.setBundle(bundle);
@@ -107,6 +109,7 @@ public class ExportServiceTest extends AbstractServiceTest {
         translation1_2.setLanguage(english);
         translation1_2.setKeyword(keyword1);
         translation1_2.setValue("a keyword lah");
+        translation1_2.setState(TranslationState.VERIFIED);
         keyword1.addTranslation(translation1_2);
         
         keyword2 = new Keyword();
@@ -118,6 +121,7 @@ public class ExportServiceTest extends AbstractServiceTest {
         translation2_1.setLanguage(english);
         translation2_1.setKeyword(keyword2);
         translation2_1.setValue("another keyword");
+        translation2_1.setState(TranslationState.VERIFIED);
         keyword2.addTranslation(translation2_1);
         
         keyword3 = new Keyword();
@@ -126,6 +130,7 @@ public class ExportServiceTest extends AbstractServiceTest {
         translation3_1.setBundle(bundle);
         translation3_1.setCountry(singapore);
         translation3_1.setLanguage(chinese);
+        translation3_1.setState(TranslationState.VERIFIED);
         translation3_1.setKeyword(keyword3);
         translation3_1.setValue("keyword three");
         keyword3.addTranslation(translation3_1);
@@ -134,6 +139,7 @@ public class ExportServiceTest extends AbstractServiceTest {
         translation3_2.setCountry(singapore);
         translation3_2.setLanguage(english);
         translation3_2.setKeyword(keyword3);
+        translation3_2.setState(TranslationState.UNVERIFIED);
         keyword3.addTranslation(translation3_2);
         translation3_3 = new Translation();
         translation3_3.setBundle(bundle);
@@ -141,6 +147,7 @@ public class ExportServiceTest extends AbstractServiceTest {
         translation3_3.setLanguage(english);
         translation3_3.setValue("xml < ! & \" '>");
         translation3_3.setKeyword(keyword3);
+        translation3_3.setState(TranslationState.VERIFIED);
         keyword3.addTranslation(translation3_3);
         
         keyword4 = new Keyword();
@@ -184,6 +191,7 @@ public class ExportServiceTest extends AbstractServiceTest {
         parameters.addBundle(bundle);
         parameters.addCountry(singapore);
         parameters.setFormatType(FormatType.xls);
+        parameters.setTranslationState(TranslationState.VERIFIED);
         dataService.exportData(parameters);
         
         final File exportDir = dataService.getExportPath();
@@ -208,6 +216,7 @@ public class ExportServiceTest extends AbstractServiceTest {
         parameters.addBundle(bundle);
         parameters.addCountry(singapore);
         parameters.setFormatType(FormatType.xlsLanguage);
+        parameters.setTranslationState(TranslationState.VERIFIED);
         dataService.exportData(parameters);
         
         final File exportDir = dataService.getExportPath();
@@ -232,6 +241,7 @@ public class ExportServiceTest extends AbstractServiceTest {
         parameters.addBundle(bundle);
         parameters.addCountry(singapore);
         parameters.setFormatType(FormatType.csv);
+        parameters.setTranslationState(TranslationState.VERIFIED);
         dataService.exportData(parameters);
         
         List<Translation> translations = transferRepository.findTranslations(parameters);
@@ -242,6 +252,7 @@ public class ExportServiceTest extends AbstractServiceTest {
             append(t.getLanguage().getName()).append(",").
             append(t.getCountry().getName()).append(",").
             append(t.getBundle().getName()).append(",").
+            append(t.getState().name()).append(",").
             append(t.getValue() != null? t.getValue(): "").
             append("\r\n");
         }
@@ -264,6 +275,7 @@ public class ExportServiceTest extends AbstractServiceTest {
         parameters.addCountry(australia);
         parameters.addCountry(singapore);
         parameters.setFormatType(FormatType.properties);
+        parameters.setTranslationState(TranslationState.VERIFIED);
         dataService.exportData(parameters);
         
         Properties expected_en_AU = new Properties();
@@ -391,6 +403,7 @@ public class ExportServiceTest extends AbstractServiceTest {
         parameters.addLanguage(chinese);
         parameters.addBundle(bundle);
         parameters.addCountry(singapore);
+        parameters.setTranslationState(TranslationState.VERIFIED);
         parameters.setFormatType(null);
         dataService.exportData(parameters);
     }
