@@ -92,8 +92,10 @@ public abstract class Importer {
         validate(parameters.getData(), errorCodes);
         validate(parameters.getFileName(), errorCodes);
         
-        if (!errorCodes.isEmpty())
+        if (!errorCodes.isEmpty()) {
+            logger.warn("failed to import files. errorCodes ("+errorCodes+")");
             throw new ImportException(errorCodes);
+        }
     }
 
     /**
