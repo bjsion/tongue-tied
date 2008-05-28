@@ -46,6 +46,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
             <props>
+                <prop key="org.tonguetied.datatransfer.importing.ImportException">import/error</prop>
                 <prop key="javax.servlet.ServletException">error</prop>
                 <prop key="java.lang.Exception">error</prop>
             </props>
@@ -64,6 +65,10 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     
     <bean name="/error.htm" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
         <property name="viewName" value="error"/>
+    </bean>
+    
+    <bean name="/import/error.htm" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+        <property name="viewName" value="import/error"/>
     </bean>
     
     <!-- ========================= DEFINITIONS OF PROTECTED CONTROLLERS ========================= -->
