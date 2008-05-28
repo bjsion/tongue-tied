@@ -484,24 +484,26 @@
             <classpath location="${classes.dir}"/>
         </hibernatetool>
 
-        <!--java jar="${3rdparty.home}/SchemaSpy/2.1.1/schemaSpy_2.1.1.jar"
+        <java jar="${3rdparty.home}/SchemaSpy/3.1.1/schemaSpy.jar"
               fork="true">
             <arg value="-t" />
             <arg value="hsqldb"/>
+            <arg value="-db"/>
+            <arg value="tonguetied"/>
             <arg value="-cp"/>
             <arg value="${3rdparty.home}/HSQLDB/1.8.0/hsqldb.jar"/>
             <arg value="-u" />
-            <arg value="${jdbc.username}"/-->
+            <arg value="${jdbc.username}"/>
             <!--arg value="-p"/>
             <arg value="${jdbc.password}"/-->
-            <!--arg value="-s" />
+            <arg value="-s" />
             <arg value="PUBLIC"/>
             <arg value="-o" />
             <arg value="${docs.schema.dir}"/>
             <arg value="-host" />
-            <arg value="localhost"/-->
+            <arg value="localhost:9010"/>
             <!--arg value="-dbhelp"/-->
-        <!--/java-->
+        </java>
     </target>
     
     <target name="hot.deploy" description="deploy the web components into a running server. This is for developers only">
