@@ -30,7 +30,7 @@ public class ImporterFactory {
             case properties:
                 importer = new PropertiesImporter(keywordService);
                 break;
-            case resources:
+            case resx:
                 importer = new ResourceImporter(keywordService);
                 break;
             case xls:
