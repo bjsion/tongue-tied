@@ -24,14 +24,13 @@
     <property name="fmpp.log.file" value="${generated.dir}/fmpp.log"/>
     
     <path id="db.server.classpath">
-        <pathelement location="${3rdparty.home}/HSQLDB/1.8.0/hsqldb.jar"/>
+        <pathelement location="${3rdparty.home}/HSQLDB/1.8.0.9/hsqldb.jar"/>
     </path>
 
     <path id="fmpp.classpath">
-        <pathelement location="${3rdparty.home}/FreeMarker/FMPP/0.9.11/fmpp_teamworks.jar"/>
+        <pathelement location="${3rdparty.home}/FreeMarker/FMPP/0.9.13/fmpp.jar"/>
         <pathelement location="${3rdparty.home}/FreeMarker/2.3.13/freemarker.jar"/>
-        <pathelement location="${3rdparty.home}/FreeMarker/FMPP/0.9.11/bsh.jar"/>
-        <!--pathelement location="${3rdparty.home}/FreeMarker/FMPP/0.9.11/resolver.jar"/-->
+        <pathelement location="${3rdparty.home}/bsh/2.0b4/bsh.jar"/>
         <pathelement location="${3rdparty.home}/oro/2.0.8/jakarta-oro-2.0.8.jar"/>
         <path refid="db.server.classpath"/>
     </path>
@@ -39,11 +38,11 @@
     <path id="tonguetied.server.classpath">
         <pathelement location="${server.home}/builds/jettyServer.jar"/>
         <pathelement location="${3rdparty.home}/Jetty/6.1.9/jetty.jar"/>
-        <pathelement location="${3rdparty.home}/Log4j/1.2.14/log4j.jar"/>
+        <pathelement location="${3rdparty.home}/Log4j/1.2.15/log4j.jar"/>
         <pathelement location="${3rdparty.home}/Jetty/5.1.5/javax.servlet.jar"/>
         <pathelement location="${3rdparty.home}/Ant/1.7.0/ant.jar"/>
         <pathelement location="${server.home}/builds/server.jar"/>
-        <pathelement location="${3rdparty.home}/Spring/2.5.3/spring.jar"/>
+        <pathelement location="${3rdparty.home}/Spring/2.5.4/spring.jar"/>
         <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-logging.jar"/>
         <pathelement location="${3rdparty.home}/Quartz/1.5.2/quartz.jar"/>
         <pathelement location="${3rdparty.home}/Hibernate/3.2.6/hibernate3.jar"/>
