@@ -129,7 +129,7 @@
             <zipfileset dir="${3rdparty.home}/Jakarta-Commons" prefix="${version}/libs">
                 <include name="commons-cli-1.1.jar"/>
             </zipfileset>
-            <zipfileset dir="${3rdparty.home}/HSQLDB/1.8.0" prefix="${version}/libs">
+            <zipfileset dir="${3rdparty.home}/HSQLDB/1.8.0.9" prefix="${version}/libs">
                 <include name="hsqldb.jar"/>
             </zipfileset>
             <zipfileset dir="${3rdparty.home}/Jetty/6.1.9" prefix="${version}/libs">
@@ -142,7 +142,7 @@
                 <include name="jsp-2.1.jar"/>
                 <include name="jsp-api-2.1.jar"/>
             </zipfileset>
-            <zipfileset dir="${3rdparty.home}/Log4j/1.2.14" prefix="${version}/libs">
+            <zipfileset dir="${3rdparty.home}/Log4j/1.2.15" prefix="${version}/libs">
                 <include name="log4j.jar"/>
             </zipfileset>
             <zipfileset dir="${server.home}/builds" prefix="${version}/libs">
