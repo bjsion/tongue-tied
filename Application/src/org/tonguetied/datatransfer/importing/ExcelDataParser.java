@@ -122,23 +122,23 @@ public class ExcelDataParser implements HSSFListener {
                     else {
                         if (lrec.getColumn() == 0) {
                             String keywordStr = 
-                                sstrec.getString(lrec.getSSTIndex());
+                                sstrec.getString(lrec.getSSTIndex()).getString();
                             loadKeyword(keywordStr);
                         }
                         else if (lrec.getColumn() == 1) {
                             keyword.setContext(
-                                    sstrec.getString(lrec.getSSTIndex()));
+                                    sstrec.getString(lrec.getSSTIndex()).getString());
                         }
                         else if (lrec.getColumn() == 2) {
                             baseTranslation = new Translation();
                             baseTranslation.setKeyword(keyword);
-                            String name = sstrec.getString(lrec.getSSTIndex());
+                            String name = sstrec.getString(lrec.getSSTIndex()).getString();
                             Bundle bundle = keywordService.getBundleByName(name);
                             baseTranslation.setBundle(bundle);
                         }
                         else if (lrec.getColumn() == 3) {
                             String colHeader = 
-                                sstrec.getString(lrec.getSSTIndex());
+                                sstrec.getString(lrec.getSSTIndex()).getString();
                             String[] headers = colHeader.split(":");
                             CountryCode code = CountryCode.valueOf(headers[0]);
                             Country country = keywordService.getCountry(code);
@@ -147,7 +147,7 @@ public class ExcelDataParser implements HSSFListener {
                         else {
                             Language language = 
                                 languages.get(lrec.getColumn()-4);
-                            String value = sstrec.getString(lrec.getSSTIndex());
+                            String value = sstrec.getString(lrec.getSSTIndex()).getString();
                             Translation translation = 
                                 baseTranslation.clone();
                             if (language.getCode() == LanguageCode.zht) {
@@ -196,7 +196,7 @@ public class ExcelDataParser implements HSSFListener {
      */
     private void processHeader(LabelSSTRecord lrec) {
         if (lrec.getColumn() > 3) {
-            String colHeader = sstrec.getString(lrec.getSSTIndex());
+            String colHeader = sstrec.getString(lrec.getSSTIndex()).getString();
             String[] headers = colHeader.split(":");
             LanguageCode code = LanguageCode.valueOf(headers[0]);
             Language language;
