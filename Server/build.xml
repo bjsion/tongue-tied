@@ -22,7 +22,7 @@
     <property name="web.server.scripts" value="${web.server.root}/scripts"/>
     <property name="web.server.webinf" value="${web.server.root}/WEB-INF"/>
 
-    <!-- temporary directories -->
+    <!-- temporary directories and files-->
     <property name="classes.dir" value="${server.home}/classes"/>
     <property name="build.dir" value="${server.home}/builds"/>
     <property name="docs.dir" value="${server.home}/docs"/>
@@ -32,6 +32,7 @@
     <property name="output.dir" value="${server.home}/output"/>
     <property name="compiled.reports.dir" value="${generated.dir}/reports"/>
     <property name="build.details.file" value="${generated.dir}/buildNumber.properties"/>
+    <property name="keystore.file" value="${generated.dir}/keystore"/>
 
 
     <property name="build.debug" value="on"/>
@@ -55,6 +56,7 @@
         <mkdir dir="${output.dir}"/>
         <mkdir dir="${compiled.reports.dir}"/>
         <mkdir dir="${logs.dir}"/>
+        <available file="${keystore.file}" property="is.keystore.available"/>
     </target>
 
     <target name="clean.classes" description="Remove all compiled classes">
@@ -86,12 +88,22 @@
         <echo message="Generating jar file for module ${ant.project.name} ..."/>
         <jar jarfile="${build.dir}/${module.jarfile}">
             <zipfileset dir="${classes.dir}">
-                <include name="**/*.class"/>             	
+                <include name="**/*.class"/>
             </zipfileset>
         </jar>
     </target>
 
-    <target name="build" depends="validate.xml, jar" description="Compile entire module and validate xml files"/>
+    <target name="gen.key" depends="init" description="Generate the keystore for this server" unless="is.keystore.available">
+        <echo message="Generating keystore for module ${ant.project.name} ..."/>
+        <genkey alias="tonguetied" storepass="abc123" keystore="${keystore.file}">
+            <dname>
+                <param name="CN" value="Google Code"/>
+                <param name="OU" value="Tongue Tied"/>
+            </dname>
+        </genkey>
+    </target>
+
+    <target name="build" depends="validate.xml, jar, gen.key" description="Compile entire module and validate xml files"/>
  
     <target name="validate.xml" description="Validate XML configuration files" >
         <echo message="validating XML in module ${ant.project.name}..." />
