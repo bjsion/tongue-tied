@@ -95,7 +95,7 @@
             <arg value="-w"/>
             <arg value="${server.home}/builds/tonguetied.war"/>
             <arg value="-keystore"/>
-            <arg value="${server.home}/resources/config/keystore"/>
+            <arg value="${server.home}/generated/keystore"/>
         </java>
     </target>
     
