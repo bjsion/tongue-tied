@@ -159,6 +159,8 @@
             <zipfileset dir="${server.home}/resources/config" prefix="${version}">
                 <include name="embeddedServer.properties"/>
                 <include name="log4j.properties"/>
+            </zipfileset>
+            <zipfileset dir="${server.home}/generated" prefix="${version}">
                 <include name="keystore"/>
             </zipfileset>
             <zipfileset dir="${infra.home}" prefix="${version}">
