@@ -1,4 +1,5 @@
-@CHARSET "ISO-8859-1";
+@charset "ISO-8859-1";
+
 html, body {
   margin: 0px;
   padding: 0px;
@@ -22,7 +23,7 @@ ul.inline li a {
   padding: .2em .2em;
   font-size: 12px;
   font-weight: bold;
-  text-shadow: red 0.2em 0.3em 0.2em;
+/*  text-shadow: red 0.2em 0.3em 0.2em;*/
   text-decoration: none;
   color: #474747;
 }
@@ -45,12 +46,12 @@ div.header-container {
 
 div.left-element {
   float: left;
-  width: 49%;"
+  width: 49%;
 }
 
 div.right-element {
   float: right;
-  width: 49%;"
+  width: 49%;
 }
 
 div.productDesc p {
