@@ -3,9 +3,8 @@ package org.tonguetied.usermanagement;
 import java.util.List;
 
 
-
 /**
- * This interface defines the events used for a user management.
+ * This interface defines the events used for user management.
  * 
  * @author bsion
  *
