@@ -4,24 +4,24 @@
        xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-	<!-- Resolves ${...} placeholders from client.properties -->
-	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
+    <!-- Resolves ${...} placeholders from client.properties -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
                 <value>classpath:jdbc.properties</value>
-				<value>classpath:test.properties</value>
-			</list>
-		</property>
-	</bean>
+                <value>classpath:test.properties</value>
+            </list>
+        </property>
+    </bean>
 
-	<!-- See Image Database for an example of using C3P0 ComboPooledDataSource as alternative -->
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="${jdbc.driverClassName}"/>
-		<property name="url" value="${jdbc.url}"/>
-		<property name="username" value="${jdbc.username}"/>
-		<property name="password" value="${jdbc.password}"/>
-	</bean>
+    <!-- See Image Database for an example of using C3P0 ComboPooledDataSource as alternative -->
+    <bean id="dataSource"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
 
     <!-- Hibernate SessionFactory -->
     <bean id="sessionFactory"
@@ -82,7 +82,13 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean id="transferRepository" class="org.tonguetied.datatransfer.dao.TransferRepositoryImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-	<bean id="userRepository" class="org.tonguetied.usermanagement.UserRepositoryImpl">
+    <bean id="userRepository" class="org.tonguetied.usermanagement.UserRepositoryImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    </bean>
+    
+    <!-- ============================== Encryption ========================= -->
+    
+    <bean id="passwordEncoder" class="org.springframework.security.providers.encoding.ShaPasswordEncoder">
+        <constructor-arg value="256"/>
+    </bean>
 </beans>
