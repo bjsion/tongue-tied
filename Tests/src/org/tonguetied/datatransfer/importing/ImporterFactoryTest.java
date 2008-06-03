@@ -47,7 +47,7 @@ public class ImporterFactoryTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.datatransfer.importing.Importer#createInstance(org.tonguetied.keywordmanagement.KeywordService, org.tonguetied.datatransfer.common.FormatType)}.
+     * Test method for {@link org.tonguetied.datatransfer.importing.ImporterFactory#getImporter(FormatType, org.tonguetied.keywordmanagement.KeywordService)}.
      */
     @Test
     public final void testCreateImporter() {
