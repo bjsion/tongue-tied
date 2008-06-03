@@ -15,7 +15,6 @@
                 <form:input path="username"/>
                 <form:errors path="username" cssClass="error"/>
             </div>
-            user id = ${user.id eq null}
             <c:choose>
                 <c:when test="${user.id eq null}">
                     <div>
