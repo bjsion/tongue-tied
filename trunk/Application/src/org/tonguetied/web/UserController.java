@@ -60,7 +60,8 @@ public class UserController extends CancellableFormController {
 
     @Override
     protected Object formBackingObject(HttpServletRequest request) 
-            throws Exception {
+            throws Exception 
+    {
         String stringId = request.getParameter("id");
         User user = null;
         if (StringUtils.isNotBlank(stringId)) {

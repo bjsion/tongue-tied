@@ -6,10 +6,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
-	
-	<!-- ========================= GENERAL DEFINITIONS ========================= -->
-	
-	
+    
+    <!-- ======================= GENERAL DEFINITIONS ======================= -->
+    
+    
     <!-- Configurer that replaces ${...} placeholders with values from properties files -->
     <!-- (JDBC related properties) -->
     <bean id="propertyConfigurer"
@@ -36,41 +36,41 @@
         </property>
     </bean>
     
-	<!-- ========================= RESOURCE DEFINITIONS ========================= -->
-	
-	<!-- Local DataSource that works in any environment -->
-	
-	<!-- Note that DriverManagerDataSource does not pool; it is not intended for production -->
-	
-	<!-- See JPetStore for an example of using Commons DBCP BasicDataSource as alternative -->
-	
-	<!-- See Image Database for an example of using C3P0 ComboPooledDataSource as alternative -->
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="${jdbc.driverClassName}"/>
-		<property name="url" value="${jdbc.url}"/>
-		<property name="username" value="${jdbc.username}"/>
-		<property name="password" value="${jdbc.password}"/>
-	</bean>
+    <!-- ======================= RESOURCE DEFINITIONS ====================== -->
+    
+    <!-- Local DataSource that works in any environment -->
+    
+    <!-- Note that DriverManagerDataSource does not pool; it is not intended for production -->
+    
+    <!-- See JPetStore for an example of using Commons DBCP BasicDataSource as alternative -->
+    
+    <!-- See Image Database for an example of using C3P0 ComboPooledDataSource as alternative -->
+    <bean id="dataSource"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
 
-	<!-- Hibernate SessionFactory -->
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"/>
-		
-		<property name="configLocation">
-		    <value>classpath:hibernate.cfg.xml</value>
-		</property>
-		
-		<property name="configurationClass">
-		    <value>org.hibernate.cfg.AnnotationConfiguration</value>
-		</property>
-		
-		<property name="eventListeners">
-			<map>
-				<entry key="merge">
-					<bean class="org.springframework.orm.hibernate3.support.IdTransferringMergeEventListener"/>
-				</entry>
+    <!-- Hibernate SessionFactory -->
+    <bean id="sessionFactory"
+        class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        
+        <property name="configLocation">
+            <value>classpath:hibernate.cfg.xml</value>
+        </property>
+        
+        <property name="configurationClass">
+            <value>org.hibernate.cfg.AnnotationConfiguration</value>
+        </property>
+        
+        <property name="eventListeners">
+            <map>
+                <entry key="merge">
+                    <bean class="org.springframework.orm.hibernate3.support.IdTransferringMergeEventListener"/>
+                </entry>
                 <entry key="post-delete">
                     <bean class="org.tonguetied.audit.AuditLogPostDeleteEventListener"/>
                 </entry>
@@ -80,18 +80,18 @@
                 <entry key="post-update">
                     <bean class="org.tonguetied.audit.AuditLogPostUpdateEventListener"/>
                 </entry>
-			</map>
-		</property>
-	</bean>
-	
-	<!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
-	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
-	
-	
-	<!-- ==================================DAO ====================================== -->
-	
+            </map>
+        </property>
+    </bean>
+    
+    <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    
+    <!-- ================================= DAO ============================= -->
+    
     <bean id="auditRepository" class="org.tonguetied.audit.AuditRepositoryImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
@@ -101,16 +101,16 @@
     <bean id="transferRepository" class="org.tonguetied.datatransfer.dao.TransferRepositoryImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-	<bean id="userRepository" class="org.tonguetied.usermanagement.UserRepositoryImpl">
+    <bean id="userRepository" class="org.tonguetied.usermanagement.UserRepositoryImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
-	
-	<bean name="openSessionInViewInterceptor" class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
-		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
-		<property name="flushModeName"><value>FLUSH_AUTO</value></property>
-	</bean>    
+    </bean>
+    
+    <bean name="openSessionInViewInterceptor" class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
+        <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+        <property name="flushModeName"><value>FLUSH_AUTO</value></property>
+    </bean>    
    
-	
+    
     <!--
     Transactional proxy for the CommandExectutionService.
     
@@ -158,4 +158,10 @@
     </bean>
     
     <bean id="auditService" autowire="byName" dependency-check="objects" class="org.tonguetied.audit.AuditServiceImpl" />
+    
+    <!-- ============================== Encryption ========================= -->
+    
+    <bean id="passwordEncoder" class="org.springframework.security.providers.encoding.ShaPasswordEncoder">
+        <constructor-arg value="256"/>
+    </bean>
 </beans>

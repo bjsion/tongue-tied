@@ -28,7 +28,9 @@
     </http>
     
     <authentication-provider user-service-ref="userDetailsService">
-        <!-- password-encoder hash="sha"/-->
+        <password-encoder ref="passwordEncoder">
+            <salt-source user-property="username"/>
+        </password-encoder>
     </authentication-provider>
     
     <beans:bean id="userDetailsService" class="org.tonguetied.usermanagement.UserDetailsServiceImpl">

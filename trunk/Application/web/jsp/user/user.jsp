@@ -9,22 +9,27 @@
         <%-- We need to bind the id as the form is in the request and would be lost when submitted --%>
         <fieldset>
             <form:hidden path="id"/>
-            <legend><fmt:message key="userDetails"/></legend>
+            <legend><fmt:message key="user.details"/></legend>
             <div>
                 <form:label path="username" cssClass="content"><fmt:message key="username"/></form:label>
                 <form:input path="username"/>
                 <form:errors path="username" cssClass="error"/>
             </div>
-            <div>
-                <form:label path="password" cssClass="content"><fmt:message key="password"/></form:label>
-                <form:password path="password"/>
-                <form:errors path="password" cssClass="error"/>
-            </div>
-            <div>
-                <form:label path="repeatedPassword" cssClass="content"><fmt:message key="repeated.password"/></form:label>
-                <form:password path="repeatedPassword"/>
-                <form:errors path="repeatedPassword" cssClass="error"/>
-            </div>
+            user id = ${user.id eq null}
+            <c:choose>
+                <c:when test="${user.id eq null}">
+                    <div>
+                        <form:label path="password" cssClass="content"><fmt:message key="password"/></form:label>
+                        <form:password path="password"/>
+                        <form:errors path="password" cssClass="error"/>
+                    </div>
+                    <div>
+                        <form:label path="repeatedPassword" cssClass="content"><fmt:message key="repeated.password"/></form:label>
+                        <form:password path="repeatedPassword"/>
+                        <form:errors path="repeatedPassword" cssClass="error"/>
+                    </div>
+                </c:when>
+            </c:choose>
             <div>
                 <form:label path="firstName" cssClass="content"><fmt:message key="first.name"/></form:label>
                 <form:input path="firstName"/>
@@ -62,9 +67,9 @@
             <c:forEach items="${user.userRights}" var="userRight" varStatus="index">
             <form:hidden path="userRights[${index.index}].user.id" id="userRight${index.index}.user.id"/>
             <div>
-                <form:label path="userRights[${index.index}].permission" id="userRight${index.index}.permission.label" for="userRight${index.index}.permission" cssClass="content"><fmt:message key="permission"/></form:label>
+                <form:label path="userRights[${index.index}].permission" id="userRight${index.index}.permission.label" for="userRight${index.index}.permission" cssClass="content"><fmt:message key="user.role"/></form:label>
                 <form:select path="userRights[${index.index}].permission" id="userRight${index.index}.permission" size="1">
-                    <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
+                    <form:option value=""><fmt:message key="please.select"/></form:option>
                     <form:options items="${permissions}"/>
                 </form:select>
             </div>
