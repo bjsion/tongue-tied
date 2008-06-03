@@ -375,7 +375,7 @@ public class PropertiesImporterTest extends AbstractServiceTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.datatransfer.importing.PropertiesImporter#isCountryCode(code)}.
+     * Test method for {@link org.tonguetied.datatransfer.importing.PropertiesImporter#isCountryCode(String)}.
      */
     public final void testIsCountryCodeValid() throws Exception {
         PropertiesImporter importer = (PropertiesImporter) 
@@ -384,7 +384,7 @@ public class PropertiesImporterTest extends AbstractServiceTest {
     }
     
     /**
-     * Test method for {@link org.tonguetied.datatransfer.importing.PropertiesImporter#isCountryCode(code)}.
+     * Test method for {@link org.tonguetied.datatransfer.importing.PropertiesImporter#isCountryCode(String)}.
      */
     public final void testIsCountryCodeInvalid() throws Exception {
         PropertiesImporter importer = (PropertiesImporter) 
@@ -393,7 +393,7 @@ public class PropertiesImporterTest extends AbstractServiceTest {
     }
     
     /**
-     * Test method for {@link org.tonguetied.datatransfer.importing.PropertiesImporter#isCountryCode(code)}.
+     * Test method for {@link org.tonguetied.datatransfer.importing.PropertiesImporter#isCountryCode(String)}.
      */
     public final void testIsCountryCodeEmpty() throws Exception {
         PropertiesImporter importer = (PropertiesImporter) 
@@ -402,7 +402,7 @@ public class PropertiesImporterTest extends AbstractServiceTest {
     }
     
     /**
-     * Test method for {@link org.tonguetied.datatransfer.importing.PropertiesImporter#isCountryCode(code)}.
+     * Test method for {@link org.tonguetied.datatransfer.importing.PropertiesImporter#isCountryCode(String)}.
      */
     public final void testIsCountryCodeNull() throws Exception {
         PropertiesImporter importer = (PropertiesImporter) 
