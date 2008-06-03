@@ -88,7 +88,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     
     <!-- ============================== Encryption ========================= -->
     
-    <bean id="passwordEncoder" class="org.springframework.security.providers.encoding.ShaPasswordEncoder">
-        <constructor-arg value="256"/>
+    <bean id="passwordEncoder" class="org.springframework.security.providers.encoding.PlaintextPasswordEncoder">
+        <!-- constructor-arg value="256"/-->
     </bean>
 </beans>

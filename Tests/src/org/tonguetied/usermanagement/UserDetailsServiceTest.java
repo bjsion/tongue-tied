@@ -2,6 +2,7 @@ package org.tonguetied.usermanagement;
 
 import org.springframework.security.GrantedAuthority;
 import org.springframework.security.GrantedAuthorityImpl;
+import org.springframework.security.providers.encoding.PlaintextPasswordEncoder;
 import org.springframework.security.userdetails.UserDetails;
 import org.springframework.security.userdetails.UserDetailsService;
 import org.springframework.security.userdetails.UsernameNotFoundException;
@@ -21,6 +22,7 @@ public class UserDetailsServiceTest extends AbstractServiceTest {
     private User noAuth;
     private UserDetailsService userDetailsService;
     private UserService userService;
+    private PlaintextPasswordEncoder passwordEncoder;
 
     @Override
     protected void onSetUpInTransaction() throws Exception {
@@ -52,7 +54,7 @@ public class UserDetailsServiceTest extends AbstractServiceTest {
         assertTrue("User account should not be locked", userDetails.isAccountNonLocked());
         assertTrue("User account should have valid credentials", userDetails.isCredentialsNonExpired());
         assertEquals("username", userDetails.getUsername());
-        assertEquals("password", userDetails.getPassword());
+        this.vaildatePassword(userDetails.getPassword(), "password");
         
         assertEquals(1, userDetails.getAuthorities().length);
         GrantedAuthority expectedAuthority = 
@@ -71,7 +73,7 @@ public class UserDetailsServiceTest extends AbstractServiceTest {
         assertTrue("User account should not be locked", userDetails.isAccountNonLocked());
         assertTrue("User account should have valid credentials", userDetails.isCredentialsNonExpired());
         assertEquals("expired", userDetails.getUsername());
-        assertEquals("password", userDetails.getPassword());
+        this.vaildatePassword(userDetails.getPassword(), "password");
         assertEquals(1, userDetails.getAuthorities().length);
         GrantedAuthority expectedAuthority = 
             new GrantedAuthorityImpl(Permission.ROLE_ADMIN.name());
@@ -89,7 +91,7 @@ public class UserDetailsServiceTest extends AbstractServiceTest {
         assertTrue("User account should not be locked", userDetails.isAccountNonLocked());
         assertFalse("User account should have valid credentials", userDetails.isCredentialsNonExpired());
         assertEquals("badCred", userDetails.getUsername());
-        assertEquals("password", userDetails.getPassword());
+        this.vaildatePassword(userDetails.getPassword(), "password");
         assertEquals(1, userDetails.getAuthorities().length);
         GrantedAuthority expectedAuthority = 
             new GrantedAuthorityImpl(Permission.ROLE_USER.name());
@@ -120,6 +122,11 @@ public class UserDetailsServiceTest extends AbstractServiceTest {
         userDetailsService.loadUserByUsername("unknown");
     }
 
+    private final void vaildatePassword(final String encoded, final String expected) 
+    {
+        String[] passwordSalt = passwordEncoder.obtainPasswordAndSalt(encoded);
+        assertEquals(expected, passwordSalt[0]);
+    }
     /**
      * Test method for {@link UserDetailsService#loadUserByUsername(String)}.
      */
@@ -140,5 +147,12 @@ public class UserDetailsServiceTest extends AbstractServiceTest {
      */
     public void setUserDetailsService(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
+    }
+    
+    /**
+     * @param passwordEncoder the encoder used to encrypt the user's password
+     */
+    public void setPasswordEncoder(PlaintextPasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 }
