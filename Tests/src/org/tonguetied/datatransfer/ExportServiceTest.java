@@ -408,7 +408,7 @@ public class ExportServiceTest extends AbstractServiceTest {
         dataService.exportData(parameters);
     }
     
-    private class FileExtensionFilter implements FilenameFilter {
+    private static class FileExtensionFilter implements FilenameFilter {
         //immutable file name extension
         private String extension;
         
