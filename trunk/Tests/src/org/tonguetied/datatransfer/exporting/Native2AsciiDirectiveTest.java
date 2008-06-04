@@ -104,7 +104,7 @@ public class Native2AsciiDirectiveTest {
         native2Ascii.execute(env, params, loopVars, body);
     }
 
-    private final class TestBody implements TemplateDirectiveBody 
+    private static final class TestBody implements TemplateDirectiveBody 
     {
         private String input;
 
