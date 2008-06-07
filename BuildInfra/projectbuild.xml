@@ -6,7 +6,7 @@
 	
     <property file="${app.root}/BuildInfra/global.properties"/>
     <property name="server.jar.file" value="server.jar"/>
-    <property name="server.war.file" value="tonguetied.war"/>
+    <property name="application.war.file" value="tonguetied.war"/>
     
     <!-- temporary directories -->
     <property name="output.dir" value="${infra.home}/output"/>
@@ -123,9 +123,6 @@
         <mkdir dir="${package.dir}"/>   
         <tstamp/>
         <zip destfile="${package.dir}/${version}-${DSTAMP}.zip" >
-            <zipfileset dir="${3rdparty.home}/Ant/1.7.0" prefix="${version}/libs">
-                <include name="ant.jar"/>
-            </zipfileset>
             <zipfileset dir="${3rdparty.home}/Jakarta-Commons" prefix="${version}/libs">
                 <include name="commons-cli-1.1.jar"/>
             </zipfileset>
@@ -148,23 +145,30 @@
             <zipfileset dir="${server.home}/builds" prefix="${version}/libs">
                 <include name="${server.jar.file}"/>
             </zipfileset>
-            <zipfileset dir="${server.home}/builds/war" prefix="${version}/webapps">
-                <include name="${server.war.file}"/>
+            <zipfileset dir="${application.home}/builds/war" prefix="${version}/webapps">
+                <include name="${application.war.file}"/>
             </zipfileset>
             <zipfileset dir="${server.home}/resources/shellScripts" prefix="${version}">
                 <include name="startServer.bat"/>
                 <include name="startDB.bat"/>
                 <include name="createDB.bat"/>
+                <include name="sqltool.rc"/>
             </zipfileset>
             <zipfileset dir="${server.home}/resources/config" prefix="${version}">
                 <include name="embeddedServer.properties"/>
                 <include name="log4j.properties"/>
+            </zipfileset>
+            <zipfileset dir="${application.home}/generated" prefix="${version}">
+                <include name="schema-export.sql"/>
             </zipfileset>
             <zipfileset dir="${server.home}/generated" prefix="${version}">
                 <include name="keystore"/>
             </zipfileset>
             <zipfileset dir="${infra.home}" prefix="${version}">
                 <include name="server.properties"/>
+            </zipfileset>
+            <zipfileset dir="${application.home}/resources/sql" prefix="${version}">
+                <include name="initial-data.sql"/>
             </zipfileset>
         </zip>
     </target>
