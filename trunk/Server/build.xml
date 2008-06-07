@@ -42,11 +42,12 @@
         <pathelement location="${3rdparty.home}/Jetty/6.1.9/jetty-util.jar"/>
         <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-cli-1.1.jar"/>
         <pathelement location="${3rdparty.home}/Log4j/1.2.15/log4j.jar"/>
+        <pathelement location="${3rdparty.home}/Jetty/6.1.9/servlet-api-2.5.jar"/>
     </path>
 
     <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
         <classpath path="${findbugs.home}/lib/findbugs-ant.jar"/>
-    </taskdef>	
+    </taskdef>
 
     <target name="init">
         <mkdir dir="${classes.dir}"/>
