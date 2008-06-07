@@ -77,6 +77,7 @@
 
     <path id="compile.classpath">
         <path refid="hibernate.classpath"/>
+        <path refid="common.classpath"/>
         <pathelement location="${3rdparty.home}/Spring/2.5.4/spring.jar"/>
         <pathelement location="${3rdparty.home}/Spring/2.5.4/spring-webmvc.jar"/>
         <pathelement location="${3rdparty.home}/Jetty/6.1.9/servlet-api-2.5.jar"/>
@@ -467,7 +468,7 @@
                 <include name="${schema.file}"/>
             </fileset>
             <fileset dir="${sql.dir}">
-                <include name="initialData.sql"/>
+                <include name="initial-data.sql"/>
             </fileset>
         </sql>
     </target>
