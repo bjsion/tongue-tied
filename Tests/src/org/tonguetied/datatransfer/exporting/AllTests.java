@@ -16,7 +16,8 @@ import org.junit.runners.Suite.SuiteClasses;
     ExportDataPostProcessorFactoryTest.class,
     LanguageCentricProcessorTest.class,
     Native2AsciiDirectiveTest.class,
-    Native2AsciiWriterTest.class
+    Native2AsciiWriterTest.class,
+    PropertiesTemplateTest.class
 })
 public class AllTests {
 
