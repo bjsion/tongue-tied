@@ -53,7 +53,7 @@ public class Native2AsciiDirective implements TemplateDirectiveModel {
      * @author bsion
      *
      */
-    static class Native2AsciiWriter extends Writer {
+    static final class Native2AsciiWriter extends Writer {
         private final Writer out;
 
         /**
