@@ -136,7 +136,7 @@ public class DataServiceImpl implements DataService {
         }
         
         if (logger.isInfoEnabled()) {
-            long totalMillis = System.currentTimeMillis() - start;
+            float totalMillis = System.currentTimeMillis() - start;
             logger.info("import complete in " + (totalMillis/1000) + " seconds");
         }
 
