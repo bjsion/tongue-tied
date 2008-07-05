@@ -15,9 +15,7 @@
 </head>
 
 <body>
-    <div>
-        <img src="<c:url value="/images/application_logo.png"/>" alt="<fmt:message key="application.logo"/>" title="<fmt:message key="application.logo"/>"/>
-    </div>
+    <img src="<c:url value="/images/application_logo.png"/>" alt="<fmt:message key="application.logo"/>" title="<fmt:message key="application.logo"/>" class="logo"/>
     <h1><fmt:message key="logout.successful"/></h1>
     <p>
         <fmt:message key="logout.successful.text"/>
