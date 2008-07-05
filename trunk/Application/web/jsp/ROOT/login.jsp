@@ -7,6 +7,7 @@
 <%@ page import="org.springframework.security.ui.AbstractProcessingFilter" %>
 <%@ page import="org.springframework.security.AuthenticationException" %>
 
+<%@page import="org.springframework.security.ui.webapp.AuthenticationProcessingFilter"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <fmt:bundle basename="tonguetied">
 <head>
@@ -18,7 +19,7 @@
 
 <body>
     <div>
-        <img src="<c:url value="/images/application_logo.png"/>" alt="<fmt:message key="application.logo"/>" title="<fmt:message key="application.logo"/>"/>
+        <img src="<c:url value="/images/application_logo.png"/>" alt="<fmt:message key="application.logo"/>" title="<fmt:message key="application.logo"/>" class="logo"/>
     </div>
     <h1><fmt:message key="login"/></h1>
     <%-- this form-login-page form is also used as the 
@@ -31,12 +32,12 @@
             <c:if test="${not empty param.login_error}">
               <span class="error">
                 <fmt:message key="login.unsuccessful"/>
-                FIXME Reason: <%= ((AuthenticationException) session.getAttribute(AbstractProcessingFilter.SPRING_SECURITY_LAST_EXCEPTION_KEY)).getMessage() %>
+                <fmt:message key="login.unsuccessful.detail"><fmt:param value="<%= ((AuthenticationException) session.getAttribute(AbstractProcessingFilter.SPRING_SECURITY_LAST_EXCEPTION_KEY)).getMessage() %>"/></fmt:message>
               </span>
             </c:if>
             <div>
                 <label id="labelUsername" for="j_username"><fmt:message key="username"/></label>
-                <input type="text" id="j_username" name="j_username" <c:if test="${not empty param.login_error}">value="<c:out value="${SPRING_SECURITY_LAST_USERNAME_KEY}"/>"</c:if>/>
+                <input type="text" id="j_username" name="j_username" <c:if test="${not empty param.login_error}">value="<%= (String) session.getAttribute(AuthenticationProcessingFilter.SPRING_SECURITY_LAST_USERNAME_KEY) %>"</c:if>/>
             </div>
             <div>
                 <label id="labelPassword" for="j_password"><fmt:message key="password"/></label>
