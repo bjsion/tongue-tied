@@ -1,6 +1,7 @@
 package org.tonguetied.audit;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -16,11 +17,8 @@ public class AuditLogRecordPersistenceTest extends PersistenceTestBase {
 
     @Test
     public final void simplePersistence() {
-        Session session;
-        Transaction tx;
-        
-        session = getSession();
-        tx = session.beginTransaction();
+        Session session = getSession();
+        Transaction tx = session.beginTransaction();
         
         Keyword keyword = new Keyword();
         keyword.setKeyword("test");
@@ -37,6 +35,7 @@ public class AuditLogRecordPersistenceTest extends PersistenceTestBase {
             (AuditLogRecord) session.get(AuditLogRecord.class, record.getId());
         assertEquals(record, reloaded);
         tx.rollback();
+        assertTrue(tx.wasRolledBack());
         session.close();
     }
 }
