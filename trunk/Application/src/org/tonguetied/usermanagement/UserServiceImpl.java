@@ -3,6 +3,7 @@ package org.tonguetied.usermanagement;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.providers.encoding.PasswordEncoder;
 
 
@@ -45,13 +46,58 @@ public class UserServiceImpl implements UserService {
      * is made. This involves making a hash of the password.
      */
     public void saveOrUpdate(User user) {
+        if (logger.isDebugEnabled()) logger.debug("persisting user: " + user);
         if (user.getId() == null) {
-            if (logger.isDebugEnabled()) logger.debug("endcoding user password");
-            final String encoded = 
-                passwordEncoder.encodePassword(user.getPassword(), user.getUsername());
-            user.setPassword(encoded);
+            encodePassword(user, user.getPassword());
         }
         userRepository.saveOrUpdate(user);
+    }
+
+    /**
+     * Perform a unidirectional encryption of the password. This involves 
+     * making a hash of the password. The {@link #passwordEncoder} determines 
+     * the encryption mechanism.
+     * @param newPassword the raw value of the new password
+     * 
+     * @see #setPasswordEncoder(PasswordEncoder)
+     */
+    public void encodePassword(User user, final String newPassword)
+    {
+        if (logger.isDebugEnabled()) logger.debug("endcoding user password");
+        final String encoded = 
+            passwordEncoder.encodePassword(newPassword, user.getUsername());
+        
+        user.setPassword(encoded);
+    }
+    /**
+     * {@inheritDoc}
+     */
+    public void changePassword(User user, final String oldPassword, final String newPassword)
+            throws AuthenticationException 
+    {
+        if (!isPasswordValid(user, oldPassword))
+            throw new AuthenticationException("invalid password");
+        
+        if (logger.isDebugEnabled()) logger.debug("changing user password");
+        encodePassword(user, newPassword);
+        
+        userRepository.saveOrUpdate(user);
+    }
+
+    /**
+     * Determine if the password supplied is valid.
+     * 
+     * @param user the user to validate against
+     * @param password the value to validate
+     * @return <code>true</code> if the password matches the users password,
+     * <code>false</code> otherwise.
+     * @throws DataAccessException
+     */
+    private boolean isPasswordValid(User user, final String password)
+            throws DataAccessException
+    {
+        return passwordEncoder.isPasswordValid(
+                user.getPassword(), password, user.getUsername());
     }
 
     /**

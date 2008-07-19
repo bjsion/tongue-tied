@@ -42,4 +42,28 @@ public interface UserService {
      * @return a list of all {@link User}s in the system
      */
     List<User> getUsers();
+    
+    /**
+     * Encode the new password and persist the changes to the {@link User}.
+     * 
+     * @param user the user to update
+     * @param oldPassword the old raw value of this User's password to be 
+     * validated
+     * @param newPassword the new raw value of the password
+     * @throws AuthenticationException if an invalid <code>oldPassword</code>
+     * is supplied
+     * @see User#changePassword(String, String)
+     */
+    void changePassword(User user, final String oldPassword, final String newPassword) 
+        throws AuthenticationException;
+    
+    /**
+     * Encryption the password. The method of encryption is determined by the
+     * implementing class.
+     * 
+     * @param user the {@link User} to apply the new password to
+     * @param newPassword the raw value of the new password
+     * @return the encoded value of the password
+     */
+    void encodePassword(User user, final String newPassword);
 }
