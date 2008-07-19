@@ -45,7 +45,10 @@ public class LanguageValidatorTest {
                 });
     }
     
-    public LanguageValidatorTest(LanguageCode code, String name, String fieldName) {
+    public LanguageValidatorTest(final LanguageCode code, 
+            final String name, 
+            final String fieldName) 
+    {
         this.language = new Language();
         this.language.setCode(code);
         this.language.setName(name);

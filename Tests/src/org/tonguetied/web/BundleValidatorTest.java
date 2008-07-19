@@ -53,7 +53,8 @@ public class BundleValidatorTest {
                                final String resourceName,
                                final boolean isDefault,
                                final boolean isGlobal,
-                               final String fieldName) {
+                               final String fieldName) 
+    {
         this.bundle = new Bundle();
         this.bundle.setName(name);
         this.bundle.setDescription(description);

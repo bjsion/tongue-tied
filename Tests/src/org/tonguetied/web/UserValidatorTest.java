@@ -57,13 +57,13 @@ public class UserValidatorTest {
                 });
     }
     
-    public UserValidatorTest(String username,
-                            String password, 
-                            String firstName, 
-                            String lastName, 
-                            String email, 
-                            boolean isEnabled,
-                            String fieldName) {
+    public UserValidatorTest(final String username,
+                            final String password, 
+                            final String firstName, 
+                            final String lastName, 
+                            final String email, 
+                            final boolean isEnabled,
+                            final String fieldName) {
         this.user = new User(username, password, firstName, lastName, email, isEnabled, true, true, true);
         this.fieldName = fieldName;
     }
