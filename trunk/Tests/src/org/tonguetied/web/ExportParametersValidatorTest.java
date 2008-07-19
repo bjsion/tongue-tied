@@ -83,9 +83,12 @@ public class ExportParametersValidatorTest {
         });
     }
     
-    public ExportParametersValidatorTest(Language[] langauges,
-            Country[] countries, Bundle[] bundles, FormatType formatType, 
-            TranslationState translationState, String fieldName)
+    public ExportParametersValidatorTest(final Language[] langauges,
+            final Country[] countries, 
+            final Bundle[] bundles, 
+            final FormatType formatType, 
+            final TranslationState translationState, 
+            final String fieldName)
     {
         parameters = new ExportParameters();
         if (langauges == null) {

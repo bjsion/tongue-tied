@@ -44,7 +44,10 @@ public class CountryValidatorTest {
                 });
     }
     
-    public CountryValidatorTest(CountryCode code, String name, String fieldName) {
+    public CountryValidatorTest(final CountryCode code, 
+            final String name, 
+            final String fieldName) 
+    {
         this.country = new Country();
         this.country.setCode(code);
         this.country.setName(name);

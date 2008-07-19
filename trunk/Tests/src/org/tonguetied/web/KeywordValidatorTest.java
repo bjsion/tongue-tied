@@ -36,7 +36,7 @@ public class KeywordValidatorTest {
     private Keyword keyword;
     private String fieldName;
     
-    private static Translation translation;
+    private static Translation translation = new Translation();
 
     @Parameters
     public static final Collection<Object[]> data() {
