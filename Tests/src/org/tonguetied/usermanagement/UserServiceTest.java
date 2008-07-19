@@ -3,9 +3,8 @@ package org.tonguetied.usermanagement;
 import java.util.List;
 
 import org.junit.Test;
+import org.springframework.test.annotation.ExpectedException;
 import org.tonguetied.test.common.AbstractServiceTest;
-import org.tonguetied.usermanagement.User;
-import org.tonguetied.usermanagement.UserService;
 
 
 /**
@@ -67,6 +66,54 @@ public class UserServiceTest extends AbstractServiceTest {
         List<User> users = userService.getUsers();
         assertEquals(1, users.size());
         assertTrue(users.contains(user1));
+    }
+    
+    @Test(expected=AuthenticationException.class)
+    @ExpectedException(value=AuthenticationException.class)
+    public final void testChangePasswordWithInvalidOldPassword()
+    {
+        userService.changePassword(user1, "invalid", "newPassword");
+    }
+    
+    @Test
+    public final void testChangePassword()
+    {
+        final String newPassword = "new";
+        final String oldPassword = "password";
+        
+        userService.changePassword(user1, oldPassword, newPassword);
+        
+        User actual = userService.getUser(user1.getId());
+        final String[] components = 
+            UserTestUtils.demergePasswordAndSalt(actual.getPassword());
+        assertEquals(newPassword, components[0]);
+        assertEquals(user1.getUsername(), components[1]);
+    }
+    
+    
+    @Test
+    public final void testChangePasswordToNull()
+    {
+        final String oldPassword = "password";
+        
+        userService.changePassword(user1, oldPassword, null);
+        
+        User actual = userService.getUser(user1.getId());
+        final String[] components = 
+            UserTestUtils.demergePasswordAndSalt(actual.getPassword());
+        assertEquals("", components[0]);
+        assertEquals(user1.getUsername(), components[1]);
+    }
+    
+    @Test
+    public final void testEncodePassword()
+    {
+        final String newPassword = "new";
+        userService.encodePassword(user1, newPassword);
+        final String[] components = 
+            UserTestUtils.demergePasswordAndSalt(user1.getPassword());
+        assertEquals(newPassword, components[0]);
+        assertEquals(user1.getUsername(), components[1]);
     }
     
     /**

@@ -38,6 +38,24 @@ public class UserServiceStub implements UserService {
     }
 
     /* (non-Javadoc)
+     * @see org.tonguetied.usermanagement.UserService#changePassword(org.tonguetied.usermanagement.User, java.lang.String, java.lang.String)
+     */
+    public void changePassword(User user, String oldPassword, String newPassword)
+            throws AuthenticationException
+    {
+        user.setPassword(newPassword);
+        saveOrUpdate(user);
+    }
+
+    /* (non-Javadoc)
+     * @see org.tonguetied.usermanagement.UserService#encodePassword(org.tonguetied.usermanagement.User, java.lang.String)
+     */
+    public void encodePassword(User user, String newPassword)
+    {
+        user.setPassword(newPassword);
+    }
+
+    /* (non-Javadoc)
      * @see org.tonguetied.service.UserService#getUsers()
      */
     public List<User> getUsers() {

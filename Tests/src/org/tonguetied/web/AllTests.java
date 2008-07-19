@@ -8,6 +8,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
+ * Test suite.
+ * 
  * @author bsion
  *
  */
@@ -15,6 +17,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
     BundleSupportTest.class,
     BundleValidatorTest.class,
+    ChangePasswordFormValidatorTest.class,
     CountryCodeSupportTest.class,
     CountrySupportTest.class,
     CountryValidatorTest.class,
