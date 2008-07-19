@@ -72,7 +72,7 @@ public class KeywordServiceStub implements KeywordService {
      */
     public List<Keyword> findKeywords(final Keyword keyword, boolean ignoreCase,
             Integer firstResult, Integer maxResults) {
-        Predicate keywordFilter = new Predicate() {
+        final Predicate keywordFilter = new Predicate() {
 
             /* (non-Javadoc)
              * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
@@ -108,7 +108,7 @@ public class KeywordServiceStub implements KeywordService {
      * @see org.tonguetied.service.KeywordService#getBundle(java.lang.String)
      */
     public Bundle getBundleByName(final String name) {
-        Predicate bundleCodeFilter = new Predicate() {
+        final Predicate bundleCodeFilter = new Predicate() {
 
             /* (non-Javadoc)
              * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
@@ -130,7 +130,7 @@ public class KeywordServiceStub implements KeywordService {
      * @see org.tonguetied.keywordmanagement.KeywordService#getBundleByResourceName(java.lang.String)
      */
     public Bundle getBundleByResourceName(final String resourceName) {
-        Predicate bundleCodeFilter = new Predicate() {
+        final Predicate bundleCodeFilter = new Predicate() {
 
             /* (non-Javadoc)
              * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
@@ -152,7 +152,7 @@ public class KeywordServiceStub implements KeywordService {
      * @see org.tonguetied.keywordmanagement.KeywordService#getDefaultBundle()
      */
     public Bundle getDefaultBundle() {
-        Predicate bundleCodeFilter = new Predicate() {
+        final Predicate bundleCodeFilter = new Predicate() {
 
             /* (non-Javadoc)
              * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
@@ -184,7 +184,7 @@ public class KeywordServiceStub implements KeywordService {
      * @see org.tonguetied.service.KeywordService#getCountry(org.tonguetied.domain.Country.CountryCode)
      */
     public Country getCountry(final CountryCode code) {
-        Predicate countryCodeFilter = new Predicate() {
+        final Predicate countryCodeFilter = new Predicate() {
 
             /* (non-Javadoc)
              * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
@@ -213,7 +213,7 @@ public class KeywordServiceStub implements KeywordService {
      * @see org.tonguetied.service.KeywordService#getKeyword(java.lang.String)
      */
     public Keyword getKeyword(final String keywordString) {
-        Predicate keywordFilter = new Predicate() {
+        final Predicate keywordFilter = new Predicate() {
 
             /* (non-Javadoc)
              * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
@@ -257,7 +257,7 @@ public class KeywordServiceStub implements KeywordService {
      * @see org.tonguetied.service.KeywordService#getLanguage(org.tonguetied.domain.Language.LanguageCode)
      */
     public Language getLanguage(final LanguageCode code) {
-        Predicate languageCodeFilter = new Predicate() {
+        final Predicate languageCodeFilter = new Predicate() {
 
             /* (non-Javadoc)
              * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
