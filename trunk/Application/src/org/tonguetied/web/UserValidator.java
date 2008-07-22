@@ -1,8 +1,5 @@
 package org.tonguetied.web;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -24,10 +21,6 @@ public class UserValidator implements Validator {
     static final String FIELD_FIRSTNAME = "firstName";
     static final String FIELD_LASTNAME = "lastName";
     static final String FIELD_USERNAME = "username";
-    
-    //Set the email pattern string
-    private static final Pattern emailPattern = 
-        Pattern.compile(".+@.+\\.[a-z]+");
     
     /* (non-Javadoc)
      * @see org.springframework.validation.Validator#supports(java.lang.Class)
@@ -91,13 +84,13 @@ public class UserValidator implements Validator {
      *  
      * @param email the email string to validate
      * @param errors contextual state about the validation process (never null)
+     * @see WebValidationUtils#isEmailValid(String)
      */
-    private void validateEmail(final String email, Errors errors) {
-        if (email != null) {
-            //Match the given string with the pattern
-            Matcher m = emailPattern.matcher(email);
-            if (!m.matches())
-                errors.rejectValue(FIELD_EMAIL, "error.invalid.email");
+    private void validateEmail(final String email, Errors errors)
+    {
+        if (!WebValidationUtils.isEmailValid(email))
+        {
+            errors.rejectValue(FIELD_EMAIL, "error.invalid.email");
         }
     }
 

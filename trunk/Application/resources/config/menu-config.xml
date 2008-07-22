@@ -31,6 +31,10 @@
             <Item name="Export" title="export" page="/export.htm" toolTip="help.export.sub.menu"/>
             <Item name="Import" title="import" page="/import.htm" toolTip="help.import.sub.menu"/>
         </Menu>
+        <Menu name="TabbedAccountManagement" title="account.management.tab" toolTip="help.account.management.tab" roles="ROLE_ADMIN,ROLE_USER,ROLE_VERFIER">
+            <Item name="AccountDetails" title="account.details" page="/accountDetails.htm" toolTip="help.account.details.sub.menu"/>
+            <Item name="ChangePassword" title="change.password" page="/changePassword.htm" toolTip="help.change.password.sub.menu"/>
+        </Menu>
         <Menu name="TabbedUsers" title="users.tab" toolTip="help.users.tab" roles="ROLE_ADMIN">
             <Item name="UsersList" title="users" page="/users.htm" toolTip="help.users.sub.menu"/>
             <Item name="NewUser" title="new.user" page="/user.htm" toolTip="help.new.user.sub.menu"/>

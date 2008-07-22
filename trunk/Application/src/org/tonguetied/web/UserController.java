@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.userdetails.UserDetails;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,10 +22,14 @@ import org.tonguetied.usermanagement.UserRight.Permission;
 
 
 /**
+ * Controller responsible for action logic around the creating or updating of a
+ * {@link User}.
+ * 
  * @author bsion
  *
  */
-public class UserController extends CancellableFormController {
+public class UserController extends CancellableFormController 
+{
     
     private UserService userService;
     
@@ -31,9 +37,10 @@ public class UserController extends CancellableFormController {
         Logger.getLogger(UserController.class);
 
     /**
-     * Create new instance of BundleController 
+     * Create new instance of UserController 
      */
-    public UserController() {
+    public UserController()
+    {
         setCommandClass(User.class);
     }
 
@@ -62,11 +69,22 @@ public class UserController extends CancellableFormController {
     protected Object formBackingObject(HttpServletRequest request) 
             throws Exception 
     {
-        String stringId = request.getParameter("id");
+        final String stringId = request.getParameter("id");
         User user = null;
         if (StringUtils.isNotBlank(stringId)) {
             Long id = Long.parseLong(stringId);
             user = userService.getUser(id);
+        }
+        else
+        {
+            final String myAccountFlag = request.getParameter("myAccount");
+            if (myAccountFlag != null && Boolean.parseBoolean(myAccountFlag))
+            {
+                UserDetails userDetails = 
+                    (UserDetails) SecurityContextHolder.getContext().
+                    getAuthentication().getPrincipal();
+                user = userService.getUser(userDetails.getUsername());
+            }
         }
         
         if (user == null) {
@@ -87,7 +105,8 @@ public class UserController extends CancellableFormController {
     protected ModelAndView onSubmit(HttpServletRequest request, 
                                     HttpServletResponse response,
                                     Object command,
-                                    BindException errors) throws Exception {
+                                    BindException errors) throws Exception
+    {
         if (logger.isDebugEnabled()) logger.debug("saving user");
         User user = (User) command;
         
@@ -99,7 +118,8 @@ public class UserController extends CancellableFormController {
     @Override
     protected ModelAndView onCancel(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    Object command) throws Exception {
+                                    Object command) throws Exception
+    {
         return new ModelAndView(getCancelView());
     }
 

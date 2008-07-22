@@ -54,6 +54,7 @@
         <menu:displayMenu name="TabbedLanguages"/>
         <menu:displayMenu name="TabbedBundles"/>
         <menu:displayMenu name="TabbedImportExport"/>
+        <menu:displayMenu name="TabbedAccountManagement"/>
         <menu:displayMenu name="TabbedUsers"/>
         <menu:displayMenu name="TabbedAuditLog"/>
     </menu:useMenuDisplayer>

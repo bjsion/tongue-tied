@@ -112,7 +112,9 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 
                 <!-- User -->
                 <entry key="/user.htm" value-ref="userController"/>
+                <entry key="/accountDetails.htm" value-ref="accountController"/>
                 <entry key="/users.htm" value-ref="mainController"/>
+                <entry key="/changePassword.htm" value-ref="changePasswordController"/>
             </map>
         </property>
     </bean>
@@ -223,12 +225,31 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="userService" ref="userService"/>
     </bean>
 
+    <bean name="changePasswordController" class="org.tonguetied.web.ChangePasswordController">
+        <property name="commandName" value="changePasswordForm"/>
+        <property name="formView" value="user/changePassword"/>
+        <property name="validator" ref="changePasswordFormValidator"/>
+        <property name="successView" value="redirect:/accountDetails.htm"/>
+        <property name="cancelView" value="redirect:/accountDetails.htm"/>
+        <property name="userService" ref="userService"/>
+    </bean>
+
+    <bean name="accountController" class="org.tonguetied.web.AccountController">
+        <property name="commandName" value="user"/>
+        <property name="formView" value="user/accountDetails"/>
+        <property name="validator" ref="accountFormValidator"/>
+        <property name="successView" value="user/accountDetails"/>
+        <property name="userService" ref="userService"/>
+    </bean>
+
     <bean id="bundleValidator" autowire="byName" dependency-check="objects" class="org.tonguetied.web.BundleValidator"/>
     <bean id="countryValidator" autowire="byName" dependency-check="objects" class="org.tonguetied.web.CountryValidator"/>
     <bean id="keywordValidator" autowire="byName" dependency-check="objects" class="org.tonguetied.web.KeywordValidator"/>
     <bean id="languageValidator" autowire="byName" dependency-check="objects" class="org.tonguetied.web.LanguageValidator"/>
     <bean id="exportParametersValidator" autowire="byName" dependency-check="objects" class="org.tonguetied.web.ExportParametersValidator"/>
     <bean id="userValidator" autowire="byName" dependency-check="objects" class="org.tonguetied.web.UserValidator"/>
+    <bean id="changePasswordFormValidator" autowire="byName" dependency-check="objects" class="org.tonguetied.web.ChangePasswordFormValidator"/>
+    <bean id="accountFormValidator" autowire="byName" dependency-check="objects" class="org.tonguetied.web.AccountFormValidator"/>
 
     <bean name="viewPreferences" class="org.tonguetied.web.PreferenceForm" scope="session" init-method="init">
         <aop:scoped-proxy/>
