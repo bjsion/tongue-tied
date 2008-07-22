@@ -26,7 +26,7 @@ public class UserServiceTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.usermanagement.UserService#getUser(String)}.
      */
     public final void testGetUserByNameWithNoMatch() {
-        User actual = userService.getUser("unknown");
+        final User actual = userService.getUser("unknown");
         
         assertNull(actual);
     }
@@ -35,7 +35,7 @@ public class UserServiceTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.usermanagement.UserService#getUser(Long)}.
      */
     public final void testGetUserByIdWithNoMatch() {
-        User actual = userService.getUser(-1L);
+        final User actual = userService.getUser(-1L);
         
         assertNull(actual);
     }
@@ -44,7 +44,7 @@ public class UserServiceTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.usermanagement.UserService#getUser(String)}.
      */
     public final void testGetUserByUserName() {
-        User actual = userService.getUser(user1.getUsername());
+        final User actual = userService.getUser(user1.getUsername());
         
         assertEquals(user1, actual);
     }
@@ -53,7 +53,7 @@ public class UserServiceTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.usermanagement.UserService#getUser(Long)}.
      */
     public final void testGetUserById() {
-        User actual = userService.getUser(user1.getId());
+        final User actual = userService.getUser(user1.getId());
         
         assertEquals(user1, actual);
     }
@@ -63,7 +63,7 @@ public class UserServiceTest extends AbstractServiceTest {
      */
     @Test
     public final void testGetUsers() {
-        List<User> users = userService.getUsers();
+        final List<User> users = userService.getUsers();
         assertEquals(1, users.size());
         assertTrue(users.contains(user1));
     }
@@ -83,7 +83,7 @@ public class UserServiceTest extends AbstractServiceTest {
         
         userService.changePassword(user1, oldPassword, newPassword);
         
-        User actual = userService.getUser(user1.getId());
+        final User actual = userService.getUser(user1.getId());
         final String[] components = 
             UserTestUtils.demergePasswordAndSalt(actual.getPassword());
         assertEquals(newPassword, components[0]);
@@ -91,18 +91,13 @@ public class UserServiceTest extends AbstractServiceTest {
     }
     
     
-    @Test
+    @Test(expected=IllegalArgumentException.class)
+    @ExpectedException(value=IllegalArgumentException.class)
     public final void testChangePasswordToNull()
     {
         final String oldPassword = "password";
         
         userService.changePassword(user1, oldPassword, null);
-        
-        User actual = userService.getUser(user1.getId());
-        final String[] components = 
-            UserTestUtils.demergePasswordAndSalt(actual.getPassword());
-        assertEquals("", components[0]);
-        assertEquals(user1.getUsername(), components[1]);
     }
     
     @Test
