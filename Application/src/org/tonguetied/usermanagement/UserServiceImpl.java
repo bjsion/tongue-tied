@@ -77,6 +77,8 @@ public class UserServiceImpl implements UserService {
     {
         if (!isPasswordValid(user, oldPassword))
             throw new AuthenticationException("invalid password");
+        if (newPassword == null)
+            throw new IllegalArgumentException("password cannot be null");
         
         if (logger.isDebugEnabled()) logger.debug("changing user password");
         encodePassword(user, newPassword);
@@ -93,7 +95,7 @@ public class UserServiceImpl implements UserService {
      * <code>false</code> otherwise.
      * @throws DataAccessException
      */
-    private boolean isPasswordValid(User user, final String password)
+    private boolean isPasswordValid(final User user, final String password)
             throws DataAccessException
     {
         return passwordEncoder.isPasswordValid(
