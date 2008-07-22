@@ -15,7 +15,7 @@
         <fieldset>
             <legend><fmt:message key="user.details"/></legend>
             <div>
-                <label path="username" class="content"><fmt:message key="username"/></label>
+                <label id="username" class="content"><fmt:message key="username"/></label>
                 <security:authentication property="principal.username"/>
             </div>
             <div>
