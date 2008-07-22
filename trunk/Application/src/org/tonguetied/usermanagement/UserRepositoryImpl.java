@@ -38,13 +38,13 @@ public class UserRepositoryImpl extends HibernateDaoSupport implements UserRepos
         return query.list();
     }
     
-    public void saveOrUpdate(Object object) throws DataAccessException 
+    public void saveOrUpdate(User user) throws DataAccessException 
     {
-        getHibernateTemplate().saveOrUpdate(object);
+        getHibernateTemplate().saveOrUpdate(user);
         getHibernateTemplate().flush();
     }
     
-    public void delete(Object object) {
-        getSession().delete(object);
+    public void delete(User user) {
+        getSession().delete(user);
     }
 }
