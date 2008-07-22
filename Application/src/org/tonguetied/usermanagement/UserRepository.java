@@ -13,19 +13,19 @@ import org.springframework.dao.DataAccessException;
 public interface UserRepository 
 {
     /**
-     * Persist an object to permanent storage.
+     * Persist a {@link User} object to permanent storage.
      * 
-     * @param object the item to save or update.
+     * @param user the user to save or update.
      * @throws DataAccessException if the operation fails.
      */
-    void saveOrUpdate(Object object) throws DataAccessException;
+    void saveOrUpdate(User user) throws DataAccessException;
     
     /**
-     * Remove an object from permanent storage.
+     * Remove a {@link User} object from permanent storage.
      * 
-     * @param object the item to remove.
+     * @param user the item to remove.
      */
-    void delete(Object object);
+    void delete(User user);
 
     /**
      * Retrieve the user by business key, ie the {@link User#getUsername()} 
