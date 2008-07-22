@@ -27,7 +27,7 @@ public class ChangePasswordFormValidator implements Validator
      * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
      */
     public void validate(Object target, Errors errors) {
-        ValidationUtils.rejectIfEmpty(errors, FIELD_NEW_PASSWORD, "error.password.empty");
+        ValidationUtils.rejectIfEmpty(errors, FIELD_NEW_PASSWORD, "error.password.required");
         validateNewPassword((ChangePasswordForm) target, errors);
     }
     

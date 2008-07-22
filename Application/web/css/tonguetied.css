@@ -248,6 +248,15 @@ h3 {
   font-weight: bold;
 }
 
+h4.message {
+  background: #99CC00;
+  text-align: center;
+  padding: 5px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+
 /******************************************************************************
 * Styles for hyperlinks display.
 ******************************************************************************/
