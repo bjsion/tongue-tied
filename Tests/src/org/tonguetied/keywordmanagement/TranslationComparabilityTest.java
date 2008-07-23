@@ -11,7 +11,15 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
 import junitx.extensions.ComparabilityTestCase;
 
-public class TranslationComparabilityTest extends ComparabilityTestCase {
+/**
+ * Test class to ensure the {@link Translation} class is compliant with the 
+ * <code>Comparable</code> interface.
+ * 
+ * @author bsion
+ *
+ */
+public class TranslationComparabilityTest extends ComparabilityTestCase
+{
     
     private Language hebrew;
     private Language russian;
@@ -66,7 +74,7 @@ public class TranslationComparabilityTest extends ComparabilityTestCase {
      * @see junitx.extensions.ComparabilityTestCase#createEqualInstance()
      */
     @Override
-    protected Comparable<?> createEqualInstance() throws Exception {
+    protected Comparable<Translation> createEqualInstance() throws Exception {
         Translation translation = 
             new Translation(bundle, israel, hebrew, "value", TranslationState.QUERIED);
         translation.setKeyword(keyword1);
@@ -77,7 +85,7 @@ public class TranslationComparabilityTest extends ComparabilityTestCase {
      * @see junitx.extensions.ComparabilityTestCase#createGreaterInstance()
      */
     @Override
-    protected Comparable<?> createGreaterInstance() throws Exception {
+    protected Comparable<Translation> createGreaterInstance() throws Exception {
         Translation translation = 
             new Translation(bundle, israel, russian, "value", TranslationState.QUERIED);
         translation.setKeyword(keyword1);
@@ -88,7 +96,7 @@ public class TranslationComparabilityTest extends ComparabilityTestCase {
      * @see junitx.extensions.ComparabilityTestCase#createLessInstance()
      */
     @Override
-    protected Comparable<?> createLessInstance() throws Exception {
+    protected Comparable<Translation> createLessInstance() throws Exception {
         Translation translation = 
             new Translation(bundle, defaultCountry, hebrew, "value", TranslationState.UNVERIFIED);
         translation.setKeyword(keyword1);

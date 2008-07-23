@@ -1,10 +1,16 @@
 package org.tonguetied.keywordmanagement;
 
-import org.tonguetied.keywordmanagement.Country;
-import org.tonguetied.keywordmanagement.Country.CountryCode;
-
 import junitx.extensions.ComparabilityTestCase;
 
+import org.tonguetied.keywordmanagement.Country.CountryCode;
+
+/**
+ * Test class to ensure the {@link Country} class is compliant with the 
+ * <code>Comparable</code> interface.
+ * 
+ * @author bsion
+ *
+ */
 public class CountryComparabilityTest extends ComparabilityTestCase {
     
     /**
@@ -18,7 +24,7 @@ public class CountryComparabilityTest extends ComparabilityTestCase {
      * @see junitx.extensions.ComparabilityTestCase#createEqualInstance()
      */
     @Override
-    protected Comparable<?> createEqualInstance() throws Exception {
+    protected Comparable<Country> createEqualInstance() throws Exception {
         Country finland = new Country();
         finland.setCode(CountryCode.FI);
         finland.setName("Finland");
@@ -29,7 +35,7 @@ public class CountryComparabilityTest extends ComparabilityTestCase {
      * @see junitx.extensions.ComparabilityTestCase#createGreaterInstance()
      */
     @Override
-    protected Comparable<?> createGreaterInstance() throws Exception {
+    protected Comparable<Country> createGreaterInstance() throws Exception {
         Country norway = new Country();
         norway.setCode(CountryCode.NO);
         norway.setName("Norway");
@@ -40,7 +46,7 @@ public class CountryComparabilityTest extends ComparabilityTestCase {
      * @see junitx.extensions.ComparabilityTestCase#createLessInstance()
      */
     @Override
-    protected Comparable<?> createLessInstance() throws Exception {
+    protected Comparable<Country> createLessInstance() throws Exception {
         Country defaultCountry = new Country();
         defaultCountry.setCode(CountryCode.DEFAULT);
         defaultCountry.setName("Default");

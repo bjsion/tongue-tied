@@ -4,7 +4,15 @@ import org.tonguetied.keywordmanagement.Bundle;
 
 import junitx.extensions.ComparabilityTestCase;
 
-public class BundleComparabilityTest extends ComparabilityTestCase {
+/**
+ * Test class to ensure the {@link Bundle} class is compliant with the 
+ * <code>Comparable</code> interface.
+ * 
+ * @author bsion
+ *
+ */
+public class BundleComparabilityTest extends ComparabilityTestCase
+{
     
     /**
      * @param name
@@ -17,7 +25,7 @@ public class BundleComparabilityTest extends ComparabilityTestCase {
      * @see junitx.extensions.ComparabilityTestCase#createEqualInstance()
      */
     @Override
-    protected Comparable<?> createEqualInstance() throws Exception {
+    protected Comparable<Bundle> createEqualInstance() throws Exception {
         Bundle bundle = new Bundle();
         bundle.setName("bundle");
         bundle.setDescription("description");
@@ -30,7 +38,7 @@ public class BundleComparabilityTest extends ComparabilityTestCase {
      * @see junitx.extensions.ComparabilityTestCase#createGreaterInstance()
      */
     @Override
-    protected Comparable<?> createGreaterInstance() throws Exception {
+    protected Comparable<Bundle> createGreaterInstance() throws Exception {
         Bundle bundle = new Bundle();
         bundle.setName("bundle");
         bundle.setDescription("description");
@@ -43,7 +51,7 @@ public class BundleComparabilityTest extends ComparabilityTestCase {
      * @see junitx.extensions.ComparabilityTestCase#createLessInstance()
      */
     @Override
-    protected Comparable<?> createLessInstance() throws Exception {
+    protected Comparable<Bundle> createLessInstance() throws Exception {
         Bundle bundle = new Bundle();
         bundle.setName("bundle");
         bundle.setDescription("description");
