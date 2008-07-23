@@ -5,12 +5,21 @@ import org.tonguetied.usermanagement.UserRight.Permission;
 
 import junitx.extensions.ComparabilityTestCase;
 
-public class UserRightComparabilityTest extends ComparabilityTestCase {
+/**
+ * Test class to ensure the {@link UserRight} class is compliant with the 
+ * <code>Comparable</code> interface.
+ * 
+ * @author bsion
+ *
+ */
+public class UserRightComparabilityTest extends ComparabilityTestCase
+{
     
     /**
      * @param name
      */
-    public UserRightComparabilityTest(String name) {
+    public UserRightComparabilityTest(String name)
+    {
         super(name);
     }
 
@@ -18,7 +27,8 @@ public class UserRightComparabilityTest extends ComparabilityTestCase {
      * @see junitx.extensions.ComparabilityTestCase#createEqualInstance()
      */
     @Override
-    protected Comparable<?> createEqualInstance() throws Exception {
+    protected Comparable<UserRight> createEqualInstance() throws Exception
+    {
         UserRight userRight = new UserRight(Permission.ROLE_USER, null, null, null);
         return userRight;
     }
@@ -27,7 +37,8 @@ public class UserRightComparabilityTest extends ComparabilityTestCase {
      * @see junitx.extensions.ComparabilityTestCase#createGreaterInstance()
      */
     @Override
-    protected Comparable<?> createGreaterInstance() throws Exception {
+    protected Comparable<UserRight> createGreaterInstance() throws Exception
+    {
         UserRight userRight = new UserRight(Permission.ROLE_VERIFIER, null, null, null);
         return userRight;
     }
@@ -36,7 +47,8 @@ public class UserRightComparabilityTest extends ComparabilityTestCase {
      * @see junitx.extensions.ComparabilityTestCase#createLessInstance()
      */
     @Override
-    protected Comparable<? extends Object> createLessInstance() throws Exception {
+    protected Comparable<UserRight> createLessInstance() throws Exception
+    {
         UserRight userRight = new UserRight(Permission.ROLE_ADMIN, null, null, null);
         return userRight;
     }
