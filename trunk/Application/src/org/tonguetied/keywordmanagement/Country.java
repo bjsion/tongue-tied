@@ -24,7 +24,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @AccessType("field")
 @NamedQuery(name="get.countries",query="from Country c order by c.name")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class Country implements Comparable<Object> 
+public class Country implements Comparable<Country> 
 {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -57,8 +57,7 @@ public class Country implements Comparable<Object>
     /* (non-Javadoc)
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    public int compareTo(Object object) {
-        final Country other = (Country) object;
+    public int compareTo(final Country other) {
         return new CompareToBuilder().append(code, other.code).toComparison();
     }
     

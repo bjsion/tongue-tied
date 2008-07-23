@@ -39,7 +39,7 @@ import org.tonguetied.audit.Auditable;
 @AccessType("property")
 @NamedQuery(name="get.keywords",query="from Keyword k order by k.keyword")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class Keyword implements Cloneable, Comparable<Object>, Auditable
+public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
 {
     private Long id;
     private String keyword;
@@ -162,8 +162,8 @@ public class Keyword implements Cloneable, Comparable<Object>, Auditable
     /* (non-Javadoc)
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    public int compareTo(Object object) {
-        final Keyword other = (Keyword) object;
+    public int compareTo(final Keyword other)
+    {
         return new CompareToBuilder().append(keyword, other.keyword).
                 append(context, other.context).
                 toComparison();

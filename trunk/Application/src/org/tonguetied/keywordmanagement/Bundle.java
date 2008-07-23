@@ -28,7 +28,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
     @NamedQuery(name=Bundle.QUERY_GET_DEFAULT_BUNDLE,query="from Bundle b where b.isDefault = true")
 })
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class Bundle implements Comparable<Object>
+public class Bundle implements Comparable<Bundle>
 {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -106,8 +106,8 @@ public class Bundle implements Comparable<Object>
     /* (non-Javadoc)
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    public int compareTo(Object object) {
-        final Bundle other = (Bundle) object;
+    public int compareTo(final Bundle other)
+    {
         return new CompareToBuilder().append(name, other.name).
                 append(resourceName, other.resourceName).
                 append(isGlobal, other.isGlobal).
