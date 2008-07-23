@@ -30,7 +30,7 @@ import org.tonguetied.keywordmanagement.Language;
 @Embeddable
 @AccessType("property")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class UserRight implements Comparable<Object>, Serializable {
+public class UserRight implements Comparable<UserRight>, Serializable {
     private Permission permission;
 //    private Language language;
 //    private Country country;
@@ -144,9 +144,9 @@ public class UserRight implements Comparable<Object>, Serializable {
     /* (non-Javadoc)
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    public int compareTo(Object obj) {
+    public int compareTo(final UserRight other)
+    {
         CompareToBuilder builder = new CompareToBuilder();
-        final UserRight other = (UserRight) obj;
         builder.append(permission, other.permission);
         return builder.toComparison();
     }

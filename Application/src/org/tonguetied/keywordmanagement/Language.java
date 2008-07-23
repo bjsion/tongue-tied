@@ -26,7 +26,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @AccessType("field")
 @NamedQuery(name="get.languages",query="from Language l order by l.name")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class Language implements Comparable<Object> 
+public class Language implements Comparable<Language> 
 {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -59,8 +59,8 @@ public class Language implements Comparable<Object>
     /* (non-Javadoc)
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    public int compareTo(Object object) {
-        final Language other = (Language) object;
+    public int compareTo(final Language other)
+    {
         return new CompareToBuilder().append(code, other.code).toComparison();
     }
     

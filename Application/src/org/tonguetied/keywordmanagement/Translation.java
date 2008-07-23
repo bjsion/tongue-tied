@@ -47,7 +47,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 })
 @Table(name="Translation",uniqueConstraints={@UniqueConstraint(columnNames={"keyword_id","language_id","country_id","bundle_id"})})
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class Translation implements Cloneable, Comparable<Object>
+public class Translation implements Cloneable, Comparable<Translation>
 {
     private Long id;
     private String value;
@@ -187,8 +187,8 @@ public class Translation implements Cloneable, Comparable<Object>
     /* (non-Javadoc)
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    public int compareTo(Object object) {
-        final Translation other = (Translation) object;
+    public int compareTo(final Translation other)
+    {
         return new CompareToBuilder().append(keyword, other.keyword).
                 append(language, other.language).
                 append(country, other.country).
