@@ -15,68 +15,74 @@ import org.tonguetied.keywordmanagement.Language.LanguageCode;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
 import org.tonguetied.test.common.AbstractServiceTest;
 
-
 /**
  * @author bsion
- *
+ * 
  */
-public class KeywordServiceTest extends AbstractServiceTest {
+public class KeywordServiceTest extends AbstractServiceTest
+{
     private Country singapore;
+
     private Country australia;
 
     private Language english;
+
     private Language chinese;
-    
+
     private Bundle bundle;
-    
+
     private Keyword keyword1;
+
     private Keyword keyword2;
+
     private Keyword keyword3;
+
     private Keyword keyword4;
-    
+
     private KeywordService keywordService;
-    
+
     @Override
-    protected void onSetUpInTransaction() throws Exception {
+    protected void onSetUpInTransaction() throws Exception
+    {
         singapore = new Country();
         singapore.setCode(CountryCode.SG);
         singapore.setName("Singapore");
-        
+
         australia = new Country();
         australia.setCode(CountryCode.AU);
         australia.setName("Australia");
-        
+
         english = new Language();
         english.setCode(LanguageCode.en);
         english.setName("English");
-        
+
         chinese = new Language();
         chinese.setCode(LanguageCode.sc);
         chinese.setName("Simplified Chinese");
-        
+
         bundle = new Bundle();
         bundle.setName("testBundle");
         bundle.setResourceName("test");
         bundle.setDescription("this is a test bundle");
         bundle.setDefault(false);
         bundle.setGlobal(false);
-        
+
         keyword1 = new Keyword();
         keyword1.setKeyword("akeyword");
         keyword1.setContext("keyword 1");
-        
+
         keyword2 = new Keyword();
         keyword2.setKeyword("anotherkeyword");
         keyword2.setContext("Keyword 2");
-        
+
         keyword3 = new Keyword();
         keyword3.setKeyword("differentKeyword");
         keyword3.setContext("keyword 3");
-        
+
         keyword4 = new Keyword();
         keyword4.setKeyword("oneOtherKeyword");
         keyword4.setContext("Keyword 4");
-        
+
         keywordService.saveOrUpdate(singapore);
         keywordService.saveOrUpdate(australia);
         keywordService.saveOrUpdate(english);
@@ -89,32 +95,38 @@ public class KeywordServiceTest extends AbstractServiceTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getBundles()}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getBundles()}.
      */
     @Test
-    public final void testGetBundles() {
-        List<Bundle> bundles = keywordService.getBundles();
+    public final void testGetBundles()
+    {
+        final List<Bundle> bundles = keywordService.getBundles();
         assertEquals(1, bundles.size());
         assertTrue(bundles.contains(bundle));
     }
 
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getCountries()}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getCountries()}.
      */
     @Test
-    public final void testGetCountries() {
-        List<Country> countries = keywordService.getCountries();
+    public final void testGetCountries()
+    {
+        final List<Country> countries = keywordService.getCountries();
         assertEquals(2, countries.size());
         assertTrue(countries.contains(singapore));
         assertTrue(countries.contains(australia));
     }
 
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getKeywords()}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getKeywords()}.
      */
     @Test
-    public final void testGetKeywords() {
-        List<Keyword> keywords = keywordService.getKeywords();
+    public final void testGetKeywords()
+    {
+        final List<Keyword> keywords = keywordService.getKeywords();
         assertEquals(4, keywords.size());
         assertTrue(keywords.contains(keyword1));
         assertTrue(keywords.contains(keyword2));
@@ -126,8 +138,9 @@ public class KeywordServiceTest extends AbstractServiceTest {
      * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer)}.
      */
     @Test
-    public final void testGetKeywordsWithPagination() {
-        List<Keyword> keywords = keywordService.getKeywords(2, 1);
+    public final void testGetKeywordsWithPagination()
+    {
+        final List<Keyword> keywords = keywordService.getKeywords(2, 1);
         assertEquals(1, keywords.size());
         assertTrue(keywords.contains(keyword3));
     }
@@ -136,8 +149,9 @@ public class KeywordServiceTest extends AbstractServiceTest {
      * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer)}.
      */
     @Test
-    public final void testGetKeywordsWithPaginationInvalidFirstPosition() {
-        List<Keyword> keywords = keywordService.getKeywords(8, 1);
+    public final void testGetKeywordsWithPaginationInvalidFirstPosition()
+    {
+        final List<Keyword> keywords = keywordService.getKeywords(8, 1);
         assertTrue(keywords.isEmpty());
     }
 
@@ -145,8 +159,9 @@ public class KeywordServiceTest extends AbstractServiceTest {
      * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer)}.
      */
     @Test
-    public final void testGetKeywordsWithPaginationNullFirstPosition() {
-        List<Keyword> keywords = keywordService.getKeywords(null, null);
+    public final void testGetKeywordsWithPaginationNullFirstPosition()
+    {
+        final List<Keyword> keywords = keywordService.getKeywords(null, null);
         assertEquals(4, keywords.size());
         assertTrue(keywords.contains(keyword1));
         assertTrue(keywords.contains(keyword2));
@@ -158,8 +173,9 @@ public class KeywordServiceTest extends AbstractServiceTest {
      * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer)}.
      */
     @Test
-    public final void testGetKeywordsWithPaginationZeroMax() {
-        List<Keyword> keywords = keywordService.getKeywords(2,0);
+    public final void testGetKeywordsWithPaginationZeroMax()
+    {
+        final List<Keyword> keywords = keywordService.getKeywords(2, 0);
         assertTrue(keywords.isEmpty());
     }
 
@@ -167,314 +183,396 @@ public class KeywordServiceTest extends AbstractServiceTest {
      * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer)}.
      */
     @Test
-    public final void testGetKeywordsWithPaginationNullMax() {
-        List<Keyword> keywords = keywordService.getKeywords(2, null);
+    public final void testGetKeywordsWithPaginationNullMax()
+    {
+        final List<Keyword> keywords = keywordService.getKeywords(2, null);
         assertEquals(2, keywords.size());
         assertTrue(keywords.contains(keyword3));
         assertTrue(keywords.contains(keyword4));
     }
 
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getLanguages()}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getLanguages()}.
      */
     @Test
-    public final void testGetLanguages() {
-        List<Language> languages = keywordService.getLanguages();
+    public final void testGetLanguages()
+    {
+        final List<Language> languages = keywordService.getLanguages();
         assertEquals(2, languages.size());
         assertTrue(languages.contains(english));
         assertTrue(languages.contains(chinese));
     }
-    
+
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getKeyword(Long)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getKeyword(Long)}.
      */
     @Test
-    public final void testGetKeyword() {
-        Keyword retrieved = keywordService.getKeyword(keyword1.getId());
-        
+    public final void testGetKeyword()
+    {
+        final Keyword retrieved = keywordService.getKeyword(keyword1.getId());
+
         assertEquals(keyword1, retrieved);
     }
-    
+
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getKeyword(Long)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getKeyword(Long)}.
      */
     @Test
-    public final void testGetKeywordWithInvalidId() {
-        Keyword retrieved = keywordService.getKeyword(-1L);
-        
+    public final void testGetKeywordWithInvalidId()
+    {
+        final Keyword retrieved = keywordService.getKeyword(-1L);
+
         assertNull(retrieved);
     }
 
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getKeyword(String)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getKeyword(String)}.
      */
     @Test
-    public final void testGetKeywordByKeyword() {
-        Keyword retrieved = keywordService.getKeyword(keyword1.getKeyword());
-        
+    public final void testGetKeywordByKeyword()
+    {
+        final Keyword retrieved = keywordService.getKeyword(keyword1
+                .getKeyword());
+
         assertEquals(keyword1, retrieved);
     }
-    
+
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getKeyword(String)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getKeyword(String)}.
      */
     @Test
-    public final void testGetKeywordWithUnknownKeyword() {
-        Keyword retrieved = keywordService.getKeyword("unknown");
-        
-        assertNull(retrieved);
-    }
-    
-    /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getBundle(Long)}.
-     */
-    @Test
-    public final void testGetBundleById() {
-        Bundle retrieved = keywordService.getBundle(bundle.getId());
-        
-        assertEquals(bundle, retrieved);
-    }
-    
-    /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getBundle(Long)}.
-     */
-    @Test
-    public final void testGetBundleWithInvalidId() {
-        Bundle retrieved = keywordService.getBundle(-1L);
-        
+    public final void testGetKeywordWithUnknownKeyword()
+    {
+        final Keyword retrieved = keywordService.getKeyword("unknown");
+
         assertNull(retrieved);
     }
 
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getBundle(Long)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getBundle(Long)}.
      */
     @Test
-    public final void testGetBundleByName() {
-        Bundle retrieved = keywordService.getBundleByName(bundle.getName());
-        
+    public final void testGetBundleById()
+    {
+        final Bundle retrieved = keywordService.getBundle(bundle.getId());
+
         assertEquals(bundle, retrieved);
     }
-    
+
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getBundle(Long)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getBundle(Long)}.
      */
     @Test
-    public final void testGetBundleWithInvalidName() {
-        Bundle retrieved = keywordService.getBundleByName("invalid");
-        
+    public final void testGetBundleWithInvalidId()
+    {
+        final Bundle retrieved = keywordService.getBundle(-1L);
+
         assertNull(retrieved);
     }
-    
+
+    /**
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getBundle(Long)}.
+     */
     @Test
-    public final void testGetDefaultBundle() {
+    public final void testGetBundleByName()
+    {
+        final Bundle retrieved = keywordService.getBundleByName(bundle
+                .getName());
+
+        assertEquals(bundle, retrieved);
+    }
+
+    /**
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getBundleByName(String)}.
+     */
+    @Test
+    public final void testGetBundleWithInvalidName()
+    {
+        final Bundle retrieved = keywordService.getBundleByName("invalid");
+
+        assertNull(retrieved);
+    }
+
+    /**
+     * Test the
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getBundleByResourceName(String)}
+     * method with a valid value.
+     */
+    @Test
+    public final void testGetBundleByResourceName()
+    {
+        final Bundle retrieved = keywordService.getBundleByResourceName(bundle
+                .getResourceName());
+
+        assertEquals(bundle, retrieved);
+    }
+
+    /**
+     * Test the
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getBundleByResourceName(String)}
+     * method with a invalid value. This should return <code>null</code>.
+     */
+    @Test
+    public final void testGetBundleWithInvalidResourceName()
+    {
+        final Bundle retrieved = keywordService
+                .getBundleByResourceName("invalid");
+
+        assertNull(retrieved);
+    }
+
+    @Test
+    public final void testGetDefaultBundle()
+    {
         Bundle defaultBundle = new Bundle();
         defaultBundle.setDefault(true);
         defaultBundle.setDescription("default bundle");
         defaultBundle.setName("default");
         defaultBundle.setResourceName("default");
         keywordService.saveOrUpdate(defaultBundle);
-        
-        Bundle retrieved = keywordService.getDefaultBundle();
-        
+
+        final Bundle retrieved = keywordService.getDefaultBundle();
+
         assertEquals(defaultBundle, retrieved);
     }
-    
+
     @Test
-    public final void testGetDefaultBundleWithNoDefault() {
-        Bundle retrieved = keywordService.getDefaultBundle();
-        
+    public final void testGetDefaultBundleWithNoDefault()
+    {
+        final Bundle retrieved = keywordService.getDefaultBundle();
+
         assertNull(retrieved);
     }
-    
+
     @Test
-    public final void testSaveOrUpdateDefaultBundle() {
+    public final void testSaveOrUpdateDefaultBundle()
+    {
         Bundle defaultBundle = new Bundle();
         defaultBundle.setDefault(true);
         defaultBundle.setDescription("bundle2");
         defaultBundle.setName("bundle2");
         defaultBundle.setResourceName("bundle2");
         keywordService.saveOrUpdate(defaultBundle);
-        
+
         List<Bundle> bundles = keywordService.getBundles();
         assertEquals(2, bundles.size());
         validateBundles(defaultBundle, bundles);
-        
+
         Bundle newBundle = new Bundle();
         newBundle.setDefault(true);
         newBundle.setDescription("bundle3");
         newBundle.setName("bundle3");
         newBundle.setResourceName("bundle3");
         keywordService.saveOrUpdate(newBundle);
-        
+
         bundles = keywordService.getBundles();
         assertEquals(3, bundles.size());
         validateBundles(newBundle, bundles);
-        
+
         Bundle anotherBundle = new Bundle();
         anotherBundle.setDefault(false);
         anotherBundle.setDescription("bundle4");
         anotherBundle.setName("bundle4");
         anotherBundle.setResourceName("bundle4");
         keywordService.saveOrUpdate(anotherBundle);
-        
+
         bundles = keywordService.getBundles();
         assertEquals(4, bundles.size());
         validateBundles(newBundle, bundles);
     }
 
-    private void validateBundles(Bundle defaultBundle, List<Bundle> bundles) {
-        for (Bundle testBundle : bundles) {
+    private void validateBundles(Bundle defaultBundle, List<Bundle> bundles)
+    {
+        for (Bundle testBundle : bundles)
+        {
             if (testBundle.getName().equals(defaultBundle.getName()))
                 assertTrue(testBundle.isDefault());
             else
                 assertFalse(testBundle.isDefault());
         }
     }
-    
+
     @Test
-    public final void testSaveOrUpdateBundleWithNoDefault() {
+    public final void testSaveOrUpdateBundleWithNoDefault()
+    {
         Bundle newBundle = new Bundle();
         newBundle.setDefault(false);
         newBundle.setDescription("bundle2");
         newBundle.setName("bundle2");
         newBundle.setResourceName("bundle2");
         keywordService.saveOrUpdate(newBundle);
-        
-        List<Bundle> bundles = keywordService.getBundles();
+
+        final List<Bundle> bundles = keywordService.getBundles();
         assertEquals(2, bundles.size());
-        for (Bundle testBundle : bundles) {
+        for (Bundle testBundle : bundles)
+        {
             assertFalse(testBundle.isDefault());
         }
     }
-    
+
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getLanguage(Long)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getLanguage(Long)}.
      */
     @Test
-    public final void testGetLanguage() {
+    public final void testGetLanguage()
+    {
         Language retrieved = keywordService.getLanguage(english.getId());
-        
+
         assertEquals(english, retrieved);
     }
-    
+
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getLanguage(Long)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getLanguage(Long)}.
      */
     @Test
-    public final void testGetLanguageWithInvalidId() {
+    public final void testGetLanguageWithInvalidId()
+    {
         Language retrieved = keywordService.getLanguage(-1L);
-        
+
         assertNull(retrieved);
     }
 
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getLanguage(org.tonguetied.keywordmanagement.Language.LanguageCode)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getLanguage(org.tonguetied.keywordmanagement.Language.LanguageCode)}.
      */
     @Test
-    public final void testGetLanguageByCode() {
+    public final void testGetLanguageByCode()
+    {
         Language retrieved = keywordService.getLanguage(LanguageCode.sc);
         assertEquals(chinese, retrieved);
     }
-    
+
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getLanguage(org.tonguetied.keywordmanagement.Language.LanguageCode)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getLanguage(org.tonguetied.keywordmanagement.Language.LanguageCode)}.
      */
     @Test
-    public final void testGetLanguageWithInvalidCode() {
+    public final void testGetLanguageWithInvalidCode()
+    {
         Language retrieved = keywordService.getLanguage(LanguageCode.ak);
-        
+
         assertNull(retrieved);
     }
 
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getCountry(Long)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getCountry(Long)}.
      */
     @Test
-    public final void testGetCountry() {
+    public final void testGetCountry()
+    {
         Country retrieved = keywordService.getCountry(australia.getId());
-        
+
         assertEquals(australia, retrieved);
     }
-    
+
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getCountry(Long)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getCountry(Long)}.
      */
     @Test
-    public final void testGetCountryWithInvalidId() {
+    public final void testGetCountryWithInvalidId()
+    {
         Country retrieved = keywordService.getCountry(-1L);
-        
+
         assertNull(retrieved);
     }
 
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getCountry(org.tonguetied.keywordmanagement.Country.CountryCode)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getCountry(org.tonguetied.keywordmanagement.Country.CountryCode)}.
      */
     @Test
-    public final void testGetCountryByCode() {
+    public final void testGetCountryByCode()
+    {
         Country retrieved = keywordService.getCountry(CountryCode.SG);
         assertEquals(singapore, retrieved);
     }
-    
+
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getCountry(org.tonguetied.keywordmanagement.Country.CountryCode)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getCountry(org.tonguetied.keywordmanagement.Country.CountryCode)}.
      */
     @Test
-    public final void testGetCountryWithInvalidCode() {
+    public final void testGetCountryWithInvalidCode()
+    {
         Country retrieved = keywordService.getCountry(CountryCode.AD);
-        
+
         assertNull(retrieved);
     }
 
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
      */
-    @Test(expected=IllegalArgumentException.class)
-    public final void testFindKeywordsWithKeywordNull() {
+    @Test(expected = IllegalArgumentException.class)
+    public final void testFindKeywordsWithKeywordNull()
+    {
         List<Keyword> keywords = null;
-        try {
+        try
+        {
             keywords = keywordService.findKeywords(null, true, 0, 20);
             fail("null keyword not allowed");
         }
-        catch (IllegalArgumentException iae) {
+        catch (IllegalArgumentException iae)
+        {
             assertNull(keywords);
         }
     }
-    
+
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
      */
     @Test
-    public final void testFindKeywordsWithNoMatches() {
+    public final void testFindKeywordsWithNoMatches()
+    {
         Keyword keyword = new Keyword();
         keyword.setKeyword("unknownText");
-        List<Keyword> keywords = 
-            keywordService.findKeywords(keyword, true, 0, null);
+        List<Keyword> keywords = keywordService.findKeywords(keyword, true, 0,
+                null);
         assertTrue(keywords.isEmpty());
     }
-    
+
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
      */
     @Test
-    public final void testFindKeywordsByKeyword() {
+    public final void testFindKeywordsByKeyword()
+    {
         Keyword keyword = new Keyword();
         keyword.setKeyword("the");
-        List<Keyword> keywords = 
-            keywordService.findKeywords(keyword, true, 0, null);
+        List<Keyword> keywords = keywordService.findKeywords(keyword, true, 0,
+                null);
         assertEquals(2, keywords.size());
         assertTrue(keywords.contains(keyword2));
         assertTrue(keywords.contains(keyword4));
     }
 
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
      */
     @Test
-    public final void testFindKeywordsByKeywordEmptyString() {
+    public final void testFindKeywordsByKeywordEmptyString()
+    {
         Keyword keyword = new Keyword();
         keyword.setKeyword("");
-        List<Keyword> keywords = 
-            keywordService.findKeywords(keyword, true, 0, null);
+        List<Keyword> keywords = keywordService.findKeywords(keyword, true, 0,
+                null);
         assertEquals(4, keywords.size());
         assertTrue(keywords.contains(keyword1));
         assertTrue(keywords.contains(keyword2));
@@ -483,10 +581,12 @@ public class KeywordServiceTest extends AbstractServiceTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
      */
     @Test
-    public final void testFindKeywordsByTranslationValue() {
+    public final void testFindKeywordsByTranslationValue()
+    {
         Translation translation1 = new Translation();
         translation1.setValue("test");
         translation1.setState(TranslationState.VERIFIED);
@@ -496,23 +596,25 @@ public class KeywordServiceTest extends AbstractServiceTest {
         translation2.setState(TranslationState.VERIFIED);
         keyword3.addTranslation(translation2);
         keywordService.saveOrUpdate(keyword3);
-        
+
         Keyword keyword = new Keyword();
         Translation translation = new Translation();
         translation.setState(null);
         translation.setValue("st");
         keyword.addTranslation(translation);
-        List<Keyword> keywords = 
-            keywordService.findKeywords(keyword, false, null, null);
+        List<Keyword> keywords = keywordService.findKeywords(keyword, false,
+                null, null);
         assertEquals(1, keywords.size());
         assertTrue(keywords.contains(keyword3));
     }
-    
+
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
      */
     @Test
-    public final void testFindKeywordsByBundle() {
+    public final void testFindKeywordsByBundle()
+    {
         Translation translation1 = new Translation();
         translation1.setLanguage(english);
         translation1.setValue("test");
@@ -520,29 +622,31 @@ public class KeywordServiceTest extends AbstractServiceTest {
         translation1.setBundle(bundle);
         keyword3.addTranslation(translation1);
         keywordService.saveOrUpdate(keyword3);
-        
+
         Translation translation2 = new Translation();
         translation2.setLanguage(english);
         translation2.setValue("test");
         translation2.setState(TranslationState.QUERIED);
         keyword4.addTranslation(translation2);
         keywordService.saveOrUpdate(keyword4);
-        
+
         Keyword keyword = new Keyword();
         Translation translation = new Translation();
         translation.setBundle(bundle);
         keyword.addTranslation(translation);
-        List<Keyword> keywords = 
-            keywordService.findKeywords(keyword, false, 0, null);
+        final List<Keyword> keywords = keywordService.findKeywords(keyword,
+                false, 0, null);
         assertEquals(1, keywords.size());
         assertTrue(keywords.contains(keyword3));
     }
-    
+
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
      */
     @Test
-    public final void testFindKeywordsByCountry() {
+    public final void testFindKeywordsByCountry()
+    {
         Translation translation1 = new Translation();
         translation1.setLanguage(english);
         translation1.setValue("t1");
@@ -551,7 +655,7 @@ public class KeywordServiceTest extends AbstractServiceTest {
         translation1.setCountry(australia);
         keyword1.addTranslation(translation1);
         keywordService.saveOrUpdate(keyword1);
-        
+
         Translation translation2 = new Translation();
         translation2.setLanguage(english);
         translation2.setValue("t2");
@@ -565,23 +669,25 @@ public class KeywordServiceTest extends AbstractServiceTest {
         translation3.setCountry(singapore);
         keyword4.addTranslation(translation3);
         keywordService.saveOrUpdate(keyword4);
-        
+
         Keyword keyword = new Keyword();
         Translation translation = new Translation();
         translation.setState(null);
         translation.setCountry(singapore);
         keyword.addTranslation(translation);
-        List<Keyword> keywords = 
-            keywordService.findKeywords(keyword, false, null, null);
+        final List<Keyword> keywords = keywordService.findKeywords(keyword,
+                false, null, null);
         assertEquals(1, keywords.size());
         assertTrue(keywords.contains(keyword4));
     }
-    
+
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
      */
     @Test
-    public final void testFindKeywordsByTranslationState() {
+    public final void testFindKeywordsByTranslationState()
+    {
         Translation translation1 = new Translation();
         translation1.setLanguage(english);
         translation1.setValue("t1");
@@ -590,7 +696,7 @@ public class KeywordServiceTest extends AbstractServiceTest {
         translation1.setCountry(australia);
         keyword1.addTranslation(translation1);
         keywordService.saveOrUpdate(keyword1);
-        
+
         Translation translation2 = new Translation();
         translation2.setLanguage(english);
         translation2.setValue("t2");
@@ -604,74 +710,85 @@ public class KeywordServiceTest extends AbstractServiceTest {
         translation3.setCountry(singapore);
         keyword4.addTranslation(translation3);
         keywordService.saveOrUpdate(keyword4);
-        
+
         Keyword keyword = new Keyword();
         Translation translation = new Translation();
         translation.setState(TranslationState.VERIFIED);
         keyword.addTranslation(translation);
-        List<Keyword> keywords = 
-            keywordService.findKeywords(keyword, false, null, null);
+        final List<Keyword> keywords = keywordService.findKeywords(keyword,
+                false, null, null);
         assertEquals(1, keywords.size());
         assertTrue(keywords.contains(keyword1));
     }
-    
+
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
      */
     @Test
-    public final void testFindKeywordsWithEmptyKeyword() {
+    public final void testFindKeywordsWithEmptyKeyword()
+    {
         Keyword keyword = new Keyword();
         keyword.addTranslation(new Translation());
-        List<Keyword> keywords = 
-            keywordService.findKeywords(keyword, true, 0, null);
+        final List<Keyword> keywords = keywordService.findKeywords(keyword,
+                true, 0, null);
         assertTrue(keywords.isEmpty());
     }
 
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#deleteKeyword(Long)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#deleteKeyword(Long)}.
      */
     @Test
-    public final void testDeleteKeyword() {
+    public final void testDeleteKeyword()
+    {
         Translation translation = new Translation();
         translation.setLanguage(chinese);
         translation.setValue("&#20320;&#22909;");
         translation.setState(TranslationState.VERIFIED);
         keyword2.addTranslation(translation);
         keywordService.saveOrUpdate(keyword2);
-        
-        Long keywordId = keyword2.getId();
+
+        final Long keywordId = keyword2.getId();
         keywordService.deleteKeyword(keywordId);
-        
+
         assertNull(keywordService.getKeyword(keywordId));
-        
+
         // TODO: check that translations are deleted as well
     }
-    
+
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#deleteKeyword(Long)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#deleteKeyword(Long)}.
      */
     @Test
-    public final void testDeleteKeywordWithTranslations() {
-        Long keywordId = keyword1.getId();
+    public final void testDeleteKeywordWithoutTranslations()
+    {
+        final Long keywordId = keyword1.getId();
         keywordService.deleteKeyword(keywordId);
-        
+
         assertNull(keywordService.getKeyword(keywordId));
     }
-    
+
     /**
-     * Test method for {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#deleteKeyword(Long)}.
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#deleteKeyword(Long)}.
      */
-    @Test(expected=IllegalArgumentException.class)
-    public final void testDeleteKeywordInvalidId() {
-        try {
+    @Test(expected = IllegalArgumentException.class)
+    public final void testDeleteKeywordInvalidId()
+    {
+        try
+        {
             keywordService.deleteKeyword(-1L);
         }
-        catch (IllegalArgumentException iae) {
-            
+        catch (IllegalArgumentException iae)
+        {
+
         }
     }
-    
-    public void setKeywordService(KeywordService keywordService) {
+
+    public void setKeywordService(KeywordService keywordService)
+    {
         this.keywordService = keywordService;
     }
 }
