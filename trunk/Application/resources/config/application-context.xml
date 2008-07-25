@@ -95,6 +95,9 @@
     <bean id="auditRepository" class="org.tonguetied.audit.AuditRepositoryImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+    <bean id="bundleRepository" class="org.tonguetied.keywordmanagement.BundleRepositoryImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
     <bean id="keywordRepository" class="org.tonguetied.keywordmanagement.KeywordRepositoryImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
