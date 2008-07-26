@@ -16,18 +16,20 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  */
 public class AuditRepositoryImpl extends HibernateDaoSupport implements AuditRepository
 {
-    public List<AuditLogRecord> getAuditLog() {
+    public List<AuditLogRecord> getAuditLog()
+    {
         Query query = getSession().getNamedQuery("get.audit.log");
         return query.list();
     }
 
-    public void saveOrUpdate(Object object) throws DataAccessException 
+    public void saveOrUpdate(AuditLogRecord record) throws DataAccessException
     {
-        getHibernateTemplate().saveOrUpdate(object);
+        getHibernateTemplate().saveOrUpdate(record);
         getHibernateTemplate().flush();
     }
     
-    public void delete(Object object) {
-        getSession().delete(object);
+    public void delete(AuditLogRecord record)
+    {
+        getSession().delete(record);
     }
 }

@@ -14,10 +14,32 @@ public class KeywordServiceImpl implements KeywordService
 {
     private KeywordRepository keywordRepository;
     private BundleRepository bundleRepository;
+    private CountryRepository countryRepository;
+    private LanguageRepository languageRepository;
 
     public void setKeywordRepository(KeywordRepository keywordRepository)
     {
         this.keywordRepository = keywordRepository;
+    }
+
+    /**
+     * Assign the countryRepository.
+     *
+     * @param countryRepository the countryRepository to set
+     */
+    public void setCountryRepository(CountryRepository countryRepository)
+    {
+        this.countryRepository = countryRepository;
+    }
+
+    /**
+     * Assign the languageRepository.
+     *
+     * @param languageRepository the languageRepository to set
+     */
+    public void setLanguageRepository(LanguageRepository languageRepository)
+    {
+        this.languageRepository = languageRepository;
     }
 
     /**
@@ -30,9 +52,9 @@ public class KeywordServiceImpl implements KeywordService
         this.bundleRepository = bundleRepository;
     }
 
-    public void delete(Object object)
+    public void delete(Keyword keyword)
     {
-        keywordRepository.delete(object);
+        keywordRepository.delete(keyword);
     }
 
     public Bundle getBundle(final Long id)
@@ -62,17 +84,17 @@ public class KeywordServiceImpl implements KeywordService
 
     public Country getCountry(final Long id)
     {
-        return keywordRepository.getCountry(id);
+        return countryRepository.getCountry(id);
     }
 
     public Country getCountry(final CountryCode code)
     {
-        return keywordRepository.getCountry(code);
+        return countryRepository.getCountry(code);
     }
 
     public List<Country> getCountries()
     {
-        return keywordRepository.getCountries();
+        return countryRepository.getCountries();
     }
 
     public Keyword getKeyword(final Long id)
@@ -105,17 +127,17 @@ public class KeywordServiceImpl implements KeywordService
 
     public Language getLanguage(final Long id)
     {
-        return keywordRepository.getLanguage(id);
+        return languageRepository.getLanguage(id);
     }
 
     public Language getLanguage(final LanguageCode code)
     {
-        return keywordRepository.getLanguage(code);
+        return languageRepository.getLanguage(code);
     }
 
     public List<Language> getLanguages()
     {
-        return keywordRepository.getLanguages();
+        return languageRepository.getLanguages();
     }
 
     public void deleteKeyword(final Long id)
@@ -124,10 +146,21 @@ public class KeywordServiceImpl implements KeywordService
         delete(keyword);
     }
 
-    public void saveOrUpdate(Object object)
+    public void saveOrUpdate(Country country)
     {
-        keywordRepository.saveOrUpdate(object);
+        countryRepository.saveOrUpdate(country);
     }
+
+    public void saveOrUpdate(Language language)
+    {
+        languageRepository.saveOrUpdate(language);
+    }
+
+    public void saveOrUpdate(Keyword keyword)
+    {
+        keywordRepository.saveOrUpdate(keyword);
+    }
+
 
     public void saveOrUpdate(Bundle bundle)
     {

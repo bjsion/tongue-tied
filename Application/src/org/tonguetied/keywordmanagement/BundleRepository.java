@@ -6,7 +6,7 @@ import org.springframework.dao.DataAccessException;
 
 
 /**
- * Interface defining DAO facade for TongueTied storage for the {@link Bundle}
+ * Interface defining DAO facade for TongueTied storage of the {@link Bundle}
  * object.
  * 
  * @author bsion
@@ -23,7 +23,7 @@ public interface BundleRepository
     void saveOrUpdate(Bundle bundle) throws DataAccessException;
     
     /**
-     * Remove a Bundle from permanent storage.
+     * Remove a {@link Bundle} from permanent storage.
      * 
      * @param bundle the item to remove.
      */

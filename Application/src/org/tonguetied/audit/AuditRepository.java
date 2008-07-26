@@ -9,23 +9,24 @@ import org.springframework.dao.DataAccessException;
  * Interface defining Audit DAO facade for TongueTied storage.
  * 
  * @author mforslund
+ * @author bsion
  */
 public interface AuditRepository 
 {
     /**
-     * Persist an object to permanent storage.
+     * Persist an {@link AuditLogRecord} to permanent storage.
      * 
-     * @param object the item to save or update.
+     * @param record the item to save or update.
      * @throws DataAccessException if the operation fails.
      */
-    void saveOrUpdate(Object object) throws DataAccessException;
+    void saveOrUpdate(AuditLogRecord record) throws DataAccessException;
     
     /**
-     * Remove an object from permanent storage.
+     * Remove an {@link AuditLogRecord} from permanent storage.
      * 
-     * @param object the item to remove.
+     * @param record the item to remove.
      */
-    void delete(Object object);
+    void delete(AuditLogRecord record);
 
     /**
      * Retrieve a list of all {@link AuditLogRecord}s from permanent storage. 

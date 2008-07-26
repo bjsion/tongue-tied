@@ -161,14 +161,28 @@ public interface KeywordService
     List<Bundle> getBundles();	
     
     /**
-     * Save or update the object.
+     * Save or update the <code>Keyword</code>.
      * 
-     * @param object the {@linkplain Object} to be persisted.
+     * @param keyword the {@linkplain Keyword} to be persisted.
      */
-    void saveOrUpdate(Object object);
+    void saveOrUpdate(Keyword keyword);
 
     /**
-     * Save or update the bundle.
+     * Save or update the <code>Country</code>.
+     * 
+     * @param country the {@linkplain Country} to be persisted.
+     */
+    void saveOrUpdate(Country country);
+
+    /**
+     * Save or update the <code>Language</code>.
+     * 
+     * @param language the {@linkplain Language} to be persisted.
+     */
+    void saveOrUpdate(Language language);
+
+    /**
+     * Save or update the <code>Bundle</code>.
      * 
      * @param bundle the {@linkplain Bundle} to be persisted.
      */
@@ -182,9 +196,9 @@ public interface KeywordService
     void deleteKeyword(final Long id);
 
     /**
-     * Remove the object.
+     * Remove the Keyword.
      * 
-     * @param object the {@linkplain Object} to be removed.
+     * @param keyword the {@linkplain Keyword} to be removed.
      */
-    void delete(Object object);
+    void delete(Keyword keyword);
 }

@@ -27,8 +27,11 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
+ * A translation is a specific value of a {@link Keyword} for a 
+ * {@link Language}, {@link Country} and {@link Bundle}.
  * 
  * @author mforslund
+ * @author bsion
  */
 @Entity
 @AccessType("property")

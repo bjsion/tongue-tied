@@ -15,12 +15,15 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
+ * Stateful object that contains a summary of a database transaction.
+ * 
  * @author bsion
  *
  */
 @Entity
 @org.hibernate.annotations.Entity(mutable=false)
-@NamedQuery(name="get.audit.log",query="from AuditLogRecord alr order by alr.created desc")
+@NamedQuery(name="get.audit.log",
+        query="from AuditLogRecord alr order by alr.created desc")
 public class AuditLogRecord {
     private Long id;
     private String message;
@@ -33,9 +36,11 @@ public class AuditLogRecord {
     }
 
     /**
+     * Create a new instance of the AuditLogRecord
+     * 
      * @param message
      * @param entity
-     * @param username
+     * @param username the username of the user who made the change
      */
     public AuditLogRecord(final String message, final Auditable entity, final String username) {
         this.message = message;
@@ -77,7 +82,9 @@ public class AuditLogRecord {
     }
 
     /**
-     * @return the entityId
+     * Gets the unique identifier of the entity that was changed.
+     * 
+     * @return the id of the entity
      */
     @Column(nullable=false)
     public Long getEntityId() {
@@ -107,8 +114,10 @@ public class AuditLogRecord {
     }
 
     /**
-     * @return the username who made the change, or <tt>null</tt> if it was done
-     * anonymously
+     * Gets the username of the <code>User</code> who made this change.
+     * 
+     * @return the username of the user who made the change, or <tt>null</tt> 
+     * if it was done anonymously
      */
     public String getUsername() {
         return username;
