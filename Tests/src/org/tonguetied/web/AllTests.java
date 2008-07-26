@@ -24,6 +24,7 @@ import org.junit.runners.Suite.SuiteClasses;
     CountryValidatorTest.class,
     ExportParametersValidatorTest.class,
     FormatTypeSupportTest.class,
+    ImportValidatorTest.class,
     KeywordValidatorTest.class,
     LanguageCodeSupportTest.class,
     LanguageSupportTest.class,
