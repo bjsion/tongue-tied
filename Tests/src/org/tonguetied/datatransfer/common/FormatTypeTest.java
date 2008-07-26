@@ -10,7 +10,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import org.tonguetied.datatransfer.common.FormatType;
+
 /**
+ * Test class for the methods of the {@link FormatType} enum.
+ * 
  * @author bsion
  *
  */
@@ -43,7 +47,7 @@ public class FormatTypeTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.datatransfer.common.FormatType#getDefaultFileExtension()}.
+     * Test method for {@link FormatType#getDefaultFileExtension()}.
      */
     @Test
     public final void testCreateImporter() {
