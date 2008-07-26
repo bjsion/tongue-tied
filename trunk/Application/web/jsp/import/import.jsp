@@ -18,6 +18,7 @@
                     <form:option value=""><fmt:message key="please.select"/></form:option>
                     <form:options items="${formatTypes}"/>
                 </form:select>
+                <form:errors path="parameters.formatType" cssClass="error"/>
             </div>
             <div>
                 <form:label path="parameters.translationState" cssClass="content"><fmt:message key="translation.state"/></form:label>
@@ -25,6 +26,7 @@
                     <form:option value=""><fmt:message key="please.select"/></form:option>
                     <form:options items="${states}"/>
                 </form:select>
+                <form:errors path="parameters.translationState" cssClass="error"/>
             </div>
         </fieldset>
         <div class="submit">
