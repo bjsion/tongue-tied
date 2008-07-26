@@ -53,7 +53,6 @@ public interface UserService {
      * @throws AuthenticationException if an invalid <code>oldPassword</code>
      * is supplied
      * @throws IllegalArgumentException if the new password is <code>null</code>
-     * @see User#changePassword(String, String)
      */
     void changePassword(User user, final String oldPassword, final String newPassword) 
         throws AuthenticationException;
@@ -64,7 +63,6 @@ public interface UserService {
      * 
      * @param user the {@link User} to apply the new password to
      * @param newPassword the raw value of the new password
-     * @return the encoded value of the password
      */
     void encodePassword(User user, final String newPassword);
 }
