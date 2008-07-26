@@ -192,7 +192,7 @@ public class MainController extends MultiActionController {
     
     /**
      * Handler method that acts as an HTTP interface to the 
-     * {@linkplain KeywordService#delete(Object)} method.
+     * {@linkplain KeywordService#deleteKeyword(Long)} method.
      * 
      * @param request the current HTTP request.
      * @param response the current HTTP response.
