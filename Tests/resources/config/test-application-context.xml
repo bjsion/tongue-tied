@@ -79,7 +79,13 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean id="bundleRepository" class="org.tonguetied.keywordmanagement.BundleRepositoryImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+    <bean id="countryRepository" class="org.tonguetied.keywordmanagement.CountryRepositoryImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
     <bean id="keywordRepository" class="org.tonguetied.keywordmanagement.KeywordRepositoryImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="languageRepository" class="org.tonguetied.keywordmanagement.LanguageRepositoryImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     <bean id="transferRepository" class="org.tonguetied.datatransfer.dao.TransferRepositoryImpl">

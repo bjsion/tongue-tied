@@ -69,28 +69,28 @@ public class ExportServiceTest extends AbstractServiceTest {
         singapore = new Country();
         singapore.setCode(CountryCode.SG);
         singapore.setName("Singapore");
-        getKeywordRepository().saveOrUpdate(singapore);
+        getCountryRepository().saveOrUpdate(singapore);
         
         australia = new Country();
         australia.setCode(CountryCode.AU);
         australia.setName("Australia");
-        getKeywordRepository().saveOrUpdate(australia);
+        getCountryRepository().saveOrUpdate(australia);
         
         english = new Language();
         english.setCode(LanguageCode.en);
         english.setName("English");
-        getKeywordRepository().saveOrUpdate(english);
+        getLanguageRepository().saveOrUpdate(english);
         
         chinese = new Language();
         chinese.setCode(LanguageCode.zh);
         chinese.setName("Simplified Chinese");
-        getKeywordRepository().saveOrUpdate(chinese);
+        getLanguageRepository().saveOrUpdate(chinese);
         
         bundle = new Bundle();
         bundle.setName("testBundle");
         bundle.setResourceName("test");
         bundle.setDescription("this is a test bundle");
-        getKeywordRepository().saveOrUpdate(bundle);
+        getBundleRepository().saveOrUpdate(bundle);
         
         keyword1 = new Keyword();
         keyword1.setKeyword("akeyword");

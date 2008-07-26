@@ -42,13 +42,17 @@ public class KeywordServiceStub implements KeywordService {
             Country country = (Country) object;
             countries.remove(country.getId());
         }
-        else if (object instanceof Keyword) {
-            Keyword keyword = (Keyword) object;
-            deleteKeyword(keyword.getId());
-        }
         else {
             throw new IllegalArgumentException("Object " + object.getClass() + " not supported");
         }
+    }
+
+    /* (non-Javadoc)
+     * @see org.tonguetied.keywordmanagement.KeywordService#delete(org.tonguetied.keywordmanagement.Keyword)
+     */
+    public void delete(Keyword keyword)
+    {
+        deleteKeyword(keyword.getId());
     }
 
     /* (non-Javadoc)
@@ -281,44 +285,33 @@ public class KeywordServiceStub implements KeywordService {
     public List<Language> getLanguages() {
         return (List<Language>)this.languages.values();
     }
+    public void saveOrUpdate(Country country)
+    {
+        if (country.getId() == null)
+            country.setId(Long.valueOf(countries.size()));
+        this.countries.put(country.getId(), country);
+    }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.KeywordService#saveOrUpdate(java.lang.Object)
-     */
-    public void saveOrUpdate(Object object) {
-        if (object instanceof Country) {
-            Country country = (Country) object;
-            if (country.getId() == null)
-                country.setId(Long.valueOf(countries.size()));
-            this.countries.put(country.getId(), country);
-        }
-        else if (object instanceof Language) {
-            Language language = (Language) object;
-            if (language.getId() == null)
-                language.setId(Long.valueOf(languages.size()));
-            this.languages.put(language.getId(), language);
-        }
-        else if (object instanceof Bundle) {
-            Bundle bundle = (Bundle) object;
-            if (bundle.getId() == null)
-                bundle.setId(Long.valueOf(bundles.size()));
-            this.bundles.put(bundle.getId(), bundle);
-        }
-        else if (object instanceof Keyword) {
-            Keyword keyword = (Keyword) object;
-            if (keyword.getId() == null)
-                keyword.setId(Long.valueOf(keywords.size()));
-            this.keywords.put(keyword.getId(), keyword);
-        }
-        else {
-            throw new IllegalArgumentException("Object " + object.getClass() + " not supported");
-        }
+    public void saveOrUpdate(Language language)
+    {
+        if (language.getId() == null)
+            language.setId(Long.valueOf(languages.size()));
+        this.languages.put(language.getId(), language);
+    }
+    
+    public void saveOrUpdate(Keyword keyword)
+    {
+        if (keyword.getId() == null)
+            keyword.setId(Long.valueOf(keywords.size()));
+        this.keywords.put(keyword.getId(), keyword);
     }
 
     /* (non-Javadoc)
      * @see org.tonguetied.keywordmanagement.KeywordService#saveOrUpdate(org.tonguetied.keywordmanagement.Bundle)
      */
     public void saveOrUpdate(Bundle bundle) {
-        this.saveOrUpdate((Object) bundle);
+        if (bundle.getId() == null)
+            bundle.setId(Long.valueOf(bundles.size()));
+        this.bundles.put(bundle.getId(), bundle);
     }
 }
