@@ -31,9 +31,10 @@ import org.tonguetied.audit.Auditable;
 
 /**
  * A <code>Keyword</code> object maps a relationship between a list of 
- * {@link Translation}s a key string.  
+ * {@link Translation}s a key string.
  * 
  * @author mforslund
+ * @author bsion
  */
 @Entity
 @AccessType("property")

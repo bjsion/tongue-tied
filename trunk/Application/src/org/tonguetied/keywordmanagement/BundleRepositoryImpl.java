@@ -13,8 +13,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
- * DAO facade to ORM. This facade allows access permanent storage via Hibernate
- * orm model.
+ * DAO facade to ORM. This facade allows access permanent storage of Bundle
+ * related data via the Hibernate orm model.
  * 
  * @author bsion
  * 

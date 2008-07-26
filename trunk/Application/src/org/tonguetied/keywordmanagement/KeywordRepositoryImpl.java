@@ -17,12 +17,10 @@ import org.hibernate.criterion.Junction;
 import org.hibernate.criterion.MatchMode;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.tonguetied.keywordmanagement.Country.CountryCode;
-import org.tonguetied.keywordmanagement.Language.LanguageCode;
 
 /**
- * DAO facade to ORM. This facade allows access permanent storage via Hibernate
- * orm model.
+ * DAO facade to ORM. This facade allows access permanent storage of Keyword
+ * related data via the Hibernate orm model.
  * 
  * @author bsion
  * 
@@ -30,26 +28,6 @@ import org.tonguetied.keywordmanagement.Language.LanguageCode;
 public class KeywordRepositoryImpl extends HibernateDaoSupport implements
         KeywordRepository
 {
-    public Country getCountry(final Long id)
-    {
-        Criteria criteria = getSession().createCriteria(Country.class);
-        criteria.add(idEq(id));
-        return (Country) criteria.uniqueResult();
-    }
-
-    public Country getCountry(final CountryCode code)
-    {
-        Criteria criteria = getSession().createCriteria(Country.class);
-        criteria.add(eq("code", code));
-        return (Country) criteria.uniqueResult();
-    }
-
-    public List<Country> getCountries()
-    {
-        Query query = getSession().getNamedQuery("get.countries");
-        return query.list();
-    }
-
     public Keyword getKeyword(final Long id)
     {
         Criteria criteria = getSession().createCriteria(Keyword.class);
@@ -179,34 +157,14 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements
         }
     }
 
-    public List<Language> getLanguages()
+    public void saveOrUpdate(Keyword keyword) throws DataAccessException
     {
-        Query query = getSession().getNamedQuery("get.languages");
-        return query.list();
-    }
-
-    public Language getLanguage(final Long id)
-    {
-        Criteria criteria = getSession().createCriteria(Language.class);
-        criteria.add(idEq(id));
-        return (Language) criteria.uniqueResult();
-    }
-
-    public Language getLanguage(final LanguageCode code)
-    {
-        Criteria criteria = getSession().createCriteria(Language.class);
-        criteria.add(eq("code", code));
-        return (Language) criteria.uniqueResult();
-    }
-
-    public void saveOrUpdate(Object object) throws DataAccessException
-    {
-        getHibernateTemplate().saveOrUpdate(object);
+        getHibernateTemplate().saveOrUpdate(keyword);
         getHibernateTemplate().flush();
     }
 
-    public void delete(Object object)
+    public void delete(Keyword keyword)
     {
-        getSession().delete(object);
+        getSession().delete(keyword);
     }
 }
