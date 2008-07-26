@@ -18,6 +18,7 @@ public class AuditServiceTest extends AbstractServiceTest {
     
     private KeywordService keywordService;
     private AuditService auditService;
+    private AuditRepository auditRepository;
 
     @Override
     protected void onSetUpInTransaction() throws Exception {
@@ -36,9 +37,9 @@ public class AuditServiceTest extends AbstractServiceTest {
         AuditLogRecord record1 = new AuditLogRecord("test 1", keyword1, "user1");
         AuditLogRecord record2 = new AuditLogRecord("test 2", keyword1, "user1");
         AuditLogRecord record3 = new AuditLogRecord("test 3", keyword1, "user1");
-        keywordService.saveOrUpdate(record1);
-        keywordService.saveOrUpdate(record2);
-        keywordService.saveOrUpdate(record3);
+        auditRepository.saveOrUpdate(record1);
+        auditRepository.saveOrUpdate(record2);
+        auditRepository.saveOrUpdate(record3);
         
         List<AuditLogRecord> auditLog = auditService.getAuditLog();
         assertEquals(3, auditLog.size());
@@ -53,5 +54,15 @@ public class AuditServiceTest extends AbstractServiceTest {
 
     public void setAuditService(AuditService auditService) {
         this.auditService = auditService;
+    }
+
+    /**
+     * Assign the auditRepository.
+     *
+     * @param auditRepository the auditRepository to set
+     */
+    public void setAuditRepository(AuditRepository auditRepository)
+    {
+        this.auditRepository = auditRepository;
     }
 }

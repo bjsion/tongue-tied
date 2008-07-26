@@ -7,7 +7,10 @@ import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 import org.springframework.test.annotation.AbstractAnnotationAwareTransactionalTests;
+import org.tonguetied.keywordmanagement.BundleRepository;
+import org.tonguetied.keywordmanagement.CountryRepository;
 import org.tonguetied.keywordmanagement.KeywordRepository;
+import org.tonguetied.keywordmanagement.LanguageRepository;
 import org.tonguetied.utils.DBUtils;
 
 
@@ -28,14 +31,19 @@ import org.tonguetied.utils.DBUtils;
 public abstract class AbstractServiceTest extends 
         AbstractAnnotationAwareTransactionalTests
 {
+    private BundleRepository bundleRepository;
+    private CountryRepository countryRepository;
     private KeywordRepository keywordRepository;
+    private LanguageRepository languageRepository;
     
     private static final String BEAN_DATASOURCE = "dataSource";
+    private static final String START_DB = "startDb";
+
     protected static final Logger log = 
         Logger.getLogger(AbstractServiceTest.class);
 
     static {
-        synchronized("startDb") {
+        synchronized(START_DB) {
             try {
                 DBUtils.startDatabase();
             }
@@ -87,6 +95,60 @@ public abstract class AbstractServiceTest extends
         this.keywordRepository = keywordRepository;
     }
     
+    /**
+     * @return the bundleRepository
+     */
+    public BundleRepository getBundleRepository()
+    {
+        return bundleRepository;
+    }
+
+    /**
+     * Assign the bundleRepository.
+     *
+     * @param bundleRepository the bundleRepository to set
+     */
+    public void setBundleRepository(BundleRepository bundleRepository)
+    {
+        this.bundleRepository = bundleRepository;
+    }
+
+    /**
+     * @return the countryRepository
+     */
+    public CountryRepository getCountryRepository()
+    {
+        return countryRepository;
+    }
+
+    /**
+     * Assign the countryRepository.
+     *
+     * @param countryRepository the countryRepository to set
+     */
+    public void setCountryRepository(CountryRepository countryRepository)
+    {
+        this.countryRepository = countryRepository;
+    }
+
+    /**
+     * @return the languageRepository
+     */
+    public LanguageRepository getLanguageRepository()
+    {
+        return languageRepository;
+    }
+
+    /**
+     * Assign the languageRepository.
+     *
+     * @param languageRepository the languageRepository to set
+     */
+    public void setLanguageRepository(LanguageRepository languageRepository)
+    {
+        this.languageRepository = languageRepository;
+    }
+
     protected static boolean recreateSchema() {
         return true;
     }
