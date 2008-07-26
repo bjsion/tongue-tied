@@ -148,7 +148,6 @@ public class User implements UserDetails {
      * Used as a dto method.
      * 
      * @param password the password to set for the User
-     * @see #changePassword(String, String) To change the users password
      */
     public void setPassword(String password) {
         this.password = password;
