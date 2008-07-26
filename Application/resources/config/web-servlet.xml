@@ -187,6 +187,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="successView" value="forward:/keywords.htm"/>
         <property name="cancelView" value="forward:/export/"/>
         <property name="dataService" ref="dataService"/>
+        <property name="validator" ref="importValidator"/>
     </bean>
 
     <bean name="keywordController" class="org.tonguetied.web.KeywordController">
@@ -250,6 +251,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="userValidator" autowire="byName" dependency-check="objects" class="org.tonguetied.web.UserValidator"/>
     <bean id="changePasswordFormValidator" autowire="byName" dependency-check="objects" class="org.tonguetied.web.ChangePasswordFormValidator"/>
     <bean id="accountFormValidator" autowire="byName" dependency-check="objects" class="org.tonguetied.web.AccountFormValidator"/>
+    <bean id="importValidator" autowire="byName" dependency-check="objects" class="org.tonguetied.web.ImportValidator"/>
 
     <bean name="viewPreferences" class="org.tonguetied.web.PreferenceForm" scope="session" init-method="init">
         <aop:scoped-proxy/>
