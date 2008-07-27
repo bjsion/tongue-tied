@@ -12,7 +12,6 @@ import static org.tonguetied.datatransfer.exporting.Constants.TEST_CONFIG_DIR;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -30,7 +29,6 @@ import org.junit.Test;
 import org.tonguetied.keywordmanagement.Translation;
 
 import fmpp.ProcessingException;
-import fmpp.TemplateEnvironment;
 import fmpp.progresslisteners.LoggerProgressListener;
 import fmpp.setting.Settings;
 
@@ -62,8 +60,14 @@ public abstract class TemplateTester
         this.outputExtensions = outputExtensions;
     }
 
+    /**
+     * Load template variables.
+     * 
+     * @throws Exception if the variables fail to load
+     */
     @BeforeClass
-    public static void initialize() throws IOException {
+    public static void initialize() throws Exception
+    {
         Properties properties = new Properties();
         ByteArrayInputStream bais = null;
         try {
@@ -88,7 +92,13 @@ public abstract class TemplateTester
         FileUtils.deleteDirectory(outputDir);
     }
     
-    public abstract void runAssertions() throws Exception ;
+    /**
+     * Execute any assertions that need to be made after processing a template
+     * with translations.
+     * 
+     * @throws Exception
+     */
+    public abstract void runAssertions() throws Exception;
     
     @Test
     public final void testTemplate() throws Exception 
