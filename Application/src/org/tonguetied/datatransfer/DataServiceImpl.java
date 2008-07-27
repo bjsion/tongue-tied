@@ -54,7 +54,7 @@ public class DataServiceImpl implements DataService {
     private TransferRepository transferRepository;
     private KeywordService keywordService;
     private String sourceRoot;
-    private String outputRoot;
+    private File outputRoot;
     private File outputDir;
     
     private static final File BASE_DIR = SystemUtils.getUserDir();
@@ -79,15 +79,28 @@ public class DataServiceImpl implements DataService {
         try {
             settings = new Settings(BASE_DIR);
             settings.set(NAME_SOURCE_ROOT, sourceRoot);
-//            settings.set(NAME_OUTPUT_ROOT, outputRoot);
             settings.set(NAME_OUTPUT_ENCODING, "UTF-8");
             freemarker.log.Logger.selectLoggerLibrary(LIBRARY_LOG4J);
+            createOutputDirectory();
         }
         catch (SettingException se) {
             throw new ExportException(se);
         }
         catch (ClassNotFoundException cnfe) {
             throw new ExportException(cnfe);
+        }
+    }
+
+    /**
+     * Create the output root directory if doesn't already exist.
+     */
+    private void createOutputDirectory()
+    {
+        if (outputRoot.isDirectory())
+        {
+            if (outputRoot.mkdirs())
+                if(logger.isInfoEnabled())
+                    logger.info("created directory " + outputRoot.getPath());
         }
     }
     
@@ -286,6 +299,6 @@ public class DataServiceImpl implements DataService {
      * generated export files should be saved.
      */
     public void setOutputRoot(String outputRoot) {
-        this.outputRoot = outputRoot;
+        this.outputRoot = new File(outputRoot);
     }
 }
