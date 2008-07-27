@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
@@ -52,9 +53,10 @@ public class PropertiesImporter extends Importer {
             Keyword keyword;
             Translation translation;
             String value;
+            Predicate predicate;
             for (Entry<Object, Object> entry : properties.entrySet()) {
                 keyword = getKeywordService().getKeyword((String) entry.getKey());
-                value = "".equals(entry.getValue())? null: (String)entry.getValue();
+                value = evaluateValue((String)entry.getValue());
                 if (keyword == null) {
                     keyword = new Keyword();
                     keyword.setKeyword((String) entry.getKey());
@@ -63,7 +65,7 @@ public class PropertiesImporter extends Importer {
                     keyword.addTranslation(translation);
                 }
                 else {
-                    Predicate predicate = 
+                    predicate = 
                         new TranslationPredicate(bundle, country, language);
                     translation = (Translation) CollectionUtils.find(
                             keyword.getTranslations(), predicate);
@@ -87,6 +89,19 @@ public class PropertiesImporter extends Importer {
         finally {
             IOUtils.closeQuietly(bais);
         }
+    }
+
+    /**
+     * Process the value, escaping and java escape rules. If <code>value</code>
+     * is the empty String then <code>null</code> is returned.
+     * 
+     * @param value the value to process
+     * @return the processed value
+     */
+    protected String evaluateValue(String value)
+    {
+        String retVal = StringEscapeUtils.unescapeJava(value);
+        return "".equals(value)? null: StringEscapeUtils.escapeJava(retVal);
     }
 
     /**
@@ -143,7 +158,7 @@ public class PropertiesImporter extends Importer {
     /**
      * Find the {@link CountryCode} based on the string <code>code</code>. If
      * the code is not a valid enum value then an 
-     * {@link ImportErrorCode#illegalCountry} is added
+     * {@link ImportErrorCode#illegalCountry} is added.
      * 
      * @param code the string code to evaluate
      * @param errorCodes the list of existing {@link ImportErrorCode}
@@ -165,7 +180,7 @@ public class PropertiesImporter extends Importer {
     /**
      * Find the {@link LanguageCode} based on the string <code>code</code>. If
      * the code is not a valid enum value then an 
-     * {@link ImportErrorCode#illegalLanguage} is added
+     * {@link ImportErrorCode#illegalLanguage} is added.
      * 
      * @param code the string code to evaluate
      * @param errorCodes the list of existing {@link ImportErrorCode}
