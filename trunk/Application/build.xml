@@ -131,7 +131,7 @@
 
     <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
         <classpath path="${findbugs.home}/lib/findbugs-ant.jar"/>
-    </taskdef>	
+    </taskdef>
 
     <taskdef name="fmpp"
              classname="fmpp.tools.AntTask" 
@@ -212,7 +212,7 @@
         <echo message="Generating jar file for module ${ant.project.name} ..."/>
         <jar jarfile="${build.dir}/${module.jarfile}">
             <zipfileset dir="${classes.dir}">
-                <include name="**/*.class"/>             	
+                <include name="**/*.class"/>
             </zipfileset>
             <zipfileset file="${hibernate.cfg.xml}"/>
         </jar>
@@ -353,7 +353,6 @@
             <zipfileset dir="${web.jsp.dir}/ROOT">
                 <include name="*.jsp"/>
             </zipfileset>
-            <zipfileset dir="${web.dir}/export" prefix="export"/>
             <zipfileset dir="${web.images.dir}" prefix="images"/>
             <zipfileset dir="${web.css.dir}" prefix="css"/>
             <zipfileset dir="${web.scripts.dir}" prefix="scripts"/>
