@@ -28,6 +28,6 @@
 </listAttribute>
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.tonguetied.server.Server"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-p ${workspace_loc}/Server/resources/config/embeddedServer.properties"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-p ${workspace_loc}/Server/generated/embeddedServer.properties"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Server"/>
 </launchConfiguration>
