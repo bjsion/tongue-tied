@@ -1,0 +1,4 @@
+urlid tonguetied
+url jdbc:hsqldb:hsql://localhost:9010/tonguetied
+username sa
+password
