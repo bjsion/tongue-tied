@@ -120,7 +120,7 @@
     </target>
     
     <target name="package" description="Create the full application package with all depedencies for distribution.">
-        <mkdir dir="${package.dir}"/>   
+        <mkdir dir="${package.dir}"/>
         <tstamp/>
         <zip destfile="${package.dir}/${version}-${DSTAMP}.zip" >
             <zipfileset dir="${3rdparty.home}/Jakarta-Commons" prefix="${version}/libs">
@@ -155,13 +155,13 @@
                 <include name="sqltool.rc"/>
             </zipfileset>
             <zipfileset dir="${server.home}/resources/config" prefix="${version}">
-                <include name="embeddedServer.properties"/>
                 <include name="log4j.properties"/>
             </zipfileset>
             <zipfileset dir="${application.home}/generated" prefix="${version}">
                 <include name="schema-export.sql"/>
             </zipfileset>
             <zipfileset dir="${server.home}/generated" prefix="${version}">
+                <include name="embeddedServer.properties"/>
                 <include name="keystore"/>
             </zipfileset>
             <zipfileset dir="${infra.home}" prefix="${version}">
