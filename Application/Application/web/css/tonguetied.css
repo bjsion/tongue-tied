@@ -1,0 +1,288 @@
+@charset "ISO-8859-1";
+
+html, body {
+  margin: 0px;
+  padding: 0px;
+  background-color: #ffffff;
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size:12px;
+}
+
+ul.inline {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;	
+  text-align: center;
+}
+
+ul.inline li {
+  display: inline;
+}
+
+ul.inline li a {
+  padding: .2em .2em;
+  font-size: 12px;
+  font-weight: bold;
+/*  text-shadow: red 0.2em 0.3em 0.2em;*/
+  text-decoration: none;
+  color: #474747;
+}
+
+/******************************************************************************
+* Styles for content layout.
+******************************************************************************/
+
+#left {
+  width: 230px;
+  float: left;
+  background: #ebebeb;
+}
+
+div.header-container {
+  width: 100%;
+  background: #DAECF3;
+  height: 70px;
+}
+
+div.left-element {
+  float: left;
+  width: 49%;
+}
+
+div.right-element {
+  float: right;
+  width: 49%;
+}
+
+div.productDesc p {
+  padding: 5px;
+}
+
+div.sidepanel {
+  clear: both;
+}
+
+div.contentPanel {
+  height:100%;
+}
+
+div.tabBody {
+  background: #ffffff;
+  border-color: #cccccc;
+  border-width: 1px;
+  border-style: solid;
+  border-top: none;
+  clear: both;
+  margin: 0px;
+  padding: 15px;
+}
+
+div.tabBody div.content {
+  margin-top: 15px;
+}
+
+div.pagefooter {
+  clear: both;
+  float: left;
+  background: #DAECF3;
+  border-width: 2px;
+  border-style: none;
+  text-align: center;
+  margin: 0px;
+  padding: 15px;
+  width: 98%;
+  font-size: 75%;
+}
+
+
+/******************************************************************************
+* Styles for form display.
+******************************************************************************/
+
+form {
+  padding: 5px;
+  margin: 0 auto;
+}
+
+form fieldset {
+  display: block;
+  border: 1px dotted;
+  padding: 1px; 
+  margin-bottom: 0.5em;
+  line-height: 1.2em;
+}
+form.header {
+  display: inline;
+  float: right;
+}
+form fieldset.header {
+  display: inline;
+  border: none;
+  margin-bottom: 0pt;
+  padding: 0pt;
+}
+
+form fieldset#opt {
+  /*background:#ff6705;*/
+}
+
+form legend {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0 0 5px 10px;
+  height: 24px;
+  line-height: 24px;
+  width:157px;
+  border: 1px solid;
+  padding: 0 5px;
+  background-color: #ffffff;
+}
+
+form label {
+  clear: left; 
+  display: block; 
+  padding-right: 10px;
+  margin-bottom: 0.5em;
+}
+form label.content {
+  text-align: right;
+  float: left;
+  width: 200px;
+}
+
+form label.sidepanel {
+  text-align: left;
+  font-size: 12px;
+}
+
+form label.header {
+  display: inline;
+  text-align: left;
+}
+
+form input {
+  border: 1px solid;
+  border-color: #000000;
+  padding: 0 2px;
+  margin-bottom: 0.5em;
+}
+
+form select {
+  border: 1px solid;
+  border-color: #000000;
+  font-size: 12px;
+  margin-bottom: 0.5em;
+}
+
+form select.header {
+  display: inline;
+}
+
+form select.sidepanel {
+  width: 90%;
+}
+
+form textarea {
+  width: 95%;
+  height: auto;
+  border: 1px solid;
+  padding: 0.5em;
+  overflow: auto; 
+}
+
+form option {
+  color: #000;
+}
+
+form input.button {
+  font-weight: bold;
+  display: inline;
+  border: 1px solid;
+  text-align: center;
+}
+
+form input.button:hover {
+  color:#FF6705;
+}
+
+p {
+  margin: 4px 0;
+}
+
+form div.checkbox {
+  clear: both;
+  float: none;
+  position: relative;
+  display: block;
+}
+
+form div.checkbox label {
+  display: block;
+  margin-left: 20px;
+  font-size: 10px;
+}
+
+form div.checkbox input {
+  left: 0;
+  position: absolute;
+  top: 1px;
+}
+
+form div.submit {
+  float: right;
+}
+
+
+
+/******************************************************************************
+* Styles for heading display.
+******************************************************************************/
+
+h1 {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+h4.message {
+  background: #99CC00;
+  text-align: center;
+  padding: 5px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+
+/******************************************************************************
+* Styles for hyperlinks display.
+******************************************************************************/
+
+a img.imgLink {
+  border: 0;
+}
+
+/******************************************************************************
+* Styles for errors.
+******************************************************************************/
+
+.error {	
+  color : #ff0000;
+}
+
+/******************************************************************************
+* Styles for images.
+******************************************************************************/
+.logo {
+  padding: 1.0em;
+}
+
+/******************************************************************************
+* Styles for .
+******************************************************************************/
+.welcome {
+  font-weight: bold;
+}
