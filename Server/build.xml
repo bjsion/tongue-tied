@@ -104,11 +104,21 @@
         </genkey>
     </target>
 
-    <target name="build" depends="validate.xml, jar, gen.key" description="Compile entire module and validate xml files"/>
- 
+    <target name="build" depends="validate.xml, set.server.props, jar, gen.key" description="Compile entire module and validate xml files"/>
+
     <target name="validate.xml" description="Validate XML configuration files" >
         <echo message="validating XML in module ${ant.project.name}..." />
     </target>
+
+    <target name="set.server.props">
+        <description>Dynamically set the server properties</description>
+        <echo message="Setting server settings for the build mode"/>
+        <copy file="${config.dir}/embeddedServer.properties" 
+            tofile="${generated.dir}/embeddedServer.properties"/>
+        <replace file="${generated.dir}/embeddedServer.properties" 
+            replacefilterfile="${config.dir}/${build.mode.file}"/>
+    </target>
+
 
     <target name="javadoc" depends="init" description="Generate the javadoc for this module">
         <echo message="Generating java api documentation for module ${ant.project.name}..."/>
