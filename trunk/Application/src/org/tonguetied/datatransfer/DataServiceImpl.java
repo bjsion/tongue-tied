@@ -96,7 +96,7 @@ public class DataServiceImpl implements DataService {
      */
     private void createOutputDirectory()
     {
-        if (outputRoot.isDirectory())
+        if (!outputRoot.exists())
         {
             if (outputRoot.mkdirs())
                 if(logger.isInfoEnabled())
