@@ -10,6 +10,7 @@ import java.util.SortedSet;
 import org.apache.commons.io.FileUtils;
 import org.tonguetied.datatransfer.common.FormatType;
 import org.tonguetied.datatransfer.common.ImportParameters;
+import org.tonguetied.datatransfer.importing.PropertiesImporter;
 import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
@@ -23,30 +24,23 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
 import org.tonguetied.test.common.AbstractServiceTest;
 
 /**
+ * Class contain unit tests for the {@link PropertiesImporter} class.
+ * 
  * @author bsion
  * 
  */
-public class PropertiesImporterTest extends AbstractServiceTest
+public final class PropertiesImporterTest extends AbstractServiceTest
 {
 
     private KeywordService keywordService;
-
     private Language defaultLanguage;
-
     private Language hebrew;
-
     private Language arabic;
-
     private Country defaultCountry;
-
     private Country israel;
-
     private Country kuwait;
-
     private Country yemen;
-
     private Bundle bundle1;
-
     private Bundle bundle2;
 
     @Override
@@ -127,7 +121,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.datatransfer.importing.PropertiesImporter#importData(ImportParameters)}.
+     * {@link PropertiesImporter#importData(ImportParameters)}.
      */
     public final void testImportData() throws Exception
     {
@@ -206,7 +200,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.datatransfer.importing.PropertiesImporter#validate(String, List)}.
+     * {@link PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithIllegalCountry() throws Exception
     {
@@ -222,7 +216,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.datatransfer.importing.PropertiesImporter#validate(String, List)}.
+     * {@link PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithUnknownCountry() throws Exception
     {
@@ -237,7 +231,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.datatransfer.importing.PropertiesImporter#validate(String, List)}.
+     * {@link PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithKnownCountry() throws Exception
     {
@@ -254,7 +248,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.datatransfer.importing.PropertiesImporter#validate(String, List)}.
+     * {@link PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithIllegalLanguage() throws Exception
     {
@@ -270,7 +264,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.datatransfer.importing.PropertiesImporter#validate(String, List)}.
+     * {@link PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithUnknownLanguage() throws Exception
     {
@@ -285,7 +279,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.datatransfer.importing.PropertiesImporter#validate(String, List)}.
+     * {@link PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithKnownLanguage() throws Exception
     {
@@ -302,7 +296,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.datatransfer.importing.PropertiesImporter#validate(String, List)}.
+     * {@link PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithUnknownBundle() throws Exception
     {
@@ -317,7 +311,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.datatransfer.importing.PropertiesImporter#validate(String, List)}.
+     * {@link PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithKnownBundle() throws Exception
     {
@@ -334,7 +328,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.datatransfer.importing.PropertiesImporter#validate(String, List)}.
+     * {@link PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithUnknownCountryKnownLanguage()
             throws Exception
@@ -350,7 +344,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.datatransfer.importing.PropertiesImporter#validate(String, List)}.
+     * {@link PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithIllegalCountryKnownLanguage()
             throws Exception
@@ -366,7 +360,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.datatransfer.importing.PropertiesImporter#validate(String, List)}.
+     * {@link PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithKnownCountryUnknownLanguage()
             throws Exception
@@ -382,7 +376,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.datatransfer.importing.PropertiesImporter#validate(String, List)}.
+     * {@link PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithKnownCountryIllegalLanguage()
             throws Exception
@@ -399,7 +393,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.datatransfer.importing.PropertiesImporter#validate(String, List)}.
+     * {@link PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithKnownCountryKnownLanguage()
             throws Exception
@@ -417,7 +411,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.datatransfer.importing.PropertiesImporter#validate(String, List)}.
+     * {@link PropertiesImporter#validate(String, List)}.
      */
     public final void testValidateWithInvalidFilenameFormat() throws Exception
     {
@@ -434,7 +428,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.datatransfer.importing.PropertiesImporter#isCountryCode(String)}.
+     * {@link PropertiesImporter#isCountryCode(String)}.
      */
     public final void testIsCountryCodeValid() throws Exception
     {
@@ -445,7 +439,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.datatransfer.importing.PropertiesImporter#isCountryCode(String)}.
+     * {@link PropertiesImporter#isCountryCode(String)}.
      */
     public final void testIsCountryCodeInvalid() throws Exception
     {
@@ -455,8 +449,8 @@ public class PropertiesImporterTest extends AbstractServiceTest
     }
 
     /**
-     * Test method for
-     * {@link org.tonguetied.datatransfer.importing.PropertiesImporter#isCountryCode(String)}.
+     * Test method for {@link PropertiesImporter#isCountryCode(String)} when 
+     * the code value is an empty string.
      */
     public final void testIsCountryCodeEmpty() throws Exception
     {
@@ -467,7 +461,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.datatransfer.importing.PropertiesImporter#isCountryCode(String)}.
+     * {@link PropertiesImporter#isCountryCode(String)}.
      */
     public final void testIsCountryCodeNull() throws Exception
     {
@@ -477,7 +471,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
     }
 
     /**
-     * Test the logic of the {@link PropertiesImporter#evaluateValue(Object)}
+     * Test the logic of the {@link PropertiesImporter#evaluateValue(String)}
      * method with a <code>null</code> input value.
      */
     public final void testEvaluateValueWithNull()
@@ -489,7 +483,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
     }
 
     /**
-     * Test the logic of the {@link PropertiesImporter#evaluateValue(Object)}
+     * Test the logic of the {@link PropertiesImporter#evaluateValue(String)}
      * method with an empty string input value.
      */
     public final void testEvaluateValueEmptyString()
@@ -501,7 +495,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
     }
 
     /**
-     * Test the logic of the {@link PropertiesImporter#evaluateValue(Object)}
+     * Test the logic of the {@link PropertiesImporter#evaluateValue(String)}
      * method with an input value containing Java escape characters.
      */
     public final void testEvaluateValueWithEscapeChars()
@@ -513,7 +507,7 @@ public class PropertiesImporterTest extends AbstractServiceTest
     }
 
     /**
-     * Test the logic of the {@link PropertiesImporter#evaluateValue(Object)}
+     * Test the logic of the {@link PropertiesImporter#evaluateValue(String)}
      * method with an input value containing Java escape characters.
      */
     public final void testEvaluateValueWithAlreadyEscapedValue()
@@ -526,7 +520,20 @@ public class PropertiesImporterTest extends AbstractServiceTest
     }
 
     /**
-     * Test the logic of the {@link PropertiesImporter#evaluateValue(Object)}
+     * Test the logic of the {@link PropertiesImporter#evaluateValue(String)}
+     * method with an input value containing unicode characters.
+     */
+    public final void testEvaluateValueWithUnicodeValue()
+    {
+        final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
+                .getImporter(FormatType.properties, keywordService);
+        final String escapedString = "\u4e2d\u6587";
+        final String actual = importer.evaluateValue(escapedString);
+        assertEquals("\\u4E2D\\u6587", actual);
+    }
+
+    /**
+     * Test the logic of the {@link PropertiesImporter#evaluateValue(String)}
      * method with a plain string input value.
      */
     public final void testEvaluateValue()
