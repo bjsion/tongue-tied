@@ -29,7 +29,8 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
  * @author bsion
  * @see Properties
  */
-public class PropertiesImporter extends Importer {
+public class PropertiesImporter extends Importer
+{
     private Bundle bundle;
     private Country country;
     private Language language;
@@ -39,12 +40,14 @@ public class PropertiesImporter extends Importer {
      * 
      * @param keywordService the interface to keyword functions
      */
-    public PropertiesImporter(KeywordService keywordService) {
+    public PropertiesImporter(KeywordService keywordService)
+    {
         super(keywordService);
     }
 
     @Override
-    protected void doImport(byte[] input, TranslationState state) throws ImportException {
+    protected void doImport(byte[] input, TranslationState state) throws ImportException
+    {
         ByteArrayInputStream bais = null;
         try {
             bais = new ByteArrayInputStream(input);
@@ -83,10 +86,12 @@ public class PropertiesImporter extends Importer {
                 getKeywordService().saveOrUpdate(keyword);
             }
         } 
-        catch (IOException ioe) {
+        catch (IOException ioe)
+        {
             throw new ImportException(ioe);
         }
-        finally {
+        finally
+        {
             IOUtils.closeQuietly(bais);
         }
     }
@@ -166,7 +171,8 @@ public class PropertiesImporter extends Importer {
      * <code>null</code> if no match is found
      */
     private CountryCode getCountryCode(final String code,
-            List<ImportErrorCode> errorCodes) {
+            List<ImportErrorCode> errorCodes)
+    {
         CountryCode countryCode = null;
         try {
             countryCode = CountryCode.valueOf(code);
@@ -188,7 +194,8 @@ public class PropertiesImporter extends Importer {
      * <code>null</code> if no match is found
      */
     private LanguageCode getLanguageCode(final String code,
-            List<ImportErrorCode> errorCodes) {
+            List<ImportErrorCode> errorCodes)
+    {
         LanguageCode languageCode = null;
         try {
             languageCode = LanguageCode.valueOf(code);
@@ -206,7 +213,8 @@ public class PropertiesImporter extends Importer {
      * @return <code>true</code> if the string corresponds to a potential 
      * country code, <code>false</code> otherwise
      */
-    protected boolean isCountryCode(String code) {
+    protected boolean isCountryCode(String code)
+    {
         boolean isCountryCode = false;
         if (code != null && !"".equals(code))
             isCountryCode = Character.isUpperCase(code.charAt(0));
@@ -217,21 +225,24 @@ public class PropertiesImporter extends Importer {
     /**
      * @return the {@link Bundle} the imported file corresponds to
      */
-    protected Bundle getBundle() {
+    protected Bundle getBundle()
+    {
         return bundle;
     }
 
     /**
      * @return the {@link Country} the imported file corresponds to
      */
-    protected Country getCountry() {
+    protected Country getCountry()
+    {
         return country;
     }
 
     /**
      * @return the {@link Language} the imported file corresponds to
      */
-    protected Language getLanguage() {
+    protected Language getLanguage()
+    {
         return language;
     }
 }
