@@ -2,10 +2,10 @@ package org.tonguetied.web;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.tonguetied.web.UserValidator.FIELD_EMAIL;
-import static org.tonguetied.web.UserValidator.FIELD_FIRSTNAME;
-import static org.tonguetied.web.UserValidator.FIELD_LASTNAME;
-import static org.tonguetied.web.UserValidator.FIELD_USERNAME;
+import static org.tonguetied.usermanagement.User.FIELD_EMAIL;
+import static org.tonguetied.usermanagement.User.FIELD_FIRSTNAME;
+import static org.tonguetied.usermanagement.User.FIELD_LASTNAME;
+import static org.tonguetied.usermanagement.User.FIELD_USERNAME;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,36 +24,40 @@ import org.tonguetied.usermanagement.UserServiceStub;
 
 
 /**
+ * Unit tests for the {@link UserValidator} class.
+ * 
  * @author bsion
  *
  */
 @RunWith(value=Parameterized.class)
-public class UserValidatorTest {
+public class UserValidatorTest
+{
     private UserService userService;
     private User user;
     private String fieldName;
 
     @Parameters
-    public static final Collection<Object[]> data() {
+    public static final Collection<Object[]> data()
+    {
         return Arrays.asList(new Object[][] {
 //                {"username", "password", "firstName", "lastName", "test@test.com", true, FIELD_USERNAME},
-                {"", "password", "firstName", "lastName", "test@test.com", true, FIELD_USERNAME},
-                {"   ", "password", "firstName", "lastName", "test@test.com", true, FIELD_USERNAME},
-                {null, "password", "firstName", "lastName", "test@test.com", true, FIELD_USERNAME},
-                {"username", "password", "", "lastName", "test@test.com", true, FIELD_FIRSTNAME},
-                {"username", "password", "   ", "lastName", "test@test.com", true, FIELD_FIRSTNAME},
-                {"username", "password", null, "lastName", "test@test.com", true, FIELD_FIRSTNAME},
-                {"username", "password", "firstName", "", "test@test.com", true, FIELD_LASTNAME},
-                {"username", "password", "firstName", "   ", "test@test.com", true, FIELD_LASTNAME},
-                {"username", "password", "firstName", null, "test@test.com", true, FIELD_LASTNAME},
-                {"username", "password", "firstName", "lastName", "", true, FIELD_EMAIL},
-                {"username", "password", "firstName", "lastName", "\t\t", true, FIELD_EMAIL},
-                {"username", "password", "firstName", "lastName", null, true, FIELD_EMAIL},
-                {"username", "password", "firstName", "lastName", "email", true, FIELD_EMAIL},
-                {"username", "password", "firstName", "lastName", "test@email", true, FIELD_EMAIL},
-                {"username", "password", "firstName", "lastName", "test.com", true, FIELD_EMAIL},
-                {"username", "password", "firstName", "lastName", "@.com", true, FIELD_EMAIL},
-                {"existing", "existing", "existing", "existing", "test@test.com", true, FIELD_USERNAME},
+                {"", "password", "firstName", "lastName", "test@test.com", true, User.FIELD_USERNAME},
+                {"   ", "password", "firstName", "lastName", "test@test.com", true, User.FIELD_USERNAME},
+                {null, "password", "firstName", "lastName", "test@test.com", true, User.FIELD_USERNAME},
+                {"username", "password", "", "lastName", "test@test.com", true, User.FIELD_FIRSTNAME},
+                {"username", "password", "   ", "lastName", "test@test.com", true, User.FIELD_FIRSTNAME},
+                {"username", "password", null, "lastName", "test@test.com", true, User.FIELD_FIRSTNAME},
+                {"username", "password", "firstName", "", "test@test.com", true, User.FIELD_LASTNAME},
+                {"username", "password", "firstName", "   ", "test@test.com", true, User.FIELD_LASTNAME},
+                {"username", "password", "firstName", null, "test@test.com", true, User.FIELD_LASTNAME},
+                {"username", "password", "firstName", "lastName", "", true, User.FIELD_EMAIL},
+                {"username", "password", "firstName", "lastName", "\t\t", true, User.FIELD_EMAIL},
+                {"username", "password", "firstName", "lastName", null, true, User.FIELD_EMAIL},
+                {"username", "password", "firstName", "lastName", "email", true, User.FIELD_EMAIL},
+                {"username", "password", "firstName", "lastName", "test@email", true, User.FIELD_EMAIL},
+                {"username", "password", "firstName", "lastName", "test.com", true, User.FIELD_EMAIL},
+                {"username", "password", "firstName", "lastName", "@.com", true, User.FIELD_EMAIL},
+                {"existing", "existing", "existing", "existing", "test@test.com", true, User.FIELD_USERNAME},
                 });
     }
     
@@ -63,13 +67,15 @@ public class UserValidatorTest {
                             final String lastName, 
                             final String email, 
                             final boolean isEnabled,
-                            final String fieldName) {
+                            final String fieldName)
+    {
         this.user = new User(username, password, firstName, lastName, email, isEnabled, true, true, true);
         this.fieldName = fieldName;
     }
     
     @Before
-    public void setup() {
+    public void setup()
+    {
         this.userService = new UserServiceStub();
         User existing = new User("existing", "existing", "existing", "existing", "test@test.com", true, true, true, true);
         this.userService.saveOrUpdate(existing);
@@ -79,7 +85,8 @@ public class UserValidatorTest {
      * Test method for {@link org.tonguetied.web.UserValidator#validate(java.lang.Object, org.springframework.validation.Errors)}.
      */
     @Test
-    public final void testValidateInvalidObject() {
+    public final void testValidateInvalidObject()
+    {
         UserValidator validator = new UserValidator();
         validator.setUserService(userService);
         Errors errors = new BindException(this.user, "user");
@@ -101,5 +108,4 @@ public class UserValidatorTest {
         }
         assertFalse(error.isBindingFailure());
     }
-
 }
