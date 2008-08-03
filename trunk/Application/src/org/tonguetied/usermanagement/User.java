@@ -42,7 +42,7 @@ import org.springframework.security.userdetails.UserDetails;
  */
 @Entity
 @AccessType("property")
-@NamedQuery(name="get.users",query="from User u order by u.username")
+@NamedQuery(name=User.QUERY_GET_USERS,query="from User u order by u.username")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class User implements UserDetails {
     private Long id;
@@ -61,6 +61,13 @@ public class User implements UserDetails {
     
     // This attribute is used for optimistic concurrency control in DB    
     private Integer version;
+    
+    public static final String FIELD_LASTNAME = "lastName";
+    public static final String FIELD_FIRSTNAME = "firstName";
+    public static final String FIELD_EMAIL = "email";
+    public static final String FIELD_USERNAME = "username";
+    
+    protected static final String QUERY_GET_USERS = "get.users";
     
     private static final long serialVersionUID = -7800860686467033859L;
     
@@ -403,11 +410,11 @@ public class User implements UserDetails {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).
             append("id", id).
-            append("username", username).
+            append(FIELD_USERNAME, username).
             append("password", "********").
-            append("lastName", lastName).
-            append("firstName", firstName).
-            append("email", email).
+            append(FIELD_LASTNAME, lastName).
+            append(FIELD_FIRSTNAME, firstName).
+            append(FIELD_EMAIL, email).
             append("isEnabled", isEnabled).
             append("isAccountNonExpired", isAccountNonExpired).
             append("isAccountNonLocked", isAccountNonLocked).

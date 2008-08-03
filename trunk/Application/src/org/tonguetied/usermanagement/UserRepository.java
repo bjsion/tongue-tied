@@ -52,4 +52,12 @@ public interface UserRepository
      * @return a set of all {@link User}s in the system
      */
     List<User> getUsers();
+    
+    /**
+     * Retrieve all users matching the search criteria from permanent storage.
+     * 
+     * @param user the search criteria
+     * @return the collection of {@link User}s matching the criteria
+     */
+    List<User> findUsers(final User user);
 }

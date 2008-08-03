@@ -39,6 +39,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUsers();
     }
 
+    public List<User> findUsers(final User user)
+    {
+        return userRepository.findUsers(user);
+    }
 
     /**
      * {@inheritDoc}
