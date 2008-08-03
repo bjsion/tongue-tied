@@ -84,7 +84,7 @@
             </form>
         </div>
         <div class="sidepanel">
-            <c:url value="/search.htm" var="searchAction" scope="page"/>
+            <c:url value="/keywordSearch.htm" var="searchAction" scope="page"/>
             <form:form id="searchParameters" method="post" action="${searchAction}" commandName="searchParameters">
                 <fieldset>
                     <legend><fmt:message key="search"/></legend>
