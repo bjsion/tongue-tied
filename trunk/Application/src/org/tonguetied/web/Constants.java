@@ -22,6 +22,7 @@ public interface Constants {
     public static final String SHOW_ALL = "showAll";
     public static final String STATES = "states";
     public static final String TRANSLATIONS = "translations";
+    public static final String USER = "user";
     public static final String USERS = "users";
     public static final String VIEW_PREFERENCES = "viewPreferences";
 

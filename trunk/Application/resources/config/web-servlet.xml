@@ -106,7 +106,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 <!-- Keyword -->
                 <entry key="/keyword.htm" value-ref="keywordController"/>
                 <entry key="/keywords.htm" value-ref="mainController"/>
-                <entry key="/search.htm" value-ref="searchController"/>
+                <entry key="/keywordSearch.htm" value-ref="keywordSearchController"/>
                 <entry key="/preferences.htm" value-ref="preferenceController"/>
                 <entry key="/deleteKeyword.htm" value-ref="mainController"/>
                 
@@ -115,6 +115,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 <entry key="/accountDetails.htm" value-ref="accountController"/>
                 <entry key="/users.htm" value-ref="mainController"/>
                 <entry key="/changePassword.htm" value-ref="changePasswordController"/>
+                <entry key="/userSearch.htm" value-ref="userSearchController"/>
             </map>
         </property>
     </bean>
@@ -200,7 +201,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="keywordService" ref="keywordService"/>
     </bean>
 
-    <bean name="searchController" class="org.tonguetied.web.SearchController">
+    <bean name="keywordSearchController" class="org.tonguetied.web.KeywordSearchController">
         <property name="commandName" value="searchParameters"/>
         <property name="formView" value="keyword/keywords"/>
         <property name="successView" value="forward:/keywords.htm"/>
@@ -223,6 +224,13 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="validator" ref="userValidator"/>
         <property name="successView" value="forward:/users.htm"/>
         <property name="cancelView" value="forward:/users.htm"/>
+        <property name="userService" ref="userService"/>
+    </bean>
+
+    <bean name="userSearchController" class="org.tonguetied.web.UserSearchController">
+        <property name="commandName" value="user"/>
+        <property name="formView" value="user/users"/>
+        <property name="successView" value="user/users"/>
         <property name="userService" ref="userService"/>
     </bean>
 

@@ -8,6 +8,7 @@ import static org.tonguetied.web.Constants.SEARCH_PARAMETERS;
 import static org.tonguetied.web.Constants.SHOW_ALL;
 import static org.tonguetied.web.Constants.STATES;
 import static org.tonguetied.web.Constants.TRANSLATIONS;
+import static org.tonguetied.web.Constants.USER;
 import static org.tonguetied.web.Constants.USERS;
 import static org.tonguetied.web.Constants.VIEW_PREFERENCES;
 
@@ -169,8 +170,11 @@ public class MainController extends MultiActionController {
             HttpServletResponse response) throws Exception
     {
         List<User> users = userService.getUsers();
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put(USERS, users);
+        model.put(USER, new User());
         
-        return new ModelAndView("user/users", USERS, users);
+        return new ModelAndView("user/users", model);
     }
     
     /**
