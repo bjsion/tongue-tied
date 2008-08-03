@@ -44,6 +44,17 @@ public interface UserService {
     List<User> getUsers();
     
     /**
+     * Find all {@link User}s that match the criteria specified. This method
+     * should allow wild card searches on the user attributes.
+     * 
+     * @param user the object holding the attributes of the search 
+     * criteria
+     * @return a collection of {@link User} objects matching the search 
+     * criteria
+     */
+    List<User> findUsers(final User user);
+    
+    /**
      * Encode the new password and persist the changes to the {@link User}.
      * 
      * @param user the user to update

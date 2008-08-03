@@ -1,5 +1,10 @@
 package org.tonguetied.web;
 
+import static org.tonguetied.usermanagement.User.FIELD_EMAIL;
+import static org.tonguetied.usermanagement.User.FIELD_FIRSTNAME;
+import static org.tonguetied.usermanagement.User.FIELD_LASTNAME;
+import static org.tonguetied.usermanagement.User.FIELD_USERNAME;
+
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -17,11 +22,6 @@ public class UserValidator implements Validator {
 
     private UserService userService;
 
-    static final String FIELD_EMAIL = "email";
-    static final String FIELD_FIRSTNAME = "firstName";
-    static final String FIELD_LASTNAME = "lastName";
-    static final String FIELD_USERNAME = "username";
-    
     /* (non-Javadoc)
      * @see org.springframework.validation.Validator#supports(java.lang.Class)
      */
