@@ -25,43 +25,44 @@ import org.tonguetied.keywordmanagement.KeywordService;
 import org.tonguetied.keywordmanagement.Language;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
-
 /**
  * Controller for processing keyword / translation search requests.
  * 
  * @author bsion
- *
+ * 
  */
-public class SearchController extends SimpleFormController {
+public class KeywordSearchController extends SimpleFormController
+{
 
     private KeywordService keywordService;
     private PreferenceForm viewPreferences;
     private SearchForm searchParameters;
-    
-    private static final Logger logger = 
-        Logger.getLogger(SearchController.class);
+
+    private static final Logger logger = Logger
+            .getLogger(KeywordSearchController.class);
 
     /**
-     * Create new instance of SearchController 
+     * Create new instance of KeywordSearchController
      */
-    public SearchController() {
+    public KeywordSearchController()
+    {
         setCommandClass(SearchForm.class);
     }
-    
+
     @Override
-    protected Object formBackingObject(HttpServletRequest request) 
-            throws Exception {
+    protected Object formBackingObject(HttpServletRequest request)
+            throws Exception
+    {
         return searchParameters;
     }
 
     @Override
-    protected ModelAndView onSubmit(HttpServletRequest request, 
-                                    HttpServletResponse response,
-                                    Object command,
-                                    BindException errors) throws Exception {
-        if (logger.isDebugEnabled()) 
-            logger.debug("searching for keywords");
-        
+    protected ModelAndView onSubmit(HttpServletRequest request,
+            HttpServletResponse response, Object command, BindException errors)
+            throws Exception
+    {
+        if (logger.isDebugEnabled()) logger.debug("searching for keywords");
+
         request.getSession().setAttribute(SHOW_ALL, false);
 
         return new ModelAndView(getSuccessView());
@@ -69,7 +70,7 @@ public class SearchController extends SimpleFormController {
 
     @Override
     protected Map<String, Object> referenceData(HttpServletRequest request)
-            throws Exception 
+            throws Exception
     {
         Map<String, Object> model = new HashMap<String, Object>();
         model.put(LANGUAGES, keywordService.getLanguages());
@@ -77,49 +78,53 @@ public class SearchController extends SimpleFormController {
         model.put(COUNTRIES, keywordService.getCountries());
         model.put(STATES, TranslationState.values());
         model.put(VIEW_PREFERENCES, viewPreferences);
-        
+
         return model;
     }
 
     @Override
     protected void initBinder(HttpServletRequest request,
-                              ServletRequestDataBinder binder) 
-            throws Exception {
-        binder.registerCustomEditor(Language.class,  
-                new LanguageSupport(keywordService.getLanguages()));
-        binder.registerCustomEditor(Bundle.class, 
-                new BundleSupport(keywordService.getBundles()));
-        binder.registerCustomEditor(Country.class, 
-                new CountrySupport(keywordService.getCountries()));
-        binder.registerCustomEditor(TranslationState.class, 
+            ServletRequestDataBinder binder) throws Exception
+    {
+        binder.registerCustomEditor(Language.class, new LanguageSupport(
+                keywordService.getLanguages()));
+        binder.registerCustomEditor(Bundle.class, new BundleSupport(
+                keywordService.getBundles()));
+        binder.registerCustomEditor(Country.class, new CountrySupport(
+                keywordService.getCountries()));
+        binder.registerCustomEditor(TranslationState.class,
                 new TranslationStateSupport());
-        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(
+                        true));
     }
-    
+
     /**
      * Assign the {@link KeywordService}.
      * 
      * @param keywordService the {@link KeywordService} to set.
      */
-    public void setKeywordService(KeywordService keywordService) {
+    public void setKeywordService(KeywordService keywordService)
+    {
         this.keywordService = keywordService;
     }
-    
+
     /**
      * Assign the {@link PreferenceForm}.
      * 
      * @param viewPreferences the viewPreferences to set
      */
-    public void setViewPreferences(PreferenceForm viewPreferences) {
+    public void setViewPreferences(PreferenceForm viewPreferences)
+    {
         this.viewPreferences = viewPreferences;
     }
-    
+
     /**
      * Assign the {@link SearchForm}.
      * 
      * @param searchParameters the searchParameters to set
      */
-    public void setSearchParameters(SearchForm searchParameters) {
+    public void setSearchParameters(SearchForm searchParameters)
+    {
         this.searchParameters = searchParameters;
     }
 }
