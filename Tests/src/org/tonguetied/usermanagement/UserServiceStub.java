@@ -1,44 +1,56 @@
 package org.tonguetied.usermanagement;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.tonguetied.usermanagement.User;
-import org.tonguetied.usermanagement.UserService;
-
-
 /**
+ * Stub used to simulate UserService methods for unit tests.
+ * 
  * @author bsion
- *
+ * 
  */
-public class UserServiceStub implements UserService {
+public class UserServiceStub implements UserService
+{
     Map<String, User> users = new HashMap<String, User>();
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.tonguetied.service.UserService#saveOrUpdate(org.tonguetied.domain.User)
      */
-    public void saveOrUpdate(User user) {
+    public void saveOrUpdate(User user)
+    {
         users.put(user.getUsername(), user);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.tonguetied.service.UserService#getUser(java.lang.String)
      */
-    public User getUser(final String username) {
+    public User getUser(final String username)
+    {
         return users.get(username);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.tonguetied.service.UserService#getUser(java.lang.Long)
      */
-    public User getUser(Long id) {
+    public User getUser(Long id)
+    {
         // TODO Auto-generated method stub
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.usermanagement.UserService#changePassword(org.tonguetied.usermanagement.User, java.lang.String, java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.tonguetied.usermanagement.UserService#changePassword(org.tonguetied.usermanagement.User,
+     *      java.lang.String, java.lang.String)
      */
     public void changePassword(User user, String oldPassword, String newPassword)
             throws AuthenticationException
@@ -47,18 +59,34 @@ public class UserServiceStub implements UserService {
         saveOrUpdate(user);
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.usermanagement.UserService#encodePassword(org.tonguetied.usermanagement.User, java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.tonguetied.usermanagement.UserService#encodePassword(org.tonguetied.usermanagement.User,
+     *      java.lang.String)
      */
     public void encodePassword(User user, String newPassword)
     {
         user.setPassword(newPassword);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.tonguetied.service.UserService#getUsers()
      */
-    public List<User> getUsers() {
-        return (List<User>) users.values();
+    public List<User> getUsers()
+    {
+        return new ArrayList<User>(users.values());
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.tonguetied.usermanagement.UserService#findUsers(org.tonguetied.usermanagement.User)
+     */
+    public List<User> findUsers(User user)
+    {
+        return new ArrayList<User>(users.values());
     }
 }
