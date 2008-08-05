@@ -11,72 +11,85 @@ import org.tonguetied.keywordmanagement.BundleRepository;
 import org.tonguetied.keywordmanagement.CountryRepository;
 import org.tonguetied.keywordmanagement.KeywordRepository;
 import org.tonguetied.keywordmanagement.LanguageRepository;
+import org.tonguetied.usermanagement.UserRepository;
 import org.tonguetied.utils.DBUtils;
 
-
 /**
- * This is the base test class for service layer tests. This class uses the test 
+ * This is the base test class for service layer tests. This class uses the test
  * configuration files. The configuration files used are:
  * <ul>
- *   <li>test-application-context.xml</li>
- * </ul>  
+ * <li>test-application-context.xml</li>
+ * </ul>
  * This test uses the gym book sample for tests but can be overridden if needed.
- * Tests extending this class usually require a database. Each test is run 
+ * Tests extending this class usually require a database. Each test is run
  * within a single transaction.
  * 
  * @author bsion
  * @see AbstractTransactionalDataSourceSpringContextTests
  * 
  */
-public abstract class AbstractServiceTest extends 
+public abstract class AbstractServiceTest extends
         AbstractAnnotationAwareTransactionalTests
 {
     private BundleRepository bundleRepository;
     private CountryRepository countryRepository;
     private KeywordRepository keywordRepository;
     private LanguageRepository languageRepository;
+    private UserRepository userRepository;
     
+    protected static boolean hasDbBeenCreated = false;
     private static final String BEAN_DATASOURCE = "dataSource";
     private static final String START_DB = "startDb";
 
-    protected static final Logger log = 
-        Logger.getLogger(AbstractServiceTest.class);
+    protected static final Logger log = Logger
+            .getLogger(AbstractServiceTest.class);
 
-    static {
-        synchronized(START_DB) {
-            try {
+    static
+    {
+        synchronized (START_DB)
+        {
+            try
+            {
                 DBUtils.startDatabase();
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 log.error(e);
             }
         }
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.springframework.test.AbstractTransactionalSpringContextTests#onSetUpBeforeTransaction()
      */
     @Override
-    protected void onSetUpBeforeTransaction() throws Exception {
+    protected void onSetUpBeforeTransaction() throws Exception
+    {
         // ensure the database is clean before each test
-        DriverManagerDataSource ds = 
-            (DriverManagerDataSource) applicationContext.getBean(BEAN_DATASOURCE);
+        DriverManagerDataSource ds = (DriverManagerDataSource) applicationContext
+                .getBean(BEAN_DATASOURCE);
         Connection connection = DataSourceUtils.getConnection(ds);
-        
-        if (recreateSchema()) {
+
+        if (recreateSchema())
+        {
             DBUtils.cleanTables(connection);
+            hasDbBeenCreated = true;
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.springframework.test.AbstractDependencyInjectionSpringContextTests#getConfigLocations()
      */
     @Override
     protected String[] getConfigLocations()
     {
-        return new String[] {"classpath:/test-application-context.xml"}; 
+        return new String[] { "classpath:/test-application-context.xml" };
     }
-    
+
     /**
      * @return the keywordRepository
      */
@@ -94,7 +107,7 @@ public abstract class AbstractServiceTest extends
     {
         this.keywordRepository = keywordRepository;
     }
-    
+
     /**
      * @return the bundleRepository
      */
@@ -105,7 +118,7 @@ public abstract class AbstractServiceTest extends
 
     /**
      * Assign the bundleRepository.
-     *
+     * 
      * @param bundleRepository the bundleRepository to set
      */
     public void setBundleRepository(BundleRepository bundleRepository)
@@ -123,7 +136,7 @@ public abstract class AbstractServiceTest extends
 
     /**
      * Assign the countryRepository.
-     *
+     * 
      * @param countryRepository the countryRepository to set
      */
     public void setCountryRepository(CountryRepository countryRepository)
@@ -141,7 +154,7 @@ public abstract class AbstractServiceTest extends
 
     /**
      * Assign the languageRepository.
-     *
+     * 
      * @param languageRepository the languageRepository to set
      */
     public void setLanguageRepository(LanguageRepository languageRepository)
@@ -149,7 +162,26 @@ public abstract class AbstractServiceTest extends
         this.languageRepository = languageRepository;
     }
 
-    protected static boolean recreateSchema() {
+    /**
+     * @return the userRepository
+     */
+    public UserRepository getUserRepository()
+    {
+        return userRepository;
+    }
+
+    /**
+     * Assign the userRepository.
+     * 
+     * @param userRepository the userRepository to set
+     */
+    public void setUserRepository(UserRepository userRepository)
+    {
+        this.userRepository = userRepository;
+    }
+
+    protected boolean recreateSchema()
+    {
         return true;
     }
 }
