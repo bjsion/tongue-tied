@@ -21,7 +21,6 @@ public class UserDetailsServiceTest extends AbstractServiceTest {
     private User badCred;
     private User noAuth;
     private UserDetailsService userDetailsService;
-    private UserService userService;
     private PlaintextPasswordEncoder passwordEncoder;
 
     @Override
@@ -37,10 +36,10 @@ public class UserDetailsServiceTest extends AbstractServiceTest {
 
         noAuth = new User("noAuth", "password", "firstName", "lastName", "test@test.com", true, true, true, false);
         
-        userService.saveOrUpdate(user1);
-        userService.saveOrUpdate(expired);
-        userService.saveOrUpdate(badCred);
-        userService.saveOrUpdate(noAuth);
+        getUserRepository().saveOrUpdate(user1);
+        getUserRepository().saveOrUpdate(expired);
+        getUserRepository().saveOrUpdate(badCred);
+        getUserRepository().saveOrUpdate(noAuth);
     }
 
     /**
@@ -135,13 +134,6 @@ public class UserDetailsServiceTest extends AbstractServiceTest {
         userDetailsService.loadUserByUsername(noAuth.getUsername());
     }
     
-    /**
-     * @param userService the {@link UserDetailsServiceTest} to set
-     */
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
     /**
      * @param userDetailsService the {@link UserDetailsService} to set
      */

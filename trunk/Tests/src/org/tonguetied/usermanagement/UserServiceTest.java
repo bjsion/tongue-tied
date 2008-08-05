@@ -3,11 +3,13 @@ package org.tonguetied.usermanagement;
 import java.util.List;
 
 import org.junit.Test;
+import org.springframework.security.providers.encoding.PasswordEncoder;
 import org.springframework.test.annotation.ExpectedException;
+import org.springframework.test.annotation.Rollback;
 import org.tonguetied.test.common.AbstractServiceTest;
 
 /**
- * Unit tests for methods of the {@link UserRepositoryImpl} implementation of
+ * Unit tests for methods of the {@link UserServiceImpl} implementation of
  * the {@link UserService}.
  * 
  * @author bsion
@@ -18,14 +20,16 @@ public class UserServiceTest extends AbstractServiceTest
     private User user1;
 
     private UserService userService;
+    private PasswordEncoder encoder;
 
     @Override
     protected void onSetUpInTransaction() throws Exception
     {
-        user1 = new User("username", "password", "firstName", "lastName",
+        final String password = encoder.encodePassword("password", "username");
+        user1 = new User("username", password, "firstName", "lastName",
                 "test@test.com", true, true, true, true);
 
-        userService.saveOrUpdate(user1);
+        getUserRepository().saveOrUpdate(user1);
     }
 
     /**
@@ -87,6 +91,7 @@ public class UserServiceTest extends AbstractServiceTest
     }
 
     @Test
+//    @Rollback
     public final void testChangePassword()
     {
         final String newPassword = "new";
@@ -152,6 +157,7 @@ public class UserServiceTest extends AbstractServiceTest
      * when there is more than one matching user
      */
     @Test
+//    @Rollback
     public final void testFindUsersWithMutipleMatches()
     {
         final User user2 = new User("username2", "password", "firstName", "lastName",
@@ -175,6 +181,7 @@ public class UserServiceTest extends AbstractServiceTest
      * the start
      */
     @Test
+//    @Rollback
     public final void testFindUsersWithWildcardMatchesStart()
     {
         final User user2 = new User("username2", "password", "firstName", "lastName",
@@ -198,6 +205,7 @@ public class UserServiceTest extends AbstractServiceTest
      * the end
      */
     @Test
+//    @Rollback
     public final void testFindUsersWithWildcardMatchesEnd()
     {
         User user2 = new User("username2", "password", "firstName", "lastName",
@@ -220,6 +228,7 @@ public class UserServiceTest extends AbstractServiceTest
      * when there is more than one matching user but the caps are different
      */
     @Test
+    @Rollback
     public final void testFindUsersIgnoreCaps()
     {
         User user2 = new User("username2", "password", "firstName", "lastName",
@@ -239,5 +248,15 @@ public class UserServiceTest extends AbstractServiceTest
     public void setUserService(UserService userService)
     {
         this.userService = userService;
+    }
+
+    /**
+     * Assign the encoder.
+     *
+     * @param encoder the encoder to set
+     */
+    public void setEncoder(PasswordEncoder encoder)
+    {
+        this.encoder = encoder;
     }
 }

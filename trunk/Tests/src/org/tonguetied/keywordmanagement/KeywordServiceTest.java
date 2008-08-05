@@ -3,6 +3,7 @@ package org.tonguetied.keywordmanagement;
 import java.util.List;
 
 import org.junit.Test;
+import org.springframework.test.annotation.Rollback;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
@@ -16,32 +17,27 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
 import org.tonguetied.test.common.AbstractServiceTest;
 
 /**
+ * Unit tests for methods of the {@link KeywordServiceImpl} implementation of
+ * the {@link KeywordService}.
+ * 
  * @author bsion
  * 
  */
 public class KeywordServiceTest extends AbstractServiceTest
 {
     private Country singapore;
-
     private Country australia;
-
     private Language english;
-
     private Language chinese;
-
     private Bundle bundle;
-
     private Keyword keyword1;
-
     private Keyword keyword2;
-
     private Keyword keyword3;
-
     private Keyword keyword4;
-
     private KeywordService keywordService;
 
     @Override
+    @Rollback
     protected void onSetUpInTransaction() throws Exception
     {
         singapore = new Country();
@@ -83,15 +79,15 @@ public class KeywordServiceTest extends AbstractServiceTest
         keyword4.setKeyword("oneOtherKeyword");
         keyword4.setContext("Keyword 4");
 
-        keywordService.saveOrUpdate(singapore);
-        keywordService.saveOrUpdate(australia);
-        keywordService.saveOrUpdate(english);
-        keywordService.saveOrUpdate(chinese);
-        keywordService.saveOrUpdate(bundle);
-        keywordService.saveOrUpdate(keyword1);
-        keywordService.saveOrUpdate(keyword2);
-        keywordService.saveOrUpdate(keyword3);
-        keywordService.saveOrUpdate(keyword4);
+        getCountryRepository().saveOrUpdate(singapore);
+        getCountryRepository().saveOrUpdate(australia);
+        getLanguageRepository().saveOrUpdate(english);
+        getLanguageRepository().saveOrUpdate(chinese);
+        getBundleRepository().saveOrUpdate(bundle);
+        getKeywordRepository().saveOrUpdate(keyword1);
+        getKeywordRepository().saveOrUpdate(keyword2);
+        getKeywordRepository().saveOrUpdate(keyword3);
+        getKeywordRepository().saveOrUpdate(keyword4);
     }
 
     /**
