@@ -104,15 +104,4 @@ public interface ServerConstants {
      * servers
      */
     static final String DEFAULT_PROP_FILE = "embeddedServer.properties";
-    
-    /**
-     * The list of classes used to configure the web application deployer.
-     */
-    static final String[] SERVER_CONFIGURATION_CLASSES = new String[] { 
-        org.mortbay.jetty.webapp.WebInfConfiguration.class.getCanonicalName(), 
-        org.mortbay.jetty.webapp.WebXmlConfiguration.class.getCanonicalName(), 
-        org.mortbay.jetty.webapp.JettyWebXmlConfiguration.class.getCanonicalName(),
-        org.mortbay.jetty.webapp.TagLibConfiguration.class.getCanonicalName(),
-    //                "org.mortbay.jetty.plus.webapp.EnvConfiguration"
-                };
 }
