@@ -116,6 +116,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 <entry key="/users.htm" value-ref="mainController"/>
                 <entry key="/changePassword.htm" value-ref="changePasswordController"/>
                 <entry key="/userSearch.htm" value-ref="userSearchController"/>
+                <entry key="/readOnlyUser.htm" value-ref="readOnlyUserController"/>
             </map>
         </property>
     </bean>
@@ -223,6 +224,13 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="formView" value="user/user"/>
         <property name="validator" ref="userValidator"/>
         <property name="successView" value="forward:/users.htm"/>
+        <property name="cancelView" value="forward:/users.htm"/>
+        <property name="userService" ref="userService"/>
+    </bean>
+
+    <bean name="readOnlyUserController" class="org.tonguetied.web.UserController">
+        <property name="commandName" value="user"/>
+        <property name="formView" value="user/readOnlyUser"/>
         <property name="cancelView" value="forward:/users.htm"/>
         <property name="userService" ref="userService"/>
     </bean>

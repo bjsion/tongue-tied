@@ -3,8 +3,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net/el" %>
 
+    <security:authentication property="principal.username" var="currentUsername" scope="page"/>
     <div class="content">
         <div id="left">
             <div class="sidepanel">
@@ -39,13 +41,23 @@
         
         <div class="contentPanel">
             <display:table name="users" id="user" sort="page" requestURI="">
-                <display:column sortable="true" titleKey="username" url="/user.htm" paramId="id" paramProperty="id">
+                <display:column sortable="true" titleKey="username">
+                    <c:choose>
+                        <c:when test="${currentUsername != user.username}">
+                            <c:url value="/user.htm" var="userUrl"><c:param name="id" value="${user.id}"/></c:url>
+                        </c:when>
+                        <c:otherwise>
+                            <c:url value="/readOnlyUser.htm" var="userUrl"><c:param name="id" value="${user.id}"/></c:url>
+                        </c:otherwise>
+                    </c:choose>
+                    <a href="${userUrl}">
                     <img src="<c:url value="/images/user.png"/>" alt="" title="${user.username}}" class="imgLink"/>
                     <c:out value="${user.username}"/>
+                    </a>
                 </display:column>
                 <display:column titleKey="roles" sortable="false">
                     <c:forEach items="${user.userRights}" var="userRight" varStatus="index">
-                    ${userRight.permission}
+                    <fmt:message key="${userRight.permission}"/>
                     </c:forEach>
                 </display:column>
                 <display:column property="email" titleKey="email" sortable="true"/>
