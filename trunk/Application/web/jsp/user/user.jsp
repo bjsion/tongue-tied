@@ -45,20 +45,8 @@
                 <form:errors path="email" cssClass="error"/>
             </div>
             <div>
-                <form:label path="accountNonExpired" cssClass="content"><fmt:message key="is.account.non.expired"/></form:label>
-                <form:checkbox path="accountNonExpired" id="accountNonExpired"/>
-            </div>
-            <div>
-                <form:label path="accountNonLocked" cssClass="content"><fmt:message key="is.account.non.locked"/></form:label>
-                <form:checkbox path="accountNonLocked" id="accountNonLocked"/>
-            </div>
-            <div>
                 <form:label path="enabled" cssClass="content"><fmt:message key="is.enabled"/></form:label>
                 <form:checkbox path="enabled" id="enabled"/>
-            </div>
-            <div>
-                <form:label path="credentialsNonExpired" cssClass="content"><fmt:message key="is.credentials.non.expired"/></form:label>
-                <form:checkbox path="credentialsNonExpired" id="credentialsNonExpired"/>
             </div>
         </fieldset>
         <fieldset>

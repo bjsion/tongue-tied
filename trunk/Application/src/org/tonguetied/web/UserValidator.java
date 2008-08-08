@@ -3,6 +3,8 @@ package org.tonguetied.web;
 import static org.tonguetied.usermanagement.User.FIELD_EMAIL;
 import static org.tonguetied.usermanagement.User.FIELD_FIRSTNAME;
 import static org.tonguetied.usermanagement.User.FIELD_LASTNAME;
+import static org.tonguetied.usermanagement.User.FIELD_PASSWORD;
+import static org.tonguetied.usermanagement.User.FIELD_REPEATED_PASSWORD;
 import static org.tonguetied.usermanagement.User.FIELD_USERNAME;
 
 import org.springframework.validation.Errors;
@@ -11,77 +13,107 @@ import org.springframework.validation.Validator;
 import org.tonguetied.usermanagement.User;
 import org.tonguetied.usermanagement.UserService;
 
-
 /**
  * Validator for the {@link User} object.
  * 
  * @author bsion
- *
+ * 
  */
-public class UserValidator implements Validator {
-
+public class UserValidator implements Validator
+{
     private UserService userService;
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.springframework.validation.Validator#supports(java.lang.Class)
      */
-    public boolean supports(Class clazz) {
+    public boolean supports(Class clazz)
+    {
         return User.class.isAssignableFrom(clazz);
     }
 
-    /* (non-Javadoc)
-     * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.springframework.validation.Validator#validate(java.lang.Object,
+     *      org.springframework.validation.Errors)
      */
-    public void validate(Object target, Errors errors) {
+    public void validate(Object target, Errors errors)
+    {
         User user = (User) target;
         validateMandatoryFields(user, errors);
         validateDuplicates(user, errors);
         validateEmail(user.getEmail(), errors);
+        validatePassword(user, errors);
     }
-    
+
     /**
-     * This validation method check if the all mandatory fields on a 
+     * This validation method checks if the password and re-entered password
+     * match and confirm to a valid format.
+     * 
+     * @param user the {@link User} object to validate
+     * @param errors contextual state about the validation process (never null)
+     */
+    private void validatePassword(final User user, Errors errors)
+    {
+        // check for duplicates of new records only
+        if (user.getId() == null)
+        {
+            ValidationUtils.rejectIfEmpty(errors, FIELD_PASSWORD,
+                    "error.password.required");
+            if (user.getPassword() != null)
+            {
+                if (!user.getPassword().equals(user.getRepeatedPassword()))
+                    errors.rejectValue(FIELD_REPEATED_PASSWORD, "error.password.mismatch");
+            }
+        }
+    }
+
+    /**
+     * This validation method check if the all mandatory fields on a
      * {@link User} object have been set.
      * 
      * @param user the {@link User} object to validate
      * @param errors contextual state about the validation process (never null)
      */
-    private void validateMandatoryFields(final User user, Errors errors) {
-        ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, FIELD_USERNAME, "error.username.required", null, "default");
-        ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, FIELD_FIRSTNAME, "error.first.name.required", null, "default");
-        ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, FIELD_LASTNAME, "error.last.name.required", null, "default");
-        ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, FIELD_EMAIL, "error.email.required", null, "default");
+    private void validateMandatoryFields(final User user, Errors errors)
+    {
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, FIELD_USERNAME,
+                "error.username.required", null, "default");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, FIELD_FIRSTNAME,
+                "error.first.name.required", null, "default");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, FIELD_LASTNAME,
+                "error.last.name.required", null, "default");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, FIELD_EMAIL,
+                "error.email.required", null, "default");
     }
-    
+
     /**
-     * This validation method checks if a {@link User} object already exists 
-     * in persistence with the same business key ({@link User#getUserName()}).
+     * This validation method checks if a {@link User} object already exists in
+     * persistence with the same business key ({@link User#getUserName()}).
      * 
      * @param user the {@link User} object to validate
      * @param errors contextual state about the validation process (never null)
      */
-    private void validateDuplicates(final User user, Errors errors) {
+    private void validateDuplicates(final User user, Errors errors)
+    {
         // check for duplicates of new records only
-        if (user.getId() == null) {
+        if (user.getId() == null)
+        {
             User other = userService.getUser(user.getUsername());
-            if (other != null) {
-                errors.rejectValue(
-                        FIELD_USERNAME, 
-                        "error.user.already.exists",
-                        new String[] {user.getUsername()},
-                        "default");
+            if (other != null)
+            {
+                errors.rejectValue(FIELD_USERNAME, "error.user.already.exists",
+                        new String[] { user.getUsername() }, "default");
             }
         }
     }
-    
+
     /**
      * This validation method checks that an email string confirms to a basic
      * structure or format. The basic format is "xxx@yyy.zzz"
-     *  
+     * 
      * @param email the email string to validate
      * @param errors contextual state about the validation process (never null)
      * @see WebValidationUtils#isEmailValid(String)
@@ -99,7 +131,8 @@ public class UserValidator implements Validator {
      * 
      * @param userService the {@link UserService} instance.
      */
-    public void setUserService(UserService userService) {
+    public void setUserService(UserService userService)
+    {
         this.userService = userService;
     }
 }
