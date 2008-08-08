@@ -40,10 +40,4 @@ public interface Constants {
     static final char LINE_FEED = '\u000A';
 //    private static final char CARRIAGE_RETURN = '\u000D';
  */
-    static final char[] WHITESPACE_CHARS = new char[] {SPACE_SEPARATOR,
-        LINE_SEPARATOR, PARAGRAPH_SEPARATOR, HORIZONTAL_TABULATION,
-        VERTICAL_TABULATION, FORM_FEED, FILE_SEPARATOR, GROUP_SEPARATOR,
-        RECORD_SEPARATOR, UNIT_SEPARATOR};
-    
-
 }
