@@ -1,5 +1,5 @@
 #summary Instructions to install Tongue-Tied
-#labels Phase-Deploy
+#labels Phase-Deploy,Featured
 
 = Introduction =
 
