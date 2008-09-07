@@ -1,22 +1,10 @@
-<#list suffixes as suffix>
-    <#if "DEFAULT" != suffix.LANGUAGE_CODE>
-        <#assign lang = ".${suffix.LANGUAGE_CODE?lower_case}">
-    <#else>
-        <#assign lang = "">
-    </#if>
-    <#if "TW" == suffix.COUNTRY_CODE>
-        <#assign country = "-CHT">
-    <#elseif "DEFAULT" != suffix.COUNTRY_CODE>
-        <#assign country = "-${suffix.COUNTRY_CODE?upper_case}">
-    <#else>
-        <#if "zh" == suffix.LANGUAGE_CODE>
-            <#assign country = "-CHS">
-        <#else>
-            <#assign country = "">
-        </#if>
-    </#if>
-    <@pp.changeOutputFile name="${fileNamePrefix}${lang?default('')}${country?default('')}.resx" append=false/>
-<?xml version="1.0" encoding="utf-8"?>
+<#if (pp.outputFileName=="resx.resx")>
+    <@pp.dropOutputFile/>
+</#if>
+<#assign fileNames = pp.newWritableSequence()/>
+
+<#macro header>
+<?xml version="1.0" encoding="UTF-8"?>
 <root>
     <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
         <xsd:element name="data">
@@ -42,48 +30,49 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-</#list>
-
-<#list props as prop>
-    <#if "DEFAULT" != prop.LANGUAGE_CODE>
-        <#assign lang = ".${prop.LANGUAGE_CODE?lower_case}">
-    <#else>
-        <#assign lang = "">
-    </#if>
-    <#if "TW" == prop.COUNTRY_CODE>
-        <#assign country = "-CHT">
-    <#elseif "DEFAULT" != prop.COUNTRY_CODE>
-        <#assign country = "-${prop.COUNTRY_CODE?upper_case}">
-    <#else>
-        <#if "zh" == prop.LANGUAGE_CODE>
+</#macro>
+<#list translations as translation>
+    <#assign isCountryProcessed = false>
+    <#switch translation.language.code>
+        <#case "DEFAULT">
+            <#assign lang = "">
+            <#break/>
+        <#case "zh">
+            <#assign lang = ".${translation.language.code?lower_case}">
             <#assign country = "-CHS">
-        <#else>
-            <#assign country = "">
-        </#if>
+            <#assign isCountryProcessed = true>
+            <#break/>
+        <#case "zht">
+            <#assign lang = ".${translation.language.code?lower_case}">
+            <#assign country = "-CHT">
+            <#assign isCountryProcessed = true>
+            <#break/>
+        <#default>
+            <#assign lang = ".${translation.language.code?lower_case}">
+            <#break/>
+    </#switch>
+    <#if !isCountryProcessed>
+        <#switch translation.country.code>
+            <#case "DEFAULT">
+                <#assign country = "">
+                <#break/>
+            <#default>
+                <#assign country = "-${translation.country.code?upper_case}">
+                <#break/>
+        </#switch>
     </#if>
-    <@pp.changeOutputFile name="${fileNamePrefix}${lang?default('')}${country?default('')}.resx" append=true/>
-    <data name="${prop.KEYWORD}">
-        <value>${prop.VALUE}</value>
+    <#assign fileName="${translation.bundle.resourceName}${lang?default('')}${country?default('')}.resx"/>
+    <#if !pp.outputFileExists(fileName)>
+        <@pp.add seq=fileNames value={"name":fileName}/>
+        <@pp.changeOutputFile name="${fileName}" append=true/>
+        <@header></@>
+    </#if>
+    <@pp.changeOutputFile name="${fileName}" append=true/>
+    <data name="${translation.keyword.keyword}">
+        <value>${translation.value?xml}</value>
     </data>
 </#list>
-
-<#list suffixes as suffix>
-    <#if "DEFAULT" != suffix.LANGUAGE_CODE>
-        <#assign lang = ".${suffix.LANGUAGE_CODE?lower_case}">
-    <#else>
-        <#assign lang = "">
-    </#if>
-    <#if "TW" == suffix.COUNTRY_CODE>
-        <#assign country = "-CHT">
-    <#elseif "DEFAULT" != suffix.COUNTRY_CODE>
-        <#assign country = "-${suffix.COUNTRY_CODE?upper_case}">
-    <#else>
-        <#if "zh" == suffix.LANGUAGE_CODE>
-            <#assign country = "-CHS">
-        <#else>
-            <#assign country = "">
-        </#if>
-    </#if>
-    <@pp.changeOutputFile name="${fileNamePrefix}${lang?default('')}${country?default('')}.resx" append=true/>
+<#list fileNames as fileName>
+<@pp.changeOutputFile name="${fileName.name}" append=true/>
 </root>
 </#list>
