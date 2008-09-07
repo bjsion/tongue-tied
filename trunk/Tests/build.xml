@@ -50,6 +50,7 @@
         <pathelement location="${3rdparty.home}/jDepend/2.9.1/jdepend.jar"/>
         <pathelement location="${3rdparty.home}/POI/3.0.2/poi.jar"/>
         <pathelement location="${3rdparty.home}/Spring/spring-security/2.0.1/spring-security-core.jar"/>
+        <pathelement location="${3rdparty.home}/xmlunit/1.2/xmlunit.jar"/>
     </path>
     
     <path id="test.classpath">
