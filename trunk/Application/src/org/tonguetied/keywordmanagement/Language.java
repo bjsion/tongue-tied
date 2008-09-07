@@ -101,13 +101,18 @@ public class Language implements Comparable<Language>
     
     /**
      * This enum contains the list of 2 letter language codes according to 
-     * iso639.2 arranged in alphabetical order of language names in English
+     * iso639.2 arranged in alphabetical order of language names in English.
+     * 
+     * In addition to the iso standard codes, there extra codes to represent
+     * the default langauge and traditional Chinese as used by the .Net 
+     * platform.
      * 
      * @author bsion
      * @see <a href="http://www.loc.gov/standards/iso639-2/">ISO language codes</a>
      *
      */
-    public enum LanguageCode {
+    public enum LanguageCode
+    {
         /**
          * Non ISO code representing the default language code
          */
@@ -121,7 +126,8 @@ public class Language implements Comparable<Language>
         sk,si,sm,sn,so,sq,sr,ss,st,su,sv,sw,ta,te,tg,th,ti,tk,tl,tn,to,tr,ts,
         tt,tw,ty,ug,uk,ur,uz,ve,vi,vo,wa,wo,xh,yi,yo,za,zh,zu,
         /**
-         * Non ISO code representing traditional chinese
+         * Non ISO code representing traditional Chinese. Used for .Net 
+         * applications.
          */
         zht
     }
