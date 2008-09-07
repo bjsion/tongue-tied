@@ -42,7 +42,7 @@ public class CycleTest {
      * cycles.
      */
     @Test
-    public void testOnePackage() {
+    public final void testOnePackage() {
         jDepend.analyze();
         
         JavaPackage p = jDepend.getPackage("org.tonguetied.server");
@@ -61,7 +61,7 @@ public class CycleTest {
      * analyzed packages.
      */
     @Test
-    public void testCyclicDependency() {
+    public final void testCyclicDependency() {
         Collection<?> packages = jDepend.analyze();
 
         assertFalse(packages.isEmpty());
