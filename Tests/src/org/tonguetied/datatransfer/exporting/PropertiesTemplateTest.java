@@ -1,6 +1,7 @@
 package org.tonguetied.datatransfer.exporting;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -157,13 +158,15 @@ public class PropertiesTemplateTest extends TemplateTester
     }
 
     @Override
-    public void destroy() throws Exception {
+    public void destroy() throws Exception
+    {
         super.destroy();
         super.setTranslations(null);
     }
 
     @Override
-    public void runAssertions() throws Exception {
+    public void runAssertions() throws Exception
+    {
         Collection<File> files = FileUtils.listFiles(getOutputDir(), getOutputExtensions(), false);
         assertEquals(3, files.size());
         Properties expected;
@@ -201,9 +204,14 @@ public class PropertiesTemplateTest extends TemplateTester
                     expected.put("anotherkeyword", "xml < ! & \" '>");
                     assertEquals(expected, actual);
                 }
+                else
+                {
+                    fail("Unexpected file: " + file.getPath());
+                }
             }
         }
-        finally {
+        finally
+        {
             if (bais != null)
                 bais.close();
         }
