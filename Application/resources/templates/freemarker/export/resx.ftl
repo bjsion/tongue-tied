@@ -3,6 +3,12 @@
 </#if>
 <#assign fileNames = pp.newWritableSequence()/>
 
+<#macro processChinese countryCode languageCode>
+    <#assign lang = ".${languageCode?lower_case}">
+    <#assign country = "${countryCode}">
+    <#assign isCountryProcessed = true>
+</#macro>
+
 <#macro header>
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
@@ -38,14 +44,10 @@
             <#assign lang = "">
             <#break/>
         <#case "zh">
-            <#assign lang = ".${translation.language.code?lower_case}">
-            <#assign country = "-CHS">
-            <#assign isCountryProcessed = true>
+            <@processChinese countryCode="-CHS" languageCode="${translation.language.code}"/>
             <#break/>
         <#case "zht">
-            <#assign lang = ".${translation.language.code?lower_case}">
-            <#assign country = "-CHT">
-            <#assign isCountryProcessed = true>
+            <@processChinese countryCode="-CHT" languageCode="${translation.language.code}"/>
             <#break/>
         <#default>
             <#assign lang = ".${translation.language.code?lower_case}">
