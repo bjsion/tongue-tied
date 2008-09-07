@@ -8,6 +8,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
+ * Test suite for package.
+ * 
  * @author bsion
  *
  */
@@ -17,11 +19,14 @@ import org.junit.runners.Suite.SuiteClasses;
     LanguageCentricProcessorTest.class,
     Native2AsciiDirectiveTest.class,
     Native2AsciiWriterTest.class,
-    PropertiesTemplateTest.class
+    PropertiesTemplateTest.class,
+    ResourcesTemplateTest.class
 })
-public class AllTests {
+public class AllTests
+{
 
-    public static Test suite() {
+    public static Test suite()
+    {
         return new JUnit4TestAdapter(AllTests.class);
     }
 }

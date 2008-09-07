@@ -47,7 +47,7 @@ public abstract class TemplateTester
     private static File templateDir;
     private static File outputDir;
     
-    private static final Logger logger = Logger.getLogger(TemplateTester.class);
+    protected static final Logger logger = Logger.getLogger(TemplateTester.class);
     
     /**
      * Create a new instance of TemplateTester.
