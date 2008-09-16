@@ -20,7 +20,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * Object describing the features of a language. The language is one aspect 
  * used to determine a {@link Translation}.
  * 
- * @author mforslund
+ * @author bsion
  */
 @Entity
 @AccessType("field")

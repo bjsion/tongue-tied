@@ -18,8 +18,10 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
+ * Class describing a resource bundle as it relates to resource management. The 
+ * bundle is one aspect used to determine a {@link Translation}.
  * 
- * @author mforslund
+ * @author bsion
  */
 @Entity
 @AccessType("field")

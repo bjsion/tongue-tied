@@ -17,8 +17,10 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
+ * Class describing the country as it relates to resource management. The 
+ * country is one aspect used to determine a {@link Translation}.
  * 
- * @author mforslund
+ * @author bsion
  */
 @Entity
 @AccessType("field")
@@ -117,6 +119,6 @@ public class Country implements Comparable<Country>
         PA,PG,PY,PE,PH,PN,PL,PT,PR,QA,RE,RO,RU,RW,SH,KN,LC,PM,VC,WS,SM,ST,SA,SN,
         CS,SC,SL,SG,SK,SI,SB,SO,ZA,GS,ES,LK,SD,SR,SJ,SZ,SE,CH,SY,TW,TJ,TZ,TH,TL,
         TG,TK,TO,TT,TN,TR,TM,TC,TV,UG,UA,AE,GB,US,UM,UY,UZ,VU,VE,VN,VG,VI,WF,EH,
-        YE,ZM,ZW        
+        YE,ZM,ZW
     }
 }
