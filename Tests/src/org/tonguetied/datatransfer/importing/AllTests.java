@@ -18,6 +18,7 @@ import org.junit.runners.Suite.SuiteClasses;
     ImporterFactoryTest.class,
     ImporterTest.class,
     PropertiesImporterTest.class,
+    ResourceImporterTest.class,
     TranslationPredicateTest.class
 })
 public class AllTests {
