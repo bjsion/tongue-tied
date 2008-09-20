@@ -90,6 +90,7 @@
             <exclude name="org.hibernate*"/>
             <exclude name="org.mortbay.*"/>
             <exclude name="org.springframework.*"/>
+            <exclude name="org.xml.*"/>
             <classespath>
                 <pathelement location="${application.home}/classes"/>
                 <pathelement location="${server.home}/classes"/>
