@@ -8,7 +8,8 @@ import org.apache.commons.lang.SystemUtils;
  * @author bsion
  *
  */
-public interface Constants {
+public interface Constants
+{
     static final File BASE_DIR = new File(SystemUtils.getUserDir(), "..");
     static final File APPLICATION_DIR =  new File(BASE_DIR, "Application");
     static final File APPLICATION_CLASSES = new File(APPLICATION_DIR, "classes");
@@ -17,6 +18,7 @@ public interface Constants {
     
     static final String[] PACKAGE_FILTER = new String[] {
         "fmpp*", "freemarker*", "java.*", "javax.*", "org.apache.*", 
-        "org.hibernate*", "org.mortbay.*", "org.springframework.*"
+        "org.hibernate*", "org.mortbay.*", "org.springframework.*", 
+        "org.xml.*"
     };
 }

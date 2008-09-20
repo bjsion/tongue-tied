@@ -13,58 +13,63 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * This test case is designed to catch cyclic references between packages 
+ * This test case is designed to catch cyclic references between packages
  * thereby enforcing architectural designs.
  * 
  * @author bsion
- *
+ * 
  */
-public class ConstraintTest {
-
+public class ConstraintTest
+{
     private JDepend jDepend;
-    
+
     @Before
-    public void setUp() throws Exception {
-//        PackageFilter filter = new PackageFilter(Arrays.asList(PACKAGE_FILTER));
+    public void setUp() throws Exception
+    {
+        // PackageFilter filter = new
+        // PackageFilter(Arrays.asList(PACKAGE_FILTER));
         PackageFilter filter = new PackageFilter();
-        for (String packageName : PACKAGE_FILTER) {
+        for (String packageName : PACKAGE_FILTER)
+        {
             filter.addPackage(packageName);
         }
-        
+
         this.jDepend = new JDepend(filter);
-        
+
         jDepend.addDirectory(APPLICATION_CLASSES.getAbsolutePath());
         jDepend.addDirectory(SERVER_CLASSES.getAbsolutePath());
     }
 
     /**
-     * Tests that the package dependency constraint is met for the analyzed 
+     * Tests that the package dependency constraint is met for the analyzed
      * packages.
      */
     @Test
-    public void testPackageDependencies() {
+    public final void testPackageDependencies()
+    {
         DependencyConstraint constraint = new DependencyConstraint();
 
         JavaPackage audit = constraint.addPackage("org.tonguetied.audit");
-        JavaPackage keywordmanagement = 
-            constraint.addPackage("org.tonguetied.keywordmanagement");
-        JavaPackage datatransfer = 
-            constraint.addPackage("org.tonguetied.datatransfer");
-        JavaPackage datatransferDao = 
-            constraint.addPackage("org.tonguetied.datatransfer.dao");
-        JavaPackage datatransferCommon = 
-            constraint.addPackage("org.tonguetied.datatransfer.common");
-        JavaPackage datatransferExport = 
-            constraint.addPackage("org.tonguetied.datatransfer.exporting");
-        JavaPackage datatransferImport = 
-            constraint.addPackage("org.tonguetied.datatransfer.importing");
-        JavaPackage usermanagement = 
-            constraint.addPackage("org.tonguetied.usermanagement");
+        JavaPackage keywordmanagement = constraint
+                .addPackage("org.tonguetied.keywordmanagement");
+        JavaPackage datatransfer = constraint
+                .addPackage("org.tonguetied.datatransfer");
+        JavaPackage datatransferDao = constraint
+                .addPackage("org.tonguetied.datatransfer.dao");
+        JavaPackage datatransferCommon = constraint
+                .addPackage("org.tonguetied.datatransfer.common");
+        JavaPackage datatransferExport = constraint
+                .addPackage("org.tonguetied.datatransfer.exporting");
+        JavaPackage datatransferImport = constraint
+                .addPackage("org.tonguetied.datatransfer.importing");
+        JavaPackage usermanagement = constraint
+                .addPackage("org.tonguetied.usermanagement");
         JavaPackage web = constraint.addPackage("org.tonguetied.web");
-        JavaPackage webServlet = constraint.addPackage("org.tonguetied.web.servlet");
+        JavaPackage webServlet = constraint
+                .addPackage("org.tonguetied.web.servlet");
         JavaPackage dao = constraint.addPackage("org.tonguetied.dao");
         JavaPackage server = constraint.addPackage("org.tonguetied.server");
-    
+
         keywordmanagement.dependsUpon(audit);
         usermanagement.dependsUpon(keywordmanagement);
         datatransferCommon.dependsUpon(keywordmanagement);
@@ -85,10 +90,10 @@ public class ConstraintTest {
         web.dependsUpon(datatransferCommon);
         web.dependsUpon(keywordmanagement);
         web.dependsUpon(audit);
-    
+
         jDepend.analyze();
-        
-        assertEquals("Dependency mismatch",
-                 true, jDepend.dependencyMatch(constraint));
+
+        assertEquals("Dependency mismatch", true, jDepend
+                .dependencyMatch(constraint));
     }
 }
