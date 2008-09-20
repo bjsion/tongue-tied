@@ -3,8 +3,8 @@
 </#if>
 <#assign fileNames = pp.newWritableSequence()/>
 
-<#macro processChinese countryCode languageCode>
-    <#assign lang = ".${languageCode?lower_case}">
+<#macro processChinese countryCode>
+    <#assign lang = ".zh">
     <#assign country = "${countryCode}">
     <#assign isCountryProcessed = true>
 </#macro>
@@ -44,10 +44,10 @@
             <#assign lang = "">
             <#break/>
         <#case "zh">
-            <@processChinese countryCode="-CHS" languageCode="${translation.language.code}"/>
+            <@processChinese countryCode="-CHS"/>
             <#break/>
         <#case "zht">
-            <@processChinese countryCode="-CHT" languageCode="${translation.language.code}"/>
+            <@processChinese countryCode="-CHT"/>
             <#break/>
         <#default>
             <#assign lang = ".${translation.language.code?lower_case}">

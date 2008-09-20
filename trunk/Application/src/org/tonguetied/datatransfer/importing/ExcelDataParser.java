@@ -59,7 +59,7 @@ public class ExcelDataParser implements HSSFListener {
     /**
      * This method listens for incoming records and handles them as required.
      * 
-     * @param record    The record that was found while reading.
+     * @param record The record that was found while reading.
      */
     public void processRecord(Record record) {
         if (record == null) {
