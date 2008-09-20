@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -18,6 +18,11 @@
     <h1><img src="<c:url value="/images/error.png"/>" alt="" title="<fmt:message key="warning"/>"/>&nbsp;<fmt:message key="warning"/></h1>
     <p><fmt:message key="import.error.text"/></p>
     <p>
+        <c:choose>
+            <c:when test="${empty exception.errorCodes}">
+            <p>${exception.message}</p>
+            </c:when>
+            <c:otherwise>
         <dl id="errorList">
         <c:forEach items="${exception.errorCodes}" var="errorCode">
             <dt class="error"><fmt:message key="error.${errorCode}"/></dt>
@@ -26,6 +31,8 @@
             </dd>
         </c:forEach>
         </dl>
+            </c:otherwise>
+        </c:choose>
     </p>
 </body>
 </fmt:bundle>

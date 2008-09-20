@@ -22,19 +22,15 @@ import org.tonguetied.keywordmanagement.Language.LanguageCode;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
 /**
- * Data importer that handles input in resource or property file format. The 
- * resource file is read and entries are transformed into {@link Translation}s
- * and added to the system.
+ * Data importer that handles input in the Java resource or property file 
+ * format. The resource file is read and entries are transformed into 
+ * {@link Translation}s and added to the system.
  *   
  * @author bsion
  * @see Properties
  */
-public class PropertiesImporter extends Importer
+public class PropertiesImporter extends AbstractSingleResourceImporter
 {
-    private Bundle bundle;
-    private Country country;
-    private Language language;
-
     /**
      * Create a new instance of PropertiesImporter.
      * 
@@ -46,7 +42,8 @@ public class PropertiesImporter extends Importer
     }
 
     @Override
-    protected void doImport(byte[] input, TranslationState state) throws ImportException
+    protected void doImport(final byte[] input, final TranslationState state) 
+            throws ImportException
     {
         ByteArrayInputStream bais = null;
         try {
@@ -64,17 +61,17 @@ public class PropertiesImporter extends Importer
                     keyword = new Keyword();
                     keyword.setKeyword((String) entry.getKey());
                     translation = 
-                        new Translation(bundle, country, language, value, state);
+                        new Translation(getBundle(), getCountry(), getLanguage(), value, state);
                     keyword.addTranslation(translation);
                 }
                 else {
                     predicate = 
-                        new TranslationPredicate(bundle, country, language);
+                        new TranslationPredicate(getBundle(), getCountry(), getLanguage());
                     translation = (Translation) CollectionUtils.find(
                             keyword.getTranslations(), predicate);
                     if (translation == null) {
                         translation = 
-                            new Translation(bundle, country, language, value, state);
+                            new Translation(getBundle(), getCountry(), getLanguage(), value, state);
                         keyword.addTranslation(translation);
                     }
                     else {
@@ -84,6 +81,8 @@ public class PropertiesImporter extends Importer
                 }
                 
                 getKeywordService().saveOrUpdate(keyword);
+                if (logger.isInfoEnabled())
+                    logger.info("processed " + properties.size() + " translations");
             }
         } 
         catch (IOException ioe)
@@ -111,7 +110,8 @@ public class PropertiesImporter extends Importer
 
     /**
      * Validates the <code>fileName</code> to ensure that the fileName 
-     * corresponds to an existing bundle.
+     * corresponds to an existing {@link Bundle}, {@link Country} and 
+     * {@link Language}.
      * 
      */
     @Override
@@ -122,14 +122,16 @@ public class PropertiesImporter extends Importer
         
         CountryCode countryCode = null;
         LanguageCode languageCode = null;
-        switch (tokens.length) {
+        switch (tokens.length)
+        {
             case 1:
                 // this is the default bundle, so no country or language
                 countryCode = CountryCode.DEFAULT;
                 languageCode = LanguageCode.DEFAULT;
                 break;
             case 2:
-                if (isCountryCode(tokens[1])) {
+                if (isCountryCode(tokens[1]))
+                {
                     countryCode = getCountryCode(tokens[1], errorCodes);
                     languageCode = LanguageCode.DEFAULT;
                 }
@@ -146,64 +148,29 @@ public class PropertiesImporter extends Importer
                 errorCodes.add(ImportErrorCode.invalidNameFormat);
                 break;
         }
+        
+        if (logger.isDebugEnabled())
+        {
+            logger.debug("bundle name = " + tokens[0]);
+            logger.debug("languageCode = " + languageCode);
+            logger.debug("countryCode = " + countryCode);
+        }
 
-        bundle = getKeywordService().getBundleByResourceName(tokens[0]);
-        if (bundle == null)
+        setBundle(getKeywordService().getBundleByResourceName(tokens[0]));
+        if (getBundle() == null)
             errorCodes.add(ImportErrorCode.unknownBundle);
         
-        this.country = getKeywordService().getCountry(countryCode);
-        if (country == null)
+        this.setCountry(getKeywordService().getCountry(countryCode));
+        if (getCountry() == null)
             errorCodes.add(ImportErrorCode.unknownCountry);
         
-        this.language = getKeywordService().getLanguage(languageCode);
-        if (language == null)
+        this.setLanguage(getKeywordService().getLanguage(languageCode));
+        if (getLanguage() == null)
             errorCodes.add(ImportErrorCode.unknownLanguage);
-    }
-
-    /**
-     * Find the {@link CountryCode} based on the string <code>code</code>. If
-     * the code is not a valid enum value then an 
-     * {@link ImportErrorCode#illegalCountry} is added.
-     * 
-     * @param code the string code to evaluate
-     * @param errorCodes the list of existing {@link ImportErrorCode}
-     * @return the {@link CountryCode} matching <code>code</code> or 
-     * <code>null</code> if no match is found
-     */
-    private CountryCode getCountryCode(final String code,
-            List<ImportErrorCode> errorCodes)
-    {
-        CountryCode countryCode = null;
-        try {
-            countryCode = CountryCode.valueOf(code);
-        }
-        catch (IllegalArgumentException iae) {
-            errorCodes.add(ImportErrorCode.illegalCountry);
-        }
-        return countryCode;
-    }
-
-    /**
-     * Find the {@link LanguageCode} based on the string <code>code</code>. If
-     * the code is not a valid enum value then an 
-     * {@link ImportErrorCode#illegalLanguage} is added.
-     * 
-     * @param code the string code to evaluate
-     * @param errorCodes the list of existing {@link ImportErrorCode}
-     * @return the {@link LanguageCode} matching <code>code</code> or 
-     * <code>null</code> if no match is found
-     */
-    private LanguageCode getLanguageCode(final String code,
-            List<ImportErrorCode> errorCodes)
-    {
-        LanguageCode languageCode = null;
-        try {
-            languageCode = LanguageCode.valueOf(code);
-        }
-        catch (IllegalArgumentException iae) {
-            errorCodes.add(ImportErrorCode.illegalLanguage);
-        }
-        return languageCode;
+        
+        if (!errorCodes.isEmpty())
+            logger.warn("Cannot process " + fileName + ". It contains " + 
+                    errorCodes.size() + " errors");
     }
 
     /**
@@ -220,29 +187,5 @@ public class PropertiesImporter extends Importer
             isCountryCode = Character.isUpperCase(code.charAt(0));
         
         return isCountryCode;
-    }
-
-    /**
-     * @return the {@link Bundle} the imported file corresponds to
-     */
-    protected Bundle getBundle()
-    {
-        return bundle;
-    }
-
-    /**
-     * @return the {@link Country} the imported file corresponds to
-     */
-    protected Country getCountry()
-    {
-        return country;
-    }
-
-    /**
-     * @return the {@link Language} the imported file corresponds to
-     */
-    protected Language getLanguage()
-    {
-        return language;
     }
 }

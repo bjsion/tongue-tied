@@ -32,7 +32,7 @@ public class ImportException extends RuntimeException {
      * @param cause the root cause
      */
     public ImportException(Throwable cause) {
-        this(null, cause);
+        this(cause.getMessage(), cause);
     }
 
     /**

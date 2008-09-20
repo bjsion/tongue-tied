@@ -76,7 +76,7 @@ public abstract class Importer
      *         process. The {@link ImportException} may contain additional
      *         information as to why the import failed
      */
-    protected abstract void doImport(byte[] input, final TranslationState state)
+    protected abstract void doImport(final byte[] input, final TranslationState state)
             throws ImportException;
 
     /**

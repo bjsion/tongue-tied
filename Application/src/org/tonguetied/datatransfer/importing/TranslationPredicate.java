@@ -9,12 +9,13 @@ import org.tonguetied.keywordmanagement.Translation;
 
 /**
  * This predicate is used to find {@link Translation}s based off its 
- * business keys.
+ * business keys of {@link Bundle}, {@link Country} and {@link Language}.
  * 
  * @author bsion
  *
  */
-final class TranslationPredicate implements Predicate {
+final class TranslationPredicate implements Predicate
+{
     private Bundle bundle;
     private Country country;
     private Language language;
@@ -26,7 +27,8 @@ final class TranslationPredicate implements Predicate {
      * @param country the {@link Country} on which to search
      * @param language the {@link Language} on which to search
      */
-    public TranslationPredicate(Bundle bundle, Country country, Language language) {
+    public TranslationPredicate(Bundle bundle, Country country, Language language)
+    {
         this.bundle = bundle;
         this.country = country;
         this.language = language;
@@ -41,7 +43,8 @@ final class TranslationPredicate implements Predicate {
      * match. <code>false</code> otherwise
      * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
      */
-    public boolean evaluate(Object object) {
+    public boolean evaluate(Object object)
+    {
         Translation translation = (Translation) object;
         
         EqualsBuilder builder = new EqualsBuilder();
