@@ -40,5 +40,6 @@
 	<classpathentry kind="lib" path="ehcache/1.4.1/backport-util-concurrent-3.0.jar"/>
 	<classpathentry kind="lib" path="bsh/2.0b4/bsh.jar"/>
 	<classpathentry exported="true" kind="lib" path="xmlunit/1.2/xmlunit.jar"/>
+	<classpathentry exported="true" kind="lib" path="opencsv/1.8/opencsv.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
