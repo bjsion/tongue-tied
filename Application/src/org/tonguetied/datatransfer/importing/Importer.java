@@ -9,6 +9,8 @@ import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
 import org.tonguetied.keywordmanagement.Keyword;
 import org.tonguetied.keywordmanagement.KeywordService;
 import org.tonguetied.keywordmanagement.Translation;
+import org.tonguetied.keywordmanagement.Country.CountryCode;
+import org.tonguetied.keywordmanagement.Language.LanguageCode;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
 /**
@@ -149,5 +151,57 @@ public abstract class Importer
     protected KeywordService getKeywordService()
     {
         return keywordService;
+    }
+
+    /**
+     * Find the {@link LanguageCode} based on the string <code>code</code>. If
+     * the code is not a valid enum value then an 
+     * {@link ImportErrorCode#illegalLanguage} is added.
+     * 
+     * @param code the string code to evaluate
+     * @param errorCodes the list of existing {@link ImportErrorCode}
+     * @return the {@link LanguageCode} matching <code>code</code> or 
+     * <code>null</code> if no match is found
+     */
+    protected LanguageCode evaluateLanguageCode(final String code, List<ImportErrorCode> errorCodes)
+    {
+        LanguageCode languageCode = null;
+        try
+        {
+            languageCode = LanguageCode.valueOf(code);
+            if (logger.isDebugEnabled())
+                logger.debug("languageCode = " + languageCode);
+        }
+        catch (IllegalArgumentException iae)
+        {
+            errorCodes.add(ImportErrorCode.illegalLanguage);
+        }
+        return languageCode;
+    }
+
+    /**
+     * Find the {@link CountryCode} based on the string <code>code</code>. If
+     * the code is not a valid enum value then an 
+     * {@link ImportErrorCode#illegalCountry} is added.
+     * 
+     * @param code the string code to evaluate
+     * @param errorCodes the list of existing {@link ImportErrorCode}
+     * @return the {@link CountryCode} matching <code>code</code> or 
+     * <code>null</code> if no match is found
+     */
+    protected CountryCode evaluateCountryCode(final String code, List<ImportErrorCode> errorCodes)
+    {
+        CountryCode countryCode = null;
+        try
+        {
+            countryCode = CountryCode.valueOf(code);
+            if (logger.isDebugEnabled())
+                logger.debug("countryCode = " + countryCode);
+        }
+        catch (IllegalArgumentException iae)
+        {
+            errorCodes.add(ImportErrorCode.illegalCountry);
+        }
+        return countryCode;
     }
 }

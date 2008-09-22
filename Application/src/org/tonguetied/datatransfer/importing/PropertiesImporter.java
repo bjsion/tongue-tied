@@ -132,17 +132,17 @@ public class PropertiesImporter extends AbstractSingleResourceImporter
             case 2:
                 if (isCountryCode(tokens[1]))
                 {
-                    countryCode = getCountryCode(tokens[1], errorCodes);
+                    countryCode = evaluateCountryCode(tokens[1], errorCodes);
                     languageCode = LanguageCode.DEFAULT;
                 }
                 else {
                     countryCode = CountryCode.DEFAULT;
-                    languageCode = getLanguageCode(tokens[1], errorCodes);
+                    languageCode = evaluateLanguageCode(tokens[1], errorCodes);
                 }
                 break;
             case 3:
-                countryCode = getCountryCode(tokens[2], errorCodes);
-                languageCode = getLanguageCode(tokens[1], errorCodes);
+                countryCode = evaluateCountryCode(tokens[2], errorCodes);
+                languageCode = evaluateLanguageCode(tokens[1], errorCodes);
                 break;
             default:
                 errorCodes.add(ImportErrorCode.invalidNameFormat);
@@ -152,8 +152,6 @@ public class PropertiesImporter extends AbstractSingleResourceImporter
         if (logger.isDebugEnabled())
         {
             logger.debug("bundle name = " + tokens[0]);
-            logger.debug("languageCode = " + languageCode);
-            logger.debug("countryCode = " + countryCode);
         }
 
         setBundle(getKeywordService().getBundleByResourceName(tokens[0]));

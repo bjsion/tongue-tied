@@ -90,6 +90,7 @@
         <path refid="fmpp.classpath"/>
         <pathelement location="${3rdparty.home}/POI/3.0.2/poi.jar"/>
         <pathelement location="${3rdparty.home}/Spring/spring-security/2.0.1/spring-security-core.jar"/>
+        <pathelement location="${3rdparty.home}/opencsv/1.8/opencsv.jar"/>
     </path>
 
     <path id="beandoc-classpath">
@@ -307,8 +308,12 @@
                 <include name="poi.jar"/>
                 <include name="LICENSE.poi.txt"/>
             </lib>
+            <lib dir="${3rdparty.home}/opencsv/1.8">
+                <include name="opencsv.jar"/>
+            </lib>
             <lib dir="${3rdparty.home}/oro/2.0.8">
                 <include name="jakarta-oro.jar"/>
+                <include name="LICENCE.opencsv.txt"/>
             </lib>
             <lib dir="${3rdparty.home}/sitemesh/2.3">
                 <include name="sitemesh.jar"/>

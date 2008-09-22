@@ -45,7 +45,7 @@ public class ResourceImporter extends AbstractSingleResourceImporter
      * @see org.tonguetied.datatransfer.importing.Importer#doImport(byte[], org.tonguetied.keywordmanagement.Translation.TranslationState)
      */
     @Override
-    protected void doImport(byte[] input, TranslationState state)
+    protected void doImport(final byte[] input, final TranslationState state)
             throws ImportException 
     {
         if (logger.isDebugEnabled())
@@ -137,13 +137,13 @@ public class ResourceImporter extends AbstractSingleResourceImporter
             case 2:
                 if (isCountryCode(tokens[1]))
                 {
-                    countryCode = getCountryCode(tokens[1], errorCodes);
+                    countryCode = evaluateCountryCode(tokens[1], errorCodes);
                     languageCode = LanguageCode.DEFAULT;
                 }
                 else
                 {
                     countryCode = CountryCode.DEFAULT;
-                    languageCode = getLanguageCode(tokens[1], errorCodes);
+                    languageCode = evaluateLanguageCode(tokens[1], errorCodes);
                 }
                 break;
             case 3:
@@ -152,23 +152,23 @@ public class ResourceImporter extends AbstractSingleResourceImporter
                     if ("CHS".equals(tokens[2]))
                     {
                         countryCode = CountryCode.DEFAULT;
-                        languageCode = getLanguageCode(LANG_CODE_CHINESE, errorCodes);
+                        languageCode = evaluateLanguageCode(LANG_CODE_CHINESE, errorCodes);
                     }
                     else if ("CHT".equals(tokens[2]))
                     {
                         countryCode = CountryCode.DEFAULT;
-                        languageCode = getLanguageCode("zht", errorCodes);
+                        languageCode = evaluateLanguageCode("zht", errorCodes);
                     }
                     else
                     {
-                        countryCode = getCountryCode(tokens[2], errorCodes);
-                        languageCode = getLanguageCode(tokens[1], errorCodes);
+                        countryCode = evaluateCountryCode(tokens[2], errorCodes);
+                        languageCode = evaluateLanguageCode(tokens[1], errorCodes);
                     }
                 }
                 else
                 {
-                    countryCode = getCountryCode(tokens[2], errorCodes);
-                    languageCode = getLanguageCode(tokens[1], errorCodes);
+                    countryCode = evaluateCountryCode(tokens[2], errorCodes);
+                    languageCode = evaluateLanguageCode(tokens[1], errorCodes);
                 }
                 break;
             default:
@@ -179,8 +179,6 @@ public class ResourceImporter extends AbstractSingleResourceImporter
         if (logger.isDebugEnabled())
         {
             logger.debug("bundle name = " + tokens[0]);
-            logger.debug("languageCode = " + languageCode);
-            logger.debug("countryCode = " + countryCode);
         }
 
 
