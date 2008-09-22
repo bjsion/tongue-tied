@@ -262,14 +262,16 @@ public class ExportServiceTest extends AbstractServiceTest
         StringBuilder expected = new StringBuilder();
         for (Translation t : translations)
         {
-            expected.append(t.getKeyword().getKeyword()).append(",").append(
+            expected.append(t.getKeyword().getKeyword()).append(",\"").append(
                     t.getKeyword().getContext() != null ? t.getKeyword()
-                            .getContext() : "").append(",").append(
+                            .getContext() : "").append("\",").append(
+                    t.getLanguage().getCode()).append(",").append(
                     t.getLanguage().getName()).append(",").append(
+                    t.getCountry().getCode()).append(",").append(
                     t.getCountry().getName()).append(",").append(
                     t.getBundle().getName()).append(",").append(
-                    t.getState().name()).append(",").append(
-                    t.getValue() != null ? t.getValue() : "").append("\r\n");
+                    t.getState().name()).append(",\"").append(
+                    t.getValue() != null ? t.getValue() : "").append("\"\r\n");
         }
 
         final File exportDir = dataService.getExportPath();

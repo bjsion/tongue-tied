@@ -117,7 +117,7 @@ public abstract class TemplateTester
     }
     
     @Test
-    public final void testTemplateWithEmptyTranslations() throws Exception {
+    public void testTemplateWithEmptyTranslations() throws Exception {
         translations = new ArrayList<Translation>();
         processTemplate();
         

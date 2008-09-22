@@ -8,11 +8,14 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
+ * Test suite for package.
+ * 
  * @author bsion
  *
  */
 @RunWith(Suite.class)
 @SuiteClasses({
+    CsvImporterTest.class,
     ExcelDataParserTest.class,
     ExcelImporterTest.class,
     ImporterFactoryTest.class,

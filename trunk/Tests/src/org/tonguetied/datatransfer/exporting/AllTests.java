@@ -15,6 +15,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
+    CsvTemplateTest.class,
     ExportDataPostProcessorFactoryTest.class,
     LanguageCentricProcessorTest.class,
     Native2AsciiDirectiveTest.class,
