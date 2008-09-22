@@ -3,7 +3,7 @@
 <project name="TongueTiedProjectBuild" default="global.build" basedir=".">
 
     <property name="app.root" value="${basedir}/../"/>
-	
+
     <property file="${app.root}/BuildInfra/global.properties"/>
     <property name="server.jar.file" value="server.jar"/>
     <property name="application.war.file" value="tonguetied.war"/>
@@ -82,6 +82,7 @@
     <target name="global.code.metrics" description="Perform architectural code metrics for the entire application, ie all projects">
         <echo message="Performing code metrics for application ${ant.project.name}..."/>
         <jdepend format="xml" outputfile="${output.dir}/jdepend_metrics.xml">
+            <exclude name="au.com.bytecode.*"/>
             <exclude name="fmpp*"/>
             <exclude name="freemarker*"/>
             <exclude name="java.*"/>
