@@ -9,9 +9,10 @@ import java.util.List;
  * is parsed from the source file.
  * 
  * @author bsion
- *
+ * 
  */
-public class ImportException extends RuntimeException {
+public class ImportException extends RuntimeException
+{
     private List<ImportErrorCode> errorCodes;
 
     private static final long serialVersionUID = -8338610645953970655L;
@@ -19,10 +20,11 @@ public class ImportException extends RuntimeException {
     /**
      * Create a new instance of ExportException.
      * 
-     * @param errorCodes the list of codes for each error that occurred during 
-     * the import process
+     * @param errorCodes the list of codes for each error that occurred during
+     *        the import process
      */
-    public ImportException(List<ImportErrorCode> errorCodes) {
+    public ImportException(List<ImportErrorCode> errorCodes)
+    {
         this.errorCodes = errorCodes;
     }
 
@@ -31,7 +33,8 @@ public class ImportException extends RuntimeException {
      * 
      * @param cause the root cause
      */
-    public ImportException(Throwable cause) {
+    public ImportException(Throwable cause)
+    {
         this(cause.getMessage(), cause);
     }
 
@@ -41,7 +44,8 @@ public class ImportException extends RuntimeException {
      * @param message the message detail
      * @param cause the root cause
      */
-    public ImportException(String message, Throwable cause) {
+    public ImportException(String message, Throwable cause)
+    {
         super(message, cause);
         this.errorCodes = new ArrayList<ImportErrorCode>();
     }
@@ -49,20 +53,22 @@ public class ImportException extends RuntimeException {
     /**
      * @return the errorCodes
      */
-    public List<ImportErrorCode> getErrorCodes() {
+    public List<ImportErrorCode> getErrorCodes()
+    {
         return errorCodes;
     }
 
     /**
      * The type of errors that can occur during the import process. Each value
-     * describes the type of error that occurred making it easier to identify 
-     * problem files during import. 
-     *  
+     * describes the type of error that occurred making it easier to identify
+     * problem files during import.
+     * 
      * @author bsion
-     *
+     * 
      */
-    protected enum ImportErrorCode {
-        emptyData, illegalCountry, illegalLanguage, invalidNameFormat, 
-        unknownBundle, unknownCountry, unknownLanguage
+    protected enum ImportErrorCode
+    {
+        emptyData, illegalCountry, illegalLanguage, illegalTranslationState, 
+        invalidNameFormat, unknownBundle, unknownCountry, unknownLanguage
     }
 }
