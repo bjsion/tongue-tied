@@ -51,6 +51,7 @@
         <pathelement location="${3rdparty.home}/POI/3.0.2/poi.jar"/>
         <pathelement location="${3rdparty.home}/Spring/spring-security/2.0.1/spring-security-core.jar"/>
         <pathelement location="${3rdparty.home}/xmlunit/1.2/xmlunit.jar"/>
+        <pathelement location="${3rdparty.home}/opencsv/1.8/opencsv.jar"/>
     </path>
     
     <path id="test.classpath">
