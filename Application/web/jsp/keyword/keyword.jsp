@@ -65,7 +65,7 @@
                             <form:hidden path="translations[${index.index}].id" id="translation${index.index}.id"/>
                             <form:hidden path="translations[${index.index}].version" id="translation${index.index}.version"/>
                             <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
-                            <input type="image" src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" name="deleteTranslation" value="${translation.id}"/>
+                            <input type="image" src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" name="deleteTranslation" value="${translation.id}" class="deleteImageButton"/>
                             </security:authorize>
                         </td>
                         <td>
@@ -112,7 +112,7 @@
                         <td>
                             <security:authorize ifAnyGranted="ROLE_VERIFIER">
                             <form:select path="translations[${index.index}].state" id="translation${index.index}.state" size="1">
-                                <form:option value=""><fmt:message key="pleaseSelect"/></form:option>
+                                <form:option value=""><fmt:message key="please.select"/></form:option>
                                 <c:forEach items="${states}" var="state">
                                     <c:if test="${translation.state == state}">
                                         <c:set var="selected" value="true"/>
