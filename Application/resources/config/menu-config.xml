@@ -22,7 +22,7 @@
             <Item name="LanguageList" title="languages" page="/languages.htm" toolTip="help.languages.sub.menu"/>
             <Item name="NewLanguage" title="new.language" page="/language.htm" toolTip="help.new.language.sub.menu"/>
         </Menu>
-        <Menu name="TabbedBundles" title="bundles.tab" toolTip="help.bundles.tab" roles="ROLE_ADMIN">
+        <Menu name="TabbedBundles" title="bundles.tab" page="/bundles.htm" toolTip="help.bundles.tab" roles="ROLE_ADMIN">
             <Item name="BundleList" title="bundles" page="/bundles.htm" toolTip="help.bundles.sub.menu"/>
             <Item name="NewBundle" title="new.bundle" page="/bundle.htm" toolTip="help.new.bundle.sub.menu"/>
         </Menu>
