@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="BuildInfra" default="build" basedir=".">
+
+    <property name="app.root" value="${basedir}/../"/>
+    
+    <property file="${app.root}/BuildInfra/global.properties"/>
+    
+	<!-- infra module specific properties -->
+	<!--property name="module.jarfile" value="buildinfra.jar"/>
+	
+	<property name="src.dir" value="${infra.home}/src"/-->
+
+	<property name="build.debug" value="true"/>
+
+    <!-- temporary directories -->
+    <property name="output.dir" value="${infra.home}/output"/>
+
+    <target name="build" depends="init">
+        <description>presently does nothing</description>
+  	</target>
+
+	<target name="init">
+  	    <mkdir dir="${output.dir}"/>
+	</target>
+
+	<target name="clean">
+		<echo message="Cleaning ${ant.project.name} ..."/>	
+  	    <delete dir="${output.dir}" failonerror="false" quiet="true"/>
+	</target>
+	
+	<!--useful when perhaps move the source to a machine that is living in the past -->
+	<target name="touchall">
+		<touch>
+			<fileset dir="${application.home}"/>
+			<fileset dir="${infra.home}"/>
+			<fileset dir="${server.home}"/>
+		    <fileset dir="${tests.home}"/>
+		</touch>		
+	</target>
+	
+    <target name="javadoc" description="presently does nothing">
+        <description>presently does nothing</description>
+    </target>
+    
+    <target name="analyze.code" depends="init" description="Inspect Java bytecode for occurrences of bug patterns using a static analysis tool">
+        <description>presently does nothing</description>
+        <echo message="performing byte code analysis of ${ant.project.name}"/>
+    </target>
+    
+    <target name="code.metrics" depends="init" description="Analyze package dependencies and perform quality metrics on architecture">
+        <description>presently does nothing</description>
+    </target>
+</project>
