@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Use "ant -p" to see a description of tasks -->
-<project name="Tests" default="build" basedir=".">
+<project name="tests" default="build" basedir=".">
 
     <property name="app.root" value="${basedir}/../"/>
 
     <property file="${app.root}/BuildInfra/global.properties"/>
 
-    <property name="module.jarfile" value="tests.jar"/>
+    <property name="module.jarfile" value="${ant.project.name}.jar"/>
+    <property name="module.src.jarfile" value="${ant.project.name}-src.jar"/>
 
     <property name="src.dir" value="${tests.home}/src"/>
     <property name="resources.dir" value="${tests.home}/resources"/>
@@ -104,8 +105,17 @@
             </zipfileset>
         </jar>
     </target>
-	
-    <target name="build" depends="jar, validate.xml" description="Compile entire module and validate xml files"/>
+
+    <target name="jar-src" description="Generate the Java Archive files for the source files">
+        <echo message="Generating jar file of source for module ${ant.project.name} ..."/>
+        <jar jarfile="${build.dir}/${module.src.jarfile}">
+            <zipfileset dir="${src.dir}">
+                <include name="**/*.*"/>
+            </zipfileset>
+        </jar>
+    </target>
+
+    <target name="build" depends="jar, validate.xml, jar-src" description="Compile entire module and validate xml files"/>
 
     <target name="compile" depends="init" description="Generate all the class files for this module">
         <echo message="Compiling module ${ant.project.name} ..."/>
@@ -152,7 +162,7 @@
             The unit tests failed. Please check the logs to see the errors.
         </fail>
     </target>
-	
+
     <target name="validate.xml" description="Validate XML configuration files" >
         <echo message="validating XML in module ${ant.project.name}..." />
         <schemavalidate>
