@@ -9,7 +9,8 @@
 
     <property file="${app.root}/BuildInfra/global.properties"/>
 
-    <property name="module.jarfile" value="tonguetied.jar"/>
+    <property name="module.jarfile" value="${ant.project.name}.jar"/>
+    <property name="module.src.jarfile" value="${ant.project.name}-src.jar"/>
     <property name="module.warfile" value="${ant.project.name}.war"/>
 
     <property name="src.dir" value="${application.home}/src"/>
@@ -219,6 +220,15 @@
         </jar>
     </target>
 
+    <target name="jar-src" description="Generate the Java Archive files for the source files">
+        <echo message="Generating jar file of source for module ${ant.project.name} ..."/>
+        <jar jarfile="${build.dir}/${module.src.jarfile}">
+            <zipfileset dir="${src.dir}">
+                <include name="**/*.*"/>
+            </zipfileset>
+        </jar>
+    </target>
+
     <target name="manage.build.properties" depends="init">
         <propertyfile file="${build.details.file}" comment="Last tonguetied build">
             <entry key="build.date" type="date" value="now"/>
@@ -228,7 +238,7 @@
         <replace file="${build.details.file}" token="@@build." value=""/>
     </target>
     
-    <target name="war" depends="jar, manage.build.properties" description="Generate the Web Archive">
+    <target name="war" depends="jar, jar-src, manage.build.properties" description="Generate the Web Archive">
         <echo message="Generating war file for module ${ant.project.name} ..."/>
         <war destfile="${build.dir}/war/${module.warfile}" webxml="${config.dir}/web.xml">
             <lib dir="${build.dir}">
@@ -377,13 +387,13 @@
         </xmlcatalog>
         <schemavalidate>
             <schema namespace="http://www.springframework.org/schema/beans"
-            	file="${3rdparty.home}/XMLEntities/spring-beans-2.5.xsd"/>
+                file="${3rdparty.home}/XMLEntities/spring-beans-2.5.xsd"/>
             <schema namespace="http://www.springframework.org/schema/aop" 
-            	file="${3rdparty.home}/XMLEntities/spring-aop-2.5.xsd"/>
+                file="${3rdparty.home}/XMLEntities/spring-aop-2.5.xsd"/>
             <schema namespace="http://www.springframework.org/schema/tx"
-            	file="${3rdparty.home}/XMLEntities/spring-tx-2.5.xsd"/>
+                file="${3rdparty.home}/XMLEntities/spring-tx-2.5.xsd"/>
             <schema namespace="http://www.springframework.org/schema/security"
-            	file="${3rdparty.home}/XMLEntities/spring-security-2.0.xsd"/>
+                file="${3rdparty.home}/XMLEntities/spring-security-2.0.xsd"/>
             <fileset dir="${config.dir}" id="xml.resources">
                 <include name="**/*-context.xml"/>
                 <include name="**/web-servlet.xml"/>
@@ -391,12 +401,12 @@
         </schemavalidate>
         <schemavalidate file="${config.dir}/web.xml">
             <schema namespace="http://www.w3.org/2001/XMLSchema"
-                      file="${3rdparty.home}/XMLEntities/XMLSchema.xsd" />
+                file="${3rdparty.home}/XMLEntities/XMLSchema.xsd"/>
             <schema namespace="http://www.w3.org/XML/1998/namespace"
-            	file="${3rdparty.home}/XMLEntities/xml.xsd"/>
+                file="${3rdparty.home}/XMLEntities/xml.xsd"/>
             <schema namespace="http://java.sun.com/xml/ns/javaee"
-            	file="${3rdparty.home}/XMLEntities/web-app_2_5.xsd"/>
-    	</schemavalidate>
+                file="${3rdparty.home}/XMLEntities/web-app_2_5.xsd"/>
+        </schemavalidate>
         <xmlvalidate warn="yes" failonerror="true">
             <fileset dir="${config.dir}" id="xml.resources">
                 <include name="**/hibernate.cfg.xml"/>
