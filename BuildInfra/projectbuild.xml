@@ -6,6 +6,9 @@
 
     <property file="${app.root}/BuildInfra/global.properties"/>
     <property name="server.jar.file" value="server.jar"/>
+    <property name="application.src.jar.file" value="tonguetied-src.jar"/>
+    <property name="server.src.jar.file" value="server-src.jar"/>
+    <property name="tests.src.jar.file" value="tests-src.jar"/>
     <property name="application.war.file" value="tonguetied.war"/>
     
     <!-- temporary directories -->
@@ -146,6 +149,15 @@
             </zipfileset>
             <zipfileset dir="${server.home}/builds" prefix="${version}/libs">
                 <include name="${server.jar.file}"/>
+            </zipfileset>
+            <zipfileset dir="${application.home}/builds" prefix="${version}/src">
+                <include name="${application.src.jar.file}"/>
+            </zipfileset>
+            <zipfileset dir="${tests.home}/builds" prefix="${version}/src">
+                <include name="${tests.src.jar.file}"/>
+            </zipfileset>
+            <zipfileset dir="${server.home}/builds" prefix="${version}/src">
+                <include name="${server.src.jar.file}"/>
             </zipfileset>
             <zipfileset dir="${application.home}/builds/war" prefix="${version}/webapps">
                 <include name="${application.war.file}"/>
