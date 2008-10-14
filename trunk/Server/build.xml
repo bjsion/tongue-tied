@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Use "ant -p" to see a description of tasks -->
-<project name="Server" xmlns:ivy="antlib:org.apache.ivy.ant" default="build" basedir=".">
+<project name="server" xmlns:ivy="antlib:org.apache.ivy.ant" default="build" basedir=".">
 
     <property environment="env"/>
 
@@ -9,7 +9,8 @@
 
     <property file="${app.root}/BuildInfra/global.properties"/>
 
-    <property name="module.jarfile" value="server.jar"/>
+    <property name="module.jarfile" value="${ant.project.name}.jar"/>
+    <property name="module.src.jarfile" value="${ant.project.name}-src.jar"/>
 
     <property name="src.dir" value="${server.home}/src"/>
     <property name="resources.dir" value="${server.home}/resources"/>
@@ -94,6 +95,15 @@
         </jar>
     </target>
 
+    <target name="jar-src" description="Generate the Java Archive files for the source files">
+        <echo message="Generating jar file of source for module ${ant.project.name} ..."/>
+        <jar jarfile="${build.dir}/${module.src.jarfile}">
+            <zipfileset dir="${src.dir}">
+                <include name="**/*.*"/>
+            </zipfileset>
+        </jar>
+    </target>
+
     <target name="gen.key" depends="init" description="Generate the keystore for this server" unless="is.keystore.available">
         <echo message="Generating keystore for module ${ant.project.name} ..."/>
         <genkey alias="tonguetied" storepass="abc123" keystore="${keystore.file}">
@@ -104,7 +114,7 @@
         </genkey>
     </target>
 
-    <target name="build" depends="validate.xml, set.server.props, jar, gen.key" description="Compile entire module and validate xml files"/>
+    <target name="build" depends="validate.xml, set.server.props, jar, jar-src, gen.key" description="Compile entire module and validate xml files"/>
 
     <target name="validate.xml" description="Validate XML configuration files" >
         <echo message="validating XML in module ${ant.project.name}..." />
@@ -118,7 +128,6 @@
         <replace file="${generated.dir}/embeddedServer.properties" 
             replacefilterfile="${config.dir}/${build.mode.file}"/>
     </target>
-
 
     <target name="javadoc" depends="init" description="Generate the javadoc for this module">
         <echo message="Generating java api documentation for module ${ant.project.name}..."/>
