@@ -57,7 +57,13 @@
                 <form:label path="userRights[${index.index}].permission" id="userRight${index.index}.permission.label" for="userRight${index.index}.permission" cssClass="content"><fmt:message key="user.role"/></form:label>
                 <form:select path="userRights[${index.index}].permission" id="userRight${index.index}.permission" size="1">
                     <form:option value=""><fmt:message key="please.select"/></form:option>
-                    <form:options items="${permissions}"/>
+                    <c:forEach items="${permissions}" var="permission">
+                        <c:if test="${userRights[index.index].permission == permission}">
+                            <c:set var="selected" value="true"/>
+                        </c:if>
+                        <form:option value="${permission}"><fmt:message key="${permission}"/></form:option>
+                        <c:remove var="selected"/>
+                    </c:forEach>
                 </form:select>
             </div>
             </c:forEach>
