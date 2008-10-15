@@ -71,7 +71,8 @@ public class ChangePasswordController extends CancellableFormController
     @Override
     protected ModelAndView onCancel(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    Object command) throws Exception {
+                                    Object command) throws Exception
+    {
         return new ModelAndView(getCancelView());
     }
 

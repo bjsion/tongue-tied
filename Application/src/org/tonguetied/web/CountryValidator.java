@@ -60,9 +60,9 @@ public class CountryValidator implements Validator {
      */
     private void validateMandatoryFields(Country country, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, FIELD_NAME, "error.country.name.required", null, "default");
+                errors, FIELD_NAME, "error.country.name.required");
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, FIELD_CODE, "error.country.code.required", null, "default");
+                errors, FIELD_CODE, "error.country.code.required");
     }
     
     /**
@@ -81,7 +81,7 @@ public class CountryValidator implements Validator {
                         FIELD_CODE, 
                         "error.country.already.exists", 
                         new String[] {country.getCode().name()}, 
-                        "default");
+                        "the country already exists in the system");
             }
         }
     }

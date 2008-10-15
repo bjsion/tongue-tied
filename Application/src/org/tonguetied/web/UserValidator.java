@@ -146,7 +146,7 @@ public class UserValidator implements Validator
      * 
      * @param userService the {@link UserService} instance.
      */
-    public void setUserService(UserService userService)
+    public void setUserService(final UserService userService)
     {
         this.userService = userService;
     }

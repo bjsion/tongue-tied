@@ -61,7 +61,8 @@ public class BundleController extends CancellableFormController {
 
     @Override
     protected Object formBackingObject(HttpServletRequest request) 
-            throws Exception {
+            throws Exception
+    {
         String stringId = request.getParameter("bundleId");
         Long id = null;
         if (stringId != null)
@@ -77,7 +78,8 @@ public class BundleController extends CancellableFormController {
     protected ModelAndView onSubmit(HttpServletRequest request, 
                                     HttpServletResponse response,
                                     Object command,
-                                    BindException errors) throws Exception {
+                                    BindException errors) throws Exception
+    {
         if (logger.isDebugEnabled()) logger.debug("saving bundle");
         Bundle bundle = (Bundle) command;
         
@@ -86,10 +88,14 @@ public class BundleController extends CancellableFormController {
         return new ModelAndView(getSuccessView());
     }
 
+    /**
+     * Do nothing and return user to the location of {@link #getCancelView()}
+     */
     @Override
     protected ModelAndView onCancel(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    Object command) throws Exception {
+                                    Object command) throws Exception
+    {
         return new ModelAndView(getCancelView());
     }
 

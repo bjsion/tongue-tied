@@ -51,7 +51,7 @@ public final class WebValidationUtils
         boolean result = false;
         if (email != null) {
             //Match the given string with the pattern
-            Matcher m = emailPattern.matcher(email);
+            final Matcher m = emailPattern.matcher(email);
             result = m.matches();
         }
         
