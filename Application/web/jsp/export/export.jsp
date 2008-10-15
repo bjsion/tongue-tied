@@ -33,7 +33,13 @@
                 <form:label path="translationState" cssClass="content"><fmt:message key="translation.state"/></form:label>
                 <form:select path="translationState" size="1">
                     <form:option value=""><fmt:message key="please.select"/></form:option>
-                    <form:options items="${states}"/>
+                    <c:forEach items="${states}" var="state">
+                        <c:if test="${translationState == state}">
+                            <c:set var="selected" value="true"/>
+                        </c:if>
+                        <form:option value="${state}"><fmt:message key="${state}"/></form:option>
+                        <c:remove var="selected"/>
+                    </c:forEach>
                 </form:select>
                 <form:errors path="translationState" cssClass="error"/>
             </div>
@@ -41,7 +47,13 @@
                 <form:label path="formatType" cssClass="content"><fmt:message key="export.type"/></form:label>
                 <form:select path="formatType" size="1">
                     <form:option value=""><fmt:message key="please.select"/></form:option>
-                    <form:options items="${formatTypes}"/>
+                    <c:forEach items="${formatTypes}" var="type">
+                        <c:if test="${formatType == type}">
+                            <c:set var="selected" value="true"/>
+                        </c:if>
+                        <form:option value="${type}"><fmt:message key="${type}.file"/></form:option>
+                        <c:remove var="selected"/>
+                    </c:forEach>
                 </form:select>
                 <form:errors path="formatType" cssClass="error"/>
             </div>

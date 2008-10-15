@@ -40,6 +40,7 @@
         </div>
         
         <div class="contentPanel">
+            <a href="<c:url value="users.htm"/>" title="<fmt:message key="get.all.users"/>"><fmt:message key="all.users"/></a>
             <display:table name="users" id="user" sort="page" requestURI="">
                 <display:column sortable="true" titleKey="username">
                     <c:choose>
