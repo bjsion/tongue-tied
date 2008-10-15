@@ -54,27 +54,18 @@ div.right-element {
   width: 49%;
 }
 
-div.productDesc p {
-  padding: 5px;
-}
-
 div.sidepanel {
   clear: both;
 }
 
 div.contentPanel {
-  height:100%;
 }
 
 div.tabBody {
-  background: #ffffff;
-  border-color: #cccccc;
-  border-width: 1px;
-  border-style: solid;
-  border-top: none;
   clear: both;
+  background: #ffffff;
   margin: 0px;
-  padding: 15px;
+  padding-top: 15px;
 }
 
 div.tabBody div.content {
@@ -84,14 +75,20 @@ div.tabBody div.content {
 div.pagefooter {
   clear: both;
   float: left;
-  background: #DAECF3;
-  border-width: 2px;
   border-style: none;
+  background: #DAECF3;
   text-align: center;
-  margin: 0px;
-  padding: 15px;
-  width: 98%;
+  width: 100%;
   font-size: 75%;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  border-top-color: #cccccc;
+  border-top-width: 1px;
+  border-top-style: solid;
+}
+
+div.submit {
+  float: right;
 }
 
 
@@ -228,10 +225,12 @@ form div.checkbox input {
   top: 1px;
 }
 
+/*
 form div.submit {
+  clear: both;
   float: right;
 }
-
+*/
 
 
 /******************************************************************************
