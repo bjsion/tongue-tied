@@ -21,23 +21,31 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+import org.apache.log4j.Logger;
+
 /**
- * Listener that initializes all the user session settings, when the user first 
- * starts a {@link HttpSession} and tidies up any resources when the 
+ * Listener that initializes all the user session settings, when the user first
+ * starts a {@link HttpSession} and tidies up any resources when the
  * {@link HttpSession} is lost.
  * 
  * @author bsion
- *
+ * 
  */
-public class UserSessionInitializer implements HttpSessionListener {
+public class UserSessionInitializer implements HttpSessionListener
+{
+    private static final Logger logger = 
+        Logger.getLogger(UserSessionInitializer.class);
 
     /**
      * Initialize user preferences when a user starts a new session. This method
-     * will set up the tabbing flag. 
+     * will set up the tabbing flag.
      * 
      * @param event the notification event
      */
-    public void sessionCreated(HttpSessionEvent event) {
+    public void sessionCreated(HttpSessionEvent event)
+    {
+        if (logger.isDebugEnabled())
+            logger.debug("setting user session attributes");
         HttpSession session = event.getSession();
         session.setAttribute(SHOW_ALL, true);
     }
@@ -47,6 +55,7 @@ public class UserSessionInitializer implements HttpSessionListener {
      * 
      * the notification event
      */
-    public void sessionDestroyed(HttpSessionEvent event) {
+    public void sessionDestroyed(HttpSessionEvent event)
+    {
     }
 }
