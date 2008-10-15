@@ -60,11 +60,11 @@ public class AccountFormValidator implements Validator
     private void validateMandatoryFields(final AccountForm form, Errors errors)
     {
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, FIELD_FIRSTNAME, "error.first.name.required", null, "default");
+                errors, FIELD_FIRSTNAME, "error.first.name.required");
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, FIELD_LASTNAME, "error.last.name.required", null, "default");
+                errors, FIELD_LASTNAME, "error.last.name.required");
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, FIELD_EMAIL, "error.email.required", null, "default");
+                errors, FIELD_EMAIL, "error.email.required");
     }
     
     /**
