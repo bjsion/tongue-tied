@@ -15,6 +15,8 @@
  */
 package org.tonguetied.web;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import org.tonguetied.usermanagement.User;
 
 /**
@@ -95,5 +97,13 @@ public class AccountForm
     public void setEmail(final String email)
     {
         this.email = email;
+    }
+    
+
+    @Override
+    public String toString()
+    {
+        return new ReflectionToStringBuilder(this,
+                ToStringStyle.SHORT_PREFIX_STYLE).toString();
     }
 }
