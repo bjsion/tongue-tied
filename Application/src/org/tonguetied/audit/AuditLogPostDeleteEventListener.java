@@ -15,6 +15,7 @@
  */
 package org.tonguetied.audit;
 
+import org.apache.log4j.Logger;
 import org.hibernate.event.PostDeleteEvent;
 import org.hibernate.event.PostDeleteEventListener;
 
@@ -28,15 +29,23 @@ import org.hibernate.event.PostDeleteEventListener;
  */
 public class AuditLogPostDeleteEventListener implements PostDeleteEventListener
 {
-
+    private static final Logger logger = 
+        Logger.getLogger(AuditLogPostDeleteEventListener.class);
     private static final long serialVersionUID = 6638781488543805970L;
 
     /* (non-Javadoc)
      * @see org.hibernate.event.PostDeleteEventListener#onPostDelete(org.hibernate.event.PostDeleteEvent)
      */
-    public void onPostDelete(PostDeleteEvent event) {
-        if (event.getEntity() instanceof Auditable) {
-            AuditLog.logEvent("delete", (Auditable)event.getEntity(), event.getPersister().getFactory());
+    public void onPostDelete(PostDeleteEvent event)
+    {
+        if (event.getEntity() instanceof Auditable)
+        {
+            Auditable entity = (Auditable)event.getEntity();
+            if (logger.isDebugEnabled())
+                logger.debug("Adding an audit log entry for deletion of entity "
+                        + entity.getClass() + " with id " +entity.getId());
+            
+            AuditLog.logEvent("delete", entity, event.getPersister().getFactory());
         }
     }
 }

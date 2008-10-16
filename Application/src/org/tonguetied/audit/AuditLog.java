@@ -15,6 +15,7 @@
  */
 package org.tonguetied.audit;
 
+import org.apache.log4j.Logger;
 import org.hibernate.CallbackException;
 import org.hibernate.Session;
 import org.hibernate.engine.SessionFactoryImplementor;
@@ -32,6 +33,7 @@ import org.springframework.security.userdetails.UserDetails;
  */
 public class AuditLog
 {
+    private static final Logger logger = Logger.getLogger(AuditLog.class);
     
     /**
      * Create an audit log entry.
@@ -41,21 +43,26 @@ public class AuditLog
      * @param implementor
      * @throws CallbackException
      */
-    public static synchronized void logEvent(String message, Auditable entity, 
+    public static synchronized void logEvent(final String message, Auditable entity, 
             SessionFactoryImplementor implementor)
     throws CallbackException 
     {
         Session tempSession = implementor.openTemporarySession();
-        try {
+        try
+        {
             AuditLogRecord record = new AuditLogRecord(message, entity, getUsername());
             
             tempSession.save(record);
             tempSession.flush();
+            if (logger.isDebugEnabled())
+                logger.debug("successfully saved audit log record: " + record);
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             throw new CallbackException(ex);
         }
-        finally {
+        finally
+        {
             if (tempSession != null)
                 tempSession.close();
         }
