@@ -86,7 +86,9 @@ public class ExcelDataParser implements HSSFListener {
                 // the BOFRecord can represent either the beginning of a sheet 
                 // or the workbook
                 case BOFRecord.sid:
-                    BOFRecord bof = (BOFRecord) record;
+                    if (!(record instanceof BOFRecord))
+                        throw new ImportException("unknown excel element", null);
+                    final BOFRecord bof = (BOFRecord) record;
                     if (bof.getType() == BOFRecord.TYPE_WORKBOOK) {
                         if (logger.isInfoEnabled())
                             logger.info("Processing excel workbook");
@@ -100,13 +102,17 @@ public class ExcelDataParser implements HSSFListener {
                     }
                     break;
                 case BoundSheetRecord.sid:
-                    BoundSheetRecord bsr = (BoundSheetRecord) record;
+                    if (!(record instanceof BoundSheetRecord))
+                        throw new ImportException("unknown excel element", null);
+                    final BoundSheetRecord bsr = (BoundSheetRecord) record;
                     // sheets named have no impact on generating query
                     if (logger.isDebugEnabled()) 
                         logger.debug("processing sheet: "+ bsr.getSheetname());
                     break;
                 case RowRecord.sid:
-                    RowRecord rowrec = (RowRecord) record;
+                    if (!(record instanceof RowRecord))
+                        throw new ImportException("unknown excel element", null);
+                    final RowRecord rowrec = (RowRecord) record;
                     lastColOfRow = rowrec.getLastCol();
 //                    if (rowrec.getRowNumber() > 0) {
 //                        if (logger.isDebugEnabled())
@@ -115,13 +121,17 @@ public class ExcelDataParser implements HSSFListener {
 //                    }
                     break;
                 case NumberRecord.sid:
-                    NumberRecord numrec = (NumberRecord) record;
+                    if (!(record instanceof NumberRecord))
+                        throw new ImportException("unknown excel element", null);
+                    final NumberRecord numrec = (NumberRecord) record;
                     logger.warn("Cell [" + numrec.getRow() + "," + 
                             numrec.getColumn() + 
                             "] expecting a string value not numeric: " + 
                             numrec.getValue() + ". Ignoring value");
                     break;
                 case SSTRecord.sid:
+                    if (!(record instanceof SSTRecord))
+                        throw new ImportException("unknown excel element", null);
                     // SSTRecords store a array of unique strings used in Excel.
                     sstrec = (SSTRecord) record;
                     if (logger.isDebugEnabled()) {
@@ -130,7 +140,9 @@ public class ExcelDataParser implements HSSFListener {
                     }
                     break;
                 case LabelSSTRecord.sid:
-                    LabelSSTRecord lrec = (LabelSSTRecord) record;
+                    if (!(record instanceof LabelSSTRecord))
+                        throw new ImportException("unknown excel element", null);
+                    final LabelSSTRecord lrec = (LabelSSTRecord) record;
                     if (lrec.getRow() == 0) { 
                         processHeader(lrec);
                     }
