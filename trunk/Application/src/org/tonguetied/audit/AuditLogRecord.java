@@ -37,7 +37,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
  */
 @Entity
 @org.hibernate.annotations.Entity(mutable=false)
-@NamedQuery(name="get.audit.log",
+@NamedQuery(name=AuditLogRecord.QUERY_GET_AUDIT_LOG,
         query="from AuditLogRecord alr order by alr.created desc")
 public class AuditLogRecord {
     private Long id;
@@ -46,6 +46,8 @@ public class AuditLogRecord {
     private Class<?> entityClass;
     private String username;
     private Date created;
+    
+    public static final String QUERY_GET_AUDIT_LOG = "get.audit.log";
     
     AuditLogRecord() {
     }
