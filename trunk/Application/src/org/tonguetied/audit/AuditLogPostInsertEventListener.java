@@ -15,6 +15,7 @@
  */
 package org.tonguetied.audit;
 
+import org.apache.log4j.Logger;
 import org.hibernate.event.PostInsertEvent;
 import org.hibernate.event.PostInsertEventListener;
 
@@ -28,6 +29,8 @@ import org.hibernate.event.PostInsertEventListener;
  */
 public class AuditLogPostInsertEventListener implements PostInsertEventListener
 {
+    private static final Logger logger = 
+        Logger.getLogger(AuditLogPostDeleteEventListener.class);
 
     private static final long serialVersionUID = -8154917326845979720L;
 
@@ -36,7 +39,12 @@ public class AuditLogPostInsertEventListener implements PostInsertEventListener
      */
     public void onPostInsert(PostInsertEvent event) {
         if (event.getEntity() instanceof Auditable) {
-            AuditLog.logEvent("new", (Auditable)event.getEntity(), event.getPersister().getFactory());
+            Auditable entity = (Auditable)event.getEntity();
+            if (logger.isDebugEnabled())
+                logger.debug("Adding an audit log entry for insertion of entity "
+                        + entity.getClass() + " with id " +entity.getId());
+            
+            AuditLog.logEvent("new", entity, event.getPersister().getFactory());
         }
     }
 }
