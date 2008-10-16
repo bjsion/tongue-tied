@@ -23,7 +23,6 @@ import org.springframework.dao.DataAccessException;
 /**
  * Interface defining Audit DAO facade for TongueTied storage.
  * 
- * @author mforslund
  * @author bsion
  */
 public interface AuditRepository 

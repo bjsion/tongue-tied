@@ -18,13 +18,14 @@ package org.tonguetied.audit;
 import java.util.List;
 
 
-
 /**
+ * Interface defining the entry points to the Audit features
+ * 
  * @author bsion
  *
  */
-public interface AuditService {
-
+public interface AuditService
+{
     /**
      * Retrieve a list of all {@link AuditLogRecord}s in the system. 
      * 

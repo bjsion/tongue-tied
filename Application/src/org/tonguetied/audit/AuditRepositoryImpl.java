@@ -33,7 +33,7 @@ public class AuditRepositoryImpl extends HibernateDaoSupport implements AuditRep
 {
     public List<AuditLogRecord> getAuditLog()
     {
-        Query query = getSession().getNamedQuery("get.audit.log");
+        Query query = getSession().getNamedQuery(AuditLogRecord.QUERY_GET_AUDIT_LOG);
         return query.list();
     }
 
