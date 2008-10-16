@@ -94,6 +94,8 @@ public class DataServiceImpl implements DataService
      * @throws ExportException if the exporter is fails to configure
      */
     public void init() throws ExportException {
+        if (logger.isDebugEnabled())
+            logger.debug("loading freemarker settings");
         try {
             settings = new Settings(BASE_DIR);
             settings.set(NAME_SOURCE_ROOT, sourceRoot);
@@ -122,12 +124,15 @@ public class DataServiceImpl implements DataService
         }
     }
     
-    public void exportData(final ExportParameters parameters) throws ExportException {
-        if (parameters == null) {
+    public void exportData(final ExportParameters parameters) throws ExportException
+    {
+        if (parameters == null)
+        {
             throw new IllegalArgumentException("cannot perform export with " +
                     "null parameters");
         }
-        if (parameters.getFormatType() == null) {
+        if (parameters.getFormatType() == null)
+        {
             throw new IllegalArgumentException("cannot perform export without" +
                     " an export type set");
         }
@@ -136,7 +141,8 @@ public class DataServiceImpl implements DataService
         if (logger.isDebugEnabled()) 
             logger.debug("exporting based on filter " + parameters);
         
-        try {
+        try
+        {
             File exportPath = getExportPath(true);
             settings.set(NAME_OUTPUT_ROOT, exportPath.getAbsolutePath());
             settings.set(NAME_SOURCES, 
@@ -159,16 +165,19 @@ public class DataServiceImpl implements DataService
                 createArchive(exportPath);
             }
         }
-        catch (SettingException se) {
+        catch (SettingException se)
+        {
             throw new ExportException(se);
         }
-        catch (ProcessingException pe) {
+        catch (ProcessingException pe)
+        {
             throw new ExportException(pe);
         }
         
-        if (logger.isInfoEnabled()) {
+        if (logger.isInfoEnabled())
+        {
             float totalMillis = System.currentTimeMillis() - start;
-            logger.info("import complete in " + (totalMillis/1000) + " seconds");
+            logger.info("export complete in " + (totalMillis/1000) + " seconds");
         }
 
     }
@@ -246,7 +255,8 @@ public class DataServiceImpl implements DataService
      * @return the output directory
      * @see #getExportPath(boolean) 
      */
-    public File getExportPath() {
+    public File getExportPath()
+    {
         return getExportPath(false);
     }
 
@@ -258,7 +268,8 @@ public class DataServiceImpl implements DataService
      * re-initialised.
      * @return the output directory 
      */
-    private File getExportPath(final boolean reset) {
+    private File getExportPath(final boolean reset)
+    {
         if (reset) {
             final DateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
             outputDir = new File(outputRoot, formatter.format(new Date()));
@@ -267,7 +278,8 @@ public class DataServiceImpl implements DataService
         return outputDir;
     }
 
-    public void importData(ImportParameters parameters) {
+    public void importData(ImportParameters parameters)
+    {
         long start = System.currentTimeMillis();
         if (logger.isDebugEnabled()) 
             logger.debug("importing based on filter " + parameters);
@@ -289,11 +301,13 @@ public class DataServiceImpl implements DataService
      * @param formatType the type of export being performed
      * @return the name of the export template to use
      */
-    private String getTemplateName(final FormatType formatType) {
+    private String getTemplateName(final FormatType formatType)
+    {
         return formatType.name() + ".ftl";
     }
     
-    public void setTransferRepository(TransferRepository transferRepository) {
+    public void setTransferRepository(final TransferRepository transferRepository)
+    {
         this.transferRepository = transferRepository;
     }
 
@@ -301,14 +315,16 @@ public class DataServiceImpl implements DataService
      * @param sourceRoot the directory on the file system where template files
      * are stored 
      */
-    public void setSourceRoot(String sourceRoot) {
+    public void setSourceRoot(final String sourceRoot)
+    {
         this.sourceRoot = sourceRoot;
     }
 
     /**
      * @param keywordService the keywordService to set
      */
-    public void setKeywordService(KeywordService keywordService) {
+    public void setKeywordService(final KeywordService keywordService)
+    {
         this.keywordService = keywordService;
     }
 
@@ -316,7 +332,8 @@ public class DataServiceImpl implements DataService
      * @param outputRoot the base directory on the file system where all 
      * generated export files should be saved.
      */
-    public void setOutputRoot(String outputRoot) {
+    public void setOutputRoot(final String outputRoot)
+    {
         this.outputRoot = new File(outputRoot);
     }
 }
