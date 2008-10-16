@@ -44,7 +44,11 @@ public class TransferRepositoryImpl extends HibernateDaoSupport implements Trans
         return (Country) criteria.uniqueResult();
     }
     
-    public List<Translation> findTranslations(ExportParameters parameters) {
+    public List<Translation> findTranslations(ExportParameters parameters)
+    {
+        if (logger.isDebugEnabled())
+            logger.debug("attempting to find translations matching the criteria: " 
+                    + parameters);
         if (CollectionUtils.isEmpty(parameters.getBundles())) {
             throw new IllegalArgumentException("bundles cannot be null or empty");
         }
