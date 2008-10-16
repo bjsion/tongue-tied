@@ -16,6 +16,7 @@
 package org.tonguetied.usermanagement;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.userdetails.UserDetails;
 import org.springframework.security.userdetails.UserDetailsService;
@@ -23,18 +24,32 @@ import org.springframework.security.userdetails.UsernameNotFoundException;
 
 
 /**
+ * Concrete implementation of the {@link UserDetailsService} that defers its
+ * queried to the {@link UserRepository}.
+ * 
  * @author bsion
  *
  */
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService
+{
     private UserRepository userRepository;
+    private static final Logger logger = 
+        Logger.getLogger(UserDetailsServiceImpl.class);
 
+    /**
+     * Find the {@link User} that matches the <code>username</code> by querying
+     * the {@link UserRepository}.
+     */
     public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException, DataAccessException {
+            throws UsernameNotFoundException, DataAccessException
+    {
+        if (logger.isDebugEnabled())
+            logger.debug("searching for user with name = " + username);
+        
         if (StringUtils.isBlank(username))
             throw new UsernameNotFoundException("unknown username " + username);
         
-        User user = userRepository.getUser(username);
+        final User user = userRepository.getUser(username);
         
         if (user == null)
             throw new UsernameNotFoundException("unknown username " + username);
@@ -45,7 +60,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return user;
     }
 
-    public void setUserRepository(UserRepository userRepository) {
+    public void setUserRepository(final UserRepository userRepository)
+    {
         this.userRepository = userRepository;
     }
 }
