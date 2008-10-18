@@ -123,10 +123,14 @@
     <target name="set.server.props">
         <description>Dynamically set the server properties</description>
         <echo message="Setting server settings for the build mode"/>
+        <property file="${config.dir}/${build.mode.file}"/>
         <copy file="${config.dir}/embeddedServer.properties" 
-            tofile="${generated.dir}/embeddedServer.properties"/>
-        <replace file="${generated.dir}/embeddedServer.properties" 
-            replacefilterfile="${config.dir}/${build.mode.file}"/>
+              tofile="${generated.dir}/embeddedServer.properties"
+              overwrite="true">
+            <filterchain>
+                <expandproperties/>
+            </filterchain>
+        </copy>
     </target>
 
     <target name="javadoc" depends="init" description="Generate the javadoc for this module">
