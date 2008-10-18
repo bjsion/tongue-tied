@@ -15,6 +15,7 @@
  */
 package org.tonguetied.test.common;
 
+import static org.tonguetied.utils.Constants.HIBERNATE_DIALECT;
 import static org.tonguetied.utils.Constants.JDBC_DRIVER;
 import static org.tonguetied.utils.Constants.JDBC_PASSWORD;
 import static org.tonguetied.utils.Constants.JDBC_URL;
@@ -70,8 +71,9 @@ public class PersistenceTestBase {
         config.setProperty(Environment.POOL_SIZE, "1");
         config.setProperty(Environment.AUTOCOMMIT, "true");
         config.setProperty(Environment.CACHE_PROVIDER, "org.hibernate.cache.HashtableCacheProvider");
-        config.setProperty(Environment.SHOW_SQL, "true");
+        config.setProperty(Environment.SHOW_SQL, "false");
         config.setProperty(Environment.USE_SECOND_LEVEL_CACHE, "false");
+        config.setProperty(Environment.DIALECT, props.getProperty(HIBERNATE_DIALECT));
         
         for (int i=0; i<ANNOTATED_CLASSES.length; i++) {
             config.addAnnotatedClass(ANNOTATED_CLASSES[i]);

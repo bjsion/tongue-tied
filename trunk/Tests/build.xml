@@ -57,6 +57,7 @@
     
     <path id="test.classpath">
         <path refid="compile.classpath"/>
+        <pathelement location="${config.dir}"/>
         <pathelement location="${application.home}/generated"/>
         <pathelement location="${build.dir}/${module.jarfile}"/>
         <pathelement location="${3rdparty.home}/bsh/2.0b4/bsh.jar"/>
