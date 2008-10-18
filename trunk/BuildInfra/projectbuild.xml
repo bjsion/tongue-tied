@@ -125,6 +125,12 @@
     </target>
     
     <target name="package" description="Create the full application package with all depedencies for distribution.">
+        <ant antfile="${application.home}/build.xml" target="gen.schema">
+            <property name="db.dialect" value="hsql"/>
+        </ant>
+        <ant antfile="${application.home}/build.xml" target="gen.schema">
+            <property name="db.dialect" value="mysql"/>
+        </ant>
         <mkdir dir="${package.dir}"/>
         <tstamp/>
         <zip destfile="${package.dir}/${version}-${DSTAMP}.zip" >
@@ -172,7 +178,7 @@
                 <include name="log4j.properties"/>
             </zipfileset>
             <zipfileset dir="${application.home}/generated" prefix="${version}">
-                <include name="schema-export.sql"/>
+                <include name="*-schema.sql"/>
             </zipfileset>
             <zipfileset dir="${server.home}/generated" prefix="${version}">
                 <include name="embeddedServer.properties"/>

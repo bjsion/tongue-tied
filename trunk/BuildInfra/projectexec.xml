@@ -27,14 +27,6 @@
         <pathelement location="${3rdparty.home}/HSQLDB/1.8.0.9/hsqldb.jar"/>
     </path>
 
-    <path id="fmpp.classpath">
-        <pathelement location="${3rdparty.home}/FreeMarker/FMPP/0.9.13/fmpp.jar"/>
-        <pathelement location="${3rdparty.home}/FreeMarker/2.3.13/freemarker.jar"/>
-        <pathelement location="${3rdparty.home}/bsh/2.0b4/bsh.jar"/>
-        <pathelement location="${3rdparty.home}/oro/2.0.8/jakarta-oro-2.0.8.jar"/>
-        <path refid="db.server.classpath"/>
-    </path>
-    
     <path id="tonguetied.server.classpath">
         <pathelement location="${server.home}/builds/jettyServer.jar"/>
         <pathelement location="${3rdparty.home}/Jetty/6.1.9/jetty.jar"/>
@@ -47,10 +39,6 @@
         <pathelement location="${3rdparty.home}/Quartz/1.5.2/quartz.jar"/>
         <pathelement location="${3rdparty.home}/Hibernate/3.2.6/hibernate3.jar"/>
     </path>
-    
-    <taskdef name="fmpp" 
-             classname="fmpp.tools.AntTask" 
-             classpathref="fmpp.classpath"/>
     
     <target name="init">
         <mkdir dir="${classes.dir}"/>
@@ -105,21 +93,5 @@
             <classpath refid="tonguetied.server.classpath"/>
             <arg value="-shutdown"/>
         </java>
-    </target>
-    
-    <target name="export" depends="init" description="Generate csv, xls, xml files from the descriptions in the Multi Language Portal">
-        <echo message="Generating export files for project ${ant.project.name} ..."/>
-        <input message="Enter the 2 letter ISO language code, for the new language you want translated. Valid values are: "
-               validargs="DE,ZH,TA,HI,JP,KR"
-               addproperty="language.code"/>
-        <fmpp sourceroot="${templates.dir}/freemarker/export" 
-              outputroot="${generated.dir}" 
-              logfile="${fmpp.log.file}" 
-              outputencoding="UTF-8">
-            <include name="**/*.ftl"/>
-            <data expandproperties="true">
-                rows: sql({url: ${tonguetied.db.url}:${tonguetied.db.port},driver:${tonguetied.db.driver},username:${tonguetied.db.username}},'select KEYWORDS, BUNDLE, CONTEXT, EN, ${language.code} from language_keys')
-            </data>
-        </fmpp>
     </target>
 </project>
