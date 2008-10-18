@@ -35,8 +35,9 @@
     <property name="web.server.scripts" value="${web.server.root}/scripts"/>
     <property name="web.server.webinf" value="${web.server.root}/WEB-INF"/>
     <property name="server.jar" value="${application.short.name}Server.jar"/>
+    <property name="jdbc.props.file" value="${config.dir}/jdbc.${db.dialect}.properties"/>
 
-    <property file="${config.dir}/jdbc.properties"/>
+    <property file="${jdbc.props.file}"/>
    
     <!-- temporary directories -->
     <property name="classes.dir" value="${application.home}/classes"/>
@@ -50,7 +51,7 @@
     <property name="logs.dir" value="${application.home}/logs"/>
     <property name="output.dir" value="${application.home}/output"/>
     <property name="hibernate.propsfile" value="hibernate.properties"/>
-    <property name="schema.file" value="schema-export.sql"/>
+    <property name="schema.file" value="${db.dialect}-schema.sql"/>
     <property name="mapping.files.timestamp" value="${generated.dir}/mapping.files.timestamp"/>
     <property name="schema.file.timestamp" value="${generated.dir}/schema.file.timestamp"/>
     <property name="compiled.reports.dir" value="${generated.dir}/reports"/>
@@ -105,6 +106,7 @@
         <path refid="common.classpath"/>
         <path refid="hsql.classpath"/>
         <path refid="hibernate.classpath"/>
+        <pathelement location="${3rdparty.home}/MySQL/5.1.6/mysql-connector-java.jar"/>
         <pathelement location="${metadata.home}/builds/metadata.jar"/>
         <pathelement location="${3rdparty.home}/Hibernate/tools/3.2.2.beta1/hibernate-tools.jar"/>
         <pathelement location="${3rdparty.home}/FreeMarker/2.3.13/freemarker.jar"/>
@@ -121,7 +123,7 @@
         <pathelement location="${3rdparty.home}/oro/2.0.8/jakarta-oro.jar"/>
         <path refid="hsql.classpath"/>
     </path>
-    
+
     <taskdef name="hibernatetool"
              classname="org.hibernate.tool.ant.HibernateToolTask">
         <classpath refid="hibernate.tools.classpath"/>
@@ -135,16 +137,11 @@
         <classpath path="${findbugs.home}/lib/findbugs-ant.jar"/>
     </taskdef>
 
-    <taskdef name="fmpp"
-             classname="fmpp.tools.AntTask" 
-             classpathref="fmpp.classpath"/>
-    
     <target name="resolve" description="Retrieve dependencies with ivy">
         <property name="ivy.default.ivy.user.dir" value="${dependencies.home}"/>
         <ivy:retrieve/>
     </target>
 
-    
     <target name="init">
         <mkdir dir="${classes.dir}"/>
         <mkdir dir="${build.dir}"/>
@@ -170,34 +167,6 @@
         <delete dir="${logs.dir}" failonerror="true" deleteonexit="true"/>
     </target>
 
-    <target name="gen.resources" depends="init" description="Generate resource files from the descriptions in the Multi Language Portal">
-        <echo message="Generating resource files for project ${ant.project.name} ..."/>
-        <delete failonerror="true" deleteonexit="true">
-            <fileset dir="${generated.dir}">
-                <include name="*.rawproperties"/>
-            </fileset>
-        </delete>
-        <fmpp sourceroot="${templates.dir}/freemarker/resources" outputroot="${generated.dir}" logfile="fmpp.log" outputencoding="UTF-8" replaceextension="ftl, rawproperties">
-            <data expandproperties="true">
-                fileNamePrefix: tonguetied
-                props: sql({url: ${tonguetied.db.url}:${tonguetied.db.port}/${tonguetied.db.name},driver:${tonguetied.db.driver},username:${tonguetied.db.user}},
-                           'SELECT k.keyword, l.code AS language_code, c.code AS country_code, t.value
-                            FROM keyword k, translation t, language l, bundle b, country c
-                            WHERE t.keyword_id = k.id
-                            AND t.language_id = l.id
-                            AND t.country_id = c.id
-                            AND t.bundle_id = b.id
-                            AND b.name = \'TongueTied\'
-                            ORDER BY l.code, c.code')
-            </data>
-        </fmpp>
-        <native2ascii src="${generated.dir}" 
-                      dest="${generated.dir}"
-                      encoding="utf8"
-                      ext=".properties"
-                      includes="*.rawproperties"/>
-    </target>
-    
     <target name="compile" depends="init" description="Generate all the class files for this module">
         <echo message="Compiling module ${ant.project.name} ..."/>
         <javac srcdir="${src.dir}"
@@ -238,7 +207,24 @@
         <replace file="${build.details.file}" token="@@build." value=""/>
     </target>
     
-    <target name="war" depends="jar, jar-src, manage.build.properties" description="Generate the Web Archive">
+    <target name="gen.application.files">
+        <description>Dynamically set the server properties</description>
+        <echo message="Creating files used in the distribution"/>
+        <copy tofile="${generated.dir}/jdbc.properties">
+            <fileset dir="${config.dir}" includes="jdbc.${db.dialect}.properties"/>
+        </copy>
+        <concat destfile="${generated.dir}/jdbc.properties" append="true">
+            <fileset dir="${config.dir}">
+                <exclude name="jdbc.${db.dialect}.properties"/>
+                <include name="jdbc.*.properties"/>
+            </fileset>
+            <filterchain>
+                <prefixlines prefix="# "/>
+            </filterchain>
+        </concat>
+    </target>
+
+    <target name="war" depends="jar, jar-src, manage.build.properties, gen.application.files" description="Generate the Web Archive">
         <echo message="Generating war file for module ${ant.project.name} ..."/>
         <war destfile="${build.dir}/war/${module.warfile}" webxml="${config.dir}/web.xml">
             <lib dir="${build.dir}">
@@ -349,7 +335,6 @@
             </lib>
             <webinf dir="${config.dir}">
                 <include name="*.xml"/>
-                <include name="jdbc.properties"/>
                 <include name="log4j.properties"/>
                 <include name="fmpp.cfg"/>
                 <exclude name="web.xml"/>
@@ -357,6 +342,9 @@
             <webinf dir="${web.dir}">
                 <include name="**/jsp/**/*.jsp"/>
                 <exclude name="**/ROOT/*.*"/>
+            </webinf>
+            <webinf dir="${generated.dir}">
+                <include name="jdbc.properties"/>
             </webinf>
             <classes dir="${config.dir}">
                 <include name="tonguetied*.properties"/>
@@ -456,10 +444,11 @@
     <!-- The hbm2ddl requires that the all classes have been compiled and can be
          referenced via the classpath
     -->
-    <target name="gen.schema" depends="compile, schema.up.to.date" unless="is.schema.up.to.date" description="Generates DB schema with hbm2ddl.">
+    <target name="gen.schema" depends="compile, schema.up.to.date" description="Generates DB schema with hbm2ddl.">
         <echo message="Generating the database schema for module ${ant.project.name}..."/>
         <hibernatetool destdir="${generated.dir}">
-            <annotationconfiguration configurationfile="${hibernate.cfg.xml}"/>
+            <annotationconfiguration configurationfile="${hibernate.cfg.xml}"
+                propertyFile="${jdbc.props.file}"/>
             <hbm2ddl outputfilename="${schema.file}"
                      drop="true"
                      export="false"

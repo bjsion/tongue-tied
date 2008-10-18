@@ -46,7 +46,7 @@ public class Language implements Comparable<Language>
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-    @Column(unique=true,nullable=false,length=6)
+    @Column(unique=true,nullable=false,length=7)
     @Enumerated(EnumType.STRING)
     private LanguageCode code;
     @Column(nullable=false)

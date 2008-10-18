@@ -66,6 +66,12 @@
             <value>org.hibernate.cfg.AnnotationConfiguration</value>
         </property>
         
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+            </props>
+        </property>
+        
         <property name="eventListeners">
             <map>
                 <entry key="merge">

@@ -68,37 +68,38 @@ public class PropertiesImporter extends AbstractSingleResourceImporter
             Keyword keyword;
             Translation translation;
             String value;
-            Predicate predicate;
-            for (Entry<Object, Object> entry : properties.entrySet()) {
+            for (Entry<Object, Object> entry : properties.entrySet())
+            {
                 keyword = getKeywordService().getKeyword((String) entry.getKey());
                 value = evaluateValue((String)entry.getValue());
-                if (keyword == null) {
+                if (keyword == null)
+                {
                     keyword = new Keyword();
                     keyword.setKeyword((String) entry.getKey());
                     translation = 
                         new Translation(getBundle(), getCountry(), getLanguage(), value, state);
                     keyword.addTranslation(translation);
                 }
-                else {
-                    predicate = 
-                        new TranslationPredicate(getBundle(), getCountry(), getLanguage());
-                    translation = (Translation) CollectionUtils.find(
-                            keyword.getTranslations(), predicate);
-                    if (translation == null) {
+                else 
+                {
+                    translation = findTranslation(keyword);
+                    if (translation == null)
+                    {
                         translation = 
                             new Translation(getBundle(), getCountry(), getLanguage(), value, state);
                         keyword.addTranslation(translation);
                     }
-                    else {
+                    else
+                    {
                         translation.setState(state);
                         translation.setValue(value);
                     }
                 }
                 
                 getKeywordService().saveOrUpdate(keyword);
-                if (logger.isInfoEnabled())
-                    logger.info("processed " + properties.size() + " translations");
             }
+            if (logger.isInfoEnabled())
+                logger.info("processed " + properties.size() + " translations");
         } 
         catch (IOException ioe)
         {
@@ -108,6 +109,28 @@ public class PropertiesImporter extends AbstractSingleResourceImporter
         {
             IOUtils.closeQuietly(bais);
         }
+    }
+
+    /**
+     * Find a translation from an existing keyword that matches the business 
+     * keys.
+     * 
+     * @param keyword the existing keyword to search
+     * @return the matching translation or <code>null</code> if no match is 
+     * found
+     */
+    private Translation findTranslation(final Keyword keyword)
+    {
+        Translation translation = null;
+        if (!keyword.getTranslations().isEmpty())
+        {
+            final Predicate predicate = 
+                new TranslationPredicate(getBundle(), getCountry(), getLanguage());
+            translation = (Translation) CollectionUtils.find(
+                    keyword.getTranslations(), predicate);
+        }
+        
+        return translation;
     }
 
     /**

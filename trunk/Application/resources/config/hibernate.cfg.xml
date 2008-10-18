@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC 
     "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">  
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 
 <!--
   - Application context definition for TongueTied application
@@ -10,10 +10,7 @@
 
 <hibernate-configuration>
     <session-factory>
-        <!-- dialect for Hypersonic SQL -->
-        <property name="dialect">org.hibernate.dialect.HSQLDialect</property>
-        
-        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.show_sql">false</property>
         <property name="hibernate.generate_statistics">true</property>
         <property name="hibernate.cache.use_structured_entries">false</property>
         <property name="hibernate.cache.use_second_level_cache">true</property>
@@ -28,7 +25,6 @@
 
         <property name="hibernate.use_outer_join">true</property>
         
-        <property name="generate_statistics">true</property>
         <property name="hibernate.max_fetch_depth">1</property>
         <property name="hibernate.default_batch_fetch_size">16</property>
         <property name="hibernate.jdbc.batch_size">20</property>
