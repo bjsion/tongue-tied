@@ -80,7 +80,7 @@ public class UserRight implements Comparable<UserRight>, Serializable {
     /**
      * @return the permission
      */
-    @Column(nullable=false,length=10)
+    @Column(nullable=false,length=13)
     @Enumerated(EnumType.STRING)
     public Permission getPermission() {
         return permission;
