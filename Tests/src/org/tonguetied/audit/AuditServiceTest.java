@@ -23,7 +23,7 @@ import org.tonguetied.test.common.AbstractServiceTest;
 
 /**
  * Unit tests for methods of the {@link AuditServiceImpl} implementation of
- * the {@link QuditService}.
+ * the {@link AuditService}.
  * 
  * @author bsion
  * 

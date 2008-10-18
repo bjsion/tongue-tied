@@ -24,7 +24,12 @@ import java.io.File;
  * @author bsion
  *
  */
-public interface Constants {
+public interface Constants
+{
+    /**
+     * The key for the hibernate sql dialect.
+     */
+    public static final String HIBERNATE_DIALECT = "hibernate.dialect";
     /**
      * The key for the jdbc driver class name.
      */

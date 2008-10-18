@@ -25,13 +25,17 @@ import org.tonguetied.keywordmanagement.Keyword;
 import org.tonguetied.test.common.PersistenceTestBase;
 
 /**
+ * Test the persistence of the {@link AuditLogRecord} object.
+ * 
  * @author bsion
  *
  */
-public class AuditLogRecordPersistenceTest extends PersistenceTestBase {
+public class AuditLogRecordPersistenceTest extends PersistenceTestBase
+{
 
     @Test
-    public final void simplePersistence() {
+    public final void simplePersistence()
+    {
         Session session = getSession();
         Transaction tx = session.beginTransaction();
         

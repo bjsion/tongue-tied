@@ -49,7 +49,7 @@ public class DBUtils
 {
     private static final String STATEMENT_SHUTDOWN = "SHUTDOWN;";
     private static final Server dbServer = new Server();
-    private static final String DDL_FILE = "/schema-export.sql";
+    private static final String DDL_FILE = "/hsql-schema.sql";
     private static String ddlSql = "";
     public static Properties props;
     private static final Logger log = Logger.getLogger(DBUtils.class);
