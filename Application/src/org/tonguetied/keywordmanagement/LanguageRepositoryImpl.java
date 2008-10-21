@@ -17,6 +17,7 @@ package org.tonguetied.keywordmanagement;
 
 import static org.hibernate.criterion.Restrictions.eq;
 import static org.hibernate.criterion.Restrictions.idEq;
+import static org.tonguetied.keywordmanagement.Language.QUERY_GET_LANAGUAGES;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class LanguageRepositoryImpl extends HibernateDaoSupport implements
 {
     public List<Language> getLanguages()
     {
-        Query query = getSession().getNamedQuery("get.languages");
+        Query query = getSession().getNamedQuery(QUERY_GET_LANAGUAGES);
         return query.list();
     }
 
@@ -58,7 +59,7 @@ public class LanguageRepositoryImpl extends HibernateDaoSupport implements
 
     public void saveOrUpdate(Language language) throws DataAccessException
     {
-        getHibernateTemplate().saveOrUpdate(language);
+        getHibernateTemplate().merge(language);
         getHibernateTemplate().flush();
     }
 

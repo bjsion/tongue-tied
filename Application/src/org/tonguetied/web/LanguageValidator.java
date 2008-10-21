@@ -59,7 +59,7 @@ public class LanguageValidator implements Validator {
      * @param language the {@link Language} object to validate
      * @param errors contextual state about the validation process (never null)
      */
-    private void validateMandatoryFields(Language language, Errors errors) {
+    private void validateMandatoryFields(final Language language, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(
                 errors, FIELD_NAME, "error.language.name.required", null, "default");
         ValidationUtils.rejectIfEmptyOrWhitespace(
@@ -73,16 +73,20 @@ public class LanguageValidator implements Validator {
      * @param language the {@link Language} object to validate
      * @param errors contextual state about the validation process (never null)
      */
-    private void validateDuplicates(Language language, Errors errors) {
-        // check for duplicates of new records only
-        if (language.getId() == null) {
-            Language other = keywordService.getLanguage(language.getCode());
-            if (other != null) {
-                errors.rejectValue(
-                        FIELD_CODE, 
-                        "error.language.already.exists",
-                        new String[] {language.getCode().name()},
-                        "default");
+    private void validateDuplicates(final Language language, Errors errors)
+    {
+        final Language other = keywordService.getLanguage(language.getCode());
+        if (other != null)
+        {
+            // Duplicates can be new languages replicating existing languages,
+            // or updating an existing language code to another preexisting code
+            if ((language.getId() == null) || (!language.getId().equals(other.getId())))
+            {
+                    errors.rejectValue(
+                            FIELD_CODE, 
+                            "error.language.already.exists",
+                            new String[] {language.getCode().name()},
+                            "default");
             }
         }
     }

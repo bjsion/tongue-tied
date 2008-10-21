@@ -40,7 +40,8 @@ import org.tonguetied.keywordmanagement.Language.LanguageCode;
  *
  */
 @RunWith(value=Parameterized.class)
-public class LanguageValidatorTest {
+public class LanguageValidatorTest
+{
     private KeywordService keywordService;
     private Language language;
     private String fieldName;
@@ -49,34 +50,44 @@ public class LanguageValidatorTest {
     private static final String FIELD_NAME = "name";
     
     @Parameters
-    public static final Collection<Object[]> data() {
+    public static final Collection<Object[]> data()
+    {
         return Arrays.asList(new Object[][] {
-                {LanguageCode.an, null, FIELD_NAME},
-                {LanguageCode.oj, "", FIELD_NAME},
-                {LanguageCode.ur, "    ", FIELD_NAME},
-                {LanguageCode.fi, "Finnish", FIELD_CODE},
-                {LanguageCode.fi, "", FIELD_CODE},
-                {null, "Korean", FIELD_CODE}
+                {null, LanguageCode.an, null, FIELD_NAME},
+                {null, LanguageCode.oj, "", FIELD_NAME},
+                {null, LanguageCode.ur, "    ", FIELD_NAME},
+                {null, LanguageCode.fi, "Finnish", FIELD_CODE},
+                {1257L, LanguageCode.fi, "Danish", FIELD_CODE},
+                {null, null, "Korean", FIELD_CODE}
                 });
     }
     
-    public LanguageValidatorTest(final LanguageCode code, 
+    public LanguageValidatorTest(final Long id,
+            final LanguageCode code, 
             final String name, 
             final String fieldName) 
     {
         this.language = new Language();
+        if (id != null)
+            this.language.setId(id.longValue());
         this.language.setCode(code);
         this.language.setName(name);
         this.fieldName = fieldName;
     }
     
     @Before
-    public void setup() {
+    public void setup()
+    {
         this.keywordService = new KeywordServiceStub();
         Language existing = new Language();
         existing.setId(1256L);
         existing.setCode(LanguageCode.fi);
         existing.setName("Finnish");
+        this.keywordService.saveOrUpdate(existing);
+        existing = new Language();
+        existing.setId(1257L);
+        existing.setCode(LanguageCode.da);
+        existing.setName("Danish");
         this.keywordService.saveOrUpdate(existing);
     }
     
