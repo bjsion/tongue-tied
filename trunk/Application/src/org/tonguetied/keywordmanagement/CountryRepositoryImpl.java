@@ -52,13 +52,16 @@ public class CountryRepositoryImpl extends HibernateDaoSupport implements
 
     public List<Country> getCountries()
     {
-        Query query = getSession().getNamedQuery("get.countries");
+        Query query = getSession().getNamedQuery(Country.QUERY_GET_COUNTRIES);
         return query.list();
     }
 
     public void saveOrUpdate(Country country) throws DataAccessException
     {
-        getHibernateTemplate().saveOrUpdate(country);
+        if (country.getId() != null)
+            getHibernateTemplate().merge(country);
+        else
+            getHibernateTemplate().saveOrUpdate(country);
         getHibernateTemplate().flush();
     }
 

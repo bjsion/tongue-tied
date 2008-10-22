@@ -39,7 +39,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @AccessType("field")
-@NamedQuery(name="get.countries",query="from Country c order by c.name")
+@NamedQuery(name=Country.QUERY_GET_COUNTRIES,query="from Country c order by c.name")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class Country implements Comparable<Country> 
 {
@@ -52,23 +52,35 @@ public class Country implements Comparable<Country>
     @Column(nullable=false)
     private String name;
     
-    public CountryCode getCode() {
-    	return code;
+    public static final String QUERY_GET_COUNTRIES = "get.countries";
+    
+    public CountryCode getCode()
+    {
+        return code;
     }
-    public void setCode(final CountryCode code) {
-    	this.code = code;
+    
+    public void setCode(final CountryCode code)
+    {
+        this.code = code;
     }
-    public Long getId() {
-    	return id;
+    
+    public Long getId()
+    {
+        return id;
     }
-    public void setId(final Long id) {
-    	this.id = id;
+    
+    public void setId(final Long id)
+    {
+        this.id = id;
     }
-    public String getName() {
-    	return name;
+    public String getName()
+    {
+        return name;
     }
-    public void setName(final String name) {
-    	this.name = name;
+    
+    public void setName(final String name)
+    {
+        this.name = name;
     }
     
     /* (non-Javadoc)

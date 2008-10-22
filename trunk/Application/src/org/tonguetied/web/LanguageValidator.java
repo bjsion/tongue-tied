@@ -86,7 +86,7 @@ public class LanguageValidator implements Validator {
                             FIELD_CODE, 
                             "error.language.already.exists",
                             new String[] {language.getCode().name()},
-                            "default");
+                            "the language already exists in the system");
             }
         }
     }

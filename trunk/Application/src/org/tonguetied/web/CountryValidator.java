@@ -32,21 +32,24 @@ import org.tonguetied.keywordmanagement.Country.CountryCode;
  * @author bsion
  *
  */
-public class CountryValidator implements Validator {
+public class CountryValidator implements Validator
+{
     
     private KeywordService keywordService;
 
     /* (non-Javadoc)
      * @see org.springframework.validation.Validator#supports(java.lang.Class)
      */
-    public boolean supports(Class clazz) {
+    public boolean supports(Class clazz)
+    {
         return Country.class.isAssignableFrom(clazz);
     }
 
     /* (non-Javadoc)
      * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
      */
-    public void validate(Object target, Errors errors) {
+    public void validate(Object target, Errors errors)
+    {
         validateMandatoryFields((Country) target, errors);
         validateDuplicates((Country) target, errors);
     }
@@ -58,7 +61,8 @@ public class CountryValidator implements Validator {
      * @param country the {@link Country} object to validate
      * @param errors contextual state about the validation process (never null)
      */
-    private void validateMandatoryFields(Country country, Errors errors) {
+    private void validateMandatoryFields(final Country country, Errors errors)
+    {
         ValidationUtils.rejectIfEmptyOrWhitespace(
                 errors, FIELD_NAME, "error.country.name.required");
         ValidationUtils.rejectIfEmptyOrWhitespace(
@@ -72,16 +76,20 @@ public class CountryValidator implements Validator {
      * @param country the {@link Country} object to validate
      * @param errors contextual state about the validation process (never null)
      */
-    private void validateDuplicates(Country country, Errors errors) {
-        // check for duplicates of new records only
-        if (country.getId() == null) {
-            Country other = keywordService.getCountry(country.getCode());
-            if (other != null) {
-                errors.rejectValue(
-                        FIELD_CODE, 
-                        "error.country.already.exists", 
-                        new String[] {country.getCode().name()}, 
-                        "the country already exists in the system");
+    private void validateDuplicates(final Country country, Errors errors)
+    {
+        final Country other = keywordService.getCountry(country.getCode());
+        if (other != null)
+        {
+            // Duplicates can be new languages replicating existing languages,
+            // or updating an existing language code to another preexisting code
+            if ((country.getId() == null) || (!country.getId().equals(other.getId())))
+            {
+                    errors.rejectValue(
+                            FIELD_CODE, 
+                            "error.country.already.exists", 
+                            new String[] {country.getCode().name()}, 
+                            "the country already exists in the system");
             }
         }
     }
@@ -91,7 +99,8 @@ public class CountryValidator implements Validator {
      * 
      * @param keywordService the keywordService instance.
      */
-    public void setKeywordService(KeywordService keywordService) {
+    public void setKeywordService(KeywordService keywordService)
+    {
         this.keywordService = keywordService;
     }
 }
