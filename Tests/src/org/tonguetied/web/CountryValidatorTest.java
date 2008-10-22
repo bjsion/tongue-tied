@@ -38,32 +38,38 @@ import org.tonguetied.keywordmanagement.Country.CountryCode;
 
 
 /**
+ * Test the input validation of the {@link Country} object.
+ * 
  * @author bsion
  *
  */
 @RunWith(value=Parameterized.class)
-public class CountryValidatorTest {
+public class CountryValidatorTest
+{
     private KeywordService keywordService;
     private Country country;
     private String fieldName;
 
     @Parameters
-    public static final Collection<Object[]> data() {
+    public static final Collection<Object[]> data()
+    {
         return Arrays.asList(new Object[][] {
-                {CountryCode.FJ, null, FIELD_NAME},
-                {CountryCode.RE, "", FIELD_NAME},
-                {CountryCode.RE, "    ", FIELD_NAME},
-                {CountryCode.PL, "Poland", FIELD_CODE},
-                {CountryCode.PL, null, FIELD_CODE},
-                {null, "Korea", FIELD_CODE}
+                {null, CountryCode.FJ, null, FIELD_NAME},
+                {null, CountryCode.RE, "", FIELD_NAME},
+                {null, CountryCode.RE, "    ", FIELD_NAME},
+                {null, CountryCode.PL, "Poland", FIELD_CODE},
+                {1257L, CountryCode.PL, "Austria", FIELD_CODE},
+                {null, null, "Korea", FIELD_CODE}
                 });
     }
     
-    public CountryValidatorTest(final CountryCode code, 
+    public CountryValidatorTest(final Long id,
+            final CountryCode code, 
             final String name, 
             final String fieldName) 
     {
         this.country = new Country();
+        this.country.setId(id);
         this.country.setCode(code);
         this.country.setName(name);
         this.fieldName = fieldName;
@@ -76,6 +82,11 @@ public class CountryValidatorTest {
         existing.setId(1256L);
         existing.setCode(CountryCode.PL);
         existing.setName("Poland");
+        this.keywordService.saveOrUpdate(existing);
+        existing = new Country();
+        existing.setId(1257L);
+        existing.setCode(CountryCode.AT);
+        existing.setName("Austria");
         this.keywordService.saveOrUpdate(existing);
     }
     

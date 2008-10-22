@@ -36,6 +36,8 @@ import org.tonguetied.keywordmanagement.Language.LanguageCode;
 
 
 /**
+ * Test the input validation of the {@link Language} object.
+ * 
  * @author bsion
  *
  */
