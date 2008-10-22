@@ -59,7 +59,10 @@ public class LanguageRepositoryImpl extends HibernateDaoSupport implements
 
     public void saveOrUpdate(Language language) throws DataAccessException
     {
-        getHibernateTemplate().merge(language);
+        if (language.getId() != null)
+            getHibernateTemplate().merge(language);
+        else
+            getHibernateTemplate().saveOrUpdate(language);
         getHibernateTemplate().flush();
     }
 
