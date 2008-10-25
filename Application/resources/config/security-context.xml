@@ -16,7 +16,7 @@
         <intercept-url pattern="/bundle*.*" access="ROLE_ADMIN"/>
         <intercept-url pattern="/country*.*" access="ROLE_ADMIN"/>
         <intercept-url pattern="/import.*" access="ROLE_ADMIN,ROLE_USER"/>
-        <intercept-url pattern="/export.*" access="ROLE_ADMIN,ROLE_USER"/>
+        <intercept-url pattern="/export.*" access="ROLE_ADMIN,ROLE_USER,ROLE_VERIFIER"/>
         <intercept-url pattern="/language*.*" access="ROLE_ADMIN"/>
         <intercept-url pattern="/deletekeyword.*" access="ROLE_ADMIN,ROLE_USER"/>
         <intercept-url pattern="/user*.*" access="ROLE_ADMIN"/>
