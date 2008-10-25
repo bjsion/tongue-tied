@@ -61,17 +61,20 @@ public class PropertiesTemplateTest extends TemplateTester
     private Translation translation3_2;
     private Translation translation3_3;
 
-    private static final String[] FILE_EXTENSIONS = {"properties"};
+    private static final String FILE_EXTENSION = "properties";
 
     /**
      * Create a new instance of PropertiesTemplateTest.
      */
-    public PropertiesTemplateTest() {
-        super("properties.ftl", FILE_EXTENSIONS);
+    public PropertiesTemplateTest()
+    {
+        super("properties.ftl", FILE_EXTENSION);
     }
 
     @Override
-    public void setUp() {
+    public void setUp() throws Exception
+    {
+        super.setUp();
         usa = new Country();
         usa.setCode(CountryCode.US);
         usa.setName("United States");

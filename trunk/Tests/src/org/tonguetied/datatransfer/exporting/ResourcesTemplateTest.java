@@ -71,17 +71,20 @@ public class ResourcesTemplateTest extends TemplateTester
     private Translation translation3_2;
     private Translation translation3_3;
 
-    private static final String[] FILE_EXTENSIONS = {"resx"};
+    private static final String FILE_EXTENSION = "resx";
 
     /**
      * Create a new instance of PropertiesTemplateTest.
      */
-    public ResourcesTemplateTest() {
-        super("resx.ftl", FILE_EXTENSIONS);
+    public ResourcesTemplateTest()
+    {
+        super("resx.ftl", FILE_EXTENSION);
     }
 
     @Override
-    public void setUp() {
+    public void setUp() throws Exception
+    {
+        super.setUp();
         usa = new Country();
         usa.setCode(CountryCode.US);
         usa.setName("United States");
