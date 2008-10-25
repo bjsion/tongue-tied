@@ -18,6 +18,7 @@ package org.tonguetied.datatransfer.exporting;
 import static fmpp.setting.Settings.NAME_DATA;
 import static fmpp.setting.Settings.NAME_OUTPUT_ENCODING;
 import static fmpp.setting.Settings.NAME_OUTPUT_ROOT;
+import static fmpp.setting.Settings.NAME_REPLACE_EXTENSIONS;
 import static fmpp.setting.Settings.NAME_SOURCES;
 import static fmpp.setting.Settings.NAME_SOURCE_ROOT;
 import static freemarker.log.Logger.LIBRARY_LOG4J;
@@ -57,6 +58,7 @@ public abstract class TemplateTester
 {
     private List<Translation> translations;
     private final String templateName;
+    private final String outputExtension;
     private final String[] outputExtensions;
     
     private static File templateDir;
@@ -70,9 +72,11 @@ public abstract class TemplateTester
      * @param templateName
      * @param outputExtensions
      */
-    public TemplateTester(String templateName, String[] outputExtensions) {
+    public TemplateTester(final String templateName, final String outputExtension)
+    {
         this.templateName = templateName;
-        this.outputExtensions = outputExtensions;
+        this.outputExtension = outputExtension;
+        this.outputExtensions = new String[] {outputExtension};
     }
 
     /**
@@ -87,11 +91,12 @@ public abstract class TemplateTester
         ByteArrayInputStream bais = null;
         try {
             byte[] bytes = FileUtils.readFileToByteArray(
-                    new File(TEST_CONFIG_DIR, "test.properties"));
+                    new File(TEST_CONFIG_DIR, "templateTest.properties"));
             bais = new ByteArrayInputStream(bytes);
             properties.load(bais);
             templateDir = new File(properties.getProperty("source.root"));
             outputDir = new File(properties.getProperty("output.root"));
+            outputDir.mkdir();
         }
         finally {
             if (bais != null)
@@ -100,10 +105,15 @@ public abstract class TemplateTester
     }
     
     @Before
-    public abstract void setUp() throws Exception ;
+    public void setUp() throws Exception
+    {
+        if (!getOutputDir().isDirectory())
+            FileUtils.forceMkdir(getOutputDir());
+    }
     
     @After
-    public void destroy() throws Exception {
+    public void destroy() throws Exception
+    {
         FileUtils.deleteDirectory(outputDir);
     }
     
@@ -132,7 +142,8 @@ public abstract class TemplateTester
     }
     
     @Test
-    public void testTemplateWithEmptyTranslations() throws Exception {
+    public void testTemplateWithEmptyTranslations() throws Exception
+    {
         translations = new ArrayList<Translation>();
         processTemplate();
         
@@ -142,13 +153,14 @@ public abstract class TemplateTester
     
     protected final void processTemplate() throws Exception
     {
+        long start = System.currentTimeMillis();
+        
         Settings settings = new Settings(SystemUtils.getUserDir());
         settings.set(NAME_SOURCE_ROOT, templateDir.getAbsolutePath());
         settings.set(NAME_OUTPUT_ENCODING, "UTF-8");
         freemarker.log.Logger.selectLoggerLibrary(LIBRARY_LOG4J);
-        
-        long start = System.currentTimeMillis();
-        
+        settings.set(NAME_REPLACE_EXTENSIONS, new String[] {"ftl", outputExtension});
+
         settings.set(NAME_OUTPUT_ROOT, outputDir.getAbsolutePath());
         settings.set(NAME_SOURCES, templateName);
         
@@ -206,7 +218,8 @@ public abstract class TemplateTester
     /**
      * @return the outputExtensions
      */
-    public final String[] getOutputExtensions() {
+    public final String[] getOutputExtensions()
+    {
         return outputExtensions;
     }
 }
