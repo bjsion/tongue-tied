@@ -19,7 +19,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -40,8 +39,8 @@ import org.tonguetied.keywordmanagement.Language.LanguageCode;
  *
  */
 @RunWith(value=Parameterized.class)
-public class PreferenceFilterTest {
-    
+public class EmptyPreferenceFilterTest
+{
     private boolean expected;
     private Translation translation;
     
@@ -62,7 +61,7 @@ public class PreferenceFilterTest {
      * @param bundle
      * @param keywordStr
      */
-    public PreferenceFilterTest(final boolean expected, 
+    public EmptyPreferenceFilterTest(final boolean expected, 
             final String value, 
             final Language language, 
             final Country country, 
@@ -111,9 +110,9 @@ public class PreferenceFilterTest {
         
         return Arrays.asList(new Object[][] {
                 {true, "test1", spanish, newZealand, bundle1, "keyword"},
-                {false, "test1", english, newZealand, bundle1, "keyword"},
-                {false, "test1", spanish, china, bundle1, "keyword"},
-                {false, "test1", spanish, newZealand, bundle2, "keyword"},
+                {true, "test1", english, newZealand, bundle1, "keyword"},
+                {true, "test1", spanish, china, bundle1, "keyword"},
+                {true, "test1", spanish, newZealand, bundle2, "keyword"},
                 {true, "test1", null, newZealand, bundle1, "keyword"},
                 {true, "test1", spanish, null, bundle1, "keyword"},
                 {true, "test1", spanish, newZealand, null, "keyword"},
@@ -126,32 +125,37 @@ public class PreferenceFilterTest {
      * @throws java.lang.Exception
      */
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
         preferences = new PreferenceForm();
-        
-        List<Language> selectedLanguages = 
-            Arrays.asList(new Language[] {spanish});
-        List<Country> selectedCountries = 
-            Arrays.asList(new Country[] {newZealand});
-        List<Bundle> selectedBundles = 
-            Arrays.asList(new Bundle[] {bundle1});
-        
-        preferences.setSelectedLanguages(selectedLanguages);
-        preferences.setSelectedCountries(selectedCountries);
-        preferences.setSelectedBundles(selectedBundles);
+        preferences.setSelectedBundles(null);
+        preferences.setSelectedCountries(null);
+        preferences.setSelectedLanguages(null);
     }
 
     /**
      * Test method for {@link org.tonguetied.web.PreferenceFilter#evaluate(java.lang.Object)}.
      */
     @Test
-    public final void testEvaluate()
+    public final void testEvaluateWithEmptyFilter()
     {
         PreferenceFilter filter = new PreferenceFilter(preferences);
         
         boolean actual = filter.evaluate(this.translation);
         
-        assertEquals(this.expected, actual);
+        assertEquals(expected, actual);
+    }
+    
+    /**
+     * Test method for {@link org.tonguetied.web.PreferenceFilter#evaluate(java.lang.Object)}.
+     */
+    @Test
+    public final void testEvaluateWithEmptyValueFilter()
+    {
+        preferences = new PreferenceForm();
+        PreferenceFilter filter = new PreferenceFilter(preferences);
+        
+        boolean actual = filter.evaluate(this.translation);
+        
+        assertEquals(expected, actual);
     }
 }

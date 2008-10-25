@@ -17,6 +17,8 @@ package org.tonguetied.web;
 
 import org.apache.commons.collections.Predicate;
 import org.tonguetied.keywordmanagement.Bundle;
+import org.tonguetied.keywordmanagement.Country;
+import org.tonguetied.keywordmanagement.Language;
 import org.tonguetied.keywordmanagement.Translation;
 
 /**
@@ -55,11 +57,9 @@ public class PreferenceFilter implements Predicate
 
         if (translation != null)
         {
-            result = preferences.getSelectedCountries().contains(
-                    translation.getCountry())
+            result = isValidCounty(translation.getCountry())
                     && isValidBundle(translation.getBundle())
-                    && preferences.getSelectedLanguages().contains(
-                            translation.getLanguage());
+                    && isValidLanguage(translation.getLanguage());
         }
 
         return result;
@@ -68,13 +68,14 @@ public class PreferenceFilter implements Predicate
     /**
      * Determine if the bundle of a {@link Translation} is in the list of
      * {@link Bundle}s. If the bundle is <code>null</code> then returns
-     * <code>true</code>.
+     * <code>true</code>. If there are no selected bundles, then 
+     * <code>true</code> is returned.
      * 
      * @param bundle the Bundle of the translation to evaluate
      * @return <code>true</code> if the bundle is valid, <code>false</code>
      *         otherwise
      */
-    private boolean isValidBundle(Bundle bundle)
+    private boolean isValidBundle(final Bundle bundle)
     {
         boolean result = false;
 
@@ -82,9 +83,75 @@ public class PreferenceFilter implements Predicate
         {
             result = true;
         }
+        else if (preferences.getSelectedBundles() == null || 
+                preferences.getSelectedBundles().isEmpty())
+        {
+            result = true;
+        }
         else
         {
             result = preferences.getSelectedBundles().contains(bundle);
+        }
+
+        return result;
+    }
+    
+    /**
+     * Determine if the country of a {@link Translation} is in the list of
+     * {@link Country}s. If the country is <code>null</code> then returns
+     * <code>true</code>. If there are no selected countries, then 
+     * <code>true</code> is returned.
+     * 
+     * @param country the Country of the translation to evaluate
+     * @return <code>true</code> if the country is valid, <code>false</code>
+     *         otherwise
+     */
+    private boolean isValidCounty(final Country country)
+    {
+        boolean result = false;
+        if (country == null)
+        {
+            result = true;
+        }
+        else if (preferences.getSelectedCountries() == null ||
+                preferences.getSelectedCountries().isEmpty())
+        {
+            result = true;
+        }
+        else
+        {
+            result = preferences.getSelectedCountries().contains(country);
+        }
+        
+        return result;
+    }
+    
+    /**
+     * Determine if the language of a {@link Translation} is in the list of
+     * {@link Language}s. If the bundle is <code>null</code> then returns
+     * <code>true</code>. If there are no selected languages, then 
+     * <code>true</code> is returned.
+     * 
+     * @param language the Language of the translation to evaluate
+     * @return <code>true</code> if the language is valid, <code>false</code>
+     *         otherwise
+     */
+    private boolean isValidLanguage(final Language language)
+    {
+        boolean result = false;
+
+        if (language == null)
+        {
+            result = true;
+        }
+        else if (preferences.getSelectedLanguages() == null ||
+                preferences.getSelectedLanguages().isEmpty())
+        {
+            result = true;
+        }
+        else
+        {
+            result = preferences.getSelectedLanguages().contains(language);
         }
 
         return result;

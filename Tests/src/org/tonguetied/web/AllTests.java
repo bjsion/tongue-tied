@@ -37,6 +37,7 @@ import org.junit.runners.Suite.SuiteClasses;
     CountryCodeSupportTest.class,
     CountrySupportTest.class,
     CountryValidatorTest.class,
+    EmptyPreferenceFilterTest.class,
     ExportParametersValidatorTest.class,
     FormatTypeSupportTest.class,
     ImportValidatorTest.class,
