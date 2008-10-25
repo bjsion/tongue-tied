@@ -37,6 +37,8 @@ import org.tonguetied.keywordmanagement.KeywordServiceStub;
 
 
 /**
+ * Test the input validation of the {@link Bundle} object.
+ * 
  * @author bsion
  *
  */
@@ -49,21 +51,24 @@ public class BundleValidatorTest {
     @Parameters
     public static final Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-                {null, null, "resource", true, false, FIELD_NAME},
-                {"", null, "resource", false, false, FIELD_NAME},
-                {"   ", null, "resource", true, true, FIELD_NAME},
-                {"test", "description", "resource", true, false, FIELD_NAME},
-                {"new", "description", null, true, false, FIELD_RESOURCE_NAME},
-                {"new", "description", "", true, false, FIELD_RESOURCE_NAME},
-                {"new", "description", "    ", true, false, FIELD_RESOURCE_NAME},
-                {"new", "description", "test", true, false, FIELD_RESOURCE_NAME},
-                {"new", "description", "has whitespace", true, false, FIELD_RESOURCE_NAME},
+                {null, null, null, "resource", true, false, FIELD_NAME},
+                {null, "", null, "resource", false, false, FIELD_NAME},
+                {null, "   ", null, "resource", true, true, FIELD_NAME},
+                {null, "test", "description", "resource", true, false, FIELD_NAME},
+                {1257L, "test", "descriptiond", "test2", true, false, FIELD_NAME},
+                {null, "new", "description", null, true, false, FIELD_RESOURCE_NAME},
+                {null, "new", "description", "", true, false, FIELD_RESOURCE_NAME},
+                {null, "new", "description", "    ", true, false, FIELD_RESOURCE_NAME},
+                {null, "new", "description", "test", true, false, FIELD_RESOURCE_NAME},
+                {1257L, "test2", "description", "test", true, false, FIELD_RESOURCE_NAME},
+                {null, "new", "description", "has whitespace", true, false, FIELD_RESOURCE_NAME},
 //              {"new", "description", "has\nwhitespace", true, false, FIELD_RESOURCE_NAME},
-                {"new", "description", "has\twhitespace", true, false, FIELD_RESOURCE_NAME}
+                {null, "new", "description", "has\twhitespace", true, false, FIELD_RESOURCE_NAME}
                 });
     }
     
-    public BundleValidatorTest(final String name,
+    public BundleValidatorTest(final Long id,
+                               final String name,
                                final String description,
                                final String resourceName,
                                final boolean isDefault,
@@ -71,6 +76,7 @@ public class BundleValidatorTest {
                                final String fieldName) 
     {
         this.bundle = new Bundle();
+        this.bundle.setId(id);
         this.bundle.setName(name);
         this.bundle.setDescription(description);
         this.bundle.setResourceName(resourceName);
@@ -87,6 +93,12 @@ public class BundleValidatorTest {
         existing.setName("test");
         existing.setResourceName("test");
         existing.setDescription("description");
+        this.keywordService.saveOrUpdate(existing);
+        existing = new Bundle();
+        existing.setId(1257L);
+        existing.setName("test2");
+        existing.setResourceName("test2");
+        existing.setDescription("description2");
         this.keywordService.saveOrUpdate(existing);
     }
     

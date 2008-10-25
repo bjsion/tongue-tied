@@ -34,7 +34,8 @@ import org.tonguetied.keywordmanagement.Language.LanguageCode;
  * @author bsion
  *
  */
-public class KeywordServiceStub implements KeywordService {
+public class KeywordServiceStub implements KeywordService
+{
 
     private Map<Long, Country> countries = new HashMap<Long, Country>();
     private Map<Long, Language> languages = new HashMap<Long, Language>();
@@ -44,16 +45,20 @@ public class KeywordServiceStub implements KeywordService {
     /* (non-Javadoc)
      * @see org.tonguetied.service.KeywordService#delete(java.lang.Object)
      */
-    public void delete(Object object) {
-        if (object instanceof Language) {
+    public void delete(Object object)
+    {
+        if (object instanceof Language)
+        {
             Language langauge = (Language) object;
             languages.remove(langauge.getId());
         }
-        else if (object instanceof Bundle) {
+        else if (object instanceof Bundle)
+        {
             Bundle bundle = (Bundle) object;
             bundles.remove(bundle.getId());
         }
-        else if (object instanceof Country) {
+        else if (object instanceof Country)
+        {
             Country country = (Country) object;
             countries.remove(country.getId());
         }
@@ -73,26 +78,19 @@ public class KeywordServiceStub implements KeywordService {
     /* (non-Javadoc)
      * @see org.tonguetied.service.KeywordService#deleteKeyword(java.lang.Long)
      */
-    public void deleteKeyword(Long id) {
+    public void deleteKeyword(Long id)
+    {
         this.keywords.remove(id);
-    }
-
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.KeywordService#findKeywords(java.lang.String, java.lang.Integer, java.lang.Integer)
-     */
-    public List<Keyword> findKeywords(String searchString, Integer firstResult,
-            Integer maxResults) {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     /* (non-Javadoc)
      * @see org.tonguetied.service.KeywordService#findKeywords(org.tonguetied.keywordmanagement.Keyword, boolean, org.hibernate.criterion.MatchMode, java.lang.Integer, java.lang.Integer)
      */
     public List<Keyword> findKeywords(final Keyword keyword, boolean ignoreCase,
-            Integer firstResult, Integer maxResults) {
-        final Predicate keywordFilter = new Predicate() {
-
+            Integer firstResult, Integer maxResults)
+    {
+        final Predicate keywordFilter = new Predicate()
+        {
             /* (non-Javadoc)
              * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
              */
@@ -183,6 +181,25 @@ public class KeywordServiceStub implements KeywordService {
         Bundle bundle= 
             (Bundle) CollectionUtils.find(bundles.values(), bundleCodeFilter);
         return bundle;
+    }
+
+    public List<Bundle> findBundles(final String name, final String resourceName)
+    {
+        final Predicate keywordFilter = new Predicate()
+        {
+            /* (non-Javadoc)
+             * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
+             */
+            public boolean evaluate(Object object)
+            {
+                Bundle other = (Bundle) object;
+                return (other.getName().equals(name)) ||
+                    (other.getResourceName().equals(resourceName));
+            }
+        };
+        List<Bundle> results = 
+            (List<Bundle>) CollectionUtils.select(bundles.values(), keywordFilter);
+        return results;
     }
 
     /* (non-Javadoc)

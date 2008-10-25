@@ -85,4 +85,15 @@ public interface BundleRepository
      * @return the {@link List} of all {@link Bundle}s in the system.
      */
     List<Bundle> getBundles();
+    
+    /**
+     * Find all {@link Bundle}s matching the search criteria.
+     * 
+     * @param name the unique name identifying the {@link Bundle}.
+     * @param resourceName the unique resource name identifying the {@link Bundle}.
+     * @return a list of all bundles matching the criteria
+     * @throws IllegalArgumentException if the keyword is <code>null</code>
+     */
+    List<Bundle> findBundles(final String name, final String resourceName)
+        throws IllegalArgumentException;
 }
