@@ -78,7 +78,7 @@ public class DataServiceImpl implements DataService
     private static final File BASE_DIR = SystemUtils.getUserDir();
     private static final Logger logger = 
         Logger.getLogger(DataServiceImpl.class);
-    private static final String DATE_FORMAT = "yyyy-MM-dd_hh_mm_ss";
+    private static final String DATE_FORMAT = "yyyy-MM-dd_HH_mm_ss";
 
     /**
      * Create a new instance of the DataServiceImpl. After this constructor
