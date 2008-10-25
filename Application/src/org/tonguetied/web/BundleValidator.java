@@ -18,6 +18,8 @@ package org.tonguetied.web;
 import static org.tonguetied.web.Constants.FIELD_NAME;
 import static org.tonguetied.web.Constants.*;
 
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -70,7 +72,7 @@ public class BundleValidator implements Validator
      * @param bundle the {@link Bundle} object to validate
      * @param errors contextual state about the validation process (never null)
      */
-    private void validateMandatoryFields(Bundle bundle, Errors errors)
+    private void validateMandatoryFields(final Bundle bundle, Errors errors)
     {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, FIELD_NAME,
                 "error.bundle.name.required", null, "default");
@@ -85,24 +87,28 @@ public class BundleValidator implements Validator
      * @param bundle the {@link Bundle} object to validate
      * @param errors contextual state about the validation process (never null)
      */
-    private void validateDuplicates(Bundle bundle, Errors errors)
+    private void validateDuplicates(final Bundle bundle, Errors errors)
     {
-        // check for duplicates of new records only
-        if (bundle.getId() == null)
+        List<Bundle> others = 
+            keywordService.findBundles(bundle.getName(), bundle.getResourceName());
+        if (!others.isEmpty())
         {
-            Bundle other = keywordService.getBundleByName(bundle.getName());
-            if (other != null)
+            for (Bundle other : others)
             {
-                errors.rejectValue(FIELD_NAME, "error.bundle.already.exists",
-                        new String[] { bundle.getName() }, "default");
-            }
-            other = keywordService.getBundleByResourceName(bundle
-                    .getResourceName());
-            if (other != null)
-            {
-                errors.rejectValue(FIELD_RESOURCE_NAME,
-                        "error.bundle.already.exists", new String[] { bundle
-                                .getResourceName() }, "default");
+                // Duplicates can be new bundles replicating existing bundles,
+                // or updating an existing bundles code to another preexisting code
+                if ((bundle.getId() == null) || (!bundle.getId().equals(other.getId())))
+                {
+                    if (bundle.getName().equals(other.getName()))
+                        errors.rejectValue(FIELD_NAME, "error.bundle.already.exists",
+                                new String[] { bundle.getName() },
+                                "a bundle with this name already exists");
+                    if (bundle.getResourceName().equals(other.getResourceName()))
+                        errors.rejectValue(FIELD_RESOURCE_NAME,
+                                "error.bundle.already.exists", 
+                                new String[] { bundle.getResourceName() },
+                                "a bundle with this resource name already exists");
+                }
             }
         }
     }
@@ -115,7 +121,7 @@ public class BundleValidator implements Validator
      * @param errors contextual state about the validation process (never null)
      * @see Character#isWhitespace(char)
      */
-    private void validateCharacterSet(Bundle bundle, Errors errors)
+    private void validateCharacterSet(final Bundle bundle, Errors errors)
     {
         if (StringUtils.containsAny(bundle.getResourceName(), WHITESPACE_CHARS))
         {

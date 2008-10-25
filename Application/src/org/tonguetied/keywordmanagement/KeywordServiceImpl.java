@@ -97,6 +97,11 @@ public class KeywordServiceImpl implements KeywordService
         return bundleRepository.getBundles();
     }
 
+    public List<Bundle> findBundles(final String name, final String resourceName)
+    {
+        return bundleRepository.findBundles(name, resourceName);
+    }
+
     public Country getCountry(final Long id)
     {
         return countryRepository.getCountry(id);

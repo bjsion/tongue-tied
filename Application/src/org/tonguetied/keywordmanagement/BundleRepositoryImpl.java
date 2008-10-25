@@ -17,6 +17,7 @@ package org.tonguetied.keywordmanagement;
 
 import static org.hibernate.criterion.Restrictions.eq;
 import static org.hibernate.criterion.Restrictions.idEq;
+import static org.tonguetied.keywordmanagement.Bundle.QUERY_FIND_BUNDLES;
 import static org.tonguetied.keywordmanagement.Bundle.QUERY_GET_BUNDLES;
 import static org.tonguetied.keywordmanagement.Bundle.QUERY_GET_DEFAULT_BUNDLE;
 
@@ -44,14 +45,14 @@ public class BundleRepositoryImpl extends HibernateDaoSupport implements
         return (Bundle) criteria.uniqueResult();
     }
 
-    public Bundle getBundleByName(String name)
+    public Bundle getBundleByName(final String name)
     {
         Criteria criteria = getSession().createCriteria(Bundle.class);
         criteria.add(eq("name", name));
         return (Bundle) criteria.uniqueResult();
     }
 
-    public Bundle getBundleByResourceName(String resourceName)
+    public Bundle getBundleByResourceName(final String resourceName)
     {
         Criteria criteria = getSession().createCriteria(Bundle.class);
         criteria.add(eq("resourceName", resourceName));
@@ -70,6 +71,16 @@ public class BundleRepositoryImpl extends HibernateDaoSupport implements
         return query.list();
     }
 
+    public List<Bundle> findBundles(final String name, final String resourceName)
+            throws IllegalArgumentException
+    {
+        Query query = getSession().getNamedQuery(QUERY_FIND_BUNDLES);
+        query.setString("name", name);
+        query.setString("resourceName", resourceName);
+        
+        return query.list();
+    }
+
     public void saveOrUpdate(Bundle bundle) throws DataAccessException
     {
         if (bundle.isDefault())
@@ -82,7 +93,12 @@ public class BundleRepositoryImpl extends HibernateDaoSupport implements
                 getHibernateTemplate().save(defaultBundle);
             }
         }
-        getHibernateTemplate().saveOrUpdate(bundle);
+        
+        if (bundle.getId() != null)
+            getHibernateTemplate().merge(bundle);
+        else
+            getHibernateTemplate().saveOrUpdate(bundle);
+        
         getHibernateTemplate().flush();
     }
 

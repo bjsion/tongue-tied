@@ -430,6 +430,40 @@ public class KeywordServiceTest extends AbstractServiceTest
         }
     }
 
+    @Test
+    public final void testFindBundlesName()
+    {
+        final List<Bundle> bundles = keywordService.findBundles(bundle.getName(), null);
+        assertEquals(1, bundles.size());
+        assertTrue(bundles.contains(bundle));
+    }
+    
+    @Test
+    public final void testFindBundlesResourceName()
+    {
+        final List<Bundle> bundles = keywordService.findBundles(null, bundle.getResourceName());
+        assertEquals(1, bundles.size());
+        assertTrue(bundles.contains(bundle));
+    }
+    
+    @Test
+    public final void testFindBundlesWithNullParams()
+    {
+        final List<Bundle> bundles = keywordService.findBundles(null, null);
+        assertTrue("bundles contains a value when it should be empty", bundles.isEmpty());
+    }
+
+    /**
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
+     */
+    @Test
+    public final void testFindBundlesWithNoMatches()
+    {
+        final List<Bundle> bundles = keywordService.findBundles("unknown", "unknown");
+        assertTrue(bundles.isEmpty());
+    }
+
     /**
      * Test method for
      * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#getLanguage(Long)}.
@@ -437,7 +471,7 @@ public class KeywordServiceTest extends AbstractServiceTest
     @Test
     public final void testGetLanguage()
     {
-        Language retrieved = keywordService.getLanguage(english.getId());
+        final Language retrieved = keywordService.getLanguage(english.getId());
 
         assertEquals(english, retrieved);
     }
@@ -449,7 +483,7 @@ public class KeywordServiceTest extends AbstractServiceTest
     @Test
     public final void testGetLanguageWithInvalidId()
     {
-        Language retrieved = keywordService.getLanguage(-1L);
+        final Language retrieved = keywordService.getLanguage(-1L);
 
         assertNull(retrieved);
     }
@@ -461,7 +495,7 @@ public class KeywordServiceTest extends AbstractServiceTest
     @Test
     public final void testGetLanguageByCode()
     {
-        Language retrieved = keywordService.getLanguage(LanguageCode.sc);
+        final Language retrieved = keywordService.getLanguage(LanguageCode.sc);
         assertEquals(chinese, retrieved);
     }
 
@@ -472,7 +506,7 @@ public class KeywordServiceTest extends AbstractServiceTest
     @Test
     public final void testGetLanguageWithInvalidCode()
     {
-        Language retrieved = keywordService.getLanguage(LanguageCode.ak);
+        final Language retrieved = keywordService.getLanguage(LanguageCode.ak);
 
         assertNull(retrieved);
     }
@@ -484,7 +518,7 @@ public class KeywordServiceTest extends AbstractServiceTest
     @Test
     public final void testGetCountry()
     {
-        Country retrieved = keywordService.getCountry(australia.getId());
+        final Country retrieved = keywordService.getCountry(australia.getId());
 
         assertEquals(australia, retrieved);
     }
@@ -496,7 +530,7 @@ public class KeywordServiceTest extends AbstractServiceTest
     @Test
     public final void testGetCountryWithInvalidId()
     {
-        Country retrieved = keywordService.getCountry(-1L);
+        final Country retrieved = keywordService.getCountry(-1L);
 
         assertNull(retrieved);
     }
@@ -508,7 +542,7 @@ public class KeywordServiceTest extends AbstractServiceTest
     @Test
     public final void testGetCountryByCode()
     {
-        Country retrieved = keywordService.getCountry(CountryCode.SG);
+        final Country retrieved = keywordService.getCountry(CountryCode.SG);
         assertEquals(singapore, retrieved);
     }
 
@@ -519,7 +553,7 @@ public class KeywordServiceTest extends AbstractServiceTest
     @Test
     public final void testGetCountryWithInvalidCode()
     {
-        Country retrieved = keywordService.getCountry(CountryCode.AD);
+        final Country retrieved = keywordService.getCountry(CountryCode.AD);
 
         assertNull(retrieved);
     }

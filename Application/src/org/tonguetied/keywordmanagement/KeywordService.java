@@ -176,6 +176,14 @@ public interface KeywordService
     List<Bundle> getBundles();	
     
     /**
+     * Find all {@link Bundle}s matching the search criteria.
+     * 
+     * @param bundle the criteria to search for
+     * @return a list of all {@link Bundle}s matching the criteria
+     */
+    List<Bundle> findBundles(final String name, final String resourceName);
+    
+    /**
      * Save or update the <code>Keyword</code>.
      * 
      * @param keyword the {@linkplain Keyword} to be persisted.
