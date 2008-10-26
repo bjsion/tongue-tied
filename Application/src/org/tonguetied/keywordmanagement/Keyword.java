@@ -53,7 +53,7 @@ import org.tonguetied.audit.Auditable;
  */
 @Entity
 @AccessType("property")
-@NamedQuery(name="get.keywords",query="from Keyword k order by k.keyword")
+@NamedQuery(name=Keyword.QUERY_GET_KEYWORDS,query="from Keyword k order by k.keyword")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
 {
@@ -62,7 +62,9 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
     private String context;
     private SortedSet<Translation> translations;
     
-    // This attribute is used for optimistic concurrency control in DB    
+    public static final String QUERY_GET_KEYWORDS = "get.keywords";
+    
+    // This attribute is used for optimistic concurrency control in DB
     private Integer version;
     
     public Keyword() {
