@@ -60,7 +60,7 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements
     public List<Keyword> getKeywords(final Integer firstResult,
             final Integer maxResults)
     {
-        Query query = getSession().getNamedQuery("get.keywords");
+        Query query = getSession().getNamedQuery(Keyword.QUERY_GET_KEYWORDS);
         if (firstResult != null) query.setFirstResult(firstResult);
         if (maxResults != null) query.setMaxResults(maxResults);
         return query.list();
