@@ -22,7 +22,6 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
-import org.tonguetied.keywordmanagement.KeywordService;
 import org.tonguetied.keywordmanagement.Language;
 
 
@@ -37,7 +36,6 @@ public class PreferenceForm {
     private List<Country> selectedCountries;
     private List<Language> selectedLanguages;
     private int maxResults;
-    private KeywordService keywordService; 
     
     /**
      * Create a new instance of the PreferenceForm.
@@ -149,19 +147,7 @@ public class PreferenceForm {
      * initialization each list has its default item added.
      */
     public void init() {
-//        this.setSelectedLanguages(keywordService.getLanguages());
-//        this.setSelectedCountries(keywordService.getCountries());
-//        this.setSelectedBundles(keywordService.getBundles());
         this.maxResults = 20;
-    }
-    
-    /**
-     * Assign the {@link KeywordService}.
-     * 
-     * @param keywordService the {@link KeywordService} to set.
-     */
-    public void setKeywordService(KeywordService keywordService) {
-        this.keywordService = keywordService;
     }
     
     @Override

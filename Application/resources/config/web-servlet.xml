@@ -271,7 +271,6 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
     <bean name="viewPreferences" class="org.tonguetied.web.PreferenceForm" scope="session" init-method="init">
         <aop:scoped-proxy/>
-        <property name="keywordService" ref="keywordService"/>
     </bean>
 
     <bean name="searchParameters" class="org.tonguetied.web.SearchForm" scope="session">
