@@ -81,8 +81,8 @@ public class CountryValidator implements Validator
         final Country other = keywordService.getCountry(country.getCode());
         if (other != null)
         {
-            // Duplicates can be new languages replicating existing languages,
-            // or updating an existing language code to another preexisting code
+            // Duplicates can be new countries replicating existing countries,
+            // or updating an country language code to another preexisting code
             if ((country.getId() == null) || (!country.getId().equals(other.getId())))
             {
                     errors.rejectValue(
