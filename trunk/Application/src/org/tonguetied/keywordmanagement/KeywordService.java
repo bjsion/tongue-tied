@@ -178,7 +178,8 @@ public interface KeywordService
     /**
      * Find all {@link Bundle}s matching the search criteria.
      * 
-     * @param bundle the criteria to search for
+     * @param name the unique name identifying the {@link Bundle}.
+     * @param resourceName the unique resource name identifying the {@link Bundle}.
      * @return a list of all {@link Bundle}s matching the criteria
      */
     List<Bundle> findBundles(final String name, final String resourceName);

@@ -16,6 +16,7 @@
 package org.tonguetied.keywordmanagement;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -36,6 +37,7 @@ public class BundlePersistenceTest extends PersistenceTestBase {
         
         session = getSession();
         tx = session.beginTransaction();
+        assertTrue(tx.isActive());
 
         Bundle bundle = new Bundle();
         bundle.setName("tonguetied Server");

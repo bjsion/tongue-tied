@@ -47,6 +47,7 @@ public class KeywordPersistenceTest extends PersistenceTestBase {
         
         session = getSession();
         tx = session.beginTransaction();
+        assertTrue(tx.isActive());
 
         Keyword keyword = new Keyword();
         keyword.setContext("description of the keyword");

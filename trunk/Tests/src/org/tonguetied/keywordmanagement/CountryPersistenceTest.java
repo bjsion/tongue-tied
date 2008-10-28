@@ -38,6 +38,7 @@ public class CountryPersistenceTest extends PersistenceTestBase {
         
         session = getSession();
         tx = session.beginTransaction();
+        assertTrue(tx.isActive());
         
         Country country = new Country();
         country.setCode(CountryCode.SG);
