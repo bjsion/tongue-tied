@@ -40,8 +40,8 @@ import org.tonguetied.keywordmanagement.Language.LanguageCode;
  *
  */
 @RunWith(value=Parameterized.class)
-public class PreferenceFilterTest {
-    
+public class PreferenceFilterTest
+{
     private boolean expected;
     private Translation translation;
     
@@ -63,11 +63,11 @@ public class PreferenceFilterTest {
      * @param keywordStr
      */
     public PreferenceFilterTest(final boolean expected, 
-            final String value, 
-            final Language language, 
-            final Country country, 
-            final Bundle bundle, 
-            final String keywordStr)
+                                final String value, 
+                                final Language language, 
+                                final Country country, 
+                                final Bundle bundle, 
+                                final String keywordStr)
     {
         this.expected = expected;
         if (value == null && keywordStr == null) {
@@ -87,7 +87,8 @@ public class PreferenceFilterTest {
     }
 
     @Parameters
-    public static final Collection<Object[]> data() {
+    public static final Collection<Object[]> data()
+    {
         china = new Country();
         china.setCode(CountryCode.CN);
         china.setName("China");
