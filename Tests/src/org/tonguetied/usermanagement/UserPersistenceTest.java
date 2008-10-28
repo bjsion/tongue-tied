@@ -42,6 +42,7 @@ public class UserPersistenceTest extends PersistenceTestBase {
         
         session = getSession();
         tx = session.beginTransaction();
+        assertTrue(tx.isActive());
 
         User user = new User("username", "password", "firstName", "lastName", "test@test.com", true, true, true, true);
         session.saveOrUpdate(user);
@@ -63,6 +64,7 @@ public class UserPersistenceTest extends PersistenceTestBase {
         
         session = getSession();
         tx = session.beginTransaction();
+        assertTrue(tx.isActive());
 
         User user = new User("username", "password", "firstName", "lastName", "test@test.com", true, true, true, true);
         session.saveOrUpdate(user);

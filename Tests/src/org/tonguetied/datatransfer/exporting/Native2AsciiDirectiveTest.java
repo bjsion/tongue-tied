@@ -34,7 +34,6 @@ import freemarker.core.Environment;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateDirectiveBody;
-import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 
@@ -54,7 +53,6 @@ public class Native2AsciiDirectiveTest
     private StringWriter out;
     private Reader in;
     private Template template;
-    private TemplateHashModel rootDataModel;
 
     /**
      * @throws java.lang.Exception
@@ -65,8 +63,7 @@ public class Native2AsciiDirectiveTest
         out = new StringWriter();
         in = new StringReader("test");
         template = new Template("test", in, new Configuration(), null);
-        rootDataModel = null;
-        env = new Environment(template, rootDataModel, out);
+        env = new Environment(template, null, out);
 
         loopVars = new TemplateModel[] {};
         params = new HashMap<Object, Object>();

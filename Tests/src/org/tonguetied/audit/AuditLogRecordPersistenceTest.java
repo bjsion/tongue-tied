@@ -38,6 +38,7 @@ public class AuditLogRecordPersistenceTest extends PersistenceTestBase
     {
         Session session = getSession();
         Transaction tx = session.beginTransaction();
+        assertTrue(tx.isActive());
         
         Keyword keyword = new Keyword();
         keyword.setKeyword("test");

@@ -16,6 +16,7 @@
 package org.tonguetied.keywordmanagement;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -39,6 +40,7 @@ public class LanguagePersistenceTest extends PersistenceTestBase {
         
         session = getSession();
         tx = session.beginTransaction();
+        assertTrue(tx.isActive());
 
         Language language = new Language();
         language.setCode(LanguageCode.en);

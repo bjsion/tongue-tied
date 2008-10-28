@@ -69,8 +69,8 @@ public abstract class TemplateTester
     /**
      * Create a new instance of TemplateTester.
      * 
-     * @param templateName
-     * @param outputExtensions
+     * @param templateName the name of the template to test
+     * @param outputExtension the file extension string
      */
     public TemplateTester(final String templateName, final String outputExtension)
     {
@@ -96,7 +96,8 @@ public abstract class TemplateTester
             properties.load(bais);
             templateDir = new File(properties.getProperty("source.root"));
             outputDir = new File(properties.getProperty("output.root"));
-            outputDir.mkdir();
+            if (!outputDir.mkdir())
+                logger.error("failed to create directory " + outputDir);
         }
         finally {
             if (bais != null)

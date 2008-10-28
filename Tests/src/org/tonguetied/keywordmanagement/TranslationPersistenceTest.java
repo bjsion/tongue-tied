@@ -17,6 +17,7 @@ package org.tonguetied.keywordmanagement;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -46,6 +47,7 @@ public class TranslationPersistenceTest extends PersistenceTestBase {
         
         session = getSession();
         tx = session.beginTransaction();
+        assertTrue(tx.isActive());
 
         Translation translation = new Translation();
         translation.setValue("translated value");
@@ -69,6 +71,7 @@ public class TranslationPersistenceTest extends PersistenceTestBase {
         
         session = getSession();
         tx = session.beginTransaction();
+        assertTrue(tx.isActive());
 
         // init data
         Bundle bundle = new Bundle();
@@ -101,6 +104,7 @@ public class TranslationPersistenceTest extends PersistenceTestBase {
         
         session = getSession();
         tx = session.beginTransaction();
+        assertTrue(tx.isActive());
 
         // init data
         Country country = new Country();
@@ -132,6 +136,7 @@ public class TranslationPersistenceTest extends PersistenceTestBase {
         
         session = getSession();
         tx = session.beginTransaction();
+        assertTrue(tx.isActive());
 
         // init data
         Language language = new Language();
@@ -163,6 +168,7 @@ public class TranslationPersistenceTest extends PersistenceTestBase {
         
         session = getSession();
         tx = session.beginTransaction();
+        assertTrue(tx.isActive());
 
         // init data
         Keyword keyword = new Keyword();
