@@ -18,6 +18,7 @@ package org.tonguetied.web;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.tonguetied.keywordmanagement.Bundle;
@@ -26,12 +27,13 @@ import org.tonguetied.keywordmanagement.Language;
 
 
 /**
- * Pojo to store the users viewing preferences.
+ * Value object to store the users viewing preferences.
  * 
  * @author bsion
  *
  */
-public class PreferenceForm {
+public class PreferenceForm
+{
     private List<Bundle> selectedBundles;
     private List<Country> selectedCountries;
     private List<Language> selectedLanguages;
@@ -41,7 +43,8 @@ public class PreferenceForm {
      * Create a new instance of the PreferenceForm.
      *
      */
-    public PreferenceForm() {
+    public PreferenceForm()
+    {
         this.selectedLanguages = new ArrayList<Language>();
         this.selectedCountries = new ArrayList<Country>();
         this.selectedBundles = new ArrayList<Bundle>();
@@ -52,7 +55,8 @@ public class PreferenceForm {
      * 
      * @return a list of selected {@link Bundle}s.
      */
-    public List<Bundle> getSelectedBundles() {
+    public List<Bundle> getSelectedBundles()
+    {
         return selectedBundles;
     }
 
@@ -61,7 +65,8 @@ public class PreferenceForm {
      * 
      * @param selectedBundles the list of {@link Bundle}s to set.
      */
-    public void setSelectedBundles(List<Bundle> selectedBundles) {
+    public void setSelectedBundles(List<Bundle> selectedBundles)
+    {
         this.selectedBundles = selectedBundles;
     }
 
@@ -70,7 +75,8 @@ public class PreferenceForm {
      * 
      * @param bundle the {@link Bundle} to add.
      */
-    public void addBundle(Bundle bundle) {
+    public void addBundle(Bundle bundle)
+    {
         this.selectedBundles.add(bundle);
     }
 
@@ -79,7 +85,8 @@ public class PreferenceForm {
      * 
      * @return a list of selected {@link Country}s.
      */
-    public List<Country> getSelectedCountries() {
+    public List<Country> getSelectedCountries()
+    {
         return selectedCountries;
     }
 
@@ -88,7 +95,8 @@ public class PreferenceForm {
      * 
      * @param selectedCountries the list of {@link Country}s to set.
      */
-    public void setSelectedCountries(List<Country> selectedCountries) {
+    public void setSelectedCountries(List<Country> selectedCountries)
+    {
         this.selectedCountries = selectedCountries;
     }
 
@@ -97,7 +105,8 @@ public class PreferenceForm {
      * 
      * @param country the {@link Country} to add.
      */
-    public void addCountry(Country country) {
+    public void addCountry(Country country)
+    {
         this.selectedCountries.add(country);
     }
 
@@ -106,7 +115,8 @@ public class PreferenceForm {
      * 
      * @return a list of selected {@link Language}s.
      */
-    public List<Language> getSelectedLanguages() {
+    public List<Language> getSelectedLanguages()
+    {
         return selectedLanguages;
     }
     
@@ -115,7 +125,8 @@ public class PreferenceForm {
      * 
      * @param selectedLanguages the list of {@link Language}s to set.
      */
-    public void setSelectedLanguages(List<Language> selectedLanguages) {
+    public void setSelectedLanguages(List<Language> selectedLanguages)
+    {
         this.selectedLanguages = selectedLanguages;
     }
     
@@ -124,21 +135,24 @@ public class PreferenceForm {
      * 
      * @param language the {@link Language} to add.
      */
-    public void addLanguage(Language language) {
+    public void addLanguage(Language language)
+    {
         this.selectedLanguages.add(language);
     }
 
     /**
      * @return the maxResults
      */
-    public int getMaxResults() {
+    public int getMaxResults()
+    {
         return maxResults;
     }
 
     /**
      * @param maxResults the maxResults to set
      */
-    public void setMaxResults(int maxResults) {
+    public void setMaxResults(int maxResults)
+    {
         this.maxResults = maxResults;
     }
 
@@ -146,12 +160,14 @@ public class PreferenceForm {
      * Method used to initialize class after it has been created. After 
      * initialization each list has its default item added.
      */
-    public void init() {
+    public void init()
+    {
         this.maxResults = 20;
     }
     
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj)
+    {
         boolean isEqual = false;
         // a good optimization
         if (this == obj)
@@ -175,20 +191,19 @@ public class PreferenceForm {
     }
     
     @Override
-    public int hashCode() {
-        int result = 11;
-        
-        result = 19 * result + maxResults;
-        result = 19 * result + 
-            (this.selectedCountries == null? 0: this.selectedCountries.hashCode());
-        result = 19 * result + 
-            (this.selectedLanguages == null? 0: this.selectedLanguages.hashCode());
+    public int hashCode()
+    {
+        HashCodeBuilder builder = new HashCodeBuilder(11, 19);
+        builder.append(maxResults).
+            append(this.selectedCountries).
+            append(this.selectedLanguages);
 
-        return result;
+        return builder.toHashCode();
     }
     
     @Override
-    public String toString() {
+    public String toString()
+    {
         return new ReflectionToStringBuilder(this, 
                 ToStringStyle.SHORT_PREFIX_STYLE).toString();
     }

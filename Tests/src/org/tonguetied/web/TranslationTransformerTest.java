@@ -169,8 +169,8 @@ public class TranslationTransformerTest {
         assertTrue(translations.contains(translation4));
         assertTrue(translations.contains(translation5));
         
-//        Translation translation = new Translation();
-//        translation.setKeyword(keywordWithNoTranslations.clone());
-//        assertTrue(translations.contains(translations));
+        Translation translation = new Translation();
+        translation.setKeyword(keywordWithNoTranslations.clone());
+        assertTrue(translations.contains(translation));
     }
 }
