@@ -58,4 +58,42 @@ public class AuditLogRecordPersistenceTest extends PersistenceTestBase
         assertTrue(tx.wasRolledBack());
         session.close();
     }
+    
+    @Test
+    public final void testImmutability()
+    {
+        Session session = getSession();
+        Transaction tx = session.beginTransaction();
+        assertTrue(tx.isActive());
+        
+        Keyword keyword = new Keyword();
+        keyword.setKeyword("test");
+        session.saveOrUpdate(keyword);
+        
+        AuditLogRecord record = new AuditLogRecord("new", keyword, "username");
+
+        session.saveOrUpdate(record);
+        session.flush();
+        tx.commit();
+        session.close();
+        
+        session = getSession();
+        tx = session.beginTransaction();
+        AuditLogRecord reloaded = 
+            (AuditLogRecord) session.get(AuditLogRecord.class, record.getId());
+        reloaded.setMessage("updated");
+        session.saveOrUpdate(reloaded);
+        session.flush();
+        tx.commit();
+        session.close();
+        
+        session = getSession();
+        tx = session.beginTransaction();
+        AuditLogRecord actual = 
+            (AuditLogRecord) session.get(AuditLogRecord.class, record.getId());
+        assertEquals("new", actual.getMessage());
+        tx.rollback();
+        assertTrue(tx.wasRolledBack());
+        session.close();
+    }
 }

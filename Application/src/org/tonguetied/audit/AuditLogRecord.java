@@ -28,6 +28,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.hibernate.annotations.Immutable;
 
 /**
  * Stateful object that contains a summary of a database transaction.
@@ -36,9 +37,10 @@ import org.apache.commons.lang.builder.ToStringStyle;
  *
  */
 @Entity
-@org.hibernate.annotations.Entity(mutable=false)
+//@org.hibernate.annotations.Entity(mutable=false)
 @NamedQuery(name=AuditLogRecord.QUERY_GET_AUDIT_LOG,
         query="from AuditLogRecord alr order by alr.created desc")
+@Immutable
 public class AuditLogRecord {
     private Long id;
     private String message;

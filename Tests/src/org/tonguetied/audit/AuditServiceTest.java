@@ -48,7 +48,7 @@ public class AuditServiceTest extends AbstractServiceTest
      * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog()}.
      */
     @Test
-    public void testGetAuditLog()
+    public final void testGetAuditLog()
     {
         AuditLogRecord record1 = new AuditLogRecord("test 1", keyword1, "user1");
         AuditLogRecord record2 = new AuditLogRecord("test 2", keyword1, "user1");
@@ -64,7 +64,7 @@ public class AuditServiceTest extends AbstractServiceTest
         assertEquals(record1, auditLog.get(2));
     }
 
-    public void setAuditService(AuditService auditService)
+    public final void setAuditService(AuditService auditService)
     {
         this.auditService = auditService;
     }
@@ -74,7 +74,7 @@ public class AuditServiceTest extends AbstractServiceTest
      * 
      * @param auditRepository the auditRepository to set
      */
-    public void setAuditRepository(AuditRepository auditRepository)
+    public final void setAuditRepository(AuditRepository auditRepository)
     {
         this.auditRepository = auditRepository;
     }
