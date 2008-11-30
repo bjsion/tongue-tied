@@ -1,9 +1,9 @@
 #labels Phase-Deploy
-Getting started with TongueTied.
+#Getting started with !TongueTied.
 
 = Introduction =
 
-Here you will learn how to set up TongueTied after you have installed it. This howto assumes you have followed the InstallationInstructions.
+Here you will learn how to set up TongueTied after you have installed it. This howto assumes you have followed the [InstallationInstructions Installation Instructions].
 
 
 = Details =
