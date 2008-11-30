@@ -60,6 +60,7 @@ public class UserRepositoryImpl extends HibernateDaoSupport implements
     public List<User> getUsers()
     {
         Query query = getSession().getNamedQuery(QUERY_GET_USERS).setCacheable(true);
+        query.setCacheable(true);
         return query.list();
     }
 

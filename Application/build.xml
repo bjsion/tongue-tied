@@ -44,6 +44,7 @@
     <property name="build.dir" value="${application.home}/builds"/>
     <property name="docs.dir" value="${application.home}/docs"/>
     <property name="generated.dir" value="${application.home}/generated"/>
+    <property name="generated.sql.dir" value="${generated.dir}/sql"/>
     <property name="docs.api.dir" value="${docs.dir}/api"/>
     <property name="docs.beandoc.dir" value="${docs.dir}/beandoc"/>
     <property name="docs.hibernate.dir" value="${docs.dir}/hibernate"/>
@@ -149,6 +150,7 @@
         <mkdir dir="${docs.dir}"/>
         <mkdir dir="${docs.beandoc.dir}"/>
         <mkdir dir="${generated.dir}"/>
+        <mkdir dir="${generated.sql.dir}"/>
         <mkdir dir="${output.dir}"/>
         <mkdir dir="${compiled.reports.dir}"/>
         <mkdir dir="${logs.dir}"/>
@@ -237,6 +239,10 @@
                 <include name="bsh.jar"/>
                 <include name="LICENSE.bsh.txt"/>
             </lib>
+            <!--lib dir="${3rdparty.home}/c3p0/0.9.1.2">
+                <include name="c3p0.jar"/>
+                <include name="LICENSE.c3p0.txt"/>
+            </lib-->
             <lib dir="${3rdparty.home}/cglib/2.2">
                 <include name="cglib-nodep-2.2.jar"/>
             </lib>
@@ -345,6 +351,10 @@
             </webinf>
             <webinf dir="${generated.dir}">
                 <include name="jdbc.properties"/>
+                <include name="**/sql/*.sql"/>
+            </webinf>
+            <webinf dir="${resources.dir}">
+                <include name="**/sql/*.sql"/>
             </webinf>
             <classes dir="${config.dir}">
                 <include name="tonguetied*.properties"/>
@@ -446,7 +456,7 @@
     -->
     <target name="gen.schema" depends="compile, schema.up.to.date" description="Generates DB schema with hbm2ddl.">
         <echo message="Generating the database schema for module ${ant.project.name}..."/>
-        <hibernatetool destdir="${generated.dir}">
+        <hibernatetool destdir="${generated.sql.dir}">
             <annotationconfiguration configurationfile="${hibernate.cfg.xml}"
                 propertyFile="${jdbc.props.file}"/>
             <hbm2ddl outputfilename="${schema.file}"
