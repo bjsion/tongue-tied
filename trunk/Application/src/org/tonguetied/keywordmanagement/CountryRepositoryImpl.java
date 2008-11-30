@@ -53,6 +53,7 @@ public class CountryRepositoryImpl extends HibernateDaoSupport implements
     public List<Country> getCountries()
     {
         Query query = getSession().getNamedQuery(Country.QUERY_GET_COUNTRIES);
+        query.setCacheable(true);
         return query.list();
     }
 

@@ -68,6 +68,7 @@ public class BundleRepositoryImpl extends HibernateDaoSupport implements
     public List<Bundle> getBundles()
     {
         Query query = getSession().getNamedQuery(QUERY_GET_BUNDLES);
+        query.setCacheable(true);
         return query.list();
     }
 

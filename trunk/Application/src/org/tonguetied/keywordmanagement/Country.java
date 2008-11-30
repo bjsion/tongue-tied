@@ -25,6 +25,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.hibernate.annotations.AccessType;
@@ -110,17 +111,17 @@ public class Country implements Comparable<Country>
     }
     
     @Override
-    public int hashCode() {
-        int result = 15;
-        
-        result = 29 * result + this.code.hashCode();
-        result = 29 * result + this.name.hashCode();
+    public int hashCode()
+    {
+        HashCodeBuilder builder = new HashCodeBuilder(15, 29);
+        builder.append(this.code).append(this.name);
 
-        return result;
+        return builder.toHashCode();
     }
     
     @Override
-    public String toString() {
+    public String toString()
+    {
         return new ReflectionToStringBuilder(this, 
                 ToStringStyle.SHORT_PREFIX_STYLE).toString();
     }

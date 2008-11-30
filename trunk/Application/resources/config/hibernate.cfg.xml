@@ -30,6 +30,7 @@
         <property name="hibernate.jdbc.batch_size">20</property>
         
         <!-- need to manually add all persistable classes -->
+        <mapping class="org.tonguetied.administration.ServerData" />
         <mapping class="org.tonguetied.audit.AuditLogRecord"/>
         <mapping class="org.tonguetied.keywordmanagement.Bundle" />
         <mapping class="org.tonguetied.keywordmanagement.Country" />

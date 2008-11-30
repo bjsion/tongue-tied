@@ -40,6 +40,7 @@ public class LanguageRepositoryImpl extends HibernateDaoSupport implements
     public List<Language> getLanguages()
     {
         Query query = getSession().getNamedQuery(QUERY_GET_LANAGUAGES);
+        query.setCacheable(true);
         return query.list();
     }
 
