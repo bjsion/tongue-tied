@@ -15,6 +15,9 @@
  */
 package org.tonguetied.audit;
 
+import static org.tonguetied.test.common.Constants.TABLE_AUDIT_LOG_RECORD;
+import static org.tonguetied.test.common.Constants.TABLE_KEYWORD;
+
 import java.util.List;
 
 import org.junit.Test;
@@ -62,6 +65,15 @@ public class AuditServiceTest extends AbstractServiceTest
         assertEquals(record3, auditLog.get(0));
         assertEquals(record2, auditLog.get(1));
         assertEquals(record1, auditLog.get(2));
+    }
+
+    /* (non-Javadoc)
+     * @see org.tonguetied.test.common.AbstractServiceTest#getTableNames()
+     */
+    @Override
+    protected String[] getTableNames()
+    {
+        return new String[] {TABLE_AUDIT_LOG_RECORD, TABLE_KEYWORD};
     }
 
     public final void setAuditService(AuditService auditService)

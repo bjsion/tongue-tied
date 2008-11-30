@@ -15,6 +15,9 @@
  */
 package org.tonguetied.usermanagement;
 
+import static org.tonguetied.test.common.Constants.TABLE_AUTHORITIES;
+import static org.tonguetied.test.common.Constants.TABLE_USER;
+
 import java.util.List;
 
 import org.junit.Test;
@@ -257,6 +260,12 @@ public class UserServiceTest extends AbstractServiceTest
         assertTrue(users.contains(user2));
     }
     
+    @Override
+    protected String[] getTableNames()
+    {
+        return new String[] {TABLE_AUTHORITIES, TABLE_USER};
+    }
+
     /**
      * @param userService the userService to set
      */

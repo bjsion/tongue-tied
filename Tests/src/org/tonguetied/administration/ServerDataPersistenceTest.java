@@ -13,27 +13,28 @@
  * License for the specific language governing permissions and limitations 
  * under the License. 
  */
-package org.tonguetied.audit;
+package org.tonguetied.administration;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.tonguetied.test.common.Constants.TABLE_AUDIT_LOG_RECORD;
-import static org.tonguetied.test.common.Constants.TABLE_KEYWORD;
+import static org.tonguetied.test.common.Constants.TABLE_SERVER_DATA;
+
+import java.util.Date;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.Test;
-import org.tonguetied.keywordmanagement.Keyword;
 import org.tonguetied.test.common.PersistenceTestBase;
 
 /**
- * Test the persistence of the {@link AuditLogRecord} object.
+ * Test the persistence of the {@link ServerData} object.
  * 
  * @author bsion
  *
  */
-public class AuditLogRecordPersistenceTest extends PersistenceTestBase
+public class ServerDataPersistenceTest extends PersistenceTestBase
 {
+    private static final Date BUILD_DATE = new Date();
 
     @Test
     public final void simplePersistence()
@@ -42,66 +43,54 @@ public class AuditLogRecordPersistenceTest extends PersistenceTestBase
         Transaction tx = session.beginTransaction();
         assertTrue(tx.isActive());
         
-        Keyword keyword = new Keyword();
-        keyword.setKeyword("test");
-        session.saveOrUpdate(keyword);
-        
-        AuditLogRecord record = new AuditLogRecord("new", keyword, "username");
+        ServerData serverData = new ServerData("2.0.1", "5684", BUILD_DATE);
 
-        session.saveOrUpdate(record);
+        session.saveOrUpdate(serverData);
         session.close();
         
         session = getSession();
         tx = session.beginTransaction();
-        AuditLogRecord reloaded = 
-            (AuditLogRecord) session.get(AuditLogRecord.class, record.getId());
-        assertEquals(record, reloaded);
+        ServerData reloaded = 
+            (ServerData) session.get(ServerData.class, serverData.getId());
+        assertEquals(serverData, reloaded);
         tx.rollback();
         assertTrue(tx.wasRolledBack());
         session.close();
     }
     
     @Test
-    public final void testImmutability()
+    public final void testImmutablity()
     {
         Session session = getSession();
         Transaction tx = session.beginTransaction();
         assertTrue(tx.isActive());
         
-        Keyword keyword = new Keyword();
-        keyword.setKeyword("test");
-        session.saveOrUpdate(keyword);
-        
-        AuditLogRecord record = new AuditLogRecord("new", keyword, "username");
+        ServerData serverData = new ServerData("2.0.1", "5684", BUILD_DATE);
 
-        session.saveOrUpdate(record);
-        session.flush();
-        tx.commit();
+        session.saveOrUpdate(serverData);
         session.close();
         
         session = getSession();
         tx = session.beginTransaction();
-        AuditLogRecord reloaded = 
-            (AuditLogRecord) session.get(AuditLogRecord.class, record.getId());
-        reloaded.setMessage("updated");
-        session.saveOrUpdate(reloaded);
-        session.flush();
-        tx.commit();
+        ServerData updated = 
+            (ServerData) session.get(ServerData.class, serverData.getId());
+        updated.setVersion("3.2");
+        session.saveOrUpdate(updated);
         session.close();
         
         session = getSession();
         tx = session.beginTransaction();
-        AuditLogRecord actual = 
-            (AuditLogRecord) session.get(AuditLogRecord.class, record.getId());
-        assertEquals("new", actual.getMessage());
+        ServerData reloaded = 
+            (ServerData) session.get(ServerData.class, serverData.getId());
+        assertEquals("2.0.1", reloaded.getVersion());
         tx.rollback();
         assertTrue(tx.wasRolledBack());
         session.close();
     }
-
+    
     @Override
     protected String[] getTableNames()
     {
-        return new String[] {TABLE_AUDIT_LOG_RECORD, TABLE_KEYWORD};
+        return new String[] {TABLE_SERVER_DATA};
     }
 }

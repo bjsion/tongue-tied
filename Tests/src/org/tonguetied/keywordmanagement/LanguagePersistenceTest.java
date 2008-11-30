@@ -17,11 +17,11 @@ package org.tonguetied.keywordmanagement;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.tonguetied.test.common.Constants.TABLE_LANGUAGE;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.Test;
-import org.tonguetied.keywordmanagement.Language;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
 import org.tonguetied.test.common.PersistenceTestBase;
 
@@ -55,5 +55,11 @@ public class LanguagePersistenceTest extends PersistenceTestBase {
         assertEquals(language, reloaded);
         tx.rollback();
         session.close();
+    }
+    
+    @Override
+    protected String[] getTableNames()
+    {
+        return new String[] {TABLE_LANGUAGE};
     }
 }

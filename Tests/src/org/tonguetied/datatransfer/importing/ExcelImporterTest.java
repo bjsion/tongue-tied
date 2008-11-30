@@ -16,6 +16,11 @@
 package org.tonguetied.datatransfer.importing;
 
 import static org.tonguetied.datatransfer.importing.Constants.TEST_DATA_DIR;
+import static org.tonguetied.test.common.Constants.TABLE_BUNDLE;
+import static org.tonguetied.test.common.Constants.TABLE_COUNTRY;
+import static org.tonguetied.test.common.Constants.TABLE_KEYWORD;
+import static org.tonguetied.test.common.Constants.TABLE_LANGUAGE;
+import static org.tonguetied.test.common.Constants.TABLE_TRANSLATION;
 
 import java.io.File;
 import java.util.List;
@@ -229,6 +234,13 @@ public class ExcelImporterTest extends AbstractServiceTest {
         assertEquals("\u661F\u671F\u516D", ((Translation)translations[3]).getValue());
     }
     
+    @Override
+    protected String[] getTableNames()
+    {
+        return new String[] {TABLE_TRANSLATION, TABLE_KEYWORD, TABLE_BUNDLE, 
+                TABLE_COUNTRY, TABLE_LANGUAGE};
+    }
+
     public void setKeywordService(KeywordService keywordService) {
         this.keywordService = keywordService;
     }

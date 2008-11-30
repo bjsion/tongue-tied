@@ -64,6 +64,7 @@ public class ConstraintTest
     {
         DependencyConstraint constraint = new DependencyConstraint();
 
+        JavaPackage administration = constraint.addPackage("org.tonguetied.administration");
         JavaPackage audit = constraint.addPackage("org.tonguetied.audit");
         JavaPackage keywordmanagement = constraint
                 .addPackage("org.tonguetied.keywordmanagement");
@@ -79,6 +80,8 @@ public class ConstraintTest
                 .addPackage("org.tonguetied.datatransfer.importing");
         JavaPackage usermanagement = constraint
                 .addPackage("org.tonguetied.usermanagement");
+        JavaPackage utilsDatabase = 
+            constraint.addPackage("org.tonguetied.utils.database");
         JavaPackage web = constraint.addPackage("org.tonguetied.web");
         JavaPackage webServlet = constraint
                 .addPackage("org.tonguetied.web.servlet");
@@ -100,6 +103,7 @@ public class ConstraintTest
         datatransfer.dependsUpon(datatransferExport);
         datatransfer.dependsUpon(datatransferImport);
         datatransfer.dependsUpon(keywordmanagement);
+        webServlet.dependsUpon(utilsDatabase);
         web.dependsUpon(usermanagement);
         web.dependsUpon(datatransfer);
         web.dependsUpon(datatransferCommon);

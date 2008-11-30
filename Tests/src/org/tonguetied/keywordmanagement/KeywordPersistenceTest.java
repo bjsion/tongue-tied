@@ -15,6 +15,8 @@
  */
 package org.tonguetied.keywordmanagement;
 
+import static org.tonguetied.test.common.Constants.*;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -182,5 +184,12 @@ public class KeywordPersistenceTest extends PersistenceTestBase {
         tx.commit();
 //        tx.rollback();
         session.close();
+    }
+    
+    @Override
+    protected String[] getTableNames()
+    {
+        return new String[] {TABLE_TRANSLATION, TABLE_KEYWORD, TABLE_BUNDLE, 
+                TABLE_COUNTRY, TABLE_LANGUAGE};
     }
 }

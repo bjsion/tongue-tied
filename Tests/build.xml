@@ -57,7 +57,9 @@
     <path id="test.classpath">
         <path refid="compile.classpath"/>
         <pathelement location="${config.dir}"/>
-        <pathelement location="${application.home}/generated"/>
+        <pathelement location="${application.home}/resources/sql"/>
+        <pathelement location="${application.home}/generated/sql"/>
+        <pathelement location="${resources.dir}/sql"/>
         <pathelement location="${build.dir}/${module.jarfile}"/>
         <pathelement location="${3rdparty.home}/bsh/2.0b4/bsh.jar"/>
         <pathelement location="${3rdparty.home}/cglib/2.2/cglib-nodep-2.2.jar"/>
@@ -78,8 +80,8 @@
     <target name="init">
         <mkdir dir="${classes.dir}"/>
         <mkdir dir="${build.dir}"/>
-        <mkdir dir="${output.dir}" />   
-        <mkdir dir="${docs.dir}"/>   
+        <mkdir dir="${output.dir}"/>
+        <mkdir dir="${docs.dir}"/>
         <mkdir dir="${data.dir}"/>
     </target>
 

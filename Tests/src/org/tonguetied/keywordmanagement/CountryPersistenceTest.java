@@ -15,15 +15,15 @@
  */
 package org.tonguetied.keywordmanagement;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.tonguetied.test.common.Constants.TABLE_COUNTRY;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.Test;
-import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.test.common.PersistenceTestBase;
-
-
-import static org.junit.Assert.*;
 
 /**
  * @author bsion
@@ -55,4 +55,9 @@ public class CountryPersistenceTest extends PersistenceTestBase {
         session.close();
     }
 
+    @Override
+    protected String[] getTableNames()
+    {
+        return new String[] {TABLE_COUNTRY};
+    }
 }

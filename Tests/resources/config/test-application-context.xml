@@ -58,7 +58,9 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         </property>
     </bean>
 
-    <bean id="auditService" autowire="byName" dependency-check="objects" class="org.tonguetied.audit.AuditServiceImpl" />
+    <bean id="administrationService" autowire="byName" dependency-check="objects" class="org.tonguetied.administration.AdministrationServiceImpl"/>
+
+    <bean id="auditService" autowire="byName" dependency-check="objects" class="org.tonguetied.audit.AuditServiceImpl"/>
     
     <bean id="dataService" dependency-check="objects" class="org.tonguetied.datatransfer.DataServiceImpl" init-method="init">
         <property name="transferRepository" ref="transferRepository"/>
@@ -88,6 +90,9 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean id="languageRepository" class="org.tonguetied.keywordmanagement.LanguageRepositoryImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+    <bean id="serverDataRepository" class="org.tonguetied.administration.ServerDataRepositoryImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
     <bean id="transferRepository" class="org.tonguetied.datatransfer.dao.TransferRepositoryImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
@@ -95,6 +100,13 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     
+    <bean id="schemaDao" class="org.tonguetied.administration.SchemaDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <!-- bean id="jdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+        <constructor-arg type="javax.sql.DataSource" ref="dataSource"></constructor-arg>
+    </bean-->
     <!-- ============================== Encryption ========================= -->
     
     <bean id="passwordEncoder" class="org.springframework.security.providers.encoding.PlaintextPasswordEncoder">
