@@ -8,7 +8,7 @@ This page details how to install and setup Tongue-Tied for use.
 
 = Details =
 
-Download the Tongue-Tied package from here.
+Download the Tongue-Tied package from here[http://code.google.com/p/tongue-tied/downloads/list].
 
 == Windows ==
   # Unzip package to a directory of your choice
