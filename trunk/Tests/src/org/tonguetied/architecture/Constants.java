@@ -34,7 +34,7 @@ public interface Constants
     static final String[] PACKAGE_FILTER = new String[] {
         "au.com.bytecode.*",
         "fmpp*", "freemarker*", "java.*", "javax.*", "org.apache.*", 
-        "org.hibernate*", "org.mortbay.*", "org.springframework.*", 
-        "org.xml.*"
+        "org.hibernate*", "org.hsqldb*", "org.mortbay.*", 
+        "org.springframework.*", "org.xml.*"
     };
 }

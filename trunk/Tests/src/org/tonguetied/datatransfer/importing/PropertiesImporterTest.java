@@ -16,6 +16,11 @@
 package org.tonguetied.datatransfer.importing;
 
 import static org.tonguetied.datatransfer.importing.Constants.TEST_DATA_DIR;
+import static org.tonguetied.test.common.Constants.TABLE_BUNDLE;
+import static org.tonguetied.test.common.Constants.TABLE_COUNTRY;
+import static org.tonguetied.test.common.Constants.TABLE_KEYWORD;
+import static org.tonguetied.test.common.Constants.TABLE_LANGUAGE;
+import static org.tonguetied.test.common.Constants.TABLE_TRANSLATION;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -25,7 +30,6 @@ import java.util.SortedSet;
 import org.apache.commons.io.FileUtils;
 import org.tonguetied.datatransfer.common.FormatType;
 import org.tonguetied.datatransfer.common.ImportParameters;
-import org.tonguetied.datatransfer.importing.PropertiesImporter;
 import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
@@ -558,6 +562,13 @@ public final class PropertiesImporterTest extends AbstractServiceTest
         final String plainString = "plain value";
         final String actual = importer.evaluateValue(plainString);
         assertEquals(plainString, actual);
+    }
+
+    @Override
+    protected String[] getTableNames()
+    {
+        return new String[] {TABLE_TRANSLATION, TABLE_KEYWORD, TABLE_BUNDLE, 
+                TABLE_COUNTRY, TABLE_LANGUAGE};
     }
 
     public void setKeywordService(KeywordService keywordService)

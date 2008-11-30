@@ -15,11 +15,16 @@
  */
 package org.tonguetied.datatransfer.dao;
 
+import static org.tonguetied.test.common.Constants.TABLE_BUNDLE;
+import static org.tonguetied.test.common.Constants.TABLE_COUNTRY;
+import static org.tonguetied.test.common.Constants.TABLE_KEYWORD;
+import static org.tonguetied.test.common.Constants.TABLE_LANGUAGE;
+import static org.tonguetied.test.common.Constants.TABLE_TRANSLATION;
+
 import java.util.List;
 
 import org.springframework.test.annotation.ExpectedException;
 import org.tonguetied.datatransfer.common.ExportParameters;
-import org.tonguetied.datatransfer.dao.TransferRepository;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
@@ -203,6 +208,13 @@ public class TransferRepositoryTest extends AbstractServiceTest {
 //        assertTrue(translations.contains(translation1_2));
 //        assertTrue(translations.contains(translation3_1));
 //        assertTrue(translations.contains(translation4_1));
+    }
+
+    @Override
+    protected String[] getTableNames()
+    {
+        return new String[] {TABLE_TRANSLATION, TABLE_KEYWORD, TABLE_BUNDLE, 
+                TABLE_COUNTRY, TABLE_LANGUAGE};
     }
 
     public void setTransferRepository(TransferRepository transferRepository) {

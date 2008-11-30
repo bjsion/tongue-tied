@@ -15,17 +15,16 @@
  */
 package org.tonguetied.keywordmanagement;
 
+import static org.tonguetied.test.common.Constants.TABLE_BUNDLE;
+import static org.tonguetied.test.common.Constants.TABLE_COUNTRY;
+import static org.tonguetied.test.common.Constants.TABLE_KEYWORD;
+import static org.tonguetied.test.common.Constants.TABLE_LANGUAGE;
+import static org.tonguetied.test.common.Constants.TABLE_TRANSLATION;
+
 import java.util.List;
 
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
-import org.tonguetied.keywordmanagement.Bundle;
-import org.tonguetied.keywordmanagement.Country;
-import org.tonguetied.keywordmanagement.Keyword;
-import org.tonguetied.keywordmanagement.KeywordService;
-import org.tonguetied.keywordmanagement.KeywordServiceImpl;
-import org.tonguetied.keywordmanagement.Language;
-import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
@@ -830,6 +829,13 @@ public class KeywordServiceTest extends AbstractServiceTest
         {
 
         }
+    }
+
+    @Override
+    protected String[] getTableNames()
+    {
+        return new String[] {TABLE_TRANSLATION, TABLE_KEYWORD, TABLE_BUNDLE, 
+                TABLE_COUNTRY, TABLE_LANGUAGE};
     }
 
     public void setKeywordService(KeywordService keywordService)

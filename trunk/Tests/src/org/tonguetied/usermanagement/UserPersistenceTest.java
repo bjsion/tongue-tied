@@ -17,14 +17,14 @@ package org.tonguetied.usermanagement;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.tonguetied.test.common.Constants.TABLE_AUTHORITIES;
+import static org.tonguetied.test.common.Constants.TABLE_USER;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.tonguetied.test.common.PersistenceTestBase;
-import org.tonguetied.usermanagement.User;
-import org.tonguetied.usermanagement.UserRight;
 import org.tonguetied.usermanagement.UserRight.Permission;
 
 
@@ -81,5 +81,11 @@ public class UserPersistenceTest extends PersistenceTestBase {
         assertTrue(user.getUserRights().contains("ROLE_USER"));
         tx.rollback();
         session.close();
+    }
+
+    @Override
+    protected String[] getTableNames()
+    {
+        return new String[] {TABLE_AUTHORITIES, TABLE_USER};
     }
 }

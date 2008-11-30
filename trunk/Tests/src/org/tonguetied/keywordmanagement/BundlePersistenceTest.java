@@ -17,21 +17,25 @@ package org.tonguetied.keywordmanagement;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.tonguetied.test.common.Constants.TABLE_BUNDLE;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.Test;
-import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.test.common.PersistenceTestBase;
 
 /**
+ * Test the persistence of the {@link Bundle} object.
+ * 
  * @author bsion
  *
  */
-public class BundlePersistenceTest extends PersistenceTestBase {
+public class BundlePersistenceTest extends PersistenceTestBase
+{
 
     @Test
-    public final void simplePersistence() {
+    public final void simplePersistence()
+    {
         Session session;
         Transaction tx;
         
@@ -54,4 +58,11 @@ public class BundlePersistenceTest extends PersistenceTestBase {
         tx.rollback();
         session.close();
     }
+    
+    @Override
+    protected String[] getTableNames()
+    {
+        return new String[] {TABLE_BUNDLE};
+    }
+
 }

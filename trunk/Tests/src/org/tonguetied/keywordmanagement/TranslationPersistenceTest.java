@@ -18,15 +18,12 @@ package org.tonguetied.keywordmanagement;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.tonguetied.test.common.Constants.TABLE_KEYWORD;
+import static org.tonguetied.test.common.Constants.TABLE_TRANSLATION;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.Test;
-import org.tonguetied.keywordmanagement.Bundle;
-import org.tonguetied.keywordmanagement.Country;
-import org.tonguetied.keywordmanagement.Keyword;
-import org.tonguetied.keywordmanagement.Language;
-import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
@@ -196,4 +193,11 @@ public class TranslationPersistenceTest extends PersistenceTestBase {
         tx.rollback();
         session.close();
     }
+    
+    @Override
+    protected String[] getTableNames()
+    {
+        return new String[] {TABLE_TRANSLATION, TABLE_KEYWORD};
+    }
+
 }

@@ -15,6 +15,9 @@
  */
 package org.tonguetied.usermanagement;
 
+import static org.tonguetied.test.common.Constants.TABLE_AUTHORITIES;
+import static org.tonguetied.test.common.Constants.TABLE_USER;
+
 import org.springframework.security.GrantedAuthority;
 import org.springframework.security.GrantedAuthorityImpl;
 import org.springframework.security.providers.encoding.PlaintextPasswordEncoder;
@@ -176,6 +179,12 @@ public class UserDetailsServiceTest extends AbstractServiceTest
     public final void testLoadUserWithNoAuthorizations()
     {
         userDetailsService.loadUserByUsername(noAuth.getUsername());
+    }
+
+    @Override
+    protected String[] getTableNames()
+    {
+        return new String[] {TABLE_AUTHORITIES, TABLE_USER};
     }
 
     /**

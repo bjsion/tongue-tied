@@ -15,11 +15,13 @@
  */
 package org.tonguetied.test.common;
 
-import java.sql.Connection;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-import org.springframework.jdbc.datasource.DataSourceUtils;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 import org.springframework.test.annotation.AbstractAnnotationAwareTransactionalTests;
 import org.tonguetied.keywordmanagement.BundleRepository;
@@ -27,7 +29,8 @@ import org.tonguetied.keywordmanagement.CountryRepository;
 import org.tonguetied.keywordmanagement.KeywordRepository;
 import org.tonguetied.keywordmanagement.LanguageRepository;
 import org.tonguetied.usermanagement.UserRepository;
-import org.tonguetied.utils.DBUtils;
+import org.tonguetied.utils.database.EmbeddedDatabaseServer;
+import org.tonguetied.utils.database.EmbeddedDatabaseServerTest;
 
 /**
  * This is the base test class for service layer tests. This class uses the test
@@ -52,8 +55,8 @@ public abstract class AbstractServiceTest extends
     private LanguageRepository languageRepository;
     private UserRepository userRepository;
     
+    private static Properties properties;
     protected static boolean hasDbBeenCreated = false;
-    private static final String BEAN_DATASOURCE = "dataSource";
     private static final String START_DB = "startDb";
 
     protected static final Logger log = Logger
@@ -65,13 +68,35 @@ public abstract class AbstractServiceTest extends
         {
             try
             {
-                DBUtils.startDatabase();
+                properties = new Properties();
+                InputStream is = null;
+                try
+                {
+                    is = EmbeddedDatabaseServerTest.class.getResourceAsStream("/jdbc.properties");
+                    properties.load(is);
+                }
+                finally
+                {
+                    IOUtils.closeQuietly(is);
+                }
+                EmbeddedDatabaseServer.startDatabase(properties);
             }
-            catch (Exception e)
+            catch (IOException e)
             {
                 log.error(e);
             }
         }
+    }
+
+    /* (non-Javadoc)
+     * @see org.springframework.test.AbstractTransactionalSpringContextTests#onSetUp()
+     */
+    @Override
+    protected void onSetUp() throws Exception
+    {
+        if (!EmbeddedDatabaseServer.isRunning())
+            EmbeddedDatabaseServer.startDatabase(properties);
+        super.onSetUp();
     }
 
     /*
@@ -83,14 +108,24 @@ public abstract class AbstractServiceTest extends
     protected void onSetUpBeforeTransaction() throws Exception
     {
         // ensure the database is clean before each test
-        DriverManagerDataSource ds = (DriverManagerDataSource) applicationContext
-                .getBean(BEAN_DATASOURCE);
-        Connection connection = DataSourceUtils.getConnection(ds);
-
         if (recreateSchema())
         {
-            DBUtils.cleanTables(connection);
-            hasDbBeenCreated = true;
+            if (!hasDbBeenCreated)
+            {
+                executeSqlScript("/hsql-schema.sql", true);
+                hasDbBeenCreated = true;
+            }
+            else
+            {
+                try
+                {
+                    deleteFromTables(getTableNames());
+                }
+                catch (BadSqlGrammarException bsge)
+                {
+                    logger.error("failed to delete tables", bsge);
+                }
+            }
         }
     }
 
@@ -104,6 +139,8 @@ public abstract class AbstractServiceTest extends
     {
         return new String[] { "classpath:/test-application-context.xml" };
     }
+    
+    protected abstract String[] getTableNames();
 
     /**
      * @return the keywordRepository
