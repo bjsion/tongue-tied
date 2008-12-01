@@ -1,8 +1,8 @@
-#summary Instructions to install Tongue-Tied
+#summary Instructions to install Tongue-Tied Beta 20080923
 
 = Introduction =
 
-This page details how to install and setup Tongue-Tied Beta 20080923 for use.
+This page details how to install and setup Tongue-Tied *Beta 20080923* for use.
 
 
 = Details =
