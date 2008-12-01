@@ -2,7 +2,7 @@
 
 = Introduction =
 
-This page details how to install and setup Tongue-Tied Beta for use.
+This page details how to install and setup Tongue-Tied Beta 20080923 for use.
 
 
 = Details =
