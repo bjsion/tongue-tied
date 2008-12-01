@@ -23,4 +23,4 @@ Download the Tongue-Tied package from [http://code.google.com/p/tongue-tied/down
 
 Now open http://localhost:8080/tonguetied (or what ever IP address you have put the server) and you should come to the login screen. The default administrator username and password is admin / admin.
 
-Next: [Getting started]
+Next: [GettingStarted Getting started]
