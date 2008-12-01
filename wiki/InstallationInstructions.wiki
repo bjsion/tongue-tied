@@ -12,10 +12,7 @@ Download the Tongue-Tied package from [http://code.google.com/p/tongue-tied/down
 
 == Windows ==
   # Unzip package to a directory of your choice
-  # Open the file `schema-export.sql` and add the following line to the top of the file:
-    {{{\c true}}}
-  # Run the batch file `startDB.bat`. This starts the in memory database
-  # Create the initial schema (you will only need to do this step once). Run the batch file `createDB.bat`
+  # Choose a database (currently supported: HSQLDB, MySQL). If you are using a MySQL database follow the instructions in the UsingMySql
   # Now start the server. Run the batch file `startServer.bat`. The server will now start up. You should see something like this to indicate that the server is ready:
 {{{
 2008-08-02 16:28:29.999::INFO:  Started SelectChannelConnector@0.0.0.0:8080
@@ -24,4 +21,6 @@ Download the Tongue-Tied package from [http://code.google.com/p/tongue-tied/down
 }}}
   
 
-Now open [http://localhost:8080/tonguetied http://localhost:8080/tonguetied] (or what ever IP address you have put the server) and you should come to the login screen. The default administrator username and password is admin / admin.
+Now open http://localhost:8080/tonguetied (or what ever IP address you have put the server) and you should come to the login screen. The default administrator username and password is admin / admin.
+
+Next: [Getting started]
