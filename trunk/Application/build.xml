@@ -312,10 +312,10 @@
             </lib>
             <lib dir="${3rdparty.home}/opencsv/1.8">
                 <include name="opencsv.jar"/>
+                <include name="LICENCE.opencsv.txt"/>
             </lib>
             <lib dir="${3rdparty.home}/oro/2.0.8">
                 <include name="jakarta-oro.jar"/>
-                <include name="LICENCE.opencsv.txt"/>
             </lib>
             <lib dir="${3rdparty.home}/sitemesh/2.3">
                 <include name="sitemesh.jar"/>
