@@ -132,6 +132,9 @@
             <property name="db.dialect" value="mysql"/>
         </ant>
         <mkdir dir="${package.dir}"/>
+        <antcall target="build.all">
+            <param name="target" value="build"/>
+        </antcall>
         <tstamp/>
         <zip destfile="${package.dir}/${version}-${DSTAMP}.zip" >
             <zipfileset dir="${3rdparty.home}/Jakarta-Commons" prefix="${version}/libs">
@@ -170,9 +173,6 @@
             </zipfileset>
             <zipfileset dir="${server.home}/resources/shellScripts" prefix="${version}">
                 <include name="startServer.bat"/>
-                <include name="startDB.bat"/>
-                <include name="createDB.bat"/>
-                <include name="sqltool.rc"/>
             </zipfileset>
             <zipfileset dir="${server.home}/resources/config" prefix="${version}">
                 <include name="log4j.properties"/>
@@ -186,9 +186,6 @@
             </zipfileset>
             <zipfileset dir="${infra.home}" prefix="${version}">
                 <include name="server.properties"/>
-            </zipfileset>
-            <zipfileset dir="${application.home}/resources/sql" prefix="${version}">
-                <include name="initial-data.sql"/>
             </zipfileset>
         </zip>
     </target>
