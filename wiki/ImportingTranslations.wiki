@@ -1,0 +1,15 @@
+#summary Importing translations.
+
+= Introduction =
+
+!TongueTied allows you to import existing resource files into the system.
+
+
+= Details =
+
+  # Select the "Import / Export" tab
+  # Select the "Import" option. *N.B.* The Languages, Countries and Resource bundles need to pre-exist in the system in order for resources to be imported.
+  # Browse for the file resource to import.
+  # Select the type of resource file you are importing e.g. Java properties, .Net resource, CSV, etc
+  # Select the state for each imported translation. Whilst this value is mandatory, it is only of value if you plan to utilise the work flow in !TongueTied.
+  # Click on the "import" button.
