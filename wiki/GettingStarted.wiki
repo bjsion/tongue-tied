@@ -24,3 +24,5 @@ Here you will learn how to set up !TongueTied after you have installed it. This 
   # Select the "New Country" option.
   # Complete the form and save.
   # Start creating your translations
+
+Next [ImportingTranslations Importing translations]
