@@ -1,0 +1,11 @@
+#summary Instructions on how to use connect TongueTied to a MySQL database.
+
+= Introduction =
+
+TongueTied requires a few steps to be performed in order to connect to a MySQL database.
+
+
+= Details =
+
+  # Download the MySQL Driver from [http://dev.mysql.com/downloads/connector/j/5.1.html here].
+  # Extract the 
