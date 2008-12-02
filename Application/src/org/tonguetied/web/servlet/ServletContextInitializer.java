@@ -79,7 +79,7 @@ public class ServletContextInitializer implements ServletContextListener
         final String dialect = props.getProperty(KEY_HIBERNATE_DIALECT);
         // shutdown the embedded database if it is running
         if (EmbeddedDatabaseServer.isEmbeddable(dialect))
-            EmbeddedDatabaseServer.shutdownDatabase();
+            EmbeddedDatabaseServer.stopDatabase();
     }
 
     /**
