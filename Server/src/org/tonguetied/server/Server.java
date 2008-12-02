@@ -266,10 +266,18 @@ public class Server
      * <li>Set the temp directory where the server will work from.</li>
      * </ul>
      * 
+     * If the temp directory is supposed to be extracted, create the directory
+     * to which it is to be extracted. The reason is because a temporary 
+     * directory will have its contents deleted when the webapp is stopped 
+     * unless either it is called "work" or it pre-existed the deployment of 
+     * the webapp.
+     *
      * @param contexts the list of handlers for this web server
      * 
      * @see ServerConstants#KEY_CONTEXT_PATH_DEF
      * @see ServerConstants#KEY_TEMP_DIR
+     * @see <a href="http://docs.codehaus.org/display/JETTY/Temporary+Directories">
+     * Temporary Directories in Jetty</a>
      */
     private void configureWebAppContexts(HandlerContainer contexts)
     {
@@ -277,7 +285,16 @@ public class Server
 
         WebAppContext context = (WebAppContext) contexts
                 .getChildHandlerByClass(WebAppContext.class);
-        context.setTempDirectory(getTempDirectory());
+        final File tempDirectory = getTempDirectory();
+        if (unpackWebArchive())
+        {
+            if (tempDirectory.mkdir())
+            {
+                if (log.isInfoEnabled())
+                    log.info("creating new directory: " + tempDirectory);
+            }
+        }
+        context.setTempDirectory(tempDirectory);
 
         Map<String, String> initParams = new HashMap<String, String>();
         // see http://docs.codehaus.org/display/JETTY/Files+locked+on+Windows
@@ -330,7 +347,7 @@ public class Server
     private File getTempDirectory()
     {
         final String tempDirStr = properties.getProperty(KEY_TEMP_DIR);
-        File tempDir = (tempDirStr == null || "".equals(tempDirStr)) ? DEFAULT_TEMP_DIR
+        final File tempDir = (tempDirStr == null || "".equals(tempDirStr)) ? DEFAULT_TEMP_DIR
                 : new File(tempDirStr);
 
         return tempDir;
