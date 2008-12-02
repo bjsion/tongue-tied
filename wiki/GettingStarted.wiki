@@ -1,4 +1,4 @@
-#summary Getting started with !TongueTied.
+#summary Getting started with TongueTied.
 #labels Phase-Deploy
 
 = Introduction =
@@ -8,7 +8,18 @@ Here you will learn how to set up !TongueTied after you have installed it. This 
 
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+!TongueTied is a resource management tool. The basic idea is that a Keyword contains translations. Each translation of a keyword is identified by a Language, Country and Bundle. 
+
+  # Once you have started up the server, login in as administrator (The default username / password is admin / admin).
+  # Create your resource bundles. 
+  # Select the "Bundles" tab. 
+  # Select the "New Bundle" option.
+  # Complete the form and save.
+  # Create a language. 
+  # Select the "Languages" tab. 
+  # Select the "New Language" option.
+  # Complete the form and save.
+  # Create your countries. 
+  # Select the "Countries" tab. 
+  # Select the "New Country" option.
+  # Complete the form and save.
