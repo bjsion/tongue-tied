@@ -102,7 +102,7 @@ public class UserValidatorTest
     }
     
     @Before
-    public void setup()
+    public void setUp()
     {
         this.userService = new UserServiceStub();
         User existing = new User("existing", "existing", "existing", "existing", "test@test.com", true, true, true, true);

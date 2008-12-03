@@ -24,7 +24,6 @@ import static org.tonguetied.web.ChangePasswordFormValidator.FIELD_OLD_PASSWORD;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -62,10 +61,6 @@ public class ChangePasswordFormValidatorTest {
         this.form.setNewRepeatedPassword(newRepeatedPassword);
         this.form.setOldPassword(oldPassword);
         this.fieldName = fieldName;
-    }
-    
-    @Before
-    public void setup() {
     }
     
     /**

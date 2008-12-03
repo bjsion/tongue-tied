@@ -76,7 +76,7 @@ public class CountryValidatorTest
     }
     
     @Before
-    public void setup() {
+    public void setUp() {
         this.keywordService = new KeywordServiceStub();
         Country existing = new Country();
         existing.setId(1256L);

@@ -37,7 +37,8 @@ public class ImporterTest {
     private TranslationState expectedState;
     
     @Before
-    public void setup() {
+    public void setUp()
+    {
         // used for testing base validate method
         importer = new Importer(keywordService) {
             /* (non-Javadoc)
