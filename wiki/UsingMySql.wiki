@@ -1,4 +1,5 @@
 #summary Instructions on how to use connect TongueTied to a MySQL database.
+#labels Phase-Deploy
 
 = Introduction =
 
