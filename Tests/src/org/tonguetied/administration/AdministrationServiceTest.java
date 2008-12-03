@@ -15,8 +15,15 @@
  */
 package org.tonguetied.administration;
 
-import static org.tonguetied.test.common.Constants.TABLES;
+import static org.tonguetied.test.common.Constants.TABLE_AUDIT_LOG_RECORD;
+import static org.tonguetied.test.common.Constants.TABLE_AUTHORITIES;
+import static org.tonguetied.test.common.Constants.TABLE_BUNDLE;
+import static org.tonguetied.test.common.Constants.TABLE_COUNTRY;
+import static org.tonguetied.test.common.Constants.TABLE_KEYWORD;
+import static org.tonguetied.test.common.Constants.TABLE_LANGUAGE;
 import static org.tonguetied.test.common.Constants.TABLE_SERVER_DATA;
+import static org.tonguetied.test.common.Constants.TABLE_TRANSLATION;
+import static org.tonguetied.test.common.Constants.TABLE_USER;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,6 +61,13 @@ import org.tonguetied.utils.database.EmbeddedDatabaseServer;
 public class AdministrationServiceTest extends AbstractServiceTest
 {
     private AdministrationService administrationService;
+    
+    public static final String[] TABLES = new String[] {
+        TABLE_AUTHORITIES, TABLE_USER, TABLE_TRANSLATION, TABLE_KEYWORD,
+        TABLE_AUDIT_LOG_RECORD, TABLE_LANGUAGE, TABLE_COUNTRY, TABLE_BUNDLE,
+        TABLE_SERVER_DATA
+    };
+    
     @Override
     protected void onSetUpBeforeTransaction() throws Exception
     {
@@ -211,7 +225,7 @@ public class AdministrationServiceTest extends AbstractServiceTest
         this.administrationService = administrationService;
     }
     
-    private class GetTableNames implements DatabaseMetaDataCallback
+    private static class GetTableNames implements DatabaseMetaDataCallback
     {
 
         public Object processMetaData(DatabaseMetaData metaData)

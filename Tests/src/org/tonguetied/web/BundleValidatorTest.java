@@ -86,7 +86,7 @@ public class BundleValidatorTest {
     }
     
     @Before
-    public void setup() {
+    public void setUp() {
         this.keywordService = new KeywordServiceStub();
         Bundle existing = new Bundle();
         existing.setId(1256L);

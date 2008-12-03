@@ -50,10 +50,4 @@ public interface Constants
     public static final String TABLE_TRANSLATION = 
         Translation.class.getSimpleName().toUpperCase();
     public static final String TABLE_AUTHORITIES = "authorities".toUpperCase();
-    
-    public static final String[] TABLES = new String[] {
-        TABLE_AUTHORITIES, TABLE_USER, TABLE_TRANSLATION, TABLE_KEYWORD,
-        TABLE_AUDIT_LOG_RECORD, TABLE_LANGUAGE, TABLE_COUNTRY, TABLE_BUNDLE,
-        TABLE_SERVER_DATA
-    };
 }

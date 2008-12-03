@@ -17,13 +17,13 @@ package org.tonguetied.web;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.tonguetied.web.ImportValidator.*;
+import static org.tonguetied.web.ImportValidator.FIELD_FILE_NAME;
+import static org.tonguetied.web.ImportValidator.FIELD_FORMAT_TYPE;
 import static org.tonguetied.web.ImportValidator.FIELD_TRANSLATION_STATE;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -86,11 +86,6 @@ public class ImportValidatorTest
         fileUploadBean.setFile(file);
         this.importBean.setFileUploadBean(fileUploadBean);
         this.fieldName = fieldName;
-    }
-
-    @Before
-    public void setup()
-    {
     }
 
     /**

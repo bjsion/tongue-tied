@@ -78,7 +78,7 @@ public class LanguageValidatorTest
     }
     
     @Before
-    public void setup()
+    public void setUp()
     {
         this.keywordService = new KeywordServiceStub();
         Language existing = new Language();
