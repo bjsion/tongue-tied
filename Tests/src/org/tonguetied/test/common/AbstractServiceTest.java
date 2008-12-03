@@ -56,15 +56,14 @@ public abstract class AbstractServiceTest extends
     private UserRepository userRepository;
     
     private static Properties properties;
-    protected static boolean hasDbBeenCreated = false;
-    private static final String START_DB = "startDb";
+    private static boolean hasDbBeenCreated = false;
 
     protected static final Logger log = Logger
             .getLogger(AbstractServiceTest.class);
 
     static
     {
-        synchronized (START_DB)
+        synchronized ("startDb")
         {
             try
             {

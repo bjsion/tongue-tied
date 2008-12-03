@@ -23,7 +23,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.tonguetied.datatransfer.common.ImportParameters;
 import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
-import org.tonguetied.keywordmanagement.KeywordService;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
 
@@ -31,8 +30,8 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
  * @author bsion
  *
  */
-public class ImporterTest {
-    private KeywordService keywordService;
+public class ImporterTest
+{
     private Importer importer;
     private TranslationState expectedState;
     
@@ -40,10 +39,8 @@ public class ImporterTest {
     public void setUp()
     {
         // used for testing base validate method
-        importer = new Importer(keywordService) {
-            /* (non-Javadoc)
-             * @see org.tonguetied.datatransfer.Importer#doImport(byte[])
-             */
+        importer = new Importer(null)
+        {
             @Override
             protected void doImport(byte[] input, TranslationState state) throws ImportException {
                 assertNotNull(state);
@@ -56,8 +53,10 @@ public class ImporterTest {
      * Test method for {@link org.tonguetied.datatransfer.importing.Importer#importData(ImportParameters)}.
      */
     @Test
-    public final void testImportDataWithNoData() {
-        try {
+    public final void testImportDataWithNoData()
+    {
+        try
+        {
             this.expectedState = TranslationState.VERIFIED;
             ImportParameters parameters = new ImportParameters();
             parameters.setData(new byte[] {});
@@ -75,8 +74,10 @@ public class ImporterTest {
      * Test method for {@link org.tonguetied.datatransfer.importing.Importer#importData(ImportParameters)}.
      */
     @Test
-    public final void testImportDataWithNull() {
-        try {
+    public final void testImportDataWithNull()
+    {
+        try
+        {
             this.expectedState = TranslationState.UNVERIFIED;
             ImportParameters parameters = new ImportParameters();
             parameters.setData(null);
@@ -84,7 +85,8 @@ public class ImporterTest {
             importer.importData(parameters);
             fail("should not have completed successfully");
         }
-        catch (ImportException ie) {
+        catch (ImportException ie)
+        {
             assertEquals(1, ie.getErrorCodes().size());
             assertEquals(ImportErrorCode.emptyData, ie.getErrorCodes().get(0));
         }
@@ -94,7 +96,8 @@ public class ImporterTest {
      * Test method for {@link org.tonguetied.datatransfer.importing.Importer#importData(ImportParameters)}.
      */
     @Test
-    public final void testImportDataWithNullState() {
+    public final void testImportDataWithNullState()
+    {
         this.expectedState = TranslationState.UNVERIFIED;
         ImportParameters parameters = new ImportParameters();
         parameters.setData(new byte[] {0, 0, 0, 1});

@@ -59,7 +59,7 @@ public abstract class TemplateTester
     private List<Translation> translations;
     private final String templateName;
     private final String outputExtension;
-    private final String[] outputExtensions;
+    private String[] outputExtensions;
     
     private static File templateDir;
     private static File outputDir;
