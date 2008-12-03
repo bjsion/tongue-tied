@@ -1,4 +1,5 @@
 #summary Instructions to install Tongue-Tied Beta 20080923
+#labels Deprecated
 
 = Introduction =
 
