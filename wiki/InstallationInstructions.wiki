@@ -12,7 +12,7 @@ Download the Tongue-Tied package from [http://code.google.com/p/tongue-tied/down
 
 == Windows ==
   # Unzip package to a directory of your choice
-  # Choose a database (currently supported: HSQLDB, MySQL). If you are using a MySQL database follow the instructions in the UsingMySql. If you are evaluating !TongueTied, you can skip this step.
+  # Choose a database (currently supported: HSQLDB, MySQL). If you are using a MySQL database follow the instructions in the [UsingMySql Using a MySQL Database]. If you are evaluating !TongueTied, you can skip this step.
   # Now start the server. Run the batch file `startServer.bat`. The server will now start up. You should see something like this to indicate that the server is ready:
 {{{
 2008-08-02 16:28:29.999::INFO:  Started SelectChannelConnector@0.0.0.0:8080
