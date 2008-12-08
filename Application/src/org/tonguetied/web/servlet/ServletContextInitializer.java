@@ -57,7 +57,6 @@ import org.tonguetied.utils.database.EmbeddedDatabaseServer;
 public class ServletContextInitializer implements ServletContextListener
 {
     private static final String DIR_WEB_INF = "/WEB-INF";
-//    private static final String DIR_CLASSES = DIR_WEB_INF + "/classes";
     private static final String DIR_SQL = DIR_WEB_INF + "/sql";
     private static final String BUILD_DATE_FORMAT = "yyyy/MM/dd hh:mm";
     private static final String KEY_SUPPORTED_LANGUAGES = "supportedLanguages";

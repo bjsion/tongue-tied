@@ -49,6 +49,34 @@ public class UserServiceTest extends AbstractServiceTest
 
         getUserRepository().saveOrUpdate(user1);
     }
+    
+    public final void testSaveUserEncodePassword()
+    {
+        final String rawPassword = "password";
+        User user = new User("test", rawPassword, "test", "test",
+                "test@test.com", true, true, true, true);
+        
+        userService.saveOrUpdate(user, true);
+        
+        User actual = getUserRepository().getUser("test");
+        assertNotNull(actual.getId());
+        assertEquals(user, actual);
+        assertFalse(rawPassword.equals(actual.getPassword()));
+    }
+
+    public final void testSaveUserDoNotEncodePassword()
+    {
+        final String rawPassword = "password";
+        User user = new User("test", rawPassword, "test", "test",
+                "test@test.com", true, true, true, true);
+        
+        userService.saveOrUpdate(user, false);
+        
+        User actual = getUserRepository().getUser("test");
+        assertNotNull(actual.getId());
+        assertEquals(user, actual);
+        assertEquals(rawPassword, actual.getPassword());
+    }
 
     /**
      * Test method for {@link UserService#getUser(String)}.
@@ -137,7 +165,7 @@ public class UserServiceTest extends AbstractServiceTest
     public final void testEncodePassword()
     {
         final String newPassword = "new";
-        userService.encodePassword(user1, newPassword);
+        ((UserServiceImpl)userService).encodePassword(user1, newPassword);
         final String[] components = UserTestUtils.demergePasswordAndSalt(user1
                 .getPassword());
         assertEquals(newPassword, components[0]);

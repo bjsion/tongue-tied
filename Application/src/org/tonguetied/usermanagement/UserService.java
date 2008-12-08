@@ -32,6 +32,15 @@ public interface UserService {
      * @param user the {@link User} to persist
      */
     void saveOrUpdate(User user);
+
+    /**
+     * Create or update a new user in the system.
+     * 
+     * @param user the {@link User} to persist
+     * @param encodePassword flag indicating if the users password should be 
+     * encoded
+     */
+    void saveOrUpdate(User user, boolean encodePassword);
     
     /**
      * Retrieve the user by business key, ie the {@link User#getUsername()}.
@@ -82,13 +91,4 @@ public interface UserService {
      */
     void changePassword(User user, final String oldPassword, final String newPassword) 
         throws AuthenticationException;
-    
-    /**
-     * Encryption the password. The method of encryption is determined by the
-     * implementing class.
-     * 
-     * @param user the {@link User} to apply the new password to
-     * @param newPassword the raw value of the new password
-     */
-    void encodePassword(User user, final String newPassword);
 }

@@ -30,7 +30,26 @@ public class ChangePasswordForm
     private String oldPassword;
     private String newPassword;
     private String newRepeatedPassword;
+    private long userId;
     
+    /**
+     * @return the userId
+     */
+    public long getUserId()
+    {
+        return userId;
+    }
+
+    /**
+     * Assign the userId.
+     *
+     * @param userId the userId to set
+     */
+    public void setUserId(final long userId)
+    {
+        this.userId = userId;
+    }
+
     /**
      * @return the oldPassword
      */
@@ -76,6 +95,7 @@ public class ChangePasswordForm
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).
+            append("userId", userId).
             append("password", "********").
             toString();
     }

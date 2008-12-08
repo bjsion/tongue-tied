@@ -37,6 +37,16 @@ public class UserServiceStub implements UserService
      */
     public void saveOrUpdate(User user)
     {
+        saveOrUpdate(user, false);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.tonguetied.service.UserService#saveOrUpdate(org.tonguetied.domain.User)
+     */
+    public void saveOrUpdate(User user, boolean encodePassword)
+    {
         users.put(user.getUsername(), user);
     }
 
