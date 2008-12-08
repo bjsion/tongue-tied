@@ -23,34 +23,31 @@ import org.springframework.security.providers.encoding.PasswordEncoder;
 
 
 /**
+ * Concrete implementation of the {@link UserService} interface.
+ * 
  * @author bsion
  *
  */
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService
+{
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     
     private static final Logger logger = 
         Logger.getLogger(UserServiceImpl.class);
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.UserService#getUser(java.lang.String)
-     */
-    public User getUser(final String username) {
+    public User getUser(final String username)
+    {
         return userRepository.getUser(username);
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.UserService#getUser(java.lang.Long)
-     */
-    public User getUser(final Long id) {
+    public User getUser(final Long id)
+    {
         return userRepository.getUser(id);
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.UserService#getUsers()
-     */
-    public List<User> getUsers() {
+    public List<User> getUsers()
+    {
         return userRepository.getUsers();
     }
 
@@ -64,9 +61,21 @@ public class UserServiceImpl implements UserService {
      * When the user is saved then a unidirectional encryption of the password 
      * is made. This involves making a hash of the password.
      */
-    public void saveOrUpdate(User user) {
+    public void saveOrUpdate(User user)
+    {
+        saveOrUpdate(user, (user.getId() == null));
+    }
+
+    /**
+     * {@inheritDoc}
+     * When the user is saved then a unidirectional encryption of the password 
+     * is made. This involves making a hash of the password.
+     */
+    public void saveOrUpdate(User user, boolean encodePassword)
+    {
         if (logger.isDebugEnabled()) logger.debug("persisting user: " + user);
-        if (user.getId() == null) {
+        if (encodePassword)
+        {
             encodePassword(user, user.getPassword());
         }
         userRepository.saveOrUpdate(user);
@@ -80,7 +89,7 @@ public class UserServiceImpl implements UserService {
      * 
      * @see #setPasswordEncoder(PasswordEncoder)
      */
-    public void encodePassword(User user, final String newPassword)
+    protected void encodePassword(User user, final String newPassword)
     {
         if (logger.isDebugEnabled()) logger.debug("endcoding user password");
         final String encoded = 

@@ -20,6 +20,8 @@
         <intercept-url pattern="/language*.*" access="ROLE_ADMIN"/>
         <intercept-url pattern="/deletekeyword.*" access="ROLE_ADMIN,ROLE_USER"/>
         <intercept-url pattern="/user*.*" access="ROLE_ADMIN"/>
+        <intercept-url pattern="/resetPassword*.*" access="ROLE_ADMIN"/>
+        <intercept-url pattern="/readOnlyUser*.*" access="ROLE_ADMIN"/>
         <intercept-url pattern="/**" access="ROLE_USER,ROLE_ADMIN,ROLE_VERIFIER" />
         <form-login login-page="/login.jsp" authentication-failure-url="/login.jsp?login_error=1"/>
         <!-- concurrent-session-control max-sessions="1" exception-if-maximum-exceeded="false"/-->

@@ -27,7 +27,6 @@ import org.springframework.validation.Validator;
  */
 public class ChangePasswordFormValidator implements Validator
 {
-    static final String FIELD_OLD_PASSWORD = "oldPassword";
     static final String FIELD_NEW_PASSWORD = "newPassword";
     static final String FIELD_NEW_REPEATED_PASSWORD = "newRepeatedPassword";
 

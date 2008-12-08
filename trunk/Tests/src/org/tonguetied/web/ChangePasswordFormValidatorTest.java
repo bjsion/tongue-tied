@@ -19,7 +19,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.tonguetied.web.ChangePasswordFormValidator.FIELD_NEW_PASSWORD;
 import static org.tonguetied.web.ChangePasswordFormValidator.FIELD_NEW_REPEATED_PASSWORD;
-import static org.tonguetied.web.ChangePasswordFormValidator.FIELD_OLD_PASSWORD;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -74,9 +73,6 @@ public class ChangePasswordFormValidatorTest {
         
         assertFalse(errors.getAllErrors().isEmpty());
         FieldError error = errors.getFieldError(fieldName);
-        if (FIELD_OLD_PASSWORD.equals(fieldName)) {
-            assertEquals(this.form.getOldPassword(), error.getRejectedValue());
-        }
         if (FIELD_NEW_PASSWORD.equals(fieldName)) {
             assertEquals(this.form.getNewPassword(), error.getRejectedValue());
         }

@@ -28,6 +28,9 @@
                         <form:errors path="repeatedPassword" cssClass="error"/>
                     </div>
                 </c:when>
+                <c:otherwise>
+                        <a href="<c:url value="resetPassword.htm"><c:param name="userId" value="${user.id}"/></c:url>"><fmt:message key="change.password"/></a>
+                </c:otherwise>
             </c:choose>
             <div>
                 <form:label path="firstName" cssClass="content"><fmt:message key="first.name"/></form:label>
