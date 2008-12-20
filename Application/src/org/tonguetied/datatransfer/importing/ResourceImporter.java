@@ -152,13 +152,13 @@ public class ResourceImporter extends AbstractSingleResourceImporter
             case 2:
                 if (isCountryCode(tokens[1]))
                 {
-                    countryCode = evaluateCountryCode(tokens[1], errorCodes);
+                    countryCode = ImporterUtils.evaluateCountryCode(tokens[1], errorCodes);
                     languageCode = LanguageCode.DEFAULT;
                 }
                 else
                 {
                     countryCode = CountryCode.DEFAULT;
-                    languageCode = evaluateLanguageCode(tokens[1], errorCodes);
+                    languageCode = ImporterUtils.evaluateLanguageCode(tokens[1], errorCodes);
                 }
                 break;
             case 3:
@@ -167,23 +167,23 @@ public class ResourceImporter extends AbstractSingleResourceImporter
                     if ("CHS".equals(tokens[2]))
                     {
                         countryCode = CountryCode.DEFAULT;
-                        languageCode = evaluateLanguageCode(LANG_CODE_CHINESE, errorCodes);
+                        languageCode = ImporterUtils.evaluateLanguageCode(LANG_CODE_CHINESE, errorCodes);
                     }
                     else if ("CHT".equals(tokens[2]))
                     {
                         countryCode = CountryCode.DEFAULT;
-                        languageCode = evaluateLanguageCode("zht", errorCodes);
+                        languageCode = ImporterUtils.evaluateLanguageCode("zht", errorCodes);
                     }
                     else
                     {
-                        countryCode = evaluateCountryCode(tokens[2], errorCodes);
-                        languageCode = evaluateLanguageCode(tokens[1], errorCodes);
+                        countryCode = ImporterUtils.evaluateCountryCode(tokens[2], errorCodes);
+                        languageCode = ImporterUtils.evaluateLanguageCode(tokens[1], errorCodes);
                     }
                 }
                 else
                 {
-                    countryCode = evaluateCountryCode(tokens[2], errorCodes);
-                    languageCode = evaluateLanguageCode(tokens[1], errorCodes);
+                    countryCode = ImporterUtils.evaluateCountryCode(tokens[2], errorCodes);
+                    languageCode = ImporterUtils.evaluateLanguageCode(tokens[1], errorCodes);
                 }
                 break;
             default:

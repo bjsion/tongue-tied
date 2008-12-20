@@ -31,10 +31,12 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
     CsvImporterTest.class,
-    ExcelDataParserTest.class,
+    ExcelLanguageCentricParserTest.class,
     ExcelImporterTest.class,
     ImporterFactoryTest.class,
     ImporterTest.class,
+    ImporterUtilsTest.class,
+    KeywordExcelParserTest.class,
     PropertiesImporterTest.class,
     ResourceImporterTest.class,
     TranslationPredicateTest.class

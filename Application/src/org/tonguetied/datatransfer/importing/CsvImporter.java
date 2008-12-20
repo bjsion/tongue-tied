@@ -111,7 +111,7 @@ public class CsvImporter extends Importer
                 country = evaluateCountry(nextLine[INDEX_COUNTRY_CODE]);
                 bundle = evaluateBundle(nextLine[INDEX_BUNDLE_NAME]);
                 translationState = 
-                    evaluateTranslationState(nextLine[INDEX_TRANSLATION_STATE]);
+                    ImporterUtils.evaluateTranslationState(nextLine[INDEX_TRANSLATION_STATE], errorCodes);
                 
                 if (!errorCodes.isEmpty())
                     throw new ImportException(errorCodes);
@@ -192,31 +192,6 @@ public class CsvImporter extends Importer
     }
 
     /**
-     * Find the {@link TranslationState} based on the string <code>code</code>.
-     * If the code is not a valid enum value then an 
-     * {@link ImportErrorCode#illegalTranslationState} is added.
-     * 
-     * @param state the string to evaluate
-     * @return the {@link TranslationState} matching <code>state</code> or 
-     * <code>null</code> if no match is found
-     */
-    private TranslationState evaluateTranslationState(final String state)
-    {
-        TranslationState translationState = null;
-        try
-        {
-            translationState = TranslationState.valueOf(state);
-            if (logger.isDebugEnabled())
-                logger.debug("translation state = " + state);
-        }
-        catch (IllegalArgumentException iae)
-        {
-            errorCodes.add(ImportErrorCode.illegalTranslationState);
-        }
-        return translationState;
-    }
-
-    /**
      * Process the value to be stored
      * 
      * @param value the value to be processed
@@ -242,7 +217,7 @@ public class CsvImporter extends Importer
     private Country evaluateCountry(final String code)
     {
         Country country = null;
-        CountryCode countryCode = evaluateCountryCode(code, errorCodes);
+        CountryCode countryCode = ImporterUtils.evaluateCountryCode(code, errorCodes);
         if (countryCode != null)
         {
             country = getKeywordService().getCountry(countryCode);
@@ -266,7 +241,7 @@ public class CsvImporter extends Importer
     private Language evaluateLanguage(final String code)
     {
         Language language = null;
-        LanguageCode languageCode = evaluateLanguageCode(code, errorCodes);
+        LanguageCode languageCode = ImporterUtils.evaluateLanguageCode(code, errorCodes);
         if (languageCode != null)
         {
             language = getKeywordService().getLanguage(languageCode);

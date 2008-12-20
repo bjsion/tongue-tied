@@ -49,7 +49,7 @@ import org.tonguetied.test.common.AbstractServiceTest;
  * @author bsion
  *
  */
-public class ExcelDataParserTest extends AbstractServiceTest {
+public class ExcelLanguageCentricParserTest extends AbstractServiceTest {
     
     private Language defaultLanguage;
     private Language hebrew;
@@ -100,7 +100,7 @@ public class ExcelDataParserTest extends AbstractServiceTest {
         defaultCountry.setName("Default");
         
         southAfrica = new Country();
-        southAfrica.setCode(CountryCode.SA);
+        southAfrica.setCode(CountryCode.ZA);
         southAfrica.setName("South Africa");
         
         taiwan = new Country();
@@ -160,11 +160,11 @@ public class ExcelDataParserTest extends AbstractServiceTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.datatransfer.importing.ExcelDataParser#processRecord(org.apache.poi.hssf.record.Record)}.
+     * Test method for {@link org.tonguetied.datatransfer.importing.ExcelLanguageCentricParser#processRecord(org.apache.poi.hssf.record.Record)}.
      */
     @Test
     public final void testProcessRecord() throws Exception {
-        ExcelDataParser parser = new ExcelDataParser(keywordService);
+        ExcelLanguageCentricParser parser = new ExcelLanguageCentricParser(keywordService);
         InputStream is = null;
         try {
             // create a new file input stream with the input file specified

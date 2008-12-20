@@ -24,7 +24,8 @@ import org.tonguetied.keywordmanagement.KeywordService;
  * @author bsion
  *
  */
-public class ImporterFactory {
+public class ImporterFactory
+{
     
     /**
      * Factory method to create the appropriate <code>Importer</code>.
@@ -38,7 +39,9 @@ public class ImporterFactory {
     {
         Importer importer = null;
         
-        switch (formatType) {
+        ExcelParser parser;
+        switch (formatType)
+        {
             case csv:
                 importer = new CsvImporter(keywordService);
                 break;
@@ -49,8 +52,12 @@ public class ImporterFactory {
                 importer = new ResourceImporter(keywordService);
                 break;
             case xls:
+                parser = new ExcelKeywordParser(keywordService);
+                importer = new ExcelImporter(parser, keywordService);
+                break;
             case xlsLanguage:
-                importer = new ExcelImporter(keywordService);
+                parser = new ExcelLanguageCentricParser(keywordService);
+                importer = new ExcelImporter(parser, keywordService);
                 break;
         }
         

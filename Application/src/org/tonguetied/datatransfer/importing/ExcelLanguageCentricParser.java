@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.apache.poi.hssf.eventusermodel.HSSFListener;
 import org.apache.poi.hssf.record.BOFRecord;
 import org.apache.poi.hssf.record.BoundSheetRecord;
 import org.apache.poi.hssf.record.LabelSSTRecord;
@@ -29,6 +28,8 @@ import org.apache.poi.hssf.record.NumberRecord;
 import org.apache.poi.hssf.record.Record;
 import org.apache.poi.hssf.record.RowRecord;
 import org.apache.poi.hssf.record.SSTRecord;
+import org.tonguetied.datatransfer.common.FormatType;
+import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
@@ -41,15 +42,16 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
 
 /**
- * This class basically acts as an excel spreadsheet parser for generating a 
- * {@link Keyword} map. All cells are parsed and a map of {@link Keyword}s with
- * {@link Translation}s are built. This {@link Map} can then be processed 
- * accordingly.
+ * This class parses excel spreadsheets in the format for 
+ * {@link FormatType#xlsLanguage}. A map of {@link Keyword}s and their 
+ * {@link Translation}s are built by processing each cell of the spread sheet.
+ * 
  * 
  * @author bsion
  *
  */
-public class ExcelDataParser implements HSSFListener {
+public class ExcelLanguageCentricParser implements ExcelParser
+{
     private SSTRecord sstrec;
     private List<Language> languages;
     private Map<String, Keyword> keywords;
@@ -57,18 +59,21 @@ public class ExcelDataParser implements HSSFListener {
     private Translation baseTranslation;
     private short lastColOfRow;
     private KeywordService keywordService;
+    private List<ImportErrorCode> errorCodes;
     
-    private static final Logger logger = Logger.getLogger(ExcelDataParser.class);
+    private static final Logger logger = Logger.getLogger(ExcelLanguageCentricParser.class);
 
     /**
      * Create a new instance of ExcelDataParser.
      * 
      * @param keywordService
      */
-    public ExcelDataParser(KeywordService keywordService) {
+    public ExcelLanguageCentricParser(KeywordService keywordService)
+    {
         this.languages = new ArrayList<Language>();
         this.keywords = new HashMap<String, Keyword>();
         this.keywordService = keywordService;
+        this.errorCodes = new ArrayList<ImportErrorCode>();
     }
 
     /**
@@ -76,11 +81,14 @@ public class ExcelDataParser implements HSSFListener {
      * 
      * @param record The record that was found while reading.
      */
-    public void processRecord(Record record) {
-        if (record == null) {
+    public void processRecord(Record record)
+    {
+        if (record == null)
+        {
             if (logger.isInfoEnabled()) logger.info("no record to process");
         }
-        else {
+        else
+        {
             switch (record.getSid())
             {
                 // the BOFRecord can represent either the beginning of a sheet 
@@ -143,10 +151,12 @@ public class ExcelDataParser implements HSSFListener {
                     if (!(record instanceof LabelSSTRecord))
                         throw new ImportException("unknown excel element", null);
                     final LabelSSTRecord lrec = (LabelSSTRecord) record;
-                    if (lrec.getRow() == 0) { 
+                    if (lrec.getRow() == 0)
+                    { 
                         processHeader(lrec);
                     }
-                    else {
+                    else
+                    {
                         if (lrec.getColumn() == 0) {
                             String keywordStr = 
                                 sstrec.getString(lrec.getSSTIndex()).getString();
@@ -197,13 +207,14 @@ public class ExcelDataParser implements HSSFListener {
                     }
                     break;
             }
-        }       
+        }
     }
 
     /**
      * @param keywordStr
      */
-    private void loadKeyword(String keywordStr) {
+    private void loadKeyword(final String keywordStr)
+    {
         keyword = keywords.get(keywordStr);
         if (keyword == null) {
             if (logger.isDebugEnabled())
@@ -221,25 +232,37 @@ public class ExcelDataParser implements HSSFListener {
      * Column 4..n Languages
      * @param lrec
      */
-    private void processHeader(LabelSSTRecord lrec) {
-        if (lrec.getColumn() > 3) {
+    private void processHeader(LabelSSTRecord lrec)
+    {
+        if (lrec.getColumn() > 3)
+        {
             String colHeader = sstrec.getString(lrec.getSSTIndex()).getString();
             String[] headers = colHeader.split(":");
             LanguageCode code = LanguageCode.valueOf(headers[0]);
             Language language;
-            if (LanguageCode.zht == code) {
+            if (LanguageCode.zht == code)
+            {
                 language = new Language();
                 language.setCode(code);
                 language.setName("Traditional Chinese");
             }
-            else {
+            else
+            {
                 language = keywordService.getLanguage(code);
             }
             languages.add(language);
         }
     }
 
-    private boolean isLastColumn(short columnNum) {
+    /**
+     * Determine if the column is the last column of the row in the spreadsheet.
+     * 
+     * @param columnNum the column number to evaluate
+     * @return <code>true</code> if the column is the last column, 
+     * <code>false</code> otherwise
+     */
+    public boolean isLastColumn(final short columnNum)
+    {
         return lastColOfRow-1 == columnNum;
     }
 
@@ -247,16 +270,18 @@ public class ExcelDataParser implements HSSFListener {
      * @return the list of {@link Language}s used in this file, or an empty 
      * list if no {@link Language}s were specified
      */
-    protected List<Language> getLanguages() {
+    protected List<Language> getLanguages()
+    {
         return this.languages;
     }
 
-    /**
-     * @return map of {@link Keyword}s generated from the parsing, using the 
-     * keyword as the map key. An empty map is returned if no 
-     * {@linkplain Keyword}s were generated
-     */
-    public Map<String, Keyword> getKeywords() {
+    public List<ImportErrorCode> getErrorCodes()
+    {
+        return errorCodes;
+    }
+
+    public Map<String, Keyword> getKeywords()
+    {
         return keywords;
     }
 }
