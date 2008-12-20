@@ -170,17 +170,17 @@ public class PropertiesImporter extends AbstractSingleResourceImporter
             case 2:
                 if (isCountryCode(tokens[1]))
                 {
-                    countryCode = evaluateCountryCode(tokens[1], errorCodes);
+                    countryCode = ImporterUtils.evaluateCountryCode(tokens[1], errorCodes);
                     languageCode = LanguageCode.DEFAULT;
                 }
                 else {
                     countryCode = CountryCode.DEFAULT;
-                    languageCode = evaluateLanguageCode(tokens[1], errorCodes);
+                    languageCode = ImporterUtils.evaluateLanguageCode(tokens[1], errorCodes);
                 }
                 break;
             case 3:
-                countryCode = evaluateCountryCode(tokens[2], errorCodes);
-                languageCode = evaluateLanguageCode(tokens[1], errorCodes);
+                countryCode = ImporterUtils.evaluateCountryCode(tokens[2], errorCodes);
+                languageCode = ImporterUtils.evaluateLanguageCode(tokens[1], errorCodes);
                 break;
             default:
                 errorCodes.add(ImportErrorCode.invalidNameFormat);
