@@ -41,7 +41,8 @@
 .menuList li.selected ul.submenu {
     display: block;
     position: absolute;
-    margin: 25px 0 0 -10px;
+    left: 0;
+    margin: 25px 0 0 5px;
 }
 
 .menuList li.selected ul.submenu a {
