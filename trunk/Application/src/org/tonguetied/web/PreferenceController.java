@@ -52,13 +52,15 @@ public class PreferenceController extends SimpleFormController {
     private static final Logger logger = 
         Logger.getLogger(PreferenceController.class);
 
-    public PreferenceController() {
+    public PreferenceController()
+    {
         setCommandClass(PreferenceForm.class);
     }
     
     @Override
     protected Object formBackingObject(HttpServletRequest request) 
-            throws Exception {
+            throws Exception
+    {
         return viewPreferences;
     }
 
@@ -66,7 +68,8 @@ public class PreferenceController extends SimpleFormController {
     protected ModelAndView onSubmit(HttpServletRequest request, 
                                     HttpServletResponse response,
                                     Object command,
-                                    BindException errors) throws Exception {
+                                    BindException errors) throws Exception
+    {
         if (logger.isDebugEnabled()) 
             logger.debug("setting view preferences");
 
@@ -88,7 +91,8 @@ public class PreferenceController extends SimpleFormController {
     @Override
     protected void initBinder(HttpServletRequest request,
                               ServletRequestDataBinder binder) 
-            throws Exception {
+            throws Exception
+    {
         binder.registerCustomEditor(List.class, "selectedLanguages", new CustomCollectionEditor(List.class){
             @Override
             protected Object convertElement(Object element) {
@@ -129,7 +133,8 @@ public class PreferenceController extends SimpleFormController {
      * 
      * @param keywordService the {@link KeywordService} to set.
      */
-    public void setKeywordService(KeywordService keywordService) {
+    public void setKeywordService(KeywordService keywordService)
+    {
         this.keywordService = keywordService;
     }
 
@@ -138,7 +143,8 @@ public class PreferenceController extends SimpleFormController {
      * 
      * @param viewPreferences the viewPreferences to set
      */
-    public void setViewPreferences(PreferenceForm viewPreferences) {
+    public void setViewPreferences(PreferenceForm viewPreferences)
+    {
         this.viewPreferences = viewPreferences;
     }
 }

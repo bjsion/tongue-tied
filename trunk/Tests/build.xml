@@ -51,7 +51,9 @@
         <pathelement location="${3rdparty.home}/POI/3.0.2/poi.jar"/>
         <pathelement location="${3rdparty.home}/Spring/spring-security/2.0.1/spring-security-core.jar"/>
         <pathelement location="${3rdparty.home}/xmlunit/1.2/xmlunit.jar"/>
+        <pathelement location="${3rdparty.home}/bsh/2.0b4/bsh.jar"/>
         <pathelement location="${3rdparty.home}/opencsv/1.8/opencsv.jar"/>
+        <pathelement location="${3rdparty.home}/Jetty/6.1.9/servlet-api-2.5.jar"/>
     </path>
     
     <path id="test.classpath">
@@ -61,7 +63,6 @@
         <pathelement location="${application.home}/generated/sql"/>
         <pathelement location="${resources.dir}/sql"/>
         <pathelement location="${build.dir}/${module.jarfile}"/>
-        <pathelement location="${3rdparty.home}/bsh/2.0b4/bsh.jar"/>
         <pathelement location="${3rdparty.home}/cglib/2.2/cglib-nodep-2.2.jar"/>
         <pathelement location="${3rdparty.home}/dom4j/1.6.1/jaxen-1.1-beta-7.jar"/>
         <pathelement location="${3rdparty.home}/ehcache/1.4.1/ehcache.jar"/>

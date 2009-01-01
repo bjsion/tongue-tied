@@ -42,7 +42,7 @@ function activateMenu(items) {
     }
      
     // more than one found, use cookies
-    if (found > 1) {  
+    if (found > 1 || found == 0) {  
         var menuSelected = getCookie("menuSelected"); 
         if (items[menuSelected].parentNode.className == "submenu") {
             items[menuSelected].firstChild.className="selected";

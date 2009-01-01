@@ -34,6 +34,7 @@ import org.junit.runners.Suite.SuiteClasses;
     BundleSupportTest.class,
     BundleValidatorTest.class,
     ChangePasswordFormValidatorTest.class,
+    CookieUtilsTest.class,
     CountryCodeSupportTest.class,
     CountrySupportTest.class,
     CountryValidatorTest.class,
