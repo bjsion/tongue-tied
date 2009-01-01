@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -80,6 +81,13 @@ public class MainController extends MultiActionController {
     {
         List<Keyword> keywords;
         String parameter = request.getParameter(SHOW_ALL);
+        Cookie cookie = CookieUtils.getCookie(request, "menuSelected");
+        if (cookie == null)
+        {
+            cookie = CookieUtils.createCookie(request, "menuSelected", "1");
+            response.addCookie(cookie);
+        }
+        
         boolean showAll;
         if (parameter != null) {
             showAll = Boolean.parseBoolean(parameter);
