@@ -1,0 +1,6 @@
+import.test.five,"",DEFAULT,Default(English),DEFAULT,Default,bundle1,UNVERIFIED,"some text, with ! reserved chars # ""all, good"""
+import.test.four,"the context",DEFAULT,Default(English),DEFAULT,Default,bundle1,UNVERIFIED,"a line break
+in the value"
+import.test.one,"some context",DEFAULT,Default(English),DEFAULT,Default,bundle1,UNVERIFIED,"Value 1"
+import.test.three,"a context, with "reserved" chars",DEFAULT,Default(English),DEFAULT,Default,bundle1,UNVERIFIED,"new value 3"
+import.test.two,"",DEFAULT,Default(English),DEFAULT,Default,bundle1,UNVERIFIED,""
