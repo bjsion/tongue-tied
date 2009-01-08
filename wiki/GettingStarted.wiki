@@ -3,7 +3,7 @@
 
 = Introduction =
 
-Here you will learn how to set up !TongueTied after you have installed it. This howto assumes you have followed the [InstallationInstructions Installation Instructions].
+Here you will learn how to set up !TongueTied after you have installed it. This howto assumes you have followed the [InstallationInstructions Installation Instructions] and that the !TongueTied server is running.
 
 
 = Details =
