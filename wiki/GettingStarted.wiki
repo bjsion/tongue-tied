@@ -8,9 +8,9 @@ Here you will learn how to set up !TongueTied after you have installed it. This 
 
 = Details =
 
-!TongueTied is a resource management tool. The basic idea is that a Keyword contains translations. Each translation of a keyword is identified by a Language, Country and Bundle. The default Language, Country and Bundle are already set up.
+!TongueTied is a resource management tool. The basic idea is that a Keyword contains translations. Each translation of a keyword is identified by a Language, Country and Bundle. The default Language, Country and Bundle are already set up. Follow these instructions to set up additional Bundles, Countries and Languages.
 
-  # Once you have started up the server, login in as administrator (The default username / password is admin / admin).
+  # Login in as an administrator (The default username / password is admin / admin).
   # Create your resource bundles. 
   # Select the "Bundles" tab. 
   # Select the "New Bundle" option.
@@ -25,4 +25,4 @@ Here you will learn how to set up !TongueTied after you have installed it. This 
   # Complete the form and save.
   # Start creating your translations
 
-Next [ImportingTranslations Importing translations]
+Next: [ImportingTranslations Importing translations]
