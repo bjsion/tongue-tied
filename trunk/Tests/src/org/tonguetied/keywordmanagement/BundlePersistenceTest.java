@@ -17,7 +17,7 @@ package org.tonguetied.keywordmanagement;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.tonguetied.test.common.Constants.TABLE_BUNDLE;
+import static org.tonguetied.keywordmanagement.Bundle.TABLE_BUNDLE;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;

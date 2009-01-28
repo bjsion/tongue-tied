@@ -15,7 +15,11 @@
  */
 package org.tonguetied.keywordmanagement;
 
-import static org.tonguetied.test.common.Constants.*;
+import static org.tonguetied.keywordmanagement.Bundle.TABLE_BUNDLE;
+import static org.tonguetied.keywordmanagement.Country.TABLE_COUNTRY;
+import static org.tonguetied.keywordmanagement.Keyword.TABLE_KEYWORD;
+import static org.tonguetied.keywordmanagement.Language.TABLE_LANGUAGE;
+import static org.tonguetied.keywordmanagement.Translation.TABLE_TRANSLATION;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

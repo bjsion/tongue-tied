@@ -17,8 +17,8 @@ package org.tonguetied.usermanagement;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.tonguetied.test.common.Constants.TABLE_AUTHORITIES;
-import static org.tonguetied.test.common.Constants.TABLE_USER;
+import static org.tonguetied.usermanagement.User.TABLE_AUTHORITIES;
+import static org.tonguetied.usermanagement.User.TABLE_USER;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;

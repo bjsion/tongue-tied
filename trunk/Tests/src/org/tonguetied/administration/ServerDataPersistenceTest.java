@@ -17,7 +17,6 @@ package org.tonguetied.administration;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.tonguetied.test.common.Constants.TABLE_SERVER_DATA;
 
 import java.util.Date;
 
@@ -91,6 +90,6 @@ public class ServerDataPersistenceTest extends PersistenceTestBase
     @Override
     protected String[] getTableNames()
     {
-        return new String[] {TABLE_SERVER_DATA};
+        return new String[] {ServerData.TABLE_SERVER_DATA};
     }
 }

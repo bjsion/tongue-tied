@@ -17,8 +17,8 @@ package org.tonguetied.audit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.tonguetied.test.common.Constants.TABLE_AUDIT_LOG_RECORD;
-import static org.tonguetied.test.common.Constants.TABLE_KEYWORD;
+import static org.tonguetied.audit.AuditLogRecord.TABLE_AUDIT_LOG_RECORD;
+import static org.tonguetied.keywordmanagement.Keyword.TABLE_KEYWORD;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;

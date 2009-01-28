@@ -15,8 +15,8 @@
  */
 package org.tonguetied.usermanagement;
 
-import static org.tonguetied.test.common.Constants.TABLE_AUTHORITIES;
-import static org.tonguetied.test.common.Constants.TABLE_USER;
+import static org.tonguetied.usermanagement.User.TABLE_AUTHORITIES;
+import static org.tonguetied.usermanagement.User.TABLE_USER;
 
 import java.util.List;
 
