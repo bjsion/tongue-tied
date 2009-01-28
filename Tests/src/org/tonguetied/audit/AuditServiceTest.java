@@ -15,8 +15,8 @@
  */
 package org.tonguetied.audit;
 
-import static org.tonguetied.test.common.Constants.TABLE_AUDIT_LOG_RECORD;
-import static org.tonguetied.test.common.Constants.TABLE_KEYWORD;
+import static org.tonguetied.audit.AuditLogRecord.TABLE_AUDIT_LOG_RECORD;
+import static org.tonguetied.keywordmanagement.Keyword.TABLE_KEYWORD;
 
 import java.util.List;
 

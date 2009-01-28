@@ -17,7 +17,7 @@ package org.tonguetied.keywordmanagement;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.tonguetied.test.common.Constants.TABLE_COUNTRY;
+import static org.tonguetied.keywordmanagement.Country.TABLE_COUNTRY;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;

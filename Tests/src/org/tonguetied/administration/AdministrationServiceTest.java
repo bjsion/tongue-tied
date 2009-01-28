@@ -15,15 +15,15 @@
  */
 package org.tonguetied.administration;
 
-import static org.tonguetied.test.common.Constants.TABLE_AUDIT_LOG_RECORD;
-import static org.tonguetied.test.common.Constants.TABLE_AUTHORITIES;
-import static org.tonguetied.test.common.Constants.TABLE_BUNDLE;
-import static org.tonguetied.test.common.Constants.TABLE_COUNTRY;
-import static org.tonguetied.test.common.Constants.TABLE_KEYWORD;
-import static org.tonguetied.test.common.Constants.TABLE_LANGUAGE;
-import static org.tonguetied.test.common.Constants.TABLE_SERVER_DATA;
-import static org.tonguetied.test.common.Constants.TABLE_TRANSLATION;
-import static org.tonguetied.test.common.Constants.TABLE_USER;
+import static org.tonguetied.administration.ServerData.TABLE_SERVER_DATA;
+import static org.tonguetied.audit.AuditLogRecord.TABLE_AUDIT_LOG_RECORD;
+import static org.tonguetied.keywordmanagement.Bundle.TABLE_BUNDLE;
+import static org.tonguetied.keywordmanagement.Country.TABLE_COUNTRY;
+import static org.tonguetied.keywordmanagement.Keyword.TABLE_KEYWORD;
+import static org.tonguetied.keywordmanagement.Language.TABLE_LANGUAGE;
+import static org.tonguetied.keywordmanagement.Translation.TABLE_TRANSLATION;
+import static org.tonguetied.usermanagement.User.TABLE_AUTHORITIES;
+import static org.tonguetied.usermanagement.User.TABLE_USER;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -124,7 +124,7 @@ public class AdministrationServiceTest extends AbstractServiceTest
                 jdbcTemplate.getDataSource(), new GetTableNames());
         assertEquals(TABLES.length, tables.size());
         for (int i=0; i < TABLES.length; i++)
-            assertTrue(tables.contains(TABLES[i]));
+            assertTrue("table "+TABLES[i]+" not found", tables.contains(TABLES[i].toUpperCase()));
         User admin = getUserRepository().getUser("admin");
         assertNotNull(admin);
         Language language = getLanguageRepository().getLanguage(LanguageCode.DEFAULT);
