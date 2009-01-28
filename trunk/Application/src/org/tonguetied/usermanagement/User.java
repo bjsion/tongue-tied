@@ -30,6 +30,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
@@ -50,15 +51,16 @@ import org.springframework.security.GrantedAuthorityImpl;
 import org.springframework.security.userdetails.UserDetails;
 
 /**
- * A user of the system.
+ * A built in user of the system.
  * 
  * @author bsion
  * 
  */
 @Entity
 @AccessType("property")
-@NamedQuery(name = User.QUERY_GET_USERS, query = "from User u order by u.username")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@NamedQuery(name=User.QUERY_GET_USERS, query = "from User u order by u.username")
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+@Table(name=User.TABLE_USER)
 public class User implements UserDetails
 {
     private Long id;
@@ -85,6 +87,8 @@ public class User implements UserDetails
     public static final String FIELD_PASSWORD = "password";
     public static final String FIELD_REPEATED_PASSWORD = "repeatedPassword";
 
+    public static final String TABLE_USER = "internal_user";
+    public static final String TABLE_AUTHORITIES = "authorities";
     protected static final String QUERY_GET_USERS = "get.users";
 
     private static final long serialVersionUID = -7800860686467033859L;
@@ -132,7 +136,7 @@ public class User implements UserDetails
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     public Long getId()
     {
         return id;
@@ -269,11 +273,11 @@ public class User implements UserDetails
     /**
      * @return the set of authorized permissions granted to a User
      */
-    @CollectionOfElements(fetch = FetchType.LAZY)
-    @Sort(type = SortType.NATURAL)
-    @JoinTable(name = "authorities", joinColumns = @JoinColumn(name = "userid"))
+    @CollectionOfElements(fetch=FetchType.LAZY)
+    @Sort(type=SortType.NATURAL)
+    @JoinTable(name=TABLE_AUTHORITIES,joinColumns=@JoinColumn(name="user_id"))
     @Cascade(CascadeType.ALL)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
     public SortedSet<UserRight> getUserRights()
     {
         return userRights;
@@ -403,7 +407,7 @@ public class User implements UserDetails
      * @return the version
      */
     @Version
-    @Column(name = "OPTLOCK")
+    @Column(name = "optlock")
     public Integer getVersion()
     {
         return version;

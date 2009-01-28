@@ -63,7 +63,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
                           "translation.country, " +
                           "translation.bundle")
 })
-@Table(name="Translation",uniqueConstraints={@UniqueConstraint(columnNames={"keyword_id","language_id","country_id","bundle_id"})})
+@Table(name=Translation.TABLE_TRANSLATION,uniqueConstraints={@UniqueConstraint(columnNames={"keyword_id","language_id","country_id","bundle_id"})})
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class Translation implements Cloneable, Comparable<Translation>
 {
@@ -75,9 +75,10 @@ public class Translation implements Cloneable, Comparable<Translation>
     private Keyword keyword;
     private TranslationState state;
     
-    // This attribute is used for optimistic concurrency control in DB    
+    // This attribute is used for optimistic concurrency control in DB
     private Integer version;
     
+    public static final String TABLE_TRANSLATION = "translation";
     /**
      * Name of the query to search for translations.
      */
@@ -87,7 +88,8 @@ public class Translation implements Cloneable, Comparable<Translation>
      * Create a new instance of Translation. This constructor initialises all
      * the required fields.
      */
-    public Translation() {
+    public Translation()
+    {
         this.state = TranslationState.UNVERIFIED;
     }
     
@@ -117,53 +119,65 @@ public class Translation implements Cloneable, Comparable<Translation>
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    public Long getId() {
+    public Long getId()
+    {
         return id;
     }
-    public void setId(final Long id) {
+    public void setId(final Long id)
+    {
         this.id = id;
     }
     
     @OneToOne(cascade=CascadeType.PERSIST)
-    @JoinColumn(name="BUNDLE_ID")
-    public Bundle getBundle() {
-    	return bundle;
+    @JoinColumn(name="bundle_id")
+    public Bundle getBundle()
+    {
+        return bundle;
     }
-    public void setBundle(final Bundle bundle) {
-    	this.bundle = bundle;
+    public void setBundle(final Bundle bundle)
+    {
+        this.bundle = bundle;
     }
     
     @OneToOne(cascade=CascadeType.PERSIST)
-    @JoinColumn(name="COUNTRY_ID")
-    public Country getCountry() {
-    	return country;
+    @JoinColumn(name="country_id")
+    public Country getCountry()
+    {
+        return country;
     }
-    public void setCountry(final Country country) {
-    	this.country = country;
+    public void setCountry(final Country country)
+    {
+        this.country = country;
     }
 
     @ManyToOne
-    @JoinColumn(name="KEYWORD_ID",insertable=false,updatable=false)
-    public Keyword getKeyword() {
-    	return keyword;
+    @JoinColumn(name="keyword_id",insertable=false,updatable=false)
+    public Keyword getKeyword()
+    {
+        return keyword;
     }
-    public void setKeyword(final Keyword keyword) {
-    	this.keyword = keyword;
+    public void setKeyword(final Keyword keyword)
+    {
+        this.keyword = keyword;
     }
     
     @OneToOne(cascade=CascadeType.PERSIST)
-    @JoinColumn(name="LANGUAGE_ID")
-    public Language getLanguage() {
-    	return language;
+    @JoinColumn(name="language_id")
+    public Language getLanguage()
+    {
+        return language;
     }
-    public void setLanguage(final Language language) {
-    	this.language = language;
+    public void setLanguage(final Language language)
+    {
+        this.language = language;
     }
-    public String getValue() {
-    	return value;
+    public String getValue()
+    {
+        return value;
     }
-    public void setValue(final String value) {
-    	this.value = value;
+    public void setValue(final String value)
+    {
+        this.value = value;
     }
     
     /**
@@ -171,14 +185,16 @@ public class Translation implements Cloneable, Comparable<Translation>
      */
     @Column(nullable=false,length=10)
     @Enumerated(EnumType.STRING)
-    public TranslationState getState() {
+    public TranslationState getState()
+    {
         return state;
     }
     
     /**
      * @param state the {@link TranslationState} to set
      */
-    public void setState(final TranslationState state) {
+    public void setState(final TranslationState state)
+    {
         this.state = state;
     }
     
@@ -188,8 +204,9 @@ public class Translation implements Cloneable, Comparable<Translation>
      * @return the version
      */
     @Version
-    @Column(name="OPTLOCK")
-    public Integer getVersion() {
+    @Column(name="optlock")
+    public Integer getVersion()
+    {
         return version;
     }
 
@@ -198,7 +215,8 @@ public class Translation implements Cloneable, Comparable<Translation>
      * 
      * @param version the version to set
      */
-    public void setVersion(Integer version) {
+    public void setVersion(Integer version)
+    {
         this.version = version;
     }
 
@@ -217,7 +235,8 @@ public class Translation implements Cloneable, Comparable<Translation>
     }
     
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj)
+    {
         boolean isEqual = false;
         // a good optimization
         if (this == obj)
@@ -242,7 +261,8 @@ public class Translation implements Cloneable, Comparable<Translation>
     }
     
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         HashCodeBuilder builder = new HashCodeBuilder(33, 19);
         builder.append(keyword).append(bundle).append(country).append(language).
             append(value).append(state);
@@ -255,19 +275,23 @@ public class Translation implements Cloneable, Comparable<Translation>
      * @see java.lang.Object#clone()
      */
     @Override
-    public Translation clone() {
+    public Translation clone()
+    {
         Translation clone;
-        try {
-            clone = (Translation) super.clone(); 
+        try
+        {
+            clone = (Translation) super.clone();
         }
-        catch (CloneNotSupportedException cnse) {
+        catch (CloneNotSupportedException cnse)
+        {
             clone = null;
         }
         return clone;
     }
     
     @Override
-    public String toString() {
+    public String toString()
+    {
         return new ReflectionToStringBuilder(this, 
                 ToStringStyle.SHORT_PREFIX_STYLE).toString();
     }
@@ -278,7 +302,8 @@ public class Translation implements Cloneable, Comparable<Translation>
      * @author bsion
      *
      */
-    public static enum TranslationState {
+    public static enum TranslationState
+    {
         UNVERIFIED, VERIFIED, QUERIED
     }
 }

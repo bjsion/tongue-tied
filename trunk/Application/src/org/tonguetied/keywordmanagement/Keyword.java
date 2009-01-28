@@ -28,6 +28,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -55,6 +56,7 @@ import org.tonguetied.audit.Auditable;
 @AccessType("property")
 @NamedQuery(name=Keyword.QUERY_GET_KEYWORDS,query="from Keyword k order by k.keyword")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+@Table(name=Keyword.TABLE_KEYWORD)
 public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
 {
     private Long id;
@@ -62,6 +64,7 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
     private String context;
     private SortedSet<Translation> translations;
     
+    public static final String TABLE_KEYWORD = "keyword";
     public static final String QUERY_GET_KEYWORDS = "get.keywords";
     
     // This attribute is used for optimistic concurrency control in DB
@@ -163,7 +166,7 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
      * @return the version
      */
     @Version
-    @Column(name="OPTLOCK")
+    @Column(name="optlock")
     public Integer getVersion() {
         return version;
     }

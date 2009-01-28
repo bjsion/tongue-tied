@@ -22,6 +22,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -46,10 +47,11 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
     @NamedQuery(name=Bundle.QUERY_FIND_BUNDLES, query="from Bundle b where b.name = :name or b.resourceName = :resourceName")
     })
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+@Table(name=Bundle.TABLE_BUNDLE)
 public class Bundle implements Comparable<Bundle>
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     @Column(unique = true, nullable = false)
     private String name;
@@ -68,6 +70,7 @@ public class Bundle implements Comparable<Bundle>
     @Column(nullable = false)
     private boolean isGlobal;
 
+    public static final String TABLE_BUNDLE = "bundle";
     protected static final String QUERY_GET_DEFAULT_BUNDLE = "get.default.bundle";
     protected static final String QUERY_GET_BUNDLES = "get.bundles";
     protected static final String QUERY_FIND_BUNDLES = "find.bundles";
