@@ -46,7 +46,7 @@ import org.hibernate.annotations.Immutable;
 @Entity
 @AccessType("field")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-@Table(uniqueConstraints={@UniqueConstraint(columnNames={"version","buildNumber"})})
+@Table(name=ServerData.TABLE_SERVER_DATA,uniqueConstraints={@UniqueConstraint(columnNames={"version","buildNumber"})})
 @NamedQuery(name=ServerData.QUERY_GET_LATEST_SERVER_DATA,query="from ServerData sd where sd.buildDate = (select max(sd2.buildDate) from ServerData sd2)")
 @Immutable
 public class ServerData
@@ -64,6 +64,7 @@ public class ServerData
     @Temporal(TemporalType.TIMESTAMP)
     private Date setupDate;
     
+    public static final String TABLE_SERVER_DATA = "server_data";
     
     protected static final String QUERY_GET_LATEST_SERVER_DATA = 
         "get.latest.server.data";
