@@ -23,6 +23,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -42,6 +43,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @AccessType("field")
 @NamedQuery(name=Country.QUERY_GET_COUNTRIES,query="from Country c order by c.name")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+@Table(name=Country.TABLE_COUNTRY)
 public class Country implements Comparable<Country> 
 {
     @Id
@@ -53,7 +55,8 @@ public class Country implements Comparable<Country>
     @Column(nullable=false)
     private String name;
     
-    public static final String QUERY_GET_COUNTRIES = "get.countries";
+    public static final String TABLE_COUNTRY = "country";
+    protected static final String QUERY_GET_COUNTRIES = "get.countries";
     
     public CountryCode getCode()
     {

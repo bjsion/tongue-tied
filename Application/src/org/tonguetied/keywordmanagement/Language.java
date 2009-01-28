@@ -23,6 +23,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
@@ -41,6 +42,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @AccessType("field")
 @NamedQuery(name=Language.QUERY_GET_LANAGUAGES,query="from Language l order by l.name")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+@Table(name=Language.TABLE_LANGUAGE)
 public class Language implements Comparable<Language>
 {
     @Id
@@ -52,7 +54,8 @@ public class Language implements Comparable<Language>
     @Column(nullable=false)
     private String name;
     
-    public static final String QUERY_GET_LANAGUAGES = "get.languages";
+    public static final String TABLE_LANGUAGE = "language";
+    protected static final String QUERY_GET_LANAGUAGES = "get.languages";
     
     public LanguageCode getCode()
     {
@@ -131,8 +134,8 @@ public class Language implements Comparable<Language>
      * This enum contains the list of 2 letter language codes according to 
      * iso639.2 arranged in alphabetical order of language names in English.
      * 
-     * In addition to the iso standard codes, there extra codes to represent
-     * the default langauge and traditional Chinese as used by the .Net 
+     * In addition to the ISO standard codes, there extra codes to represent
+     * the default language and traditional Chinese as used by the .Net 
      * platform.
      * 
      * @author bsion

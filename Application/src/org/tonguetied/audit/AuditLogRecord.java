@@ -23,6 +23,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -37,10 +38,10 @@ import org.hibernate.annotations.Immutable;
  *
  */
 @Entity
-//@org.hibernate.annotations.Entity(mutable=false)
 @NamedQuery(name=AuditLogRecord.QUERY_GET_AUDIT_LOG,
         query="from AuditLogRecord alr order by alr.created desc")
 @Immutable
+@Table(name=AuditLogRecord.TABLE_AUDIT_LOG_RECORD)
 public class AuditLogRecord {
     private Long id;
     private String message;
@@ -49,19 +50,22 @@ public class AuditLogRecord {
     private String username;
     private Date created;
     
+    public static final String TABLE_AUDIT_LOG_RECORD = "audit_log_record";
     public static final String QUERY_GET_AUDIT_LOG = "get.audit.log";
     
-    AuditLogRecord() {
+    AuditLogRecord()
+    {
     }
 
     /**
-     * Create a new instance of the AuditLogRecord
+     * Create a new instance of the AuditLogRecord.
      * 
      * @param message
      * @param entity
-     * @param username the username of the user who made the change
+     * @param username the <code>username</code> of the user who made the change
      */
-    public AuditLogRecord(final String message, final Auditable entity, final String username) {
+    public AuditLogRecord(final String message, final Auditable entity, final String username)
+    {
         this.message = message;
         this.entityId = entity.getId();
         this.entityClass = entity.getClass();
@@ -74,14 +78,16 @@ public class AuditLogRecord {
      */
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    public Long getId() {
+    public Long getId()
+    {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Long id) {
+    public void setId(Long id)
+    {
         this.id = id;
     }
 
@@ -89,14 +95,16 @@ public class AuditLogRecord {
      * @return the message describing the action taken
      */
     @Column(nullable=false)
-    public String getMessage() {
+    public String getMessage()
+    {
         return message;
     }
 
     /**
      * @param message the message to set
      */
-    public void setMessage(final String message) {
+    public void setMessage(final String message)
+    {
         this.message = message;
     }
 
@@ -106,14 +114,16 @@ public class AuditLogRecord {
      * @return the id of the entity
      */
     @Column(nullable=false)
-    public Long getEntityId() {
+    public Long getEntityId()
+    {
         return entityId;
     }
 
     /**
      * @param entityId the entityId to set
      */
-    public void setEntityId(final Long entityId) {
+    public void setEntityId(final Long entityId)
+    {
         this.entityId = entityId;
     }
 
@@ -121,14 +131,16 @@ public class AuditLogRecord {
      * @return the entityClass
      */
     @Column(nullable=false)
-    public Class<?> getEntityClass() {
+    public Class<?> getEntityClass()
+    {
         return entityClass;
     }
 
     /**
      * @param entityClass the entityClass to set
      */
-    public void setEntityClass(Class<?> entityClass) {
+    public void setEntityClass(Class<?> entityClass)
+    {
         this.entityClass = entityClass;
     }
 
@@ -138,14 +150,16 @@ public class AuditLogRecord {
      * @return the username of the user who made the change, or <tt>null</tt> 
      * if it was done anonymously
      */
-    public String getUsername() {
+    public String getUsername()
+    {
         return username;
     }
 
     /**
      * @param username the username to set
      */
-    public void setUsername(final String username) {
+    public void setUsername(final String username)
+    {
         this.username = username;
     }
 
@@ -157,14 +171,16 @@ public class AuditLogRecord {
      * @return the date the record was created
      */
     @Column(nullable=false)
-    public Date getCreated() {
+    public Date getCreated()
+    {
         return (Date) created.clone();
     }
 
     /**
      * @param created the date the record was created
      */
-    public void setCreated(final Date created) {
+    public void setCreated(final Date created)
+    {
         this.created = created;
     }
     
@@ -172,7 +188,8 @@ public class AuditLogRecord {
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj)
+    {
         boolean isEqual = false;
         // a good optimization
         if (this == obj)
@@ -196,7 +213,8 @@ public class AuditLogRecord {
      * @see java.lang.Object#hashCode()
      */
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         HashCodeBuilder builder = new HashCodeBuilder(17, 19);
         int hashCode = builder.append(message).
                     append(entityId).
@@ -209,7 +227,8 @@ public class AuditLogRecord {
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return new ReflectionToStringBuilder(this, 
                 ToStringStyle.SHORT_PREFIX_STYLE).toString();
     }
