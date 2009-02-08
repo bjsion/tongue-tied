@@ -23,6 +23,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
@@ -47,7 +48,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 public class Country implements Comparable<Country> 
 {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO,generator="country_generator")
+    @SequenceGenerator(name="country_generator",sequenceName="country_id_seq")
+    @Column(name=COL_ID)
     private Long id;
     @Column(unique=true,nullable=false,length=7)
     @Enumerated(EnumType.STRING)
@@ -56,6 +59,7 @@ public class Country implements Comparable<Country>
     private String name;
     
     public static final String TABLE_COUNTRY = "country";
+    private static final String COL_ID = TABLE_COUNTRY + "_id";
     protected static final String QUERY_GET_COUNTRIES = "get.countries";
     
     public CountryCode getCode()

@@ -28,6 +28,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -65,18 +66,23 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
     private SortedSet<Translation> translations;
     
     public static final String TABLE_KEYWORD = "keyword";
+    private static final String COL_ID = TABLE_KEYWORD + "_id";
     public static final String QUERY_GET_KEYWORDS = "get.keywords";
     
     // This attribute is used for optimistic concurrency control in DB
     private Integer version;
     
-    public Keyword() {
+    public Keyword()
+    {
         this.translations = new TreeSet<Translation>();
     }
     
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    public Long getId() {
+    @GeneratedValue(strategy=GenerationType.AUTO,generator="keyword_generator")
+    @SequenceGenerator(name="keyword_generator",sequenceName="keyword_id_seq")
+    @Column(name=COL_ID)
+    public Long getId()
+    {
         return id;
     }
         
@@ -117,12 +123,14 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
     @Sort(type=SortType.NATURAL)
     @JoinColumn(name="KEYWORD_ID")
     @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-    public SortedSet<Translation> getTranslations() {
-    	return translations;
+    public SortedSet<Translation> getTranslations()
+    {
+        return translations;
     }
     
-    public void setTranslations(SortedSet<Translation> translations) {
-    	this.translations = translations;
+    public void setTranslations(SortedSet<Translation> translations)
+    {
+        this.translations = translations;
     }
     
     /**
@@ -132,7 +140,8 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
      *  
      * @param translation the {@link Translation} to add.
      */
-    public void addTranslation(Translation translation) {
+    public void addTranslation(Translation translation)
+    {
         this.translations.add(translation);
     }
     
@@ -143,7 +152,8 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
      * 
      * @param translationId the id of the {@link Translation} to remove
      */
-    public void removeTranslation(final Long translationId) {
+    public void removeTranslation(final Long translationId)
+    {
         Translation translation = (Translation) CollectionUtils.find(
                 translations, new TranslationPredicate(translationId));
         remove(translation);
@@ -156,7 +166,8 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
      *  
      * @param translation the {@link Translation} to remove.
      */
-    public void remove(Translation translation) {
+    public void remove(Translation translation)
+    {
         this.translations.remove(translation);
     }
     
@@ -167,7 +178,8 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
      */
     @Version
     @Column(name="optlock")
-    public Integer getVersion() {
+    public Integer getVersion()
+    {
         return version;
     }
 
@@ -176,7 +188,8 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
      * 
      * @param version the version to set
      */
-    public void setVersion(Integer version) {
+    public void setVersion(Integer version)
+    {
         this.version = version;
     }
 
@@ -191,7 +204,8 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
     }
     
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj)
+    {
         boolean isEqual = false;
         // a good optimization
         if (this == obj)
@@ -216,7 +230,8 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
     }
     
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         HashCodeBuilder builder = new HashCodeBuilder(23, 17);
         int hashCode = builder.append(keyword).append(context).toHashCode();
 //        hashCode =+ SetUtils.hashCodeForSet(translations);
@@ -230,25 +245,30 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
      * @see java.lang.Object#clone()
      */
     @Override
-    public final Keyword clone() {
+    public final Keyword clone()
+    {
         Keyword clone;
-        try {
+        try
+        {
             clone = (Keyword) super.clone();
             if (translations != null) {
                 clone.setTranslations(new TreeSet<Translation>());
-                for (Translation translation: translations) {
+                for (Translation translation: translations)
+                {
                     clone.addTranslation(translation.clone());
                 }
             }
         }
-        catch (CloneNotSupportedException cnse) {
+        catch (CloneNotSupportedException cnse)
+        {
             clone = null;
         }
         return clone;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return new ReflectionToStringBuilder(this, 
                 ToStringStyle.SHORT_PREFIX_STYLE).toString();
     }
@@ -260,7 +280,8 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
      * @author bsion
      *
      */
-    protected static class TranslationPredicate implements Predicate {
+    protected static class TranslationPredicate implements Predicate
+    {
         private Long id;
         
         /**
@@ -268,7 +289,8 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
          * 
          * @param id the <code>id</code> of the translation to find
          */
-        public TranslationPredicate(final Long id) {
+        public TranslationPredicate(final Long id)
+        {
             this.id = id;
         }
         
@@ -281,7 +303,8 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
          * match. <code>false</code> otherwise
          * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
          */
-        public boolean evaluate(Object object) {
+        public boolean evaluate(Object object)
+        {
             Translation translation = (Translation) object;
             
             return id.equals(translation.getId());

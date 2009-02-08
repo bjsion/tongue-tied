@@ -23,6 +23,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -51,6 +52,7 @@ public class AuditLogRecord {
     private Date created;
     
     public static final String TABLE_AUDIT_LOG_RECORD = "audit_log_record";
+    private static final String COL_ID = TABLE_AUDIT_LOG_RECORD + "_id";
     public static final String QUERY_GET_AUDIT_LOG = "get.audit.log";
     
     AuditLogRecord()
@@ -77,7 +79,9 @@ public class AuditLogRecord {
      * @return the the unique identifier for this record
      */
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO,generator="audit_log_record_generator")
+    @SequenceGenerator(name="audit_log_record_generator",sequenceName="audit_log_record_id_seq")
+    @Column(name=COL_ID)
     public Long getId()
     {
         return id;
@@ -113,7 +117,7 @@ public class AuditLogRecord {
      * 
      * @return the id of the entity
      */
-    @Column(nullable=false)
+    @Column(name="entity_id",nullable=false)
     public Long getEntityId()
     {
         return entityId;
@@ -130,7 +134,7 @@ public class AuditLogRecord {
     /**
      * @return the entityClass
      */
-    @Column(nullable=false)
+    @Column(name="entity_class", nullable=false)
     public Class<?> getEntityClass()
     {
         return entityClass;

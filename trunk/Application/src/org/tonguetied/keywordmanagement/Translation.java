@@ -28,6 +28,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
@@ -40,6 +41,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import org.hibernate.annotations.AccessType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.ForeignKey;
 
 /**
  * A translation is a specific value of a {@link Keyword} for a 
@@ -79,6 +81,12 @@ public class Translation implements Cloneable, Comparable<Translation>
     private Integer version;
     
     public static final String TABLE_TRANSLATION = "translation";
+    private static final String COL_ID = TABLE_TRANSLATION + "_id";
+    private static final String FK_BUNDLE = "fk_"+ Bundle.TABLE_BUNDLE + "_" + TABLE_TRANSLATION;
+    private static final String FK_COUNTRY = "fk_"+ Country.TABLE_COUNTRY + "_" + TABLE_TRANSLATION;
+    private static final String FK_KEYWORD = "fk_"+ Keyword.TABLE_KEYWORD + "_" + TABLE_TRANSLATION;
+    private static final String FK_LANGUAGE = "fk_"+ Language.TABLE_LANGUAGE + "_" + TABLE_TRANSLATION;
+    
     /**
      * Name of the query to search for translations.
      */
@@ -118,7 +126,9 @@ public class Translation implements Cloneable, Comparable<Translation>
     }
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO,generator="translation_generator")
+    @SequenceGenerator(name="translation_generator",sequenceName="translation_id_seq")
+    @Column(name=COL_ID)
     public Long getId()
     {
         return id;
@@ -130,6 +140,7 @@ public class Translation implements Cloneable, Comparable<Translation>
     
     @OneToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name="bundle_id")
+    @ForeignKey(name=FK_BUNDLE)
     public Bundle getBundle()
     {
         return bundle;
@@ -141,6 +152,7 @@ public class Translation implements Cloneable, Comparable<Translation>
     
     @OneToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name="country_id")
+    @ForeignKey(name=FK_COUNTRY)
     public Country getCountry()
     {
         return country;
@@ -152,6 +164,7 @@ public class Translation implements Cloneable, Comparable<Translation>
 
     @ManyToOne
     @JoinColumn(name="keyword_id",insertable=false,updatable=false)
+    @ForeignKey(name=FK_KEYWORD)
     public Keyword getKeyword()
     {
         return keyword;
@@ -163,6 +176,7 @@ public class Translation implements Cloneable, Comparable<Translation>
     
     @OneToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name="language_id")
+    @ForeignKey(name=FK_LANGUAGE)
     public Language getLanguage()
     {
         return language;

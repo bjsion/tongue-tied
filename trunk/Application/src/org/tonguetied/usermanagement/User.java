@@ -30,6 +30,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -44,6 +45,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.ForeignKey;
 import org.hibernate.annotations.Sort;
 import org.hibernate.annotations.SortType;
 import org.springframework.security.GrantedAuthority;
@@ -89,6 +91,8 @@ public class User implements UserDetails
 
     public static final String TABLE_USER = "internal_user";
     public static final String TABLE_AUTHORITIES = "authorities";
+    private static final String COL_ID = TABLE_USER + "_id";
+    private static final String FK_AUTHORITIES = "fk_"+ TABLE_USER + "_" + TABLE_AUTHORITIES;
     protected static final String QUERY_GET_USERS = "get.users";
 
     private static final long serialVersionUID = -7800860686467033859L;
@@ -136,7 +140,9 @@ public class User implements UserDetails
     }
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO,generator="user_generator")
+    @SequenceGenerator(name="user_generator",sequenceName="internal_user_id_seq")
+    @Column(name=COL_ID)
     public Long getId()
     {
         return id;
@@ -150,7 +156,7 @@ public class User implements UserDetails
     /**
      * @return the first name of the User
      */
-    @Column(nullable = false)
+    @Column(name="first_name",nullable=false)
     public String getFirstName()
     {
         return firstName;
@@ -167,7 +173,7 @@ public class User implements UserDetails
     /**
      * @return the last name of the User
      */
-    @Column(nullable = false)
+    @Column(name="last_name",nullable=false)
     public String getLastName()
     {
         return lastName;
@@ -184,7 +190,7 @@ public class User implements UserDetails
     /**
      * @return the password of the User
      */
-    @Column(nullable = false)
+    @Column(nullable=false)
     public String getPassword()
     {
         return password;
@@ -220,7 +226,7 @@ public class User implements UserDetails
     /**
      * @return the username of the User
      */
-    @Column(unique = true, nullable = false)
+    @Column(unique=true,nullable=false)
     public String getUsername()
     {
         return username;
@@ -239,7 +245,7 @@ public class User implements UserDetails
      * 
      * @return an indicator specifying if the user is active or not.
      */
-    @Column(nullable = false)
+    @Column(nullable=false)
     public boolean isEnabled()
     {
         return isEnabled;
@@ -256,7 +262,7 @@ public class User implements UserDetails
     /**
      * @return the email address of this User
      */
-    @Column(nullable = false)
+    @Column(nullable=false)
     public String getEmail()
     {
         return email;
@@ -278,6 +284,9 @@ public class User implements UserDetails
     @JoinTable(name=TABLE_AUTHORITIES,joinColumns=@JoinColumn(name="user_id"))
     @Cascade(CascadeType.ALL)
     @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+    @GeneratedValue(strategy=GenerationType.AUTO,generator="authorities_generator")
+    @SequenceGenerator(name="authorities_generator",sequenceName="authorities_user_id_seq")
+    @ForeignKey(name=FK_AUTHORITIES)
     public SortedSet<UserRight> getUserRights()
     {
         return userRights;
@@ -336,7 +345,7 @@ public class User implements UserDetails
                 .toArray(new GrantedAuthority[authorities.size()]));
     }
 
-    @Column(nullable = false)
+    @Column(name="account_non_expired",nullable=false)
     public boolean isAccountNonExpired()
     {
         return isAccountNonExpired;
@@ -350,7 +359,7 @@ public class User implements UserDetails
         this.isAccountNonExpired = isAccountNonExpired;
     }
 
-    @Column(nullable = false)
+    @Column(name="account_non_locked",nullable=false)
     public boolean isAccountNonLocked()
     {
         return isAccountNonLocked;
@@ -364,7 +373,7 @@ public class User implements UserDetails
         this.isAccountNonLocked = isAccountNonLocked;
     }
 
-    @Column(nullable = false)
+    @Column(name="credentials_non_expired",nullable=false)
     public boolean isCredentialsNonExpired()
     {
         return isCredentialsNonExpired;
@@ -407,7 +416,7 @@ public class User implements UserDetails
      * @return the version
      */
     @Version
-    @Column(name = "optlock")
+    @Column(name="optlock")
     public Integer getVersion()
     {
         return version;
