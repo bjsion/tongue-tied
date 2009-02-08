@@ -22,6 +22,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
@@ -51,26 +52,29 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 public class Bundle implements Comparable<Bundle>
 {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO,generator="bundle_generator")
+    @SequenceGenerator(name="bundle_generator",sequenceName="bundle_id_seq")
+    @Column(name=COL_ID)
     private Long id;
-    @Column(unique = true, nullable = false)
+    @Column(unique=true,nullable=false)
     private String name;
     private String description;
-    @Column(unique = true, nullable = false)
+    @Column(name="resource_name",unique=true,nullable=false)
     private String resourceName;
     /**
      * Only one bundle will have a value of true
      */
-    @Column(nullable = false)
+    @Column(name="is_default",nullable = false)
     private boolean isDefault;
     /**
      * Flag indicating this is a global bundle. Any entries marked as global
      * should be included in all exports.
      */
-    @Column(nullable = false)
+    @Column(name="is_global",nullable = false)
     private boolean isGlobal;
 
     public static final String TABLE_BUNDLE = "bundle";
+    private static final String COL_ID = TABLE_BUNDLE + "_id";
     protected static final String QUERY_GET_DEFAULT_BUNDLE = "get.default.bundle";
     protected static final String QUERY_GET_BUNDLES = "get.bundles";
     protected static final String QUERY_FIND_BUNDLES = "find.bundles";

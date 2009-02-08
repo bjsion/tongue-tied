@@ -23,6 +23,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -46,25 +47,29 @@ import org.hibernate.annotations.Immutable;
 @Entity
 @AccessType("field")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-@Table(name=ServerData.TABLE_SERVER_DATA,uniqueConstraints={@UniqueConstraint(columnNames={"version","buildNumber"})})
+@Table(name=ServerData.TABLE_SERVER_DATA,uniqueConstraints={@UniqueConstraint(columnNames={"version",ServerData.COL_BUILD_NUMBER})})
 @NamedQuery(name=ServerData.QUERY_GET_LATEST_SERVER_DATA,query="from ServerData sd where sd.buildDate = (select max(sd2.buildDate) from ServerData sd2)")
 @Immutable
 public class ServerData
 {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO,generator="server_data_generator")
+    @SequenceGenerator(name="server_data_generator",sequenceName="server_data_id_seq")
+    @Column(name=COL_ID)
     private Long id;
     @Column(nullable=false,length=10)
     private String version;
-    @Column(nullable=false,length=10)
+    @Column(name=COL_BUILD_NUMBER,nullable=false,length=10)
     private String buildNumber;
-    @Column(nullable=false)
+    @Column(name="build_date",nullable=false)
     private Date buildDate;
-    @Column(nullable=false)
+    @Column(name="setup_date",nullable=false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date setupDate;
     
     public static final String TABLE_SERVER_DATA = "server_data";
+    private static final String COL_ID = TABLE_SERVER_DATA + "_id";
+    public static final String COL_BUILD_NUMBER = "build_number";
     
     protected static final String QUERY_GET_LATEST_SERVER_DATA = 
         "get.latest.server.data";

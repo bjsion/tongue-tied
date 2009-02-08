@@ -23,6 +23,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
@@ -46,7 +47,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 public class Language implements Comparable<Language>
 {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO,generator="language_generator")
+    @SequenceGenerator(name="language_generator",sequenceName="language_id_seq")
+    @Column(name=COL_ID)
     private Long id;
     @Column(unique=true,nullable=false,length=7)
     @Enumerated(EnumType.STRING)
@@ -55,6 +58,7 @@ public class Language implements Comparable<Language>
     private String name;
     
     public static final String TABLE_LANGUAGE = "language";
+    private static final String COL_ID = TABLE_LANGUAGE + "_id";
     protected static final String QUERY_GET_LANAGUAGES = "get.languages";
     
     public LanguageCode getCode()
