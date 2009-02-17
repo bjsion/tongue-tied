@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="lib" path="DOM4J/1.6.1/dom4j.jar"/>
 	<classpathentry kind="lib" path="DOM4J/1.6.1/jaxen-1.1-beta-7.jar"/>
-	<classpathentry exported="true" kind="lib" path="Hibernate/3.2.6/hibernate3.jar"/>
-	<classpathentry exported="true" kind="lib" path="Hibernate/annotations/3.3.1/hibernate-annotations.jar"/>
+	<classpathentry exported="true" kind="lib" path="Hibernate/3.3.1/hibernate3.jar"/>
+	<classpathentry exported="true" kind="lib" path="Hibernate/annotations/3.4.0/hibernate-annotations.jar"/>
 	<classpathentry exported="true" kind="lib" path="Jakarta-Commons/commons-collections-3.2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="Jakarta-Commons/commons-logging.jar"/>
 	<classpathentry exported="true" kind="lib" path="Jetty/6.1.9/jetty.jar"/>
@@ -16,7 +16,7 @@
 	<classpathentry kind="lib" path="cglib/2.2/cglib-nodep-2.2.jar"/>
 	<classpathentry kind="lib" path="J2ee/jta.jar"/>
 	<classpathentry exported="true" kind="lib" path="Jakarta-Commons/commons-lang-2.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="Hibernate/annotations/3.3.1/ejb3-persistence.jar"/>
+	<classpathentry exported="true" kind="lib" path="Hibernate/annotations/3.4.0/ejb3-persistence.jar"/>
 	<classpathentry kind="lib" path="ehcache/1.4.1/ehcache.jar"/>
 	<classpathentry kind="lib" path="Antlr/2.7.6/antlr.jar"/>
 	<classpathentry exported="true" kind="lib" path="JUnit/addons/1.4/junit-addons.jar"/>
@@ -34,12 +34,16 @@
 	<classpathentry exported="true" kind="lib" path="POI/3.0.2/poi.jar"/>
 	<classpathentry exported="true" kind="lib" path="Spring/2.5.4/spring-webmvc.jar"/>
 	<classpathentry exported="true" kind="lib" path="Jakarta-Commons/commons-io-1.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="Hibernate/annotations/3.3.1/hibernate-commons-annotations.jar"/>
+	<classpathentry exported="true" kind="lib" path="Hibernate/annotations/3.4.0/hibernate-commons-annotations.jar"/>
 	<classpathentry exported="true" kind="lib" path="Spring/spring-security/2.0.1/spring-security-core.jar"/>
 	<classpathentry exported="true" kind="lib" path="Spring/spring-security/2.0.1/spring-security-taglibs.jar"/>
 	<classpathentry kind="lib" path="ehcache/1.4.1/backport-util-concurrent-3.0.jar"/>
 	<classpathentry kind="lib" path="bsh/2.0b4/bsh.jar"/>
 	<classpathentry exported="true" kind="lib" path="xmlunit/1.2/xmlunit.jar"/>
 	<classpathentry exported="true" kind="lib" path="opencsv/1.8/opencsv.jar"/>
+	<classpathentry exported="true" kind="lib" path="struts-menu/2.4.3/struts-menu.jar"/>
+	<classpathentry kind="lib" path="slf4j/1.5.6/slf4j-api.jar"/>
+	<classpathentry kind="lib" path="slf4j/1.5.6/slf4j-simple.jar"/>
+	<classpathentry kind="lib" path="Javassist/3.9.0/javassist.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

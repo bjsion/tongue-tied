@@ -40,6 +40,7 @@ import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.DialectFactory;
 import org.hibernate.dialect.HSQLDialect;
 import org.hibernate.dialect.MySQLDialect;
+import org.hibernate.dialect.PostgreSQLDialect;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.tonguetied.administration.AdministrationService;
@@ -193,6 +194,13 @@ public class ServletContextInitializer implements ServletContextListener
         }
     }
     
+    /**
+     * 
+     * @param dialectStr the string name of the SQL dialect
+     * @return
+     * TODO this seems like the wrong place for this. There really should not 
+     * be a dependency on Hibernate here
+     */
     private String getSchema(final String dialectStr)
     {
         String schemaFile = null;
@@ -204,6 +212,10 @@ public class ServletContextInitializer implements ServletContextListener
         else if (dialect instanceof MySQLDialect)
         {
             schemaFile = DIR_SQL+"/mysql-schema.sql";
+        }
+        else if (dialect instanceof PostgreSQLDialect)
+        {
+            schemaFile = DIR_SQL+"/postgresql-schema.sql";
         }
         
         return schemaFile;
