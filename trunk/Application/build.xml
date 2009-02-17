@@ -70,12 +70,14 @@
     </path>
 
     <path id="hibernate.classpath">
-        <pathelement location="${3rdparty.home}/Hibernate/3.2.6/hibernate3.jar"/>
+        <pathelement location="${3rdparty.home}/Hibernate/3.3.1/hibernate3.jar"/>
         <pathelement location="${3rdparty.home}/ehcache/1.4.1/ehcache.jar"/>
         <pathelement location="${3rdparty.home}/J2ee/jta.jar"/>
-        <pathelement location="${3rdparty.home}/Hibernate/annotations/3.3.1/ejb3-persistence.jar"/>
-        <pathelement location="${3rdparty.home}/Hibernate/annotations/3.3.1/hibernate-annotations.jar"/>
-        <pathelement location="${3rdparty.home}/Hibernate/annotations/3.3.1/hibernate-commons-annotations.jar"/>
+        <pathelement location="${3rdparty.home}/Hibernate/annotations/3.4.0/ejb3-persistence.jar"/>
+        <pathelement location="${3rdparty.home}/Hibernate/annotations/3.4.0/hibernate-annotations.jar"/>
+        <pathelement location="${3rdparty.home}/Hibernate/annotations/3.4.0/hibernate-commons-annotations.jar"/>
+        <pathelement location="${3rdparty.home}/slf4j/1.5.6/slf4j-api.jar"/>
+        <pathelement location="${3rdparty.home}/slf4j/1.5.6/slf4j-simple.jar"/>
     </path>
 
     <path id="compile.classpath">
@@ -109,7 +111,7 @@
         <path refid="hibernate.classpath"/>
         <pathelement location="${3rdparty.home}/MySQL/5.1.6/mysql-connector-java.jar"/>
         <pathelement location="${metadata.home}/builds/metadata.jar"/>
-        <pathelement location="${3rdparty.home}/Hibernate/tools/3.2.2.beta1/hibernate-tools.jar"/>
+        <pathelement location="${3rdparty.home}/Hibernate/tools/3.2.4.beta1/hibernate-tools.jar"/>
         <pathelement location="${3rdparty.home}/FreeMarker/2.3.13/freemarker.jar"/>
         <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-collections-3.2.1.jar"/>
         <pathelement location="${3rdparty.home}/dom4j/1.6.1/dom4j.jar"/>
@@ -267,11 +269,11 @@
                 <include name="fmpp.jar"/>
                 <include name="LICENSE.fmpp.txt"/>
             </lib>
-            <lib dir="${3rdparty.home}/Hibernate/3.2.6">
+            <lib dir="${3rdparty.home}/Hibernate/3.3.1">
                 <include name="hibernate3.jar"/>
                 <include name="LICENSE.hibernate.txt"/>
             </lib>
-            <lib dir="${3rdparty.home}/Hibernate/annotations/3.3.1">
+            <lib dir="${3rdparty.home}/Hibernate/annotations/3.4.0">
                 <include name="hibernate-annotations.jar"/>
                 <include name="hibernate-commons-annotations.jar"/>
                 <include name="ejb3-persistence.jar"/>
@@ -302,13 +304,13 @@
                 <include name="LICENSE.commons-io.txt"/>
                 <include name="LICENSE.commons-lang.txt"/>
             </lib>
+            <lib dir="${3rdparty.home}/Javassist/3.9.0">
+                <include name="LICENSE.javassist.html"/>
+                <include name="javassist.jar"/>
+            </lib>
             <lib dir="${3rdparty.home}/Log4j/1.2.15">
                 <include name="log4j.jar"/>
                 <include name="LICENSE.log4j.txt"/>
-            </lib>
-            <lib dir="${3rdparty.home}/POI/3.0.2">
-                <include name="poi.jar"/>
-                <include name="LICENSE.poi.txt"/>
             </lib>
             <lib dir="${3rdparty.home}/opencsv/1.8">
                 <include name="opencsv.jar"/>
@@ -317,9 +319,22 @@
             <lib dir="${3rdparty.home}/oro/2.0.8">
                 <include name="jakarta-oro.jar"/>
             </lib>
+            <lib dir="${3rdparty.home}/POI/3.0.2">
+                <include name="poi.jar"/>
+                <include name="LICENSE.poi.txt"/>
+            </lib>
+            <lib dir="${3rdparty.home}/PostgreSQL/8.3-604">
+                <include name="postgresql.jdbc3.jar"/>
+                <include name="LICENSE.postgresql.txt"/>
+            </lib>
             <lib dir="${3rdparty.home}/sitemesh/2.3">
                 <include name="sitemesh.jar"/>
                 <include name="LICENSE.sitemesh.txt"/>
+            </lib>
+            <lib dir="${3rdparty.home}/slf4j/1.5.6">
+                <include name="LICENSE.slf4j.txt"/>
+                <include name="slf4j-api.jar"/>
+                <include name="slf4j-simple.jar"/>
             </lib>
             <lib dir="${3rdparty.home}/Spring/2.5.4">
                 <include name="spring.jar"/>
@@ -332,7 +347,7 @@
                 <include name="LICENSE.spring-security.txt"/>
             </lib>
             <lib dir="${3rdparty.home}/struts-menu/2.4.3">
-                <include name="LICENCE.struts-menu.txt"/>
+                <include name="LICENSE.struts-menu.txt"/>
                 <include name="struts-menu.jar"/>
             </lib>
             <lib dir="${3rdparty.home}/Velocity">
@@ -352,6 +367,7 @@
             <webinf dir="${generated.dir}">
                 <include name="jdbc.properties"/>
                 <include name="**/sql/*.sql"/>
+                <exclude name="**/sql/postgresql-schema.sql"/>
             </webinf>
             <webinf dir="${resources.dir}">
                 <include name="**/sql/*.sql"/>

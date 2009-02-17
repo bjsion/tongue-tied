@@ -31,16 +31,16 @@
         <pathelement location="${application.home}/builds/tonguetied.jar"/>
         <pathelement location="${server.home}/builds/server.jar"/>
         <pathelement location="${3rdparty.home}/HSQLDB/1.8.0.9/hsqldb.jar"/>
-        <pathelement location="${3rdparty.home}/Hibernate/3.2.6/hibernate3.jar"/>
+        <pathelement location="${3rdparty.home}/Hibernate/3.3.1/hibernate3.jar"/>
         <pathelement location="${3rdparty.home}/Spring/2.5.4/spring.jar"/>
         <pathelement location="${3rdparty.home}/Spring/2.5.4/spring-webmvc.jar"/>
         <pathelement location="${3rdparty.home}/Spring/2.5.4/spring-test.jar"/>
         <pathelement location="${3rdparty.home}/Log4j/1.2.15/log4j.jar"/>
         <pathelement location="${3rdparty.home}/dom4j/1.6.1/dom4j.jar"/>
         <pathelement location="${3rdparty.home}/JUnit/addons/1.4/junit-addons.jar"/>
-        <pathelement location="${3rdparty.home}/Hibernate/annotations/3.3.1/ejb3-persistence.jar"/>
-        <pathelement location="${3rdparty.home}/Hibernate/annotations/3.3.1/hibernate-annotations.jar"/>
-        <pathelement location="${3rdparty.home}/Hibernate/annotations/3.3.1/hibernate-commons-annotations.jar"/>
+        <pathelement location="${3rdparty.home}/Hibernate/annotations/3.4.0/ejb3-persistence.jar"/>
+        <pathelement location="${3rdparty.home}/Hibernate/annotations/3.4.0/hibernate-annotations.jar"/>
+        <pathelement location="${3rdparty.home}/Hibernate/annotations/3.4.0/hibernate-commons-annotations.jar"/>
         <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-logging.jar"/>
         <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-collections-3.2.1.jar"/>
         <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-lang-2.4.jar"/>
@@ -72,6 +72,9 @@
         <pathelement location="${3rdparty.home}/Antlr/2.7.6/antlr.jar"/>
         <pathelement location="${3rdparty.home}/oro/2.0.8/jakarta-oro.jar"/>
         <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-codec-1.3.jar"/>
+        <pathelement location="${3rdparty.home}/slf4j/1.5.6/slf4j-api.jar"/>
+        <pathelement location="${3rdparty.home}/slf4j/1.5.6/slf4j-simple.jar"/>
+        <pathelement location="${3rdparty.home}/Javassist/3.9.0/javassist.jar"/>
     </path>
         
     <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
