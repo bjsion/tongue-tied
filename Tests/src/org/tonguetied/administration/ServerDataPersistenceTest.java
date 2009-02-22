@@ -71,6 +71,7 @@ public class ServerDataPersistenceTest extends PersistenceTestBase
         
         session = getSession();
         tx = session.beginTransaction();
+        assertTrue(tx.isActive());
         ServerData updated = 
             (ServerData) session.get(ServerData.class, serverData.getId());
         updated.setVersion("3.2");

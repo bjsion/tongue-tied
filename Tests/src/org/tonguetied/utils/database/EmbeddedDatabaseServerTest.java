@@ -55,7 +55,7 @@ public class EmbeddedDatabaseServerTest
     }
     
     /**
-     * Test method for {@link org.tonguetied.utils.database.EmbeddedDatabaseServer#startDatabase()}.
+     * Test method for {@link org.tonguetied.utils.database.EmbeddedDatabaseServer#startDatabase(Properties)}.
      */
     @Test
     public final void testStartStopDatabase()
@@ -84,7 +84,7 @@ public class EmbeddedDatabaseServerTest
         assertFalse(EmbeddedDatabaseServer.isRunning());
     }
     /**
-     * Test method for {@link org.tonguetied.utils.database.EmbeddedDatabaseServer#startDatabase()}.
+     * Test method for {@link org.tonguetied.utils.database.EmbeddedDatabaseServer#startDatabase(Properties)}.
      */
     @Test(expected=IllegalArgumentException.class)
     public final void testStartDatabaseWithNullProperties()
