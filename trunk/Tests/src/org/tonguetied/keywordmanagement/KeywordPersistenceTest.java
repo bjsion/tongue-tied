@@ -44,10 +44,12 @@ import org.tonguetied.test.common.PersistenceTestBase;
  * @author bsion
  *
  */
-public class KeywordPersistenceTest extends PersistenceTestBase {
+public class KeywordPersistenceTest extends PersistenceTestBase
+{
 
     @Test
-    public final void simplePersistence() {
+    public final void simplePersistence()
+    {
         Session session;
         Transaction tx;
         
@@ -71,7 +73,8 @@ public class KeywordPersistenceTest extends PersistenceTestBase {
     }
 
     @Test
-    public final void persistKeywordWithTranslations() {
+    public final void persistKeywordWithTranslations()
+    {
         Session session;
         Transaction tx;
         
@@ -129,7 +132,8 @@ public class KeywordPersistenceTest extends PersistenceTestBase {
     }
     
     @Test(expected=GenericJDBCException.class)
-    public final void persistKeywordWithTranslationsWithSameBusinesskey() {
+    public final void persistKeywordWithTranslationsWithSameBusinesskey()
+    {
         Session session;
         Transaction tx;
         

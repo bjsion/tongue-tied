@@ -21,11 +21,13 @@ import static org.tonguetied.utils.database.Constants.KEY_JDBC_PASSWORD;
 import static org.tonguetied.utils.database.Constants.KEY_JDBC_URL;
 import static org.tonguetied.utils.database.Constants.KEY_JDBC_USER_NAME;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.hibernate.MappingException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -47,8 +49,6 @@ import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.usermanagement.User;
 import org.tonguetied.usermanagement.UserRight;
 import org.tonguetied.utils.database.EmbeddedDatabaseServer;
-import org.tonguetied.utils.database.EmbeddedDatabaseServerTest;
-
 
 
 public abstract class PersistenceTestBase
@@ -73,19 +73,48 @@ public abstract class PersistenceTestBase
     @BeforeClass
     public static void initialize() throws Exception
     {
+        Properties properties = loadProperties("/jdbc.properties");
+        EmbeddedDatabaseServer.startDatabase(properties);
+        
+        AnnotationConfiguration config = createConfiguration(properties);
+        
+        setSessionFactory(config.buildSessionFactory());
+        initializeDataSource(properties);
+        final Resource resource = new ClassPathResource("/hsql-schema.sql");
+        executeSqlScript(resource);
+    }
+
+    /**
+     * Load a new properties object.
+     * 
+     * @param name the name of the resource to load
+     * @return the loaded properties object
+     * @throws IOException if the properties fails to load
+     */
+    protected static Properties loadProperties(final String name) throws IOException
+    {
         Properties properties = new Properties();
         InputStream is = null;
         try
         {
-            is = EmbeddedDatabaseServerTest.class.getResourceAsStream("/jdbc.properties");
+            is = PersistenceTestBase.class.getResourceAsStream(name);
             properties.load(is);
         }
         finally
         {
             IOUtils.closeQuietly(is);
         }
-        EmbeddedDatabaseServer.startDatabase(properties);
-        
+        return properties;
+    }
+
+    /**
+     * @param properties
+     * @return the configuration object for running this test class
+     * @throws MappingException
+     */
+    protected static AnnotationConfiguration createConfiguration(
+        Properties properties) throws MappingException 
+    {
         AnnotationConfiguration config = new AnnotationConfiguration();
         config.setProperty(Environment.DRIVER, properties.getProperty(KEY_JDBC_DRIVER));
         config.setProperty(Environment.URL, properties.getProperty(KEY_JDBC_URL));
@@ -102,7 +131,16 @@ public abstract class PersistenceTestBase
             config.addAnnotatedClass(ANNOTATED_CLASSES[i]);
         }
         
-        setSessionFactory(config.buildSessionFactory());
+        return config;
+    }
+
+    /**
+     * Create and initialize the database connection.
+     * 
+     * @param properties
+     */
+    protected static void initializeDataSource(Properties properties)
+    {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setUrl(properties.getProperty(KEY_JDBC_URL));
         dataSource.setDriverClassName(properties.getProperty(KEY_JDBC_DRIVER));
@@ -111,8 +149,6 @@ public abstract class PersistenceTestBase
 //        final DatasourceConnectionProvider provider = new DatasourceConnectionProvider();
 //        provider.configure(properties);
         template = new SimpleJdbcTemplate(dataSource);
-        final Resource resource = new ClassPathResource("/hsql-schema.sql");
-        SimpleJdbcTestUtils.executeSqlScript(template, resource, true);
     }
     
 //    @AfterClass
@@ -122,24 +158,32 @@ public abstract class PersistenceTestBase
 //    }
     
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws Exception
+    {
         if (recreateSchema())
         {
             SimpleJdbcTestUtils.deleteFromTables(template, getTableNames());
-//            DBUtils.cleanTables(getSession().connection());
         }
     }
     
-    protected static synchronized Session getSession() {
+    protected static synchronized Session getSession()
+    {
         if (factory == null) {
             factory = new Configuration().configure().buildSessionFactory();
         }
         return factory.openSession();
     }
     
+    protected static void executeSqlScript(final Resource resource)
+    {
+        SimpleJdbcTestUtils.executeSqlScript(template, resource, true);
+        
+    }
+    
     protected abstract String[] getTableNames();
 
-    protected static void setSessionFactory(SessionFactory factory) {
+    protected static void setSessionFactory(SessionFactory factory)
+    {
         PersistenceTestBase.factory = factory;
     }
 

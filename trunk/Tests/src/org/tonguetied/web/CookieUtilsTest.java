@@ -46,7 +46,7 @@ public class CookieUtilsTest
     }
 
     /**
-     * Test method for {@link org.tonguetied.web.CookieUtils#getCookie(javax.servlet.http.HttpServletRequest, java.lang.String, boolean)}.
+     * Test method for {@link org.tonguetied.web.CookieUtils#getCookie(HttpServletRequest, String)}.
      */
     @Test
     public final void testGetCookieWithNullCookies()
@@ -57,7 +57,7 @@ public class CookieUtilsTest
     }
 
     /**
-     * Test method for {@link org.tonguetied.web.CookieUtils#getCookie(javax.servlet.http.HttpServletRequest, java.lang.String, boolean)}.
+     * Test method for {@link org.tonguetied.web.CookieUtils#getCookie(HttpServletRequest, String)}.
      */
     @Test
     public final void testGetCookieWithEmptyCookies()
@@ -69,7 +69,7 @@ public class CookieUtilsTest
     }
 
     /**
-     * Test method for {@link org.tonguetied.web.CookieUtils#getCookie(javax.servlet.http.HttpServletRequest, java.lang.String, boolean)}.
+     * Test method for {@link org.tonguetied.web.CookieUtils#getCookie(HttpServletRequest, String)}.
      */
     @Test
     public final void testGetCookieWhenCookieDoesNotExist()
@@ -81,7 +81,7 @@ public class CookieUtilsTest
     }
 
     /**
-     * Test method for {@link org.tonguetied.web.CookieUtils#getCookie(javax.servlet.http.HttpServletRequest, java.lang.String, boolean)}.
+     * Test method for {@link org.tonguetied.web.CookieUtils#getCookie(HttpServletRequest, String)}.
      */
     @Test
     public final void testGetCookieWithNullName()
@@ -93,7 +93,7 @@ public class CookieUtilsTest
     }
     
     /**
-     * Test method for {@link org.tonguetied.web.CookieUtils#getCookie(javax.servlet.http.HttpServletRequest, java.lang.String, boolean)}.
+     * Test method for {@link org.tonguetied.web.CookieUtils#getCookie(HttpServletRequest, String)}.
      */
     @Test
     public final void testGetCookieWhenCookieExists()
