@@ -19,6 +19,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,15 +41,19 @@ import org.hibernate.annotations.Immutable;
  *
  */
 @Entity
+//@org.hibernate.annotations.Entity(mutable=false)
 @NamedQuery(name=AuditLogRecord.QUERY_GET_AUDIT_LOG,
         query="from AuditLogRecord alr order by alr.created desc")
 @Immutable
 @Table(name=AuditLogRecord.TABLE_AUDIT_LOG_RECORD)
-public class AuditLogRecord {
+public class AuditLogRecord
+{
     private Long id;
-    private String message;
+    private Operation message;
     private Long entityId;
     private Class<?> entityClass;
+    private String oldValue;
+    private String newValue;
     private String username;
     private Date created;
     
@@ -60,17 +66,26 @@ public class AuditLogRecord {
     }
 
     /**
-     * Create a new instance of the AuditLogRecord.
+     * Create a new instance of the AuditLogRecord. The created date is set to
+     * the current date.
      * 
-     * @param message
-     * @param entity
-     * @param username the <code>username</code> of the user who made the change
+     * @param message a string indicating the type of operation performed
+     * @param entity the object that was sent to persistence
+     * @param newValue the updated object
+     * @param oldValue the object before being updated
+     * @param username the username of the user who made the change
      */
-    public AuditLogRecord(final String message, final Auditable entity, final String username)
+    public AuditLogRecord(final Operation message,
+                          final Auditable entity,
+                          final String newValue,
+                          final String oldValue,
+                          final String username)
     {
         this.message = message;
         this.entityId = entity.getId();
         this.entityClass = entity.getClass();
+        this.newValue = newValue;
+        this.oldValue = oldValue;
         this.username = username;
         this.created = new Date();
     }
@@ -98,16 +113,18 @@ public class AuditLogRecord {
     /**
      * @return the message describing the action taken
      */
-    @Column(nullable=false)
-    public String getMessage()
+    @Column(nullable=false,length=7)
+    @Enumerated(EnumType.STRING)
+    public Operation getMessage()
     {
         return message;
     }
 
     /**
-     * @param message the message to set
+     * @param message indicates the type of persistence operation being 
+     * performed
      */
-    public void setMessage(final String message)
+    public void setMessage(final Operation message)
     {
         this.message = message;
     }
@@ -168,6 +185,44 @@ public class AuditLogRecord {
     }
 
     /**
+     * Get the value of the object before it was updated at the time point 
+     * specified in the {@link #created} date.
+     * 
+     * @return the original value
+     */
+    public String getOldValue()
+    {
+        return oldValue;
+    }
+
+    /**
+     * @param oldValue the oldValue to set
+     */
+    public void setOldValue(String oldValue)
+    {
+        this.oldValue = oldValue;
+    }
+
+    /**
+     * Get the value of the object after it was updated at the time point 
+     * specified in the {@link #created} date.
+     * 
+     * @return the new value
+     */
+    public String getNewValue()
+    {
+        return newValue;
+    }
+
+    /**
+     * @param newValue the newValue to set
+     */
+    public void setNewValue(String newValue)
+    {
+        this.newValue = newValue;
+    }
+
+    /**
      * Returns a cloned instance of the date the record was created. This is 
      * done for security reasons, so that the internals of the date cannot be
      * changed.
@@ -206,6 +261,8 @@ public class AuditLogRecord {
                     append(entityId, other.entityId).
                     append(entityClass, other.entityClass).
                     append(username, other.username).
+                    append(oldValue, other.oldValue).
+                    append(newValue, other.newValue).
                     append(created, other.created).
                     isEquals();  
         }
@@ -213,14 +270,13 @@ public class AuditLogRecord {
         return isEqual;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode()
     {
         HashCodeBuilder builder = new HashCodeBuilder(17, 19);
         int hashCode = builder.append(message).
+                    append(newValue).
+                    append(oldValue).
                     append(entityId).
                     append(entityClass).
                     append(username).
@@ -235,5 +291,83 @@ public class AuditLogRecord {
     {
         return new ReflectionToStringBuilder(this, 
                 ToStringStyle.SHORT_PREFIX_STYLE).toString();
+    }
+    
+    /**
+     * Describes different persistence operations that can be performed and we
+     * want audited.
+     * 
+     * @author bsion
+     *
+     */
+    protected enum Operation
+    {
+        delete, insert, update;
+//        delete
+//        {
+//            /**
+//             * For delete operations, there is no new value, so return 
+//             * <code>false</code>.
+//             */
+//            @Override
+//            public boolean hasNewValue()
+//            {
+//                return false;
+//            }
+//            
+//            @Override
+//            public boolean hasOriginalValue()
+//            {
+//                return true;
+//            }
+//        }, 
+//        insert
+//        {
+//            @Override
+//            public boolean hasNewValue()
+//            {
+//                return true;
+//            }
+//            
+//            /**
+//             * For insert operations, there is no original value, so return 
+//             * <code>false</code>.
+//             */
+//            @Override
+//            public boolean hasOriginalValue()
+//            {
+//                return false;
+//            }
+//        }, 
+//        update
+//        {
+//            @Override
+//            public boolean hasNewValue()
+//            {
+//                return true;
+//            }
+//            
+//            @Override
+//            public boolean hasOriginalValue()
+//            {
+//                return true;
+//            }
+//        };
+//        
+//        /**
+//         * Determine if this operation has an original value.
+//         * 
+//         * @return the <code>true</code> if the operation has an original value,
+//         * <code>false</code> otherwise
+//         */
+//        public abstract boolean hasNewValue();
+//        
+//        /**
+//         * Determine if this operation has an original value.
+//         * 
+//         * @return the <code>true</code> if the operation has an original value,
+//         * <code>false</code> otherwise
+//         */
+//        public abstract boolean hasOriginalValue();
     }
 }

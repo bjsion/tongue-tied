@@ -23,6 +23,7 @@ import static org.tonguetied.keywordmanagement.Keyword.TABLE_KEYWORD;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.Test;
+import org.tonguetied.audit.AuditLogRecord.Operation;
 import org.tonguetied.keywordmanagement.Keyword;
 import org.tonguetied.test.common.PersistenceTestBase;
 
@@ -46,7 +47,8 @@ public class AuditLogRecordPersistenceTest extends PersistenceTestBase
         keyword.setKeyword("test");
         session.saveOrUpdate(keyword);
         
-        AuditLogRecord record = new AuditLogRecord("new", keyword, "username");
+        AuditLogRecord record = 
+            new AuditLogRecord(Operation.insert, keyword, keyword.toString(), null, "username");
 
         session.saveOrUpdate(record);
         session.close();
@@ -72,7 +74,8 @@ public class AuditLogRecordPersistenceTest extends PersistenceTestBase
         keyword.setKeyword("test");
         session.saveOrUpdate(keyword);
         
-        AuditLogRecord record = new AuditLogRecord("new", keyword, "username");
+        AuditLogRecord record =
+            new AuditLogRecord(Operation.insert, keyword, keyword.toString(), null, "username");
 
         session.saveOrUpdate(record);
         session.flush();
@@ -83,7 +86,7 @@ public class AuditLogRecordPersistenceTest extends PersistenceTestBase
         tx = session.beginTransaction();
         AuditLogRecord reloaded = 
             (AuditLogRecord) session.get(AuditLogRecord.class, record.getId());
-        reloaded.setMessage("updated");
+        reloaded.setMessage(Operation.update);
         session.saveOrUpdate(reloaded);
         session.flush();
         tx.commit();
@@ -93,7 +96,7 @@ public class AuditLogRecordPersistenceTest extends PersistenceTestBase
         tx = session.beginTransaction();
         AuditLogRecord actual = 
             (AuditLogRecord) session.get(AuditLogRecord.class, record.getId());
-        assertEquals("new", actual.getMessage());
+        assertEquals(Operation.insert, actual.getMessage());
         tx.rollback();
         assertTrue(tx.wasRolledBack());
         session.close();

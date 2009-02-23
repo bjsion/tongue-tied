@@ -15,29 +15,20 @@
  */
 package org.tonguetied.audit;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
-
 /**
- * Test suite for package.
+ * This interface marks all classes that support audit log attributes but are
+ * not auditable themselves.
  * 
  * @author bsion
  *
  */
-@RunWith(Suite.class)
-@SuiteClasses({
-    AuditLogRecordEqualsHashCodeTest.class,
-    AuditLogEventListenerTest.class,
-    AuditLogRecordPersistenceTest.class,
-    AuditServiceTest.class
-})
-public class AllTests {
-
-    public static Test suite() {
-        return new JUnit4TestAdapter(AllTests.class);
-    }
+public interface AuditSupport
+{
+    /**
+     * Format the object to display the string value of this object for an 
+     * Audit Log entry.
+     * 
+     * @return the string value of the object
+     */
+    String toLogString();
 }

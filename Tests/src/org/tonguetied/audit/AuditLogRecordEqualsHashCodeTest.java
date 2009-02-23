@@ -17,6 +17,7 @@ package org.tonguetied.audit;
 
 import junitx.extensions.EqualsHashCodeTestCase;
 
+import org.tonguetied.audit.AuditLogRecord.Operation;
 import org.tonguetied.keywordmanagement.Keyword;
 
 
@@ -35,7 +36,7 @@ public class AuditLogRecordEqualsHashCodeTest extends EqualsHashCodeTestCase {
         Keyword keyword = new Keyword();
         keyword.setKeyword("test");
         
-        AuditLogRecord record = new AuditLogRecord("new", keyword, "user");
+        AuditLogRecord record = new AuditLogRecord(Operation.insert, keyword, keyword.toString(), null, "user");
 
         return record;
     }
@@ -45,7 +46,7 @@ public class AuditLogRecordEqualsHashCodeTest extends EqualsHashCodeTestCase {
         Keyword keyword = new Keyword();
         keyword.setKeyword("test");
         
-        AuditLogRecord record = new AuditLogRecord("delete", keyword, "user");
+        AuditLogRecord record = new AuditLogRecord(Operation.delete, keyword, keyword.toString(), null, "user");
 
         return record;
     }
