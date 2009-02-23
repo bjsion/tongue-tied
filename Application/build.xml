@@ -248,7 +248,7 @@
             <lib dir="${3rdparty.home}/cglib/2.2">
                 <include name="cglib-nodep-2.2.jar"/>
             </lib>
-            <lib dir="${3rdparty.home}/displaytag/1.1.1">
+            <lib dir="${3rdparty.home}/displaytag/1.2">
                 <include name="displaytag.jar"/>
                 <include name="LICENSE.displaytag.txt"/>
             </lib>
