@@ -63,22 +63,59 @@ tr.tableRowEven,tr.even {
   background-color: #daecf3;
 }
 
+span.rtf {
+  background-image: url(../images/ico_file_rtf.png);
+}
+
 span.pagebanner {
-	background-color: #eee;
-	border: 1px dotted #999;
-	padding: 2px 4px 2px 4px;
-	width: 79%;
-	margin-top: 10px;
-	display: block;
-	border-bottom: none;
+  background-color: #eee;
+  border: 1px dotted #999;
+  padding: 2px 4px 2px 4px;
+  width: 79%;
+  margin-top: 10px;
+  display: block;
+  border-bottom: none;
 }
 
 span.pagelinks {
-	background-color: #eee;
-	border: 1px dotted #999;
-	padding: 2px 4px 2px 4px;
-	width: 79%;
-	display: block;
-	border-top: none;
-	margin-bottom: -5px;
+  background-color: #eee;
+  border: 1px dotted #999;
+  padding: 2px 4px 2px 4px;
+  width: 79%;
+  display: block;
+  border-top: none;
+  margin-bottom: -5px;
+}
+
+
+.group-1 {
+  font-weight:bold;
+  padding-bottom:10px;
+  border-top:1px solid black;
+}
+.group-2 {
+  font-style:italic;
+  border-top: 1px solid black;
+
+}
+.subtotal-sum, .grandtotal-sum {
+  font-weight:bold;
+  text-align:right;
+}
+.subtotal-header {
+  padding-bottom: 0px;
+  border-top: 1px solid white;
+}
+.subtotal-label, .grandtotal-label {
+  border-top: 1px solid white;
+  font-weight: bold;
+}
+.grouped-table tr.even {
+  background-color: #fff;
+}
+.grouped-table tr.odd {
+  background-color: #fff;
+}
+.grandtotal-row {
+  border-top: 2px solid black;
 }
