@@ -17,12 +17,14 @@ package org.tonguetied.audit;
 
 import org.apache.log4j.Logger;
 import org.hibernate.CallbackException;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.engine.SessionFactoryImplementor;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContext;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.security.userdetails.UserDetails;
+import org.tonguetied.audit.AuditLogRecord.Operation;
 
 
 /**
@@ -36,29 +38,40 @@ public class AuditLog
     private static final Logger logger = Logger.getLogger(AuditLog.class);
     
     /**
-     * Create an audit log entry.
+     * Create an audit log entry and save in persistent storage.
      * 
      * @param message the message describing the action taken
-     * @param entity
+     * @param entity the object being logged
+     * @param newValue the new values of attributes of the entity
+     * @param oldValue the previous values of attributes of the entity
      * @param implementor
      * @throws CallbackException
      */
-    public static synchronized void logEvent(final String message, Auditable entity, 
+    public static synchronized void logEvent(final Operation message,
+            Auditable entity,
+            final String newValue,
+            final String oldValue,
             SessionFactoryImplementor implementor)
-    throws CallbackException 
+            throws CallbackException 
     {
-        Session tempSession = implementor.openTemporarySession();
+        Session tempSession = null;
         try
         {
-            AuditLogRecord record = new AuditLogRecord(message, entity, getUsername());
+            // Use a separate session for saving audit log records
+            tempSession = implementor.openSession();
+            tempSession.beginTransaction();
+            
+            final AuditLogRecord record = new AuditLogRecord(
+                        message, entity, newValue, oldValue, getUsername());
             
             tempSession.save(record);
-            tempSession.flush();
             if (logger.isDebugEnabled())
                 logger.debug("successfully saved audit log record: " + record);
+            tempSession.getTransaction().commit();
         }
-        catch (Exception ex)
+        catch (HibernateException ex)
         {
+            logger.error("unable to process audit log", ex);
             throw new CallbackException(ex);
         }
         finally
@@ -68,6 +81,18 @@ public class AuditLog
         }
     }
     
+//    /**
+//     * Evaluate the string value of the object.
+//     * 
+//     * @param auditable the object to process
+//     * @return the string value of the object or <code>null</code> if the 
+//     * <code>auditable</code> is <code>null</code>
+//     */
+//    private static synchronized String getValue(final Auditable auditable)
+//    {
+//        return auditable == null? null: auditable.toLogString();
+//    }
+//
     /**
      * Gets the current user name from the Spring Security SecurityContext.
      * 
@@ -75,17 +100,14 @@ public class AuditLog
      */
     private static synchronized String getUsername()
     {
-        SecurityContext secureContext = SecurityContextHolder.getContext();
+        final SecurityContext secureContext = SecurityContextHolder.getContext();
 
         String username = null;
-        // secure context will be null when running unit tests so leave userId
-        // as null
-        if (secureContext != null) {
-            Authentication auth = secureContext.getAuthentication();
+        final Authentication auth = secureContext.getAuthentication();
 
-            if (auth.getPrincipal() instanceof UserDetails) {
-                username = ((UserDetails) auth.getPrincipal()).getUsername();
-            }
+        if (auth.getPrincipal() instanceof UserDetails)
+        {
+            username = ((UserDetails) auth.getPrincipal()).getUsername();
         }
         
         return username;

@@ -273,6 +273,30 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
                 ToStringStyle.SHORT_PREFIX_STYLE).toString();
     }
     
+    @Override
+    public String toLogString()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Keyword[keyword=").append(keyword).append(",context=").
+        append(context).append(",translations=[");
+        for (Translation translation : translations)
+        {
+            builder.append("bundle=");
+            builder.append(translation.getBundle().getName());
+            builder.append(", country=");
+            builder.append(translation.getCountry().getCode());
+            builder.append(", language=");
+            builder.append(translation.getLanguage().getCode());
+            builder.append(", state=");
+            builder.append(translation.getState());
+            builder.append(", value=");
+            builder.append(translation.getValue());
+        }
+        builder.append("]]");
+        
+        return builder.toString();
+    }
+
     /**
      * This predicate is used to find {@link Translation}s based off its 
      * primary key.

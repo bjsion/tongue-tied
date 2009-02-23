@@ -18,33 +18,43 @@ package org.tonguetied.audit;
 import org.apache.log4j.Logger;
 import org.hibernate.event.PostInsertEvent;
 import org.hibernate.event.PostInsertEventListener;
+import org.hibernate.persister.entity.EntityPersister;
+import org.tonguetied.audit.AuditLogRecord.Operation;
 
 
 /**
- * Event listener to add a new audit log record after an insert to an 
+ * Event listener to add a new audit log record before an insert to an 
  * {@link Auditable} class has been made.
  *  
  * @author bsion
  *
  */
-public class AuditLogPostInsertEventListener implements PostInsertEventListener
+public class AuditLogPostInsertEventListener extends AbstractAuditLogEventListener
+        implements PostInsertEventListener
 {
     private static final Logger logger = 
-        Logger.getLogger(AuditLogPostDeleteEventListener.class);
+        Logger.getLogger(AuditLogPostInsertEventListener.class);
 
     private static final long serialVersionUID = -8154917326845979720L;
 
-    /* (non-Javadoc)
-     * @see org.hibernate.event.PostInsertEventListener#onPostInsert(org.hibernate.event.PostInsertEvent)
+    /**
+     * Add an entry in the audit log for the creation of an {@link Auditable} 
+     * entity.
      */
-    public void onPostInsert(PostInsertEvent event) {
-        if (event.getEntity() instanceof Auditable) {
-            Auditable entity = (Auditable)event.getEntity();
+    public void onPostInsert(final PostInsertEvent event)
+    {
+        if (event.getEntity() instanceof Auditable)
+        {
+            final Auditable entity = (Auditable)event.getEntity();
             if (logger.isDebugEnabled())
                 logger.debug("Adding an audit log entry for insertion of entity "
-                        + entity.getClass() + " with id " +entity.getId());
+                        + entity.getClass() + " with id " + entity.getId());
+            final Object[] state = event.getState();
+            final EntityPersister persister = event.getPersister();
+            processEntity(null, state, persister);
             
-            AuditLog.logEvent("new", entity, event.getPersister().getFactory());
+            AuditLog.logEvent(Operation.insert, entity, getNewValue(), 
+                getOldValue(), persister.getFactory());
         }
     }
 }

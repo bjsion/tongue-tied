@@ -33,6 +33,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import org.hibernate.annotations.AccessType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.tonguetied.audit.AuditSupport;
 
 /**
  * Class describing a resource bundle as it relates to resource management. The
@@ -49,7 +50,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
     })
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @Table(name=Bundle.TABLE_BUNDLE)
-public class Bundle implements Comparable<Bundle>
+public class Bundle implements Comparable<Bundle>, AuditSupport
 {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO,generator="bundle_generator")
@@ -195,6 +196,12 @@ public class Bundle implements Comparable<Bundle>
                 isGlobal).append(isDefault);
 
         return builder.toHashCode();
+    }
+
+    @Override
+    public String toLogString()
+    {
+        return name;
     }
 
     @Override

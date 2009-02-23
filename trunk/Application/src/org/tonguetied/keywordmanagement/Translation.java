@@ -42,6 +42,7 @@ import org.hibernate.annotations.AccessType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.ForeignKey;
+import org.tonguetied.audit.Auditable;
 
 /**
  * A translation is a specific value of a {@link Keyword} for a 
@@ -67,7 +68,7 @@ import org.hibernate.annotations.ForeignKey;
 })
 @Table(name=Translation.TABLE_TRANSLATION,uniqueConstraints={@UniqueConstraint(columnNames={"keyword_id","language_id","country_id","bundle_id"})})
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class Translation implements Cloneable, Comparable<Translation>
+public class Translation implements Cloneable, Comparable<Translation>, Auditable
 {
     private Long id;
     private String value;
@@ -169,6 +170,7 @@ public class Translation implements Cloneable, Comparable<Translation>
     {
         return keyword;
     }
+    
     public void setKeyword(final Keyword keyword)
     {
         this.keyword = keyword;
@@ -309,7 +311,26 @@ public class Translation implements Cloneable, Comparable<Translation>
         return new ReflectionToStringBuilder(this, 
                 ToStringStyle.SHORT_PREFIX_STYLE).toString();
     }
-    
+
+    @Override
+    public String toLogString()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Translation[bundle=").
+            append(bundle.getName()).
+            append(", country=").
+            append(country.getCode()).
+            append(", language=").
+            append(language.getCode()).
+            append(", state=").
+            append(state).
+            append(", value=").
+            append(value).
+            append("]");
+        
+        return builder.toString();
+    }
+
     /**
      * These values represent the workflow states for a translation.
      * 

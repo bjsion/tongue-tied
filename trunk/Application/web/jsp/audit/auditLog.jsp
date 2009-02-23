@@ -5,9 +5,9 @@
 
     <div class="content">
         <display:table name="auditLog" id="record" sort="page" requestURI="">
-            <display:column property="username" titleKey="username" sortable="true"/>
-            <display:column property="entityId" titleKey="id" sortable="true"/>
-            <display:column property="entityClass" titleKey="class" sortable="true"/>
+            <display:column property="username" titleKey="changed.by" sortable="true"/>
+            <display:column property="oldValue" titleKey="old.value" sortable="false"/>
+            <display:column property="newValue" titleKey="new.value" sortable="false"/>
             <display:column property="created" titleKey="created" sortable="true"/>
             <display:column property="message" titleKey="action" sortable="false"/>
         </display:table>

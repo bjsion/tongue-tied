@@ -21,6 +21,7 @@ import static org.tonguetied.keywordmanagement.Keyword.TABLE_KEYWORD;
 import java.util.List;
 
 import org.junit.Test;
+import org.tonguetied.audit.AuditLogRecord.Operation;
 import org.tonguetied.keywordmanagement.Keyword;
 import org.tonguetied.test.common.AbstractServiceTest;
 
@@ -53,9 +54,9 @@ public class AuditServiceTest extends AbstractServiceTest
     @Test
     public final void testGetAuditLog()
     {
-        AuditLogRecord record1 = new AuditLogRecord("test 1", keyword1, "user1");
-        AuditLogRecord record2 = new AuditLogRecord("test 2", keyword1, "user1");
-        AuditLogRecord record3 = new AuditLogRecord("test 3", keyword1, "user1");
+        AuditLogRecord record1 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        AuditLogRecord record2 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        AuditLogRecord record3 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
         auditRepository.saveOrUpdate(record1);
         auditRepository.saveOrUpdate(record2);
         auditRepository.saveOrUpdate(record3);

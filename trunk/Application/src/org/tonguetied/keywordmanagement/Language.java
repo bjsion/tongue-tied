@@ -32,6 +32,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import org.hibernate.annotations.AccessType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.tonguetied.audit.AuditSupport;
 
 /**
  * Object describing the features of a language. The language is one aspect 
@@ -44,7 +45,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @NamedQuery(name=Language.QUERY_GET_LANAGUAGES,query="from Language l order by l.name")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @Table(name=Language.TABLE_LANGUAGE)
-public class Language implements Comparable<Language>
+public class Language implements Comparable<Language>, AuditSupport
 {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO,generator="language_generator")
@@ -128,6 +129,12 @@ public class Language implements Comparable<Language>
         return result;
     }
     
+    @Override
+    public String toLogString()
+    {
+        return name;
+    }
+
     @Override
     public String toString() {
         return new ReflectionToStringBuilder(this, 

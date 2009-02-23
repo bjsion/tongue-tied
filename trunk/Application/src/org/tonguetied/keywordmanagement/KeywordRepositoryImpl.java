@@ -174,7 +174,10 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements
 
     public void saveOrUpdate(Keyword keyword) throws DataAccessException
     {
-        getHibernateTemplate().saveOrUpdate(keyword);
+        if (keyword.getId() == null)
+            getHibernateTemplate().saveOrUpdate(keyword);
+        else
+            getHibernateTemplate().merge(keyword);
         getHibernateTemplate().flush();
     }
 

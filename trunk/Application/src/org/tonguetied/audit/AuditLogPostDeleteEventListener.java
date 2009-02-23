@@ -18,6 +18,8 @@ package org.tonguetied.audit;
 import org.apache.log4j.Logger;
 import org.hibernate.event.PostDeleteEvent;
 import org.hibernate.event.PostDeleteEventListener;
+import org.hibernate.persister.entity.EntityPersister;
+import org.tonguetied.audit.AuditLogRecord.Operation;
 
 
 /**
@@ -27,16 +29,18 @@ import org.hibernate.event.PostDeleteEventListener;
  * @author bsion
  *
  */
-public class AuditLogPostDeleteEventListener implements PostDeleteEventListener
+public class AuditLogPostDeleteEventListener extends AbstractAuditLogEventListener
+        implements PostDeleteEventListener
 {
     private static final Logger logger = 
         Logger.getLogger(AuditLogPostDeleteEventListener.class);
     private static final long serialVersionUID = 6638781488543805970L;
 
-    /* (non-Javadoc)
-     * @see org.hibernate.event.PostDeleteEventListener#onPostDelete(org.hibernate.event.PostDeleteEvent)
+    /**
+     * Add an entry in the audit log for the removal of an {@link Auditable} 
+     * entity.
      */
-    public void onPostDelete(PostDeleteEvent event)
+    public void onPostDelete(final PostDeleteEvent event)
     {
         if (event.getEntity() instanceof Auditable)
         {
@@ -45,7 +49,11 @@ public class AuditLogPostDeleteEventListener implements PostDeleteEventListener
                 logger.debug("Adding an audit log entry for deletion of entity "
                         + entity.getClass() + " with id " +entity.getId());
             
-            AuditLog.logEvent("delete", entity, event.getPersister().getFactory());
+            final Object[] deletedState = event.getDeletedState();
+            final EntityPersister persister = event.getPersister();
+            processEntity(deletedState, null, persister);
+            AuditLog.logEvent(Operation.delete, entity, getNewValue(), 
+                getOldValue(), persister.getFactory());
         }
     }
 }

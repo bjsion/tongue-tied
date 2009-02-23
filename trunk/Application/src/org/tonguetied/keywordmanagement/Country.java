@@ -33,6 +33,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import org.hibernate.annotations.AccessType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.tonguetied.audit.AuditSupport;
 
 /**
  * Class describing the country as it relates to resource management. The 
@@ -45,7 +46,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @NamedQuery(name=Country.QUERY_GET_COUNTRIES,query="from Country c order by c.name")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @Table(name=Country.TABLE_COUNTRY)
-public class Country implements Comparable<Country> 
+public class Country implements Comparable<Country>, AuditSupport
 {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO,generator="country_generator")
@@ -126,6 +127,12 @@ public class Country implements Comparable<Country>
         return builder.toHashCode();
     }
     
+    @Override
+    public String toLogString()
+    {
+        return name;
+    }
+
     @Override
     public String toString()
     {
