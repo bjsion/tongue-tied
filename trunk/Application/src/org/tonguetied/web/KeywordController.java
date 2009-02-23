@@ -56,7 +56,8 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
  * @see KeywordFactory#createKeyword(java.util.List, Country, Bundle)
  * @see KeywordFactory#createKeyword(java.util.List, Language, Bundle)
  */
-public class KeywordController extends CancellableFormController {
+public class KeywordController extends CancellableFormController
+{
     
     private KeywordService keywordService;
     
@@ -66,32 +67,38 @@ public class KeywordController extends CancellableFormController {
     /**
      * Create new instance of KeywordController 
      */
-    public KeywordController() {
+    public KeywordController()
+    {
         setCommandClass(Keyword.class);
     }
 
     @Override
     protected Object formBackingObject(HttpServletRequest request) 
-            throws Exception {
-        String stringId = request.getParameter("keywordId");
+            throws Exception
+    {
+        final String stringId = request.getParameter("keywordId");
         Long id = null;
         if (stringId != null)
             id = Long.parseLong(stringId);
         Keyword keyword = keywordService.getKeyword(id);
-        if (keyword == null) {
+        if (keyword == null)
+        {
             String creationType = request.getParameter("creationType");
             Bundle bundle = keywordService.getDefaultBundle();
-            if (LANGUAGE.equals(creationType)) {
+            if (LANGUAGE.equals(creationType))
+            {
                 keyword = 
                     KeywordFactory.createKeyword(keywordService.getLanguages(), 
                         keywordService.getCountry(CountryCode.DEFAULT), bundle);
             }
-            else if (COUNTRY.equals(creationType)) {
+            else if (COUNTRY.equals(creationType))
+            {
                 keyword = 
                     KeywordFactory.createKeyword(keywordService.getCountries(), 
                         keywordService.getLanguage(LanguageCode.DEFAULT), bundle);
             } 
-            else {
+            else
+            {
                 // catch all if neither is specified. This is a rare occurence
                 // and generally will not occur. This case is only to prevent
                 // NPE when rendering the form
@@ -106,22 +113,27 @@ public class KeywordController extends CancellableFormController {
     protected ModelAndView onSubmit(HttpServletRequest request, 
                                     HttpServletResponse response,
                                     Object command,
-                                    BindException errors) throws Exception {
+                                    BindException errors) throws Exception
+    {
         if (logger.isDebugEnabled()) logger.debug("saving keyword");
         Keyword keyword = (Keyword) command;
         
         ModelAndView modelAndView;
-        if (request.getParameter("add") != null) {
+        if (request.getParameter("add") != null)
+        {
             modelAndView = addTranslation(request, response, errors, keyword);
         }
-        else if (request.getParameter("delete") != null) {
+        else if (request.getParameter("delete") != null)
+        {
             modelAndView = deleteKeyword(keyword);
         }
-        else if (request.getParameter("deleteTranslation") != null) {
+        else if (request.getParameter("deleteTranslation") != null)
+        {
             modelAndView = 
                 deleteTranslation(request, response, errors, keyword);
         }
-        else {
+        else
+        {
             modelAndView = saveKeyword(keyword);
         }
         
@@ -131,7 +143,8 @@ public class KeywordController extends CancellableFormController {
     @Override
     protected ModelAndView onCancel(HttpServletRequest request, 
                                     HttpServletResponse response,
-                                    Object command) throws Exception {
+                                    Object command) throws Exception
+    {
         return new ModelAndView(getCancelView());
     }
     
@@ -151,7 +164,8 @@ public class KeywordController extends CancellableFormController {
     @Override
     protected void initBinder(HttpServletRequest request,
                               ServletRequestDataBinder binder) 
-            throws Exception {
+            throws Exception
+    {
         binder.registerCustomEditor(Language.class,  
                 new LanguageSupport(keywordService.getLanguages()));
         binder.registerCustomEditor(Country.class, 
@@ -163,13 +177,15 @@ public class KeywordController extends CancellableFormController {
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
     
-    private ModelAndView saveKeyword(Keyword keyword) {
+    private ModelAndView saveKeyword(Keyword keyword)
+    {
         keywordService.saveOrUpdate(keyword);
         
         return new ModelAndView(getSuccessView());
     }
     
-    private ModelAndView deleteKeyword(Keyword keyword) {
+    private ModelAndView deleteKeyword(Keyword keyword)
+    {
         keywordService.delete(keyword);
         
         return new ModelAndView(getSuccessView());
@@ -192,7 +208,7 @@ public class KeywordController extends CancellableFormController {
                                            Keyword keyword)
             throws Exception
     {
-        Long translationId = 
+        final Long translationId = 
             Long.valueOf(request.getParameter("deleteTranslation"));
         keyword.removeTranslation(translationId);
         return showForm(request, response, errors);
@@ -203,7 +219,8 @@ public class KeywordController extends CancellableFormController {
      * 
      * @param keywordService the {@link KeywordService} to set.
      */
-    public void setKeywordService(KeywordService keywordService) {
+    public void setKeywordService(final KeywordService keywordService)
+    {
         this.keywordService = keywordService;
     }
 }

@@ -123,7 +123,8 @@ public class ImportController extends CancellableFormController {
      * 
      * @param dataService the {@link DataService} to set.
      */
-    public void setDataService(DataService dataService) {
+    public void setDataService(final DataService dataService)
+    {
         this.dataService = dataService;
     }
 }
