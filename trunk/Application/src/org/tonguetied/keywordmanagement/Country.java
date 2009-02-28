@@ -127,7 +127,6 @@ public class Country implements Comparable<Country>, AuditSupport
         return builder.toHashCode();
     }
     
-    @Override
     public String toLogString()
     {
         return name;

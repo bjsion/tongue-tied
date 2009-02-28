@@ -198,7 +198,6 @@ public class Bundle implements Comparable<Bundle>, AuditSupport
         return builder.toHashCode();
     }
 
-    @Override
     public String toLogString()
     {
         return name;

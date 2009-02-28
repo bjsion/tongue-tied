@@ -312,7 +312,6 @@ public class Translation implements Cloneable, Comparable<Translation>, Auditabl
                 ToStringStyle.SHORT_PREFIX_STYLE).toString();
     }
 
-    @Override
     public String toLogString()
     {
         StringBuilder builder = new StringBuilder();
