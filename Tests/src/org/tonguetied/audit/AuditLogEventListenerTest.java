@@ -352,13 +352,13 @@ public class AuditLogEventListenerTest extends PersistenceTestBase
             (Keyword) session.get(Keyword.class, keyword.getId());
         Translation translation = 
             new Translation(bundle2, country, language, "value", TranslationState.VERIFIED);
+        reloaded.addTranslation(translation);
         final String expectedTranslationValue = "bundle = " + bundle2.getName() + "\n"
             + "country = " + country.getName() + "\n"
-            + "keyword = null\n"
+            + "keyword = "+reloaded.toLogString()+"\n"
             + "language = " +language.getName() + "\n"
             + "state = "+ TranslationState.VERIFIED +"\n"
             + "value = value\n";
-        reloaded.addTranslation(translation);
         session.saveOrUpdate(reloaded);
         session.flush();
         session.close();
