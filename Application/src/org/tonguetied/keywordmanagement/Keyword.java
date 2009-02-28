@@ -273,7 +273,6 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
                 ToStringStyle.SHORT_PREFIX_STYLE).toString();
     }
     
-    @Override
     public String toLogString()
     {
         StringBuilder builder = new StringBuilder();

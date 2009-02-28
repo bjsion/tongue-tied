@@ -129,7 +129,6 @@ public class Language implements Comparable<Language>, AuditSupport
         return result;
     }
     
-    @Override
     public String toLogString()
     {
         return name;
