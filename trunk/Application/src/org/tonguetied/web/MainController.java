@@ -18,6 +18,7 @@ package org.tonguetied.web;
 import static org.tonguetied.web.Constants.AUDIT_LOG;
 import static org.tonguetied.web.Constants.BUNDLES;
 import static org.tonguetied.web.Constants.COUNTRIES;
+import static org.tonguetied.web.Constants.KEYWORD_ID;
 import static org.tonguetied.web.Constants.LANGUAGES;
 import static org.tonguetied.web.Constants.SEARCH_PARAMETERS;
 import static org.tonguetied.web.Constants.SHOW_ALL;
@@ -59,7 +60,8 @@ import org.tonguetied.usermanagement.UserService;
  * @author bsion
  *
  */
-public class MainController extends MultiActionController {
+public class MainController extends MultiActionController
+{
 
     private KeywordService keywordService;
     private UserService userService;
@@ -229,7 +231,7 @@ public class MainController extends MultiActionController {
     public ModelAndView deleteKeyword(HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
-        String keywordId = request.getParameter("keywordId");
+        final String keywordId = request.getParameter(KEYWORD_ID);
         keywordService.deleteKeyword(Long.parseLong(keywordId));
         
         return new ModelAndView("forward:/keywords.htm");
@@ -240,7 +242,8 @@ public class MainController extends MultiActionController {
      * 
      * @param keywordService the {@link KeywordService} to set
      */
-    public void setKeywordService(KeywordService keywordService) {
+    public void setKeywordService(KeywordService keywordService)
+    {
         this.keywordService = keywordService;
     }
     
@@ -249,7 +252,8 @@ public class MainController extends MultiActionController {
      * 
      * @param userService the {@link UserService} to set
      */
-    public void setUserService(UserService userService) {
+    public void setUserService(UserService userService)
+    {
         this.userService = userService;
     }
 
@@ -258,7 +262,8 @@ public class MainController extends MultiActionController {
      * 
      * @param auditService the {@link AuditService} to set
      */
-    public void setAuditService(AuditService auditService) {
+    public void setAuditService(AuditService auditService)
+    {
         this.auditService = auditService;
     }
     
@@ -267,7 +272,8 @@ public class MainController extends MultiActionController {
      * 
      * @param viewPreferences the {@link PreferenceForm} to set
      */
-    public void setViewPreferences(PreferenceForm viewPreferences) {
+    public void setViewPreferences(PreferenceForm viewPreferences)
+    {
         this.viewPreferences = viewPreferences;
     }
 
@@ -276,7 +282,8 @@ public class MainController extends MultiActionController {
      * 
      * @param searchParameters the searchParameters to set
      */
-    public void setSearchParameters(SearchForm searchParameters) {
+    public void setSearchParameters(SearchForm searchParameters)
+    {
         this.searchParameters = searchParameters;
     }
 }

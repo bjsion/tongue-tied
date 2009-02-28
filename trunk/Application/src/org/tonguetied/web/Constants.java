@@ -40,6 +40,7 @@ public interface Constants {
     public static final String USER = "user";
     public static final String USERS = "users";
     public static final String VIEW_PREFERENCES = "viewPreferences";
+    static final String KEYWORD_ID = "keywordId";
 
     static final char SPACE_SEPARATOR = ' ';
     static final char LINE_SEPARATOR = '\u2007';

@@ -46,14 +46,17 @@ public class KeywordFactory {
      * <code>null</code>
      */
     public static Keyword createKeyword(List<Language> languages, Country country, Bundle bundle) 
-            throws IllegalArgumentException {
-        if (languages == null) {
+            throws IllegalArgumentException
+    {
+        if (languages == null)
+        {
             throw new IllegalArgumentException(
                     "Cannot provide a null list of languages");
         }
         
         Keyword keyword = new Keyword();
-        for(Language language: languages) {
+        for(Language language: languages)
+        {
             Translation translation = 
                 new Translation(bundle, country, language, null, TranslationState.UNVERIFIED);
             keyword.addTranslation(translation);
@@ -80,14 +83,17 @@ public class KeywordFactory {
      * <code>null</code>
      */
     public static Keyword createKeyword(List<Country> countries, Language language, Bundle bundle) 
-            throws IllegalArgumentException {
-        if (countries == null) {
+            throws IllegalArgumentException
+    {
+        if (countries == null)
+        {
             throw new IllegalArgumentException(
                     "Cannot provide a null list of countries");
         }
         
         Keyword keyword = new Keyword();
-        for(Country country: countries) {
+        for(Country country: countries)
+        {
             Translation translation = 
                 new Translation(bundle, country, language, null, TranslationState.UNVERIFIED);
             keyword.addTranslation(translation);
