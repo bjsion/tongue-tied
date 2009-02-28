@@ -30,8 +30,8 @@ import org.tonguetied.keywordmanagement.Translation;
  * @author bsion
  *
  */
-public class TranslationTransformer {
-
+public class TranslationTransformer
+{
     /**
      * Transform a list {@link Keyword} into a {@link List} of 
      * {@link Translation}s. If the key word does not contain any 
@@ -45,15 +45,19 @@ public class TranslationTransformer {
     {
         List<Translation> translations = new ArrayList<Translation>();
   
-        if (keywords != null) {
+        if (keywords != null)
+        {
             Translation translation;
-            for (Keyword keyword: keywords) {
-                if (CollectionUtils.isEmpty(keyword.getTranslations())) {
+            for (Keyword keyword: keywords)
+            {
+                if (CollectionUtils.isEmpty(keyword.getTranslations()))
+                {
                     translation = new Translation();
                     translation.setKeyword(keyword.clone());
                     translations.add(translation);
                 }
-                else {
+                else
+                {
                     translations.addAll(keyword.getTranslations());
                 }
             }

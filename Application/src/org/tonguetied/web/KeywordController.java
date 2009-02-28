@@ -18,6 +18,7 @@ package org.tonguetied.web;
 import static org.tonguetied.web.Constants.BUNDLES;
 import static org.tonguetied.web.Constants.COUNTRIES;
 import static org.tonguetied.web.Constants.COUNTRY;
+import static org.tonguetied.web.Constants.KEYWORD_ID;
 import static org.tonguetied.web.Constants.LANGUAGE;
 import static org.tonguetied.web.Constants.LANGUAGES;
 import static org.tonguetied.web.Constants.STATES;
@@ -76,15 +77,15 @@ public class KeywordController extends CancellableFormController
     protected Object formBackingObject(HttpServletRequest request) 
             throws Exception
     {
-        final String stringId = request.getParameter("keywordId");
+        final String stringId = request.getParameter(KEYWORD_ID);
         Long id = null;
         if (stringId != null)
             id = Long.parseLong(stringId);
         Keyword keyword = keywordService.getKeyword(id);
         if (keyword == null)
         {
-            String creationType = request.getParameter("creationType");
-            Bundle bundle = keywordService.getDefaultBundle();
+            final String creationType = request.getParameter("creationType");
+            final Bundle bundle = keywordService.getDefaultBundle();
             if (LANGUAGE.equals(creationType))
             {
                 keyword = 
