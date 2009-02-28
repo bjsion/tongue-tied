@@ -316,11 +316,11 @@ public class Translation implements Cloneable, Comparable<Translation>, Auditabl
     {
         StringBuilder builder = new StringBuilder();
         builder.append("Translation[bundle=").
-            append(bundle.getName()).
+            append(bundle.toLogString()).
             append(", country=").
-            append(country.getCode()).
+            append(country.toLogString()).
             append(", language=").
-            append(language.getCode()).
+            append(language.toLogString()).
             append(", state=").
             append(state).
             append(", value=").
