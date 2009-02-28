@@ -41,7 +41,6 @@ import org.hibernate.annotations.Immutable;
  *
  */
 @Entity
-//@org.hibernate.annotations.Entity(mutable=false)
 @NamedQuery(name=AuditLogRecord.QUERY_GET_AUDIT_LOG,
         query="from AuditLogRecord alr order by alr.created desc")
 @Immutable
