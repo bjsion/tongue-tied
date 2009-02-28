@@ -142,6 +142,8 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
      */
     public void addTranslation(Translation translation)
     {
+        if (translation != null && translation.getKeyword() == null)
+            translation.setKeyword(this);
         this.translations.add(translation);
     }
     
@@ -233,10 +235,7 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
     public int hashCode()
     {
         HashCodeBuilder builder = new HashCodeBuilder(23, 17);
-        int hashCode = builder.append(keyword).append(context).toHashCode();
-//        hashCode =+ SetUtils.hashCodeForSet(translations);
-        
-        return hashCode;
+        return builder.append(keyword).append(context).toHashCode();
     }
     
     /**
@@ -280,12 +279,12 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
         append(context).append(",translations=[");
         for (Translation translation : translations)
         {
-            builder.append("bundle=");
-            builder.append(translation.getBundle().getName());
+            builder.append("\nbundle=");
+            builder.append(translation.getBundle().toLogString());
             builder.append(", country=");
-            builder.append(translation.getCountry().getCode());
+            builder.append(translation.getCountry().toLogString());
             builder.append(", language=");
-            builder.append(translation.getLanguage().getCode());
+            builder.append(translation.getLanguage().toLogString());
             builder.append(", state=");
             builder.append(translation.getState());
             builder.append(", value=");
