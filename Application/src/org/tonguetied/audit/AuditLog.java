@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.CallbackException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.engine.SessionFactoryImplementor;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContext;
@@ -55,23 +56,27 @@ public class AuditLog
             throws CallbackException 
     {
         Session tempSession = null;
+        Transaction tx = null;
         try
         {
             // Use a separate session for saving audit log records
             tempSession = implementor.openSession();
-            tempSession.beginTransaction();
-            
+            tx = tempSession.beginTransaction();
+
+            tx.begin();
             final AuditLogRecord record = new AuditLogRecord(
                         message, entity, newValue, oldValue, getUsername());
             
             tempSession.save(record);
+            tx.commit();
             if (logger.isDebugEnabled())
                 logger.debug("successfully saved audit log record: " + record);
-            tempSession.getTransaction().commit();
         }
         catch (HibernateException ex)
         {
-            logger.error("unable to process audit log", ex);
+            if (logger.isInfoEnabled())
+                logger.info("rolling back transation ");
+            if (tx != null) tx.rollback();
             throw new CallbackException(ex);
         }
         finally
