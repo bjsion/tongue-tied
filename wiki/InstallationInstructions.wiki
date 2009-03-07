@@ -5,6 +5,8 @@
 
 This page details how to install and setup Tongue-Tied for use.
 
+= Prerequisites =
+Java 5 or above.
 
 = Details =
 
