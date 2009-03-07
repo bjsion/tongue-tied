@@ -38,8 +38,7 @@ import org.junit.runners.Suite.SuiteClasses;
     ImporterUtilsTest.class,
     KeywordExcelParserTest.class,
     PropertiesImporterTest.class,
-    ResourceImporterTest.class,
-    TranslationPredicateTest.class
+    ResourceImporterTest.class
 })
 public class AllTests {
 

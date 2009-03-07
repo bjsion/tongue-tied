@@ -13,14 +13,10 @@
  * License for the specific language governing permissions and limitations 
  * under the License. 
  */
-package org.tonguetied.datatransfer.importing;
+package org.tonguetied.keywordmanagement;
 
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.tonguetied.keywordmanagement.Bundle;
-import org.tonguetied.keywordmanagement.Country;
-import org.tonguetied.keywordmanagement.Language;
-import org.tonguetied.keywordmanagement.Translation;
 
 /**
  * This predicate is used to find {@link Translation}s based off its 
@@ -29,7 +25,7 @@ import org.tonguetied.keywordmanagement.Translation;
  * @author bsion
  *
  */
-final class TranslationPredicate implements Predicate
+public final class TranslationPredicate implements Predicate
 {
     private Bundle bundle;
     private Country country;
