@@ -17,7 +17,9 @@ package org.tonguetied.web;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 import static org.tonguetied.web.KeywordValidator.FIELD_KEYWORD;
+import static org.tonguetied.web.KeywordValidator.FIELD_TRANSLATIONS;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -39,52 +41,81 @@ import org.tonguetied.keywordmanagement.Language;
 import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
+import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
 
 /**
+ * Test the input validation of the {@link Keyword} object.
+ * 
  * @author bsion
  *
  */
 @RunWith(value=Parameterized.class)
-public class KeywordValidatorTest {
+public class KeywordValidatorTest
+{
     private KeywordService keywordService;
     private Keyword keyword;
     private String fieldName;
-    
-    private static Translation translation = new Translation();
 
-    @Parameters
-    public static final Collection<Object[]> data() {
-        Country country = new Country();
+    private static Country country;
+    private static Language language;
+    private static Bundle bundle;
+    
+    static
+    {
+        country = new Country();
         country.setCode(CountryCode.JP);
         country.setName("Japan");
         
-        Language language = new Language();
+        language = new Language();
         language.setCode(LanguageCode.ja);
         language.setName("Japanese");
         
-        Bundle bundle = new Bundle();
+        bundle = new Bundle();
         bundle.setName("bundle");
-        
-        Translation expectedTranslation = new Translation();
-        expectedTranslation.setCountry(country);
-        expectedTranslation.setLanguage(language);
-        expectedTranslation.setBundle(bundle);
-        
+    }
+    
+    @Parameters
+    public static final Collection<Object[]> data()
+    {
+        Translation translation1 = new Translation();
+        translation1.setBundle(bundle);
+        translation1.setCountry(country);
+        translation1.setLanguage(language);
+        translation1.setState(TranslationState.QUERIED);
+        translation1.setValue(null);
+
+        Translation translation2 = new Translation();
+        translation2.setBundle(bundle);
+        translation2.setCountry(country);
+        translation2.setLanguage(language);
+        translation2.setState(TranslationState.VERIFIED);
+        translation2.setValue("value");
+
         return Arrays.asList(new Object[][] {
                 {null, "context", null, FIELD_KEYWORD},
-                {"", "context", translation, FIELD_KEYWORD},
-                {"   ", null, translation, FIELD_KEYWORD},
-                {"keyword", "context", translation, FIELD_KEYWORD},
-                {"keyword", "", translation, FIELD_KEYWORD}
+                {"", "context", new Translation[] {translation1}, FIELD_KEYWORD},
+                {"   ", null, new Translation[] {translation1}, FIELD_KEYWORD},
+                {"keyword", "context", new Translation[] {translation1}, FIELD_KEYWORD},
+                {"keyword2", "", new Translation[] {translation1, translation2}, FIELD_TRANSLATIONS}
                 });
     }
     
-    public KeywordValidatorTest(String keywordStr, String context, Translation translation, String fieldName) {
+    public KeywordValidatorTest(final String keywordStr, 
+            final String context, 
+            final Translation[] translations, 
+            final String fieldName)
+    {
         this.keyword = new Keyword();
         this.keyword.setKeyword(keywordStr);
         this.keyword.setContext(context);
-        this.keyword.addTranslation(translation);
+        if (translations != null)
+        {
+            for (Translation translation : translations)
+            {
+                this.keyword.addTranslation(translation);
+            }
+        }
         this.fieldName = fieldName;
     }
     
@@ -92,13 +123,20 @@ public class KeywordValidatorTest {
      * @throws java.lang.Exception
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws Exception
+    {
         this.keywordService = new KeywordServiceStub();
+        
+        Translation expectedTranslation = new Translation();
+        expectedTranslation.setCountry(country);
+        expectedTranslation.setLanguage(language);
+        expectedTranslation.setBundle(bundle);
+        
         Keyword existing = new Keyword();
         existing.setId(1487L);
         existing.setKeyword("keyword");
         existing.setContext("context");
-        existing.addTranslation(translation);
+        existing.addTranslation(expectedTranslation);
         this.keywordService.saveOrUpdate(existing);
     }
 
@@ -106,7 +144,8 @@ public class KeywordValidatorTest {
      * Test method for {@link org.tonguetied.web.KeywordValidator#validate(java.lang.Object, org.springframework.validation.Errors)}.
      */
     @Test
-    public final void testValidate() {
+    public final void testValidate()
+    {
         KeywordValidator validator = new KeywordValidator();
         validator.setKeywordService(keywordService);
         Errors errors = new BindException(this.keyword, "keyword");
@@ -114,10 +153,19 @@ public class KeywordValidatorTest {
         
         assertFalse(errors.getAllErrors().isEmpty());
         FieldError error = errors.getFieldError(fieldName);
-        if (FIELD_KEYWORD.equals(fieldName)) {
+        if (FIELD_KEYWORD.equals(fieldName))
+        {
             assertEquals(this.keyword.getKeyword(), error.getRejectedValue());
+        }
+        else if (FIELD_TRANSLATIONS.equals(fieldName))
+        {
+            assertEquals(this.keyword.getTranslations(), error.getRejectedValue());
+            assertEquals(1, errors.getErrorCount());
+        }
+        else
+        {
+            fail("cannot match error field");
         }
         assertFalse(error.isBindingFailure());
     }
-
 }

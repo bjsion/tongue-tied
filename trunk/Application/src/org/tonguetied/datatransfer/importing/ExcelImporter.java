@@ -30,6 +30,7 @@ import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
 import org.tonguetied.keywordmanagement.Keyword;
 import org.tonguetied.keywordmanagement.KeywordService;
 import org.tonguetied.keywordmanagement.Translation;
+import org.tonguetied.keywordmanagement.TranslationPredicate;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
 

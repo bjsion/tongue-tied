@@ -48,6 +48,7 @@ import org.junit.runners.Suite.SuiteClasses;
     TranslationComparabilityTest.class,
     TranslationEqualsHashCodeTest.class,
     TranslationPersistenceTest.class,
+    TranslationPredicateTest.class,
     TranslationTest.class
 })
 public class AllTests {

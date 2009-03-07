@@ -31,6 +31,7 @@
                 <form:textarea path="context" rows="2" cols="100%"/>
                 <form:errors path="context" cssClass="error"/>
             </div>
+            <form:errors path="translations" cssClass="error"/>
             <table>
                 <caption><fmt:message key="translations"/></caption>
                 <colgroup>

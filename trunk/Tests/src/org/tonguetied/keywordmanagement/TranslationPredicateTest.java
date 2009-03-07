@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations 
  * under the License. 
  */
-package org.tonguetied.datatransfer.importing;
+package org.tonguetied.keywordmanagement;
 
 import static org.junit.Assert.assertEquals;
 
@@ -29,6 +29,7 @@ import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
 import org.tonguetied.keywordmanagement.Language;
 import org.tonguetied.keywordmanagement.Translation;
+import org.tonguetied.keywordmanagement.TranslationPredicate;
 import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
@@ -110,7 +111,7 @@ public class TranslationPredicateTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.datatransfer.importing.TranslationPredicate#evaluate(java.lang.Object)}.
+     * Test method for {@link org.tonguetied.keywordmanagement.TranslationPredicate#evaluate(java.lang.Object)}.
      */
     @Test
     public final void testEvaluate() {
