@@ -86,18 +86,6 @@ public class AuditLog
         }
     }
     
-//    /**
-//     * Evaluate the string value of the object.
-//     * 
-//     * @param auditable the object to process
-//     * @return the string value of the object or <code>null</code> if the 
-//     * <code>auditable</code> is <code>null</code>
-//     */
-//    private static synchronized String getValue(final Auditable auditable)
-//    {
-//        return auditable == null? null: auditable.toLogString();
-//    }
-//
     /**
      * Gets the current user name from the Spring Security SecurityContext.
      * 
