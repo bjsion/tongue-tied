@@ -136,6 +136,12 @@
             <param name="target" value="build"/>
         </antcall>
         <tstamp/>
+        <antcall target="package.zip"/>
+        <antcall target="package.tar.gz"/>
+    </target>
+
+    <target name="package.zip">
+        <description>Create the distributable package for windows systems</description>
         <zip destfile="${package.dir}/${version}-${DSTAMP}.zip" >
             <zipfileset dir="${3rdparty.home}/Jakarta-Commons" prefix="${version}/libs">
                 <include name="commons-cli-1.1.jar"/>
@@ -147,7 +153,7 @@
                 <include name="jetty.jar"/>
                 <include name="jetty-util.jar"/>
                 <include name="servlet-api-2.5.jar"/>
-            </zipfileset>   
+            </zipfileset>
             <zipfileset dir="${3rdparty.home}/Jetty/6.1.9/jsp-2.1" prefix="${version}/libs">
                 <include name="core-3.1.1.jar"/>
                 <include name="jsp-2.1.jar"/>
@@ -188,5 +194,63 @@
                 <include name="server.properties"/>
             </zipfileset>
         </zip>
+    </target>
+    
+    <target name="package.tar.gz">
+        <description>Create the distributable package for *nix systems</description>
+        <tar destfile="${package.dir}/${version}-${DSTAMP}.tar">
+            <tarfileset dir="${3rdparty.home}/Jakarta-Commons" prefix="${version}/libs">
+                <include name="commons-cli-1.1.jar"/>
+            </tarfileset>
+            <tarfileset dir="${3rdparty.home}/HSQLDB/1.8.0.9" prefix="${version}/libs">
+                <include name="hsqldb.jar"/>
+            </tarfileset>
+            <tarfileset dir="${3rdparty.home}/Jetty/6.1.9" prefix="${version}/libs">
+                <include name="jetty.jar"/>
+                <include name="jetty-util.jar"/>
+                <include name="servlet-api-2.5.jar"/>
+            </tarfileset>
+            <tarfileset dir="${3rdparty.home}/Jetty/6.1.9/jsp-2.1" prefix="${version}/libs">
+                <include name="core-3.1.1.jar"/>
+                <include name="jsp-2.1.jar"/>
+                <include name="jsp-api-2.1.jar"/>
+            </tarfileset>
+            <tarfileset dir="${3rdparty.home}/Log4j/1.2.15" prefix="${version}/libs">
+                <include name="log4j.jar"/>
+            </tarfileset>
+            <tarfileset dir="${server.home}/builds" prefix="${version}/libs">
+                <include name="${server.jar.file}"/>
+            </tarfileset>
+            <tarfileset dir="${application.home}/builds" prefix="${version}/src">
+                <include name="${application.src.jar.file}"/>
+            </tarfileset>
+            <tarfileset dir="${tests.home}/builds" prefix="${version}/src">
+                <include name="${tests.src.jar.file}"/>
+            </tarfileset>
+            <tarfileset dir="${server.home}/builds" prefix="${version}/src">
+                <include name="${server.src.jar.file}"/>
+            </tarfileset>
+            <tarfileset dir="${application.home}/builds/war" prefix="${version}/webapps">
+                <include name="${application.war.file}"/>
+            </tarfileset>
+            <tarfileset dir="${server.home}/resources/shellScripts" prefix="${version}">
+                <include name="startServer.bat"/>
+            </tarfileset>
+            <tarfileset dir="${server.home}/resources/config" prefix="${version}">
+                <include name="log4j.properties"/>
+            </tarfileset>
+            <tarfileset dir="${application.home}/generated" prefix="${version}">
+                <include name="*-schema.sql"/>
+            </tarfileset>
+            <tarfileset dir="${server.home}/generated" prefix="${version}">
+                <include name="embeddedServer.properties"/>
+                <include name="keystore"/>
+            </tarfileset>
+            <tarfileset dir="${infra.home}" prefix="${version}">
+                <include name="server.properties"/>
+            </tarfileset>
+        </tar>
+        <gzip destfile="${package.dir}/${version}-${DSTAMP}.tar.gz"
+            src="${package.dir}/${version}-${DSTAMP}.tar"/>
     </target>
 </project>
