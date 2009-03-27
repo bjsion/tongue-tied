@@ -42,9 +42,6 @@ public class KeywordServiceStub implements KeywordService
     private Map<Long, Bundle> bundles = new HashMap<Long, Bundle>();
     private Map<Long, Keyword> keywords = new HashMap<Long, Keyword>();
     
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.KeywordService#delete(java.lang.Object)
-     */
     public void delete(Object object)
     {
         if (object instanceof Language)
@@ -67,117 +64,54 @@ public class KeywordServiceStub implements KeywordService
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.keywordmanagement.KeywordService#delete(org.tonguetied.keywordmanagement.Keyword)
-     */
     public void delete(Keyword keyword)
     {
         deleteKeyword(keyword.getId());
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.KeywordService#deleteKeyword(java.lang.Long)
-     */
     public void deleteKeyword(Long id)
     {
         this.keywords.remove(id);
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.KeywordService#findKeywords(org.tonguetied.keywordmanagement.Keyword, boolean, org.hibernate.criterion.MatchMode, java.lang.Integer, java.lang.Integer)
-     */
     public List<Keyword> findKeywords(final Keyword keyword, boolean ignoreCase,
             Integer firstResult, Integer maxResults)
     {
-        final Predicate keywordFilter = new Predicate()
-        {
-            /* (non-Javadoc)
-             * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
-             */
-            public boolean evaluate(Object object) {
-                boolean result = false;
-                if (keyword != null) {
-                    result = keyword.equals(object);
-                }
-                return result;
-            }
-        };
+        final Predicate keywordFilter = new KeywordFilter(keyword);
         List<Keyword> results = 
             (List<Keyword>) CollectionUtils.select(keywords.values(), keywordFilter);
         return results;
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.KeywordService#getBundle(java.lang.Long)
-     */
-    public Bundle getBundle(final Long id) {
+    public Bundle getBundle(final Long id)
+    {
         return bundles.get(id);
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.KeywordService#getBundles()
-     */
-    public List<Bundle> getBundles() {
+    public List<Bundle> getBundles()
+    {
         return (List<Bundle>)bundles.values();
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.KeywordService#getBundle(java.lang.String)
-     */
-    public Bundle getBundleByName(final String name) {
-        final Predicate bundleCodeFilter = new Predicate() {
-
-            /* (non-Javadoc)
-             * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
-             */
-            public boolean evaluate(Object object) {
-                boolean result = false;
-                if (name != null) {
-                    result = name.equals(((Bundle) object).getName());
-                }
-                return result;
-            }
-        }; 
+    public Bundle getBundleByName(final String name)
+    {
+        final Predicate bundleCodeFilter = new BundleFilter(name); 
         Bundle bundle= 
             (Bundle) CollectionUtils.find(bundles.values(), bundleCodeFilter);
         return bundle;
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.keywordmanagement.KeywordService#getBundleByResourceName(java.lang.String)
-     */
-    public Bundle getBundleByResourceName(final String resourceName) {
-        final Predicate bundleCodeFilter = new Predicate() {
-
-            /* (non-Javadoc)
-             * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
-             */
-            public boolean evaluate(Object object) {
-                boolean result = false;
-                if (resourceName != null) {
-                    result = resourceName.equals(((Bundle) object).getResourceName());
-                }
-                return result;
-            }
-        }; 
+    public Bundle getBundleByResourceName(final String resourceName)
+    {
+        final Predicate bundleCodeFilter = new ResourceBundleFilter(resourceName); 
         Bundle bundle= 
             (Bundle) CollectionUtils.find(bundles.values(), bundleCodeFilter);
         return bundle;
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.keywordmanagement.KeywordService#getDefaultBundle()
-     */
-    public Bundle getDefaultBundle() {
-        final Predicate bundleCodeFilter = new Predicate() {
-
-            /* (non-Javadoc)
-             * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
-             */
-            public boolean evaluate(Object object) {
-                return ((Bundle) object).isDefault();
-            }
-        }; 
+    public Bundle getDefaultBundle()
+    {
+        final Predicate bundleCodeFilter = new DefaultBundleFilter(); 
         Bundle bundle= 
             (Bundle) CollectionUtils.find(bundles.values(), bundleCodeFilter);
         return bundle;
@@ -185,138 +119,69 @@ public class KeywordServiceStub implements KeywordService
 
     public List<Bundle> findBundles(final String name, final String resourceName)
     {
-        final Predicate keywordFilter = new Predicate()
-        {
-            /* (non-Javadoc)
-             * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
-             */
-            public boolean evaluate(Object object)
-            {
-                Bundle other = (Bundle) object;
-                return (other.getName().equals(name)) ||
-                    (other.getResourceName().equals(resourceName));
-            }
-        };
+        final Predicate bundleFilter = new BundleNamesFilter(name, resourceName);
         List<Bundle> results = 
-            (List<Bundle>) CollectionUtils.select(bundles.values(), keywordFilter);
+            (List<Bundle>) CollectionUtils.select(bundles.values(), bundleFilter);
         return results;
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.KeywordService#getCountries()
-     */
-    public List<Country> getCountries() {
+    public List<Country> getCountries()
+    {
         return (List<Country>)countries.values();
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.KeywordService#getCountry(java.lang.Long)
-     */
-    public Country getCountry(final Long id) {
+    public Country getCountry(final Long id)
+    {
         return countries.get(id);
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.KeywordService#getCountry(org.tonguetied.domain.Country.CountryCode)
-     */
-    public Country getCountry(final CountryCode code) {
-        final Predicate countryCodeFilter = new Predicate() {
-
-            /* (non-Javadoc)
-             * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
-             */
-            public boolean evaluate(Object object) {
-                boolean result = false;
-                if (code != null) {
-                    result = code.equals(((Country) object).getCode());
-                }
-                return result;
-            }
-        }; 
+    public Country getCountry(final CountryCode code)
+    {
+        final Predicate countryCodeFilter = new CountryCodeFilter(code); 
         Country country = 
             (Country) CollectionUtils.find(countries.values(), countryCodeFilter);
         return country;
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.KeywordService#getKeyword(java.lang.Long)
-     */
-    public Keyword getKeyword(final Long id) {
+    public Keyword getKeyword(final Long id)
+    {
         return keywords.get(id);
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.KeywordService#getKeyword(java.lang.String)
-     */
     public Keyword getKeyword(final String keywordString) {
-        final Predicate keywordFilter = new Predicate() {
-
-            /* (non-Javadoc)
-             * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
-             */
-            public boolean evaluate(Object object) {
-                boolean result = false;
-                if (keywordString != null) {
-                    result = keywordString.equals(((Keyword) object).getKeyword());
-                }
-                return result;
-            }
-        };
+        final Predicate keywordFilter = new KeywordStringFilter(keywordString);
         Keyword result = 
             (Keyword) CollectionUtils.find(keywords.values(), keywordFilter);
         return result;
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.KeywordService#getKeywords()
-     */
-    public List<Keyword> getKeywords() {
+    public List<Keyword> getKeywords()
+    {
         return (List<Keyword>)keywords.values();
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.KeywordService#getKeywords(java.lang.Integer, java.lang.Integer)
-     */
-    public List<Keyword> getKeywords(Integer firstResult, Integer maxResults) {
+    public List<Keyword> getKeywords(Integer firstResult, Integer maxResults)
+    {
         // TODO Auto-generated method stub
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.KeywordService#getLanguage(java.lang.Long)
-     */
-    public Language getLanguage(final Long id) {
+    public Language getLanguage(final Long id)
+    {
         return languages.get(id);
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.KeywordService#getLanguage(org.tonguetied.domain.Language.LanguageCode)
-     */
     public Language getLanguage(final LanguageCode code) {
-        final Predicate languageCodeFilter = new Predicate() {
-
-            /* (non-Javadoc)
-             * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
-             */
-            public boolean evaluate(Object object) {
-                boolean result = false;
-                if (code != null) {
-                    result = code.equals(((Language) object).getCode());
-                }
-                return result;
-            }
-        }; 
+        final Predicate languageCodeFilter = new LanguageCodeFilter(code); 
         Language language = 
             (Language) CollectionUtils.find(languages.values(), languageCodeFilter);
         return language;
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.KeywordService#getLanguages()
-     */
     public List<Language> getLanguages() {
         return (List<Language>)this.languages.values();
     }
+
     public void saveOrUpdate(Country country)
     {
         if (country.getId() == null)
@@ -338,12 +203,157 @@ public class KeywordServiceStub implements KeywordService
         this.keywords.put(keyword.getId(), keyword);
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.keywordmanagement.KeywordService#saveOrUpdate(org.tonguetied.keywordmanagement.Bundle)
-     */
-    public void saveOrUpdate(Bundle bundle) {
+    public void saveOrUpdate(Bundle bundle)
+    {
         if (bundle.getId() == null)
             bundle.setId(Long.valueOf(bundles.size()));
         this.bundles.put(bundle.getId(), bundle);
+    }
+
+    private static final class LanguageCodeFilter implements Predicate
+    {
+        private final LanguageCode code;
+
+        private LanguageCodeFilter(LanguageCode code)
+        {
+            this.code = code;
+        }
+
+        public boolean evaluate(Object object)
+        {
+            boolean result = false;
+            if (code != null)
+            {
+                result = code.equals(((Language) object).getCode());
+            }
+            return result;
+        }
+    }
+
+    private static final class BundleFilter implements Predicate
+    {
+        private final String name;
+
+        private BundleFilter(String name)
+        {
+            this.name = name;
+        }
+
+        public boolean evaluate(Object object)
+        {
+            boolean result = false;
+            if (name != null)
+            {
+                result = name.equals(((Bundle) object).getName());
+            }
+            return result;
+        }
+    }
+
+    private static final class ResourceBundleFilter implements Predicate
+    {
+        private final String resourceName;
+
+        private ResourceBundleFilter(String resourceName)
+        {
+            this.resourceName = resourceName;
+        }
+
+        public boolean evaluate(Object object)
+        {
+            boolean result = false;
+            if (resourceName != null)
+            {
+                result = resourceName.equals(((Bundle) object).getResourceName());
+            }
+            return result;
+        }
+    }
+
+    private static final class DefaultBundleFilter implements Predicate
+    {
+        public boolean evaluate(Object object)
+        {
+            return ((Bundle) object).isDefault();
+        }
+    }
+
+    private static final class BundleNamesFilter implements Predicate
+    {
+        private final String name;
+        private final String resourceName;
+
+        private BundleNamesFilter(String name, String resourceName)
+        {
+            this.name = name;
+            this.resourceName = resourceName;
+        }
+
+        public boolean evaluate(Object object)
+        {
+            Bundle other = (Bundle) object;
+            return (other.getName().equals(name)) ||
+                (other.getResourceName().equals(resourceName));
+        }
+    }
+
+    private static final class CountryCodeFilter implements Predicate
+    {
+        private final CountryCode code;
+
+        private CountryCodeFilter(CountryCode code)
+        {
+            this.code = code;
+        }
+
+        public boolean evaluate(Object object)
+        {
+            boolean result = false;
+            if (code != null)
+            {
+                result = code.equals(((Country) object).getCode());
+            }
+            return result;
+        }
+    }
+
+    private static final class KeywordStringFilter implements Predicate
+    {
+        private final String keywordString;
+
+        private KeywordStringFilter(String keywordString)
+        {
+            this.keywordString = keywordString;
+        }
+
+        public boolean evaluate(Object object)
+        {
+            boolean result = false;
+            if (keywordString != null)
+            {
+                result = keywordString.equals(((Keyword) object).getKeyword());
+            }
+            return result;
+        }
+    }
+
+    private static final class KeywordFilter implements Predicate
+    {
+        private final Keyword keyword;
+
+        private KeywordFilter(Keyword keyword)
+        {
+            this.keyword = keyword;
+        }
+
+        public boolean evaluate(Object object)
+        {
+            boolean result = false;
+            if (keyword != null)
+            {
+                result = keyword.equals(object);
+            }
+            return result;
+        }
     }
 }

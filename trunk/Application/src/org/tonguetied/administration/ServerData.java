@@ -92,7 +92,9 @@ public class ServerData
     public ServerData(final String version, final String buildNumber, 
             final Date buildDate)
     {
-        this.buildDate = buildDate;
+        // assign a copy of this parameter to avoid later changes to mutable 
+        // object
+        this.buildDate = (Date)buildDate.clone();
         this.buildNumber = buildNumber;
         this.version = version;
         this.setupDate = new Date();

@@ -407,7 +407,7 @@ public class User implements UserDetails
         // Assert.notNull(authorities[i], "Granted authority element " + i + "
         // is null - GrantedAuthority[] cannot contain any null elements");
         // }
-        this.grantedAuthorities = authorities;
+        this.grantedAuthorities = (GrantedAuthority[])authorities.clone();
     }
 
     /**
