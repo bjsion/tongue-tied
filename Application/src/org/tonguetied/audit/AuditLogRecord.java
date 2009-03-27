@@ -197,7 +197,7 @@ public class AuditLogRecord
     /**
      * @param oldValue the oldValue to set
      */
-    public void setOldValue(String oldValue)
+    public void setOldValue(final String oldValue)
     {
         this.oldValue = oldValue;
     }
@@ -216,7 +216,7 @@ public class AuditLogRecord
     /**
      * @param newValue the newValue to set
      */
-    public void setNewValue(String newValue)
+    public void setNewValue(final String newValue)
     {
         this.newValue = newValue;
     }
@@ -239,7 +239,9 @@ public class AuditLogRecord
      */
     public void setCreated(final Date created)
     {
-        this.created = created;
+        // assign a copy of this parameter to avoid later changes to mutable 
+        // object
+        this.created = (Date)created.clone();
     }
     
     /* (non-Javadoc)
@@ -302,71 +304,5 @@ public class AuditLogRecord
     protected enum Operation
     {
         delete, insert, update;
-//        delete
-//        {
-//            /**
-//             * For delete operations, there is no new value, so return 
-//             * <code>false</code>.
-//             */
-//            @Override
-//            public boolean hasNewValue()
-//            {
-//                return false;
-//            }
-//            
-//            @Override
-//            public boolean hasOriginalValue()
-//            {
-//                return true;
-//            }
-//        }, 
-//        insert
-//        {
-//            @Override
-//            public boolean hasNewValue()
-//            {
-//                return true;
-//            }
-//            
-//            /**
-//             * For insert operations, there is no original value, so return 
-//             * <code>false</code>.
-//             */
-//            @Override
-//            public boolean hasOriginalValue()
-//            {
-//                return false;
-//            }
-//        }, 
-//        update
-//        {
-//            @Override
-//            public boolean hasNewValue()
-//            {
-//                return true;
-//            }
-//            
-//            @Override
-//            public boolean hasOriginalValue()
-//            {
-//                return true;
-//            }
-//        };
-//        
-//        /**
-//         * Determine if this operation has an original value.
-//         * 
-//         * @return the <code>true</code> if the operation has an original value,
-//         * <code>false</code> otherwise
-//         */
-//        public abstract boolean hasNewValue();
-//        
-//        /**
-//         * Determine if this operation has an original value.
-//         * 
-//         * @return the <code>true</code> if the operation has an original value,
-//         * <code>false</code> otherwise
-//         */
-//        public abstract boolean hasOriginalValue();
     }
 }

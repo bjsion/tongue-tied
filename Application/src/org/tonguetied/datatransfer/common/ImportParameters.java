@@ -68,6 +68,9 @@ public class ImportParameters
      */
     public void setData(final byte[] data)
     {
+        // assign a copy of this parameter to avoid later changes to mutable 
+        // object
+//        this.data = (byte[])data.clone();
         this.data = data;
     }
 
