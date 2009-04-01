@@ -63,7 +63,7 @@ public abstract class AbstractServiceTest extends
 
     static
     {
-        synchronized ("startDb")
+        synchronized (new Object())
         {
             try
             {

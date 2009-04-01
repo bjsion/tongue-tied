@@ -15,7 +15,7 @@
  */
 package org.tonguetied.architecture;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.tonguetied.architecture.Constants.APPLICATION_CLASSES;
 import static org.tonguetied.architecture.Constants.PACKAGE_FILTER;
 import static org.tonguetied.architecture.Constants.SERVER_CLASSES;
@@ -87,6 +87,10 @@ public class ConstraintTest
                 .addPackage("org.tonguetied.web.servlet");
         JavaPackage dao = constraint.addPackage("org.tonguetied.dao");
         JavaPackage server = constraint.addPackage("org.tonguetied.server");
+        
+        assertNotNull(server);
+        assertNotNull(dao);
+        assertNotNull(administration);
 
         keywordmanagement.dependsUpon(audit);
         usermanagement.dependsUpon(keywordmanagement);

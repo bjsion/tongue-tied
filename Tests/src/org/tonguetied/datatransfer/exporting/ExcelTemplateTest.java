@@ -16,22 +16,22 @@
 package org.tonguetied.datatransfer.exporting;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
-import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
-import static org.custommonkey.xmlunit.XMLAssert.*;
+//import static junit.framework.Assert.fail;
+//import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
+//import static org.custommonkey.xmlunit.XMLAssert.*;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.xml.XMLConstants;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.stream.StreamSource;
+//import javax.xml.XMLConstants;
+//import javax.xml.parsers.DocumentBuilder;
+//import javax.xml.parsers.DocumentBuilderFactory;
+//import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.io.FileUtils;
-import org.custommonkey.xmlunit.jaxp13.Validator;
+//import org.custommonkey.xmlunit.jaxp13.Validator;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.tonguetied.keywordmanagement.Bundle;
@@ -42,7 +42,7 @@ import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
-import org.w3c.dom.Document;
+//import org.w3c.dom.Document;
 
 /**
  * Test class for testing the output from the excel template.
@@ -201,12 +201,12 @@ public class ExcelTemplateTest extends TemplateTester
     {
         Collection<File> files = FileUtils.listFiles(getOutputDir(), getOutputExtensions(), false);
         assertEquals(1, files.size());
-        File file = files.iterator().next();
-        DocumentBuilder builder = 
-            DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        Validator validator = new Validator();
-        StreamSource source = new StreamSource(file);
-        Document document  = builder.parse(file);
+//        File file = files.iterator().next();
+//        DocumentBuilder builder = 
+//            DocumentBuilderFactory.newInstance().newDocumentBuilder();
+//        Validator validator = new Validator();
+//        StreamSource source = new StreamSource(file);
+//        Document document  = builder.parse(file);
 //        assertTrue(validator.isInstanceValid(source));
 //        assertXpathEvaluatesTo("xml < ! & \" '>", 
 //                "/Worksheet[@ss:Name=\"Translations\"]/Table/Row/Cell/Data", document);

@@ -32,6 +32,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
@@ -124,7 +125,7 @@ public class AdministrationServiceTest extends AbstractServiceTest
                 jdbcTemplate.getDataSource(), new GetTableNames());
         assertEquals(TABLES.length, tables.size());
         for (int i=0; i < TABLES.length; i++)
-            assertTrue("table "+TABLES[i]+" not found", tables.contains(TABLES[i].toUpperCase()));
+            assertTrue("table "+TABLES[i]+" not found", tables.contains(TABLES[i].toUpperCase(Locale.getDefault())));
         User admin = getUserRepository().getUser("admin");
         assertNotNull(admin);
         Language language = getLanguageRepository().getLanguage(LanguageCode.DEFAULT);

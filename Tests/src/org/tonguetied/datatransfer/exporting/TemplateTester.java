@@ -89,7 +89,8 @@ public abstract class TemplateTester
     {
         Properties properties = new Properties();
         ByteArrayInputStream bais = null;
-        try {
+        try
+        {
             byte[] bytes = FileUtils.readFileToByteArray(
                     new File(TEST_CONFIG_DIR, "templateTest.properties"));
             bais = new ByteArrayInputStream(bytes);
@@ -99,7 +100,8 @@ public abstract class TemplateTester
             if (!outputDir.mkdir())
                 logger.error("failed to create directory " + outputDir);
         }
-        finally {
+        finally
+        {
             if (bais != null)
                 bais.close();
         }
@@ -184,28 +186,32 @@ public abstract class TemplateTester
     /**
      * @param translations the translations to set
      */
-    public final void setTranslations(final List<Translation> translations) {
+    public final void setTranslations(final List<Translation> translations)
+    {
         this.translations = translations;
     }
 
     /**
      * @return the templateDir
      */
-    public final static File getTemplateDir() {
+    public final static File getTemplateDir()
+    {
         return templateDir;
     }
 
     /**
      * @param templateDir the templateDir to set
      */
-    public final static void setTemplateDir(final File templateDir) {
+    public final static void setTemplateDir(final File templateDir)
+    {
         TemplateTester.templateDir = templateDir;
     }
 
     /**
      * @return the outputDir
      */
-    public final static File getOutputDir() {
+    public final static File getOutputDir()
+    {
         return outputDir;
     }
 
@@ -221,6 +227,6 @@ public abstract class TemplateTester
      */
     public final String[] getOutputExtensions()
     {
-        return outputExtensions;
+        return outputExtensions.clone();
     }
 }
