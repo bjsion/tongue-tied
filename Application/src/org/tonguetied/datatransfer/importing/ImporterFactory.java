@@ -35,7 +35,7 @@ public class ImporterFactory
      * @return The newly created <code>Importer</code>
      */
     public static final Importer getImporter(
-            FormatType formatType, KeywordService keywordService) 
+            final FormatType formatType, KeywordService keywordService) 
     {
         Importer importer = null;
         
