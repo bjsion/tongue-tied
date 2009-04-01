@@ -15,7 +15,7 @@
     <property name="src.dir" value="${server.home}/src"/>
     <property name="resources.dir" value="${server.home}/resources"/>
     <property name="config.dir" value="${resources.dir}/config"/>
-    <property name="findbugs.home" value="${3rdparty.home}/findbugs/1.3.4"/>
+    <property name="findbugs.home" value="${3rdparty.home}/findbugs/1.3.8"/>
     <property name="findbugs.xml.file" value="${ant.project.name}-bug-report.xml"/>
     <property name="web.server.root" value="${user.dir}/tonguetied/webapp"/>
     <property name="web.server.css" value="${web.server.root}/css"/>
