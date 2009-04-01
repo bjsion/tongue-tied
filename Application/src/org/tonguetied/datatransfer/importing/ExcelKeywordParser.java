@@ -232,7 +232,9 @@ public class ExcelKeywordParser implements ExcelParser
     }
 
     /**
-     * @param lrec
+     * Determine the type of the keyword attribute for the excel row.
+     * 
+     * @param lrec the excel cell to evaluate
      */
     private void evaluateRowType(final LabelSSTRecord lrec)
     {
@@ -245,7 +247,7 @@ public class ExcelKeywordParser implements ExcelParser
     }
 
     /**
-     * @param keywordStr
+     * @param keywordStr the keyword string to evaluate
      */
     private void loadKeyword(final String keywordStr)
     {
