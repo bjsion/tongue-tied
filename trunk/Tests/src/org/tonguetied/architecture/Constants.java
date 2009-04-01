@@ -23,7 +23,7 @@ import org.apache.commons.lang.SystemUtils;
  * @author bsion
  *
  */
-public interface Constants
+public final class Constants
 {
     static final File BASE_DIR = new File(SystemUtils.getUserDir(), "..");
     static final File APPLICATION_DIR =  new File(BASE_DIR, "Application");
