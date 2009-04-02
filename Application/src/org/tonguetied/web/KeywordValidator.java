@@ -25,8 +25,11 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import org.tonguetied.keywordmanagement.Bundle;
+import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
 import org.tonguetied.keywordmanagement.KeywordService;
+import org.tonguetied.keywordmanagement.Language;
 import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.keywordmanagement.TranslationPredicate;
 
@@ -102,9 +105,9 @@ public class KeywordValidator implements Validator
                 if (output.size() > 1)
                 {
                     final String[] errorArgs = new String[] {
-                            translation.getLanguage().getName(), 
-                            translation.getCountry().getName(), 
-                            translation.getBundle().getName()};
+                            getLanguageName(translation.getLanguage()), 
+                            getCountryName(translation.getCountry()), 
+                            getBundleName(translation.getBundle())};
                     fieldErrors = errors.getFieldErrors(FIELD_TRANSLATIONS);
                     boolean containsError = false;
                     for (FieldError error : fieldErrors)
@@ -123,6 +126,36 @@ public class KeywordValidator implements Validator
             }
         }
     }
+
+    /**
+     * This validation method checks if the set of {@link Translation}s for a 
+     * {@link Keyword} contains duplicate entries for new values of the 
+     * business key.
+     * 
+     * @param translations the set of {@link Translation}s to validate
+     * @param predicate the predicate to evaluate
+     * @param errors contextual state about the validation process (never null)
+     */
+    protected void validateDuplicates(SortedSet<Translation> translations, 
+            final TranslationPredicate predicate, Errors errors)
+    {
+        Collection<Translation> output;
+        if (translations.size() > 1)
+        {
+            output = CollectionUtils.select(translations, predicate);
+            if (output.size() > 0)
+            {
+                final String[] errorArgs = new String[] {
+                        getLanguageName(predicate.getLanguage()), 
+                        getCountryName(predicate.getCountry()), 
+                        getBundleName(predicate.getBundle())};
+                errors.rejectValue(FIELD_TRANSLATIONS,
+                    "error.duplicate.translations",
+                    errorArgs,
+                    "default");
+            }
+        }
+    }
     
     /**
      * Set the {@link KeywordService} instance.
@@ -132,5 +165,20 @@ public class KeywordValidator implements Validator
     public void setKeywordService(KeywordService keywordService)
     {
         this.keywordService = keywordService;
+    }
+    
+    private String getBundleName(final Bundle bundle)
+    {
+        return bundle == null ? null :bundle.getName();
+    }
+    
+    private String getCountryName(final Country country)
+    {
+        return country == null ? null :country.getName();
+    }
+
+    private String getLanguageName(final Language language)
+    {
+        return language == null ? null :language.getName();
     }
 }

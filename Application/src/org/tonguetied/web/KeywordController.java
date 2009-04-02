@@ -42,6 +42,7 @@ import org.tonguetied.keywordmanagement.KeywordFactory;
 import org.tonguetied.keywordmanagement.KeywordService;
 import org.tonguetied.keywordmanagement.Language;
 import org.tonguetied.keywordmanagement.Translation;
+import org.tonguetied.keywordmanagement.TranslationPredicate;
 import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
@@ -198,7 +199,10 @@ public class KeywordController extends CancellableFormController
                                         Keyword keyword)
             throws Exception 
     {
-        keyword.addTranslation(new Translation());
+        KeywordValidator validator = (KeywordValidator) getValidator();
+        validator.validateDuplicates(keyword.getTranslations(), new TranslationPredicate(null, null, null), errors);
+        if (!errors.hasErrors())
+            keyword.addTranslation(new Translation());
         
         return showForm(request, response, errors);
     }
