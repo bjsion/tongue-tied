@@ -18,13 +18,13 @@ package org.tonguetied.web;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
-import static org.tonguetied.web.KeywordValidator.FIELD_KEYWORD;
 import static org.tonguetied.web.KeywordValidator.FIELD_TRANSLATIONS;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -35,10 +35,9 @@ import org.springframework.validation.FieldError;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
-import org.tonguetied.keywordmanagement.KeywordService;
-import org.tonguetied.keywordmanagement.KeywordServiceStub;
 import org.tonguetied.keywordmanagement.Language;
 import org.tonguetied.keywordmanagement.Translation;
+import org.tonguetied.keywordmanagement.TranslationPredicate;
 import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
@@ -51,15 +50,15 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
  *
  */
 @RunWith(value=Parameterized.class)
-public class KeywordValidatorTest
+public class KeywordTranslationValidatorTest
 {
-    private KeywordService keywordService;
-    private Keyword keyword;
     private String fieldName;
+    private TranslationPredicate predicate;
 
-    private static Country country;
-    private static Language language;
-    private static Bundle bundle;
+    private final static Country country;
+    private final static Language language;
+    private final static Bundle bundle;
+    private final static SortedSet<Translation> translations = new TreeSet<Translation>();
     
     static
     {
@@ -73,11 +72,7 @@ public class KeywordValidatorTest
         
         bundle = new Bundle();
         bundle.setName("bundle");
-    }
-    
-    @Parameters
-    public static final Collection<Object[]> data()
-    {
+
         Translation translation1 = new Translation();
         translation1.setBundle(bundle);
         translation1.setCountry(country);
@@ -86,66 +81,30 @@ public class KeywordValidatorTest
         translation1.setValue(null);
 
         Translation translation2 = new Translation();
-        translation2.setBundle(bundle);
-        translation2.setCountry(country);
-        translation2.setLanguage(language);
-        translation2.setState(TranslationState.VERIFIED);
-        translation2.setValue("value");
-
-        Translation translation3 = new Translation();
-        translation3.setState(TranslationState.VERIFIED);
-        Translation translation4 = new Translation();
         
+        translations.add(translation1);
+        translations.add(translation2);
+
+    }
+    
+    @Parameters
+    public static final Collection<Object[]> data()
+    {
         return Arrays.asList(new Object[][] {
-                {null, "context", null, FIELD_KEYWORD},
-                {"", "context", new Translation[] {translation1}, FIELD_KEYWORD},
-                {"   ", null, new Translation[] {translation1}, FIELD_KEYWORD},
-                {"keyword", "context", new Translation[] {translation1}, FIELD_KEYWORD},
-                {"keyword2", "", new Translation[] {translation1, translation2}, FIELD_TRANSLATIONS},
-                // This test tests for null values in use in the bundle, country and language
-                {"keyword3", null, new Translation[] {translation3, translation4}, FIELD_TRANSLATIONS},
+                {null, null, null, FIELD_TRANSLATIONS},
+                {bundle, country, language, FIELD_TRANSLATIONS}
                 });
     }
     
-    public KeywordValidatorTest(final String keywordStr, 
-            final String context, 
-            final Translation[] translations, 
+    public KeywordTranslationValidatorTest(final Bundle bundle,
+            final Country country,
+            final Language language,
             final String fieldName)
     {
-        this.keyword = new Keyword();
-        this.keyword.setKeyword(keywordStr);
-        this.keyword.setContext(context);
-        if (translations != null)
-        {
-            for (Translation translation : translations)
-            {
-                this.keyword.addTranslation(translation);
-            }
-        }
+        this.predicate = new TranslationPredicate(bundle, country, language);
         this.fieldName = fieldName;
     }
     
-    /**
-     * @throws java.lang.Exception
-     */
-    @Before
-    public void setUp() throws Exception
-    {
-        this.keywordService = new KeywordServiceStub();
-        
-        Translation expectedTranslation = new Translation();
-        expectedTranslation.setCountry(country);
-        expectedTranslation.setLanguage(language);
-        expectedTranslation.setBundle(bundle);
-        
-        Keyword existing = new Keyword();
-        existing.setId(1487L);
-        existing.setKeyword("keyword");
-        existing.setContext("context");
-        existing.addTranslation(expectedTranslation);
-        this.keywordService.saveOrUpdate(existing);
-    }
-
     /**
      * Test method for {@link org.tonguetied.web.KeywordValidator#validate(java.lang.Object, org.springframework.validation.Errors)}.
      */
@@ -153,19 +112,16 @@ public class KeywordValidatorTest
     public final void testValidate()
     {
         KeywordValidator validator = new KeywordValidator();
-        validator.setKeywordService(keywordService);
-        Errors errors = new BindException(this.keyword, "keyword");
-        validator.validate(this.keyword, errors);
+        final Keyword keyword = new Keyword();
+        keyword.setTranslations(translations);
+        Errors errors = new BindException(keyword, "keyword");
+        validator.validateDuplicates(translations, predicate, errors);
         
         assertFalse(errors.getAllErrors().isEmpty());
         FieldError error = errors.getFieldError(fieldName);
-        if (FIELD_KEYWORD.equals(fieldName))
+        if (FIELD_TRANSLATIONS.equals(fieldName))
         {
-            assertEquals(this.keyword.getKeyword(), error.getRejectedValue());
-        }
-        else if (FIELD_TRANSLATIONS.equals(fieldName))
-        {
-            assertEquals(this.keyword.getTranslations(), error.getRejectedValue());
+            assertEquals(translations, error.getRejectedValue());
             assertEquals(1, errors.getErrorCount());
         }
         else

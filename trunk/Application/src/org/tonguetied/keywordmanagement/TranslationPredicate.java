@@ -65,4 +65,28 @@ public final class TranslationPredicate implements Predicate
         
         return builder.isEquals();
     }
+
+    /**
+     * @return the bundle
+     */
+    public Bundle getBundle()
+    {
+        return bundle;
+    }
+
+    /**
+     * @return the country
+     */
+    public Country getCountry()
+    {
+        return country;
+    }
+
+    /**
+     * @return the language
+     */
+    public Language getLanguage()
+    {
+        return language;
+    }
 }
