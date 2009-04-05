@@ -114,7 +114,7 @@
         <pathelement location="${3rdparty.home}/Hibernate/tools/3.2.4.beta1/hibernate-tools.jar"/>
         <pathelement location="${3rdparty.home}/FreeMarker/2.3.13/freemarker.jar"/>
         <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-collections-3.2.1.jar"/>
-        <pathelement location="${3rdparty.home}/dom4j/1.6.1/dom4j.jar"/>
+        <pathelement location="${3rdparty.home}/DOM4J/1.6.1/dom4j.jar"/>
         <pathelement location="${3rdparty.home}/cglib/2.2/cglib-nodep-2.2.jar"/>
         <pathelement location="${3rdparty.home}/Spring/spring-security/2.0.1/spring-security-core.jar"/>
     </path>
