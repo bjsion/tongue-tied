@@ -1,0 +1,16 @@
+#summary Overview of the TongueTied Application.
+
+= Introduction =
+
+!TongueTied is a resource management tool that allows you to manage your static resources.
+
+
+= Details =
+
+This tool helps with the creation of keywords with support for multi-language or multi-region resources. TongueTied integrates a work flow around a keyword to track changes to its translations and ensure the legitimacy of each translation associated with a resource. Such that 3rd parties can validate each translation. 
+
+!TongueTied also allows the the static resources to be exported and from the application and imported into the application. The following formats are currently supported:
+ * Java Properties
+ * .Net Resources
+ * CSV
+ * Excel
