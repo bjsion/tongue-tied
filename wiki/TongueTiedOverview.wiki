@@ -15,4 +15,4 @@ One of the key features of !TongueTied is that it allows static resources to be 
  * CSV
  * Excel
 
-!TongueTied integrates an optional work flow around a keyword to track changes to a translation and ensure the validity of that translation. Operators are allowed to query a translation if they believe it to be incorrect. 
+!TongueTied integrates an optional work flow around a keyword to track changes to a translation and ensure the validity of that translation. Operators are allowed to query a translation if they believe it to be incorrect. For more information see [TranslationWorkFlow this ] page about the workflow 
