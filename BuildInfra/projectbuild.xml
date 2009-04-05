@@ -234,8 +234,8 @@
             <tarfileset dir="${application.home}/builds/war" prefix="${version}/webapps">
                 <include name="${application.war.file}"/>
             </tarfileset>
-            <tarfileset dir="${server.home}/resources/shellScripts" prefix="${version}">
-                <include name="startServer.bat"/>
+            <tarfileset dir="${server.home}/resources/shellScripts" prefix="${version}" filemode="755">
+                <include name="startServer.sh"/>
             </tarfileset>
             <tarfileset dir="${server.home}/resources/config" prefix="${version}">
                 <include name="log4j.properties"/>
