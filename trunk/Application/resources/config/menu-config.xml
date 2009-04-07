@@ -15,8 +15,8 @@
             <Item name="NewKeywordByCountry" title="new.keyword.by.country" page="/keyword.htm?creationType=country" toolTip="help.new.keyword.by.country.sub.menu" roles="ROLE_ADMIN,ROLE_USER"/>
         </Menu>
         <Menu name="TabbedCountries" title="countries.tab" page="/countries.htm" toolTip="help.countries.tab" roles="ROLE_ADMIN">
-            <Item name="CountryList" title="countries" page="/countries.htm" toolTip="helpCountries.sub.menu"/>
-            <Item name="NewCountry" title="new.country" page="/country.htm" toolTip="helpNewCountry.sub.menu"/>
+            <Item name="CountryList" title="countries" page="/countries.htm" toolTip="help.countries.sub.menu"/>
+            <Item name="NewCountry" title="new.country" page="/country.htm" toolTip="help.new.country.sub.menu"/>
         </Menu>
         <Menu name="TabbedLanguages" title="languages.tab" page="/languages.htm" toolTip="help.languages.tab" roles="ROLE_ADMIN">
             <Item name="LanguageList" title="languages" page="/languages.htm" toolTip="help.languages.sub.menu"/>
