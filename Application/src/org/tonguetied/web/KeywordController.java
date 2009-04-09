@@ -202,7 +202,10 @@ public class KeywordController extends CancellableFormController
         KeywordValidator validator = (KeywordValidator) getValidator();
         validator.validateDuplicates(keyword.getTranslations(), new TranslationPredicate(null, null, null), errors);
         if (!errors.hasErrors())
+        {
             keyword.addTranslation(new Translation());
+            keywordService.saveOrUpdate(keyword);
+        }
         
         return showForm(request, response, errors);
     }
@@ -216,6 +219,7 @@ public class KeywordController extends CancellableFormController
         final Long translationId = 
             Long.valueOf(request.getParameter("deleteTranslation"));
         keyword.removeTranslation(translationId);
+        keywordService.saveOrUpdate(keyword);
         return showForm(request, response, errors);
     }
 

@@ -35,8 +35,8 @@
             <table>
                 <caption><fmt:message key="translations"/></caption>
                 <colgroup>
-                    <col class="fixme"/>
-                    <col width="language"/>
+                    <col class="action"/>
+                    <col class="language"/>
                     <col class="country"/>
                     <col class="bundle"/>
                     <col class="translation"/>
@@ -56,17 +56,22 @@
                     <c:forEach items="${keyword.translations}" var="translation" varStatus="index">
                     <c:choose>
                         <c:when test="${index.count % 2 == 0}">
-                    <tr>
+                    <tr class="even">
                         </c:when>
                         <c:otherwise>
-                    <tr class="altRow">
+                    <tr class="odd">
                         </c:otherwise>
                     </c:choose>
                         <td>
                             <form:hidden path="translations[${index.index}].id" id="translation${index.index}.id"/>
                             <form:hidden path="translations[${index.index}].version" id="translation${index.index}.version"/>
                             <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
-                            <input type="image" src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" name="deleteTranslation" value="${translation.id}" class="deleteImageButton"/>
+                            <fmt:message key="confirm.translation.delete" var="confirmDeleteTranslationMsg" scope="page" >
+                                <fmt:param value="${translation.language.name}"/>
+                                <fmt:param value="${translation.country.name}"/>
+                                <fmt:param value="${translation.bundle.name}"/>
+                            </fmt:message>
+                            <input type="image" src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" name="deleteTranslation" value="${translation.id}" class="deleteImageButton" onclick="return confirm('${fn:escapeXml(confirmDeleteTranslationMsg)}')"/>
                             </security:authorize>
                         </td>
                         <td>
