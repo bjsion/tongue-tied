@@ -280,11 +280,14 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
         for (Translation translation : translations)
         {
             builder.append("\nbundle=");
-            builder.append(translation.getBundle().toLogString());
+            builder.append(translation.getBundle() == null? null:
+                translation.getBundle().toLogString());
             builder.append(", country=");
-            builder.append(translation.getCountry().toLogString());
+            builder.append(translation.getCountry() == null? null:
+                translation.getCountry().toLogString());
             builder.append(", language=");
-            builder.append(translation.getLanguage().toLogString());
+            builder.append(translation.getLanguage() == null? null:
+                translation.getLanguage().toLogString());
             builder.append(", state=");
             builder.append(translation.getState());
             builder.append(", value=");
