@@ -69,7 +69,9 @@
         created timestamp not null,
         entity_class varchar(255) not null,
         entity_id int8 not null,
-        message varchar(255) not null,
+        message varchar(7) not null,
+        new_value text,
+        old_value text,
         username varchar(255),
         primary key (audit_log_record_id)
     );
@@ -114,7 +116,7 @@
 
     create table keyword (
         keyword_id int8 not null default nextval('keyword_id_seq'),
-        context varchar(255),
+        context text,
         keyword varchar(255) not null unique,
         optlock int4,
         primary key (keyword_id)
@@ -140,7 +142,7 @@
     create table translation (
         translation_id int8 not null default nextval('translation_id_seq'),
         state varchar(10) not null,
-        value varchar(255),
+        value text,
         optlock int4,
         bundle_id int8,
         country_id int8,

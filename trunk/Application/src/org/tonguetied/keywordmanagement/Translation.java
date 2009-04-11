@@ -42,6 +42,7 @@ import org.hibernate.annotations.AccessType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.ForeignKey;
+import org.hibernate.annotations.Type;
 import org.tonguetied.audit.Auditable;
 
 /**
@@ -187,6 +188,12 @@ public class Translation implements Cloneable, Comparable<Translation>, Auditabl
     {
         this.language = language;
     }
+
+    /**
+     * 
+     * @return the translated value
+     */
+    @Type(type="text")
     public String getValue()
     {
         return value;

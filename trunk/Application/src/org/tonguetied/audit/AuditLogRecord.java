@@ -33,6 +33,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.hibernate.annotations.Immutable;
+import org.hibernate.annotations.Type;
 
 /**
  * Stateful object that contains a summary of a database transaction.
@@ -189,6 +190,8 @@ public class AuditLogRecord
      * 
      * @return the original value
      */
+    @Column(name="old_value")
+    @Type(type="text")
     public String getOldValue()
     {
         return oldValue;
@@ -208,6 +211,8 @@ public class AuditLogRecord
      * 
      * @return the new value
      */
+    @Column(name="new_value")
+    @Type(type="text")
     public String getNewValue()
     {
         return newValue;
