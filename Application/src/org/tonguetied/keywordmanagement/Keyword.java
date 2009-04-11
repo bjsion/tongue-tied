@@ -44,6 +44,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Sort;
 import org.hibernate.annotations.SortType;
+import org.hibernate.annotations.Type;
 import org.tonguetied.audit.Auditable;
 
 /**
@@ -107,6 +108,7 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
      * 
      * @return the string describing the use of the {@linkplain Keyword}
      */
+    @Type(type="text")
     public String getContext() {
         return context;
     }
