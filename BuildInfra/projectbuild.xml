@@ -137,6 +137,8 @@
             <param name="target" value="build"/>
         </antcall>
         <tstamp/>
+        <copy file="${application.home}/builds/war/${application.war.file}"
+              tofile="${package.dir}/${version}-${DSTAMP}.war"/>
         <antcall target="package.zip"/>
         <antcall target="package.tar.gz"/>
     </target>
@@ -253,5 +255,6 @@
         </tar>
         <gzip destfile="${package.dir}/${version}-${DSTAMP}.tar.gz"
             src="${package.dir}/${version}-${DSTAMP}.tar"/>
+        <delete file="${package.dir}/${version}-${DSTAMP}.tar"/>
     </target>
 </project>
