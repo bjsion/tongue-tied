@@ -61,7 +61,7 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
 public class KeywordController extends CancellableFormController
 {
     
-    private KeywordService keywordService;
+private KeywordService keywordService;
     
     private static final Logger logger = 
         Logger.getLogger(KeywordController.class);
@@ -207,7 +207,7 @@ public class KeywordController extends CancellableFormController
             keywordService.saveOrUpdate(keyword);
         }
         
-        return showForm(request, response, errors);
+        return new ModelAndView("redirect:/keyword.htm?keywordId="+keyword.getId());
     }
     
     private ModelAndView deleteTranslation(HttpServletRequest request,
@@ -220,7 +220,8 @@ public class KeywordController extends CancellableFormController
             Long.valueOf(request.getParameter("deleteTranslation"));
         keyword.removeTranslation(translationId);
         keywordService.saveOrUpdate(keyword);
-        return showForm(request, response, errors);
+
+        return new ModelAndView("redirect:/keyword.htm?keywordId="+keyword.getId());
     }
 
     /**
