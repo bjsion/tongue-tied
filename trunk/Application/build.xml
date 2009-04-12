@@ -370,7 +370,7 @@
                 <exclude name="**/sql/postgresql-schema.sql"/>
             </webinf>
             <webinf dir="${resources.dir}">
-                <include name="**/sql/*.sql"/>
+                <include name="**/sql/**/*.sql"/>
             </webinf>
             <classes dir="${config.dir}">
                 <include name="tonguetied*.properties"/>
