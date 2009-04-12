@@ -82,7 +82,6 @@ public class MainController extends MultiActionController
             HttpServletResponse response) throws Exception
     {
         List<Keyword> keywords;
-        String parameter = request.getParameter(SHOW_ALL);
         Cookie cookie = CookieUtils.getCookie(request, "menuSelected");
         if (cookie == null)
         {
@@ -90,11 +89,14 @@ public class MainController extends MultiActionController
             response.addCookie(cookie);
         }
         
-        boolean showAll;
-        if (parameter != null) {
+        final boolean showAll;
+        final String parameter = request.getParameter(SHOW_ALL);
+        if (parameter != null)
+        {
             showAll = Boolean.parseBoolean(parameter);
         }
-        else {
+        else
+        {
             showAll = (Boolean) request.getSession().getAttribute(SHOW_ALL);
         }
         

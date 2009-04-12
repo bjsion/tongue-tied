@@ -29,6 +29,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
+import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
@@ -50,7 +51,7 @@ import org.hibernate.annotations.Immutable;
 @Table(name=ServerData.TABLE_SERVER_DATA,uniqueConstraints={@UniqueConstraint(columnNames={"version",ServerData.COL_BUILD_NUMBER})})
 @NamedQuery(name=ServerData.QUERY_GET_LATEST_SERVER_DATA,query="from ServerData sd where sd.buildDate = (select max(sd2.buildDate) from ServerData sd2)")
 @Immutable
-public class ServerData
+public class ServerData implements Comparable<ServerData>
 {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO,generator="server_data_generator")
@@ -190,9 +191,17 @@ public class ServerData
         this.setupDate = setupDate;
     }
     
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
+
+    /**
+     * Determine if this instance of the {@link ServerData} is older or newer
+     * than the version passed in.
      */
+    public int compareTo(ServerData other)
+    {
+        return new CompareToBuilder().append(version, other.version).
+            append(buildDate, other.buildDate).toComparison();
+    }
+
     @Override
     public int hashCode()
     {
@@ -202,9 +211,6 @@ public class ServerData
         return builder.toHashCode();
     }
     
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     @Override
     public boolean equals(Object obj)
     {
@@ -230,9 +236,6 @@ public class ServerData
         return isEqual;
     }
     
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString()
     {

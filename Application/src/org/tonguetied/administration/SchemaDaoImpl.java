@@ -33,9 +33,6 @@ public class SchemaDaoImpl extends JdbcDaoSupport implements SchemaDao
         if (schemas == null || schemas.length <= 0)
             throw new IllegalArgumentException("database schema cannot be null");
         
-        if (logger.isDebugEnabled())
-            logger.debug("attempting to create database");
-        
         // execute all statements in the schema definition
         for (String schema : schemas)
         {
@@ -45,6 +42,7 @@ public class SchemaDaoImpl extends JdbcDaoSupport implements SchemaDao
                 {
                     if (logger.isDebugEnabled())
                         logger.debug("attempting to execute : " + statement);
+                    
                     if (StringUtils.isNotBlank(statement))
                         getJdbcTemplate().execute(statement);
                 }

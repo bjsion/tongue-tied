@@ -59,6 +59,7 @@ public class ServletContextInitializer implements ServletContextListener
 {
     private static final String DIR_WEB_INF = "/WEB-INF";
     private static final String DIR_SQL = DIR_WEB_INF + "/sql";
+//    private static final String DIR_SQL_UPDATE = DIR_SQL + "/update";
     private static final String BUILD_DATE_FORMAT = "yyyy/MM/dd hh:mm";
     private static final String KEY_SUPPORTED_LANGUAGES = "supportedLanguages";
     private static final String LANGUAGE_PROPERTIES = "language";
@@ -101,21 +102,7 @@ public class ServletContextInitializer implements ServletContextListener
      */
     public void contextInitialized(ServletContextEvent event)
     {
-        // read language.properties
-        if (logger.isInfoEnabled()) 
-            logger.info("loading resources from file " + LANGUAGE_PROPERTIES);
-        final ResourceBundle bundle = 
-            ResourceBundle.getBundle(LANGUAGE_PROPERTIES);
-        Set<String> languageKeys = 
-            new TreeSet<String>(Collections.list(bundle.getKeys()));
-        if (languageKeys.isEmpty()) {
-            logger.warn("Resource file "+
-                    LANGUAGE_PROPERTIES+".properties contains no entries");
-            languageKeys.add(Locale.ENGLISH.getLanguage());
-        }
-        
-        event.getServletContext().setAttribute(
-                KEY_SUPPORTED_LANGUAGES, languageKeys);
+        loadSupportedLanguages(event.getServletContext());
         
         WebApplicationContext applicationContext =
             WebApplicationContextUtils.getWebApplicationContext(event.getServletContext());
@@ -130,12 +117,55 @@ public class ServletContextInitializer implements ServletContextListener
         // created
         if (serverData == null)
         {
+            if (logger.isDebugEnabled())
+                logger.debug("attempting to create database");
+            
             final String[] schemas = loadSchemas(event.getServletContext(), dialect);
             administrationService.createDatabase(schemas);
             serverData = createServerData(event.getServletContext());
             if (serverData != null)
                 administrationService.saveOrUpdate(serverData);
         }
+//        // check if we need to update
+//        else
+//        {
+//            if (logger.isDebugEnabled())
+//                logger.debug("attempting to update database");
+//            
+//            ServerData curServerData = createServerData(event.getServletContext());
+//            if (curServerData.compareTo(serverData) > 0)
+//            {
+//                final String[] schemas = loadSchemas(event.getServletContext(), dialect, curServerData.getVersion());
+//                administrationService.createDatabase(schemas);
+//                administrationService.saveOrUpdate(curServerData);
+//            }
+//        }
+    }
+
+    /**
+     * Create the list of supported languages used by the web front end and add
+     * as a application scope variable.
+     * 
+     * @param context the {@linkplain ServletContext} to add the list of 
+     * languages
+     */
+    private void loadSupportedLanguages(ServletContext context)
+    {
+        // read language.properties
+        if (logger.isInfoEnabled()) 
+            logger.info("loading resources from file: " + LANGUAGE_PROPERTIES);
+        final ResourceBundle bundle = 
+            ResourceBundle.getBundle(LANGUAGE_PROPERTIES);
+        Set<String> languageKeys = 
+            new TreeSet<String>(Collections.list(bundle.getKeys()));
+        if (languageKeys.isEmpty())
+        {
+            logger.warn("Resource file "+
+                    LANGUAGE_PROPERTIES+".properties contains no entries");
+            languageKeys.add(Locale.ENGLISH.getLanguage());
+        }
+        
+        context.setAttribute(KEY_SUPPORTED_LANGUAGES, languageKeys);
     }
 
     /**
@@ -147,7 +177,7 @@ public class ServletContextInitializer implements ServletContextListener
      */
     private ServerData createServerData(ServletContext servletContext)
     {
-        ServerData serverData = null;
+        ServerData serverData;
         try
         {
             final ResourceBundle bundle = ResourceBundle.getBundle("buildNumber");
@@ -194,6 +224,34 @@ public class ServletContextInitializer implements ServletContextListener
         }
     }
     
+//    /**
+//     * Load the sql schema files used to update the database.
+//     * 
+//     * @param servletContext
+//     * @param dialect the sql dialect
+//     * @return a string representation of each sql file
+//     */
+//    private String[] loadSchemas(ServletContext servletContext, final String dialect, final String version)
+//    {
+//        InputStream is = null;
+//        try
+//        {
+//            List<String> schemas = new ArrayList<String>();
+//            is = servletContext.getResourceAsStream(getUpdateSchema(dialect, version));
+//            schemas.add(IOUtils.toString(is));
+//            return schemas.toArray(new String[schemas.size()]);
+//        }
+//        catch (IOException ioe)
+//        {
+//            logger.error("failed to load file", ioe);
+//            throw new IllegalStateException("failed to load schemas", ioe);
+//        }
+//        finally
+//        {
+//            IOUtils.closeQuietly(is);
+//        }
+//    }
+    
     /**
      * 
      * @param dialectStr the string name of the SQL dialect
@@ -220,6 +278,33 @@ public class ServletContextInitializer implements ServletContextListener
         
         return schemaFile;
     }
+
+//    /**
+//     * 
+//     * @param dialectStr the string name of the SQL dialect
+//     * @return
+//     * TODO this seems like the wrong place for this. There really should not 
+//     * be a dependency on Hibernate here
+//     */
+//    private String getUpdateSchema(final String dialectStr, final String version)
+//    {
+//        String schemaFile = null;
+//        final Dialect dialect = DialectFactory.buildDialect(dialectStr);
+//        if (dialect instanceof HSQLDialect)
+//        {
+//            schemaFile = DIR_SQL_UPDATE+"/"+version+"/hsql-update.sql";
+//        }
+//        else if (dialect instanceof MySQLDialect)
+//        {
+//            schemaFile = DIR_SQL_UPDATE+"/"+version+"/mysql-update.sql";
+//        }
+//        else if (dialect instanceof PostgreSQLDialect)
+//        {
+//            schemaFile = DIR_SQL_UPDATE+"/"+version+"/postgresql-update.sql";
+//        }
+//        
+//        return schemaFile;
+//    }
 
     /**
      * Load the jdbc properties for communication with the database.
