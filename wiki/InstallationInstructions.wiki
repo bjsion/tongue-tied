@@ -16,7 +16,7 @@ Download the Tongue-Tied package from [http://code.google.com/p/tongue-tied/down
   # Unpack the archive to a directory of your choice
   # Choose a database (currently supported: HSQLDB, MySQL, PostgreSQL). Please note, that in order for the !TongueTied application to create the underlying database, the DB user it uses to connect to the database must have create table and delete table privileges. (These can be turned off after !TongueTied has started for the first time)
     * If you are using a MySQL database follow the instructions in the [UsingMySql Using a MySQL Database]. 
-    * If you are using a PostgreSQL database follow the instructions in the [UsingPostreSql Using a PostgreSQL Database]. 
+    * If you are using a PostgreSQL database follow the instructions in the [UsingPostreSQL Using a PostgreSQL Database]. 
     * If you are evaluating !TongueTied, you can skip this step and use the embedded database.
   # Now start the server. For windows users, run the batch file `startServer.bat`. For `*`nix users run the script `startServer.sh`. The server will now start up. You should see something like this to indicate that the server is ready:
 {{{
