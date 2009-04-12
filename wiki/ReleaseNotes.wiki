@@ -1,4 +1,5 @@
 #summary Release Note.
+#labels Phase-Deploy,Featured
 
 = 1.1.0 =
  * [http://code.google.com/p/tongue-tied/issues/detail?id=18 Issue 18] Add support for Postgres db
