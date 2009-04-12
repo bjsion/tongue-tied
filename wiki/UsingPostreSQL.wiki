@@ -1,0 +1,23 @@
+#summary Instructions on how to use connect TongueTied to a PostgreSQL database.
+
+= Introduction =
+
+!TongueTied requires a few steps to be performed in order to connect to a PostgreSQL database.
+
+
+= Details =
+
+  # Extract the web archive file, if using !TongueTied with an embedded server start the server by running the batch file `startServer.bat` or `startServer.sh`.
+  # After the server has started, stop the server. 
+  # Open the file `<TONGUETIED_HOME>/tonguetied/webapp/WEB-INF/jdbc.properties`
+  # Set your PostgreSQL Connection to something like the following:
+{{{
+jdbc.driverClassName=org.postgresql.Driver
+jdbc.port=5432
+jdbc.name=tonguetied
+jdbc.url=jdbc:postgresql://localhost:5432/tonguetied
+jdbc.username=postgres
+jdbc.password=password
+hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+}}}
+  # Restart the server.
