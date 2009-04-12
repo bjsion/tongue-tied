@@ -12,6 +12,9 @@ Java 5 or above.
 
 Download the Tongue-Tied package from [http://code.google.com/p/tongue-tied/downloads/list here].
 
+= Upgrading from 1.0.0 to 1.1.0 =
+See the [UpgradeTo110 Upgrade to 1.1.0] page.
+
 == Windows & Linux ==
   # Unpack the archive to a directory of your choice
   # Choose a database (currently supported: HSQLDB, MySQL, PostgreSQL). Please note, that in order for the !TongueTied application to create the underlying database, the DB user it uses to connect to the database must have create table and delete table privileges. (These can be turned off after !TongueTied has started for the first time)
