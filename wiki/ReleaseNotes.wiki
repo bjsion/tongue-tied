@@ -1,4 +1,13 @@
 #summary Release Note.
 
 = 1.1.0 =
-[http://code.google.com/p/tongue-tied/issues/detail?id=18 Issue 18] Add support for Postgres db
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=18 Issue 18] Add support for Postgres db
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=53 Issue 53] New Keywords are not displaying in the keyword listing in the main screen
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=54 Issue 54] Improve the audit log feature
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=55 Issue 55] add a `*`nix package
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=56 Issue 56] Adding a translation with an existing business key causes error
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=57 Issue 57] Cannot add a second new translation until after saving first one
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=59 Issue 59] Sub menu help texts missing
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=60 Issue 60] User interaction for adding and deleting translations is counter intuitive
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=61 Issue 61] Some columns are defined to take a max of 255 chars
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=62 Issue 62] Create a seperate war distributable
