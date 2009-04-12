@@ -12,8 +12,8 @@ Java 5 or above.
 
 Download the Tongue-Tied package from [http://code.google.com/p/tongue-tied/downloads/list here].
 
-== Windows ==
-  # Unzip package to a directory of your choice
+== Windows & Linux ==
+  # Unpack the archive to a directory of your choice
   # Choose a database (currently supported: HSQLDB, MySQL, PostgreSQL). 
     * If you are using a MySQL database follow the instructions in the [UsingMySql Using a MySQL Database]. 
     * If you are using a PostgreSQL database follow the instructions in the [UsingPostreSql Using a PostgreSQL Database]. 
