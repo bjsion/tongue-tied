@@ -3,7 +3,7 @@
 
 = Introduction =
 
-TongueTied requires a few steps to be performed in order to connect to a MySQL database.
+!TongueTied requires a few steps to be performed in order to connect to a MySQL database.
 
 
 = Details =
