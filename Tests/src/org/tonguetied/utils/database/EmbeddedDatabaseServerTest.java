@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -54,6 +55,18 @@ public class EmbeddedDatabaseServerTest
         }
     }
     
+    @Before
+    public void setUp() throws Exception
+    {
+        if (EmbeddedDatabaseServer.getServer() != null)
+        {
+            if (EmbeddedDatabaseServer.isRunning())
+            {
+                EmbeddedDatabaseServer.stopDatabase();
+            }
+        }
+    }
+    
     /**
      * Test method for {@link org.tonguetied.utils.database.EmbeddedDatabaseServer#startDatabase(Properties)}.
      */
@@ -61,7 +74,7 @@ public class EmbeddedDatabaseServerTest
     public final void testStartStopDatabase()
     {
         // Ensure the server is not running
-        EmbeddedDatabaseServer.getServer().checkRunning(false);
+//        EmbeddedDatabaseServer.getServer().checkRunning(false);
         assertFalse(EmbeddedDatabaseServer.isRunning());
         
         EmbeddedDatabaseServer.startDatabase(properties);
