@@ -131,13 +131,14 @@ public class KeywordTest {
      * Test method for {@link org.tonguetied.keywordmanagement.Keyword#removeTranslation(Long)}.
      */
     @Test
-    public final void testRemoveTranslation() {
+    public final void testRemoveSavedTranslation()
+    {
         Keyword keyword = new Keyword();
         keyword.setKeyword("a keyword");
         keyword.setContext("context");
         
         Translation translation = new Translation();
-        translation.setId(1L);
+        translation.setId(100L);
         translation.setBundle(bundle);
         translation.setCountry(vietnam);
         translation.setLanguage(vietnamese);
@@ -145,7 +146,39 @@ public class KeywordTest {
         keyword.addTranslation(translation);
 
         translation = new Translation();
-        translation.setId(2L);
+        translation.setId(200L);
+        translation.setBundle(bundle);
+        translation.setCountry(vietnam);
+        translation.setLanguage(french);
+        translation.setValue("value 2");
+        keyword.addTranslation(translation);
+        
+        assertEquals(2, keyword.getTranslations().size());
+        
+        keyword.removeTranslation(100L);
+        
+        assertEquals(1, keyword.getTranslations().size());
+        assertTrue(keyword.getTranslations().contains(translation));
+    }
+
+    /**
+     * Test method for {@link org.tonguetied.keywordmanagement.Keyword#removeTranslation(Long)}.
+     */
+    @Test
+    public final void testRemoveUnsavedTranslation()
+    {
+        Keyword keyword = new Keyword();
+        keyword.setKeyword("a keyword");
+        keyword.setContext("context");
+        
+        Translation translation = new Translation();
+        translation.setBundle(bundle);
+        translation.setCountry(vietnam);
+        translation.setLanguage(vietnamese);
+        translation.setValue("the value");
+        keyword.addTranslation(translation);
+
+        translation = new Translation();
         translation.setBundle(bundle);
         translation.setCountry(vietnam);
         translation.setLanguage(french);
@@ -158,5 +191,63 @@ public class KeywordTest {
         
         assertEquals(1, keyword.getTranslations().size());
         assertTrue(keyword.getTranslations().contains(translation));
+    }
+    
+    /**
+     * Test method for {@link org.tonguetied.keywordmanagement.Keyword#removeTranslation(Long)}.
+     */
+    @Test(expected=ArrayIndexOutOfBoundsException.class)
+    public final void testRemoveTranslationWithUnknownId()
+    {
+        Keyword keyword = new Keyword();
+        keyword.setKeyword("a keyword");
+        keyword.setContext("context");
+        
+        Translation translation = new Translation();
+        translation.setBundle(bundle);
+        translation.setCountry(vietnam);
+        translation.setLanguage(vietnamese);
+        translation.setValue("the value");
+        keyword.addTranslation(translation);
+
+        translation = new Translation();
+        translation.setBundle(bundle);
+        translation.setCountry(vietnam);
+        translation.setLanguage(french);
+        translation.setValue("value 2");
+        keyword.addTranslation(translation);
+        
+        assertEquals(2, keyword.getTranslations().size());
+        
+        keyword.removeTranslation(3L);
+    }
+
+    /**
+     * Test method for {@link org.tonguetied.keywordmanagement.Keyword#removeTranslation(Long)}.
+     */
+    @Test(expected=IllegalArgumentException.class)
+    public final void testRemoveTranslationWithNullId()
+    {
+        Keyword keyword = new Keyword();
+        keyword.setKeyword("a keyword");
+        keyword.setContext("context");
+        
+        Translation translation = new Translation();
+        translation.setBundle(bundle);
+        translation.setCountry(vietnam);
+        translation.setLanguage(vietnamese);
+        translation.setValue("the value");
+        keyword.addTranslation(translation);
+
+        translation = new Translation();
+        translation.setBundle(bundle);
+        translation.setCountry(vietnam);
+        translation.setLanguage(french);
+        translation.setValue("value 2");
+        keyword.addTranslation(translation);
+        
+        assertEquals(2, keyword.getTranslations().size());
+        
+        keyword.removeTranslation(null);
     }
 }

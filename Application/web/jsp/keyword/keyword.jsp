@@ -66,12 +66,20 @@
                             <form:hidden path="translations[${index.index}].id" id="translation${index.index}.id"/>
                             <form:hidden path="translations[${index.index}].version" id="translation${index.index}.version"/>
                             <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+                            <c:choose>
+                                <c:when test="${not empty translation.id}">
+                                    <c:set var="translationId" value="${translation.id}" scope="page"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="translationId" value="${index.index}" scope="page"/>
+                                </c:otherwise>
+                            </c:choose>
                             <fmt:message key="confirm.translation.delete" var="confirmDeleteTranslationMsg" scope="page" >
                                 <fmt:param value="${translation.language.name}"/>
                                 <fmt:param value="${translation.country.name}"/>
                                 <fmt:param value="${translation.bundle.name}"/>
                             </fmt:message>
-                            <input type="image" src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" name="deleteTranslation" value="${translation.id}" class="deleteImageButton" onclick="return confirm('${fn:escapeXml(confirmDeleteTranslationMsg)}')"/>
+                            <input type="image" src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" name="deleteTranslation" value="${translationId}" class="deleteImageButton" onclick="return confirm('${fn:escapeXml(confirmDeleteTranslationMsg)}')"/>
                             </security:authorize>
                         </td>
                         <td>
