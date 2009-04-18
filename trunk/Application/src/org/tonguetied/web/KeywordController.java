@@ -210,6 +210,9 @@ private KeywordService keywordService;
         return new ModelAndView("redirect:/keyword.htm?keywordId="+keyword.getId());
     }
     
+    /**
+     * Perform steps to remove a translation from the current keyword.
+     */
     private ModelAndView deleteTranslation(HttpServletRequest request,
                                            HttpServletResponse response,
                                            BindException errors,

@@ -152,14 +152,28 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
     /**
      * Remove a {@link Translation} from this Keyword's list of 
      * <code>translations</code>. The translation to be removed is matched by
-     * the <code>id</code> of the {@link Translation}.
+     * the <code>id</code> of the {@link Translation}. If no match is found,
+     * such as before the translation has been persisted, then this method 
+     * attempts to remove the translation according to its id in the 
+     * translation sets natural order.
      * 
-     * @param translationId the id of the {@link Translation} to remove
+     * @param translationId the id of the {@link Translation}, or the index of
+     * the collection, if no id exists
      */
     public void removeTranslation(final Long translationId)
     {
+        if (translationId == null)
+            throw new IllegalArgumentException("translationId cannot be null");
+            
         Translation translation = (Translation) CollectionUtils.find(
                 translations, new TranslationPredicate(translationId));
+        if (translation == null)
+        {
+            Translation[] array = new Translation[this.translations.size()];
+            this.translations.toArray(array);
+            translation = array[translationId.intValue()];
+        }
+        
         remove(translation);
     }
     
