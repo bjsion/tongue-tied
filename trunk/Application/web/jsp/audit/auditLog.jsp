@@ -6,8 +6,8 @@
     <div class="content">
         <display:table name="auditLog" id="record" sort="page" requestURI="">
             <display:column property="username" titleKey="changed.by" sortable="true"/>
-            <display:column property="oldValue" titleKey="old.value" sortable="false"/>
-            <display:column property="newValue" titleKey="new.value" sortable="false"/>
+            <display:column property="oldValue" titleKey="old.value" sortable="false" escapeXml="true"/>
+            <display:column property="newValue" titleKey="new.value" sortable="false" escapeXml="true"/>
             <display:column property="created" titleKey="created" sortable="true"/>
             <display:column property="message" titleKey="action" sortable="false"/>
         </display:table>
