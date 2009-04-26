@@ -97,22 +97,26 @@ public class KeywordValidatorTest
         Translation translation4 = new Translation();
         
         return Arrays.asList(new Object[][] {
-                {null, "context", null, FIELD_KEYWORD},
-                {"", "context", new Translation[] {translation1}, FIELD_KEYWORD},
-                {"   ", null, new Translation[] {translation1}, FIELD_KEYWORD},
-                {"keyword", "context", new Translation[] {translation1}, FIELD_KEYWORD},
-                {"keyword2", "", new Translation[] {translation1, translation2}, FIELD_TRANSLATIONS},
+                {null, null, "context", null, FIELD_KEYWORD},
+                {null, "", "context", new Translation[] {translation1}, FIELD_KEYWORD},
+                {null, "   ", null, new Translation[] {translation1}, FIELD_KEYWORD},
+                {null, "keyword", "context", new Translation[] {translation1}, FIELD_KEYWORD},
+                {null, "keyword2", "", new Translation[] {translation1, translation2}, FIELD_TRANSLATIONS},
+                // This tests tests for the case when trying to change an existing keyword to the value of another existing keyword
+                {1000L, "keyword", "context", new Translation[] {translation1}, FIELD_KEYWORD},
                 // This test tests for null values in use in the bundle, country and language
-                {"keyword3", null, new Translation[] {translation3, translation4}, FIELD_TRANSLATIONS},
+                {null, "keyword3", null, new Translation[] {translation3, translation4}, FIELD_TRANSLATIONS},
                 });
     }
     
-    public KeywordValidatorTest(final String keywordStr, 
+    public KeywordValidatorTest(final Long id,
+            final String keywordStr, 
             final String context, 
             final Translation[] translations, 
             final String fieldName)
     {
         this.keyword = new Keyword();
+        this.keyword.setId(id);
         this.keyword.setKeyword(keywordStr);
         this.keyword.setContext(context);
         if (translations != null)

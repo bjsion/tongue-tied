@@ -69,12 +69,20 @@ public class KeywordValidator implements Validator
      */
     private void validateDuplicates(Keyword keyword, Errors errors)
     {
-        // check for duplicates of new records only
-        if (keyword.getId() == null)
+        Keyword other = keywordService.getKeyword(keyword.getKeyword());
+        if (other != null)
         {
-            Keyword other = keywordService.getKeyword(keyword.getKeyword());
-            if (other != null)
+            // check for duplicates of new records only
+            if (keyword.getId() == null)
             {
+                errors.rejectValue(FIELD_KEYWORD,
+                    "error.keyword.already.exists", 
+                    new String[] {keyword.getKeyword() },
+                    "default");
+            }
+            // check for duplicates of existing keywords
+            else if (!keyword.getId().equals(other.getId()))
+        	{
                 errors.rejectValue(FIELD_KEYWORD,
                         "error.keyword.already.exists", 
                         new String[] {keyword.getKeyword() },
