@@ -59,6 +59,10 @@ div.sidepanel {
 }
 
 div.contentPanel {
+  margin-left: 230px;
+  position: relative;
+  padding-left: 3px;
+  padding-right: 3px;
 }
 
 div.tabBody {
