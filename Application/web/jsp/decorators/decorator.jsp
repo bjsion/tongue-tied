@@ -18,6 +18,9 @@
 <link rel="stylesheet" media="all" type="text/css" href="<c:url value="/css/tonguetied.css"/>"/>
 <link rel="stylesheet" media="all" type="text/css" href="<c:url value="/css/displaytag.css"/>"/>
 <link rel="stylesheet" media="screen" type="text/css" href="<c:url value="/css/tabs.css"/>"/>
+<!--[if IE]>
+<link rel="stylesheet" media="all" type="text/css" href="<c:url value="/css/ie.css"/>"/>
+<![endif]-->
 <link rel="icon" type="image/png" href="<c:url value="/images/favicon.ico"/>"/>
 <title><fmt:message key="application.short.name"/></title>
 </head>
