@@ -82,6 +82,8 @@ public class ConstraintTest
                 .addPackage("org.tonguetied.usermanagement");
         JavaPackage utilsDatabase = 
             constraint.addPackage("org.tonguetied.utils.database");
+        JavaPackage utilsPagination = 
+            constraint.addPackage("org.tonguetied.utils.pagination");
         JavaPackage web = constraint.addPackage("org.tonguetied.web");
         JavaPackage webServlet = constraint
                 .addPackage("org.tonguetied.web.servlet");
@@ -92,8 +94,11 @@ public class ConstraintTest
         assertNotNull(dao);
         assertNotNull(administration);
 
+        audit.dependsUpon(utilsPagination);
         keywordmanagement.dependsUpon(audit);
+        keywordmanagement.dependsUpon(utilsPagination);
         usermanagement.dependsUpon(keywordmanagement);
+        usermanagement.dependsUpon(utilsPagination);
         datatransferCommon.dependsUpon(keywordmanagement);
         datatransferDao.dependsUpon(datatransferCommon);
         datatransferDao.dependsUpon(keywordmanagement);
@@ -113,6 +118,7 @@ public class ConstraintTest
         web.dependsUpon(datatransferCommon);
         web.dependsUpon(keywordmanagement);
         web.dependsUpon(audit);
+        web.dependsUpon(utilsPagination);
 
         jDepend.analyze();
 

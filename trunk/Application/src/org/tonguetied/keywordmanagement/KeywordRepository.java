@@ -18,6 +18,7 @@ package org.tonguetied.keywordmanagement;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
+import org.tonguetied.utils.pagination.PaginatedList;
 
 
 /**
@@ -62,15 +63,16 @@ public interface KeywordRepository
     Keyword getKeyword(final String keywordString);
     
     /**
-     * Retrieve all {@link Keyword}s from permanent storage.
+     * Retrieve all {@link Keyword}s from permanent storage with page support.
      * 
      * @param firstResult a row number, numbered from 0. If <code>null</code>
-     * then then results begin at zero
+     * then then results begin at zero. If the value is negative, then the 
+     * results begin at zero
      * @param maxResults the maximum number of rows. If <code>null</code> then
      * all results are returned
      * @return the {@link List} of all {@link Keyword}s in the system.
      */
-    List<Keyword> getKeywords(final Integer firstResult,
+    PaginatedList<Keyword> getKeywords(final Integer firstResult,
                               final Integer maxResults);
 
     /**
@@ -87,7 +89,7 @@ public interface KeywordRepository
      * @throws IllegalArgumentException if the keyword is <code>null</code>
      * @throws IllegalArgumentException if the matchMode is <code>null</code>
      */
-    List<Keyword> findKeywords(Keyword keyword, 
+    PaginatedList<Keyword> findKeywords(Keyword keyword, 
                                final boolean ignoreCase,
                                final Integer firstResult,
                                final Integer maxResults)

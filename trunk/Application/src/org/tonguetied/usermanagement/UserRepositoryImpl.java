@@ -22,6 +22,7 @@ import static org.tonguetied.usermanagement.User.FIELD_FIRSTNAME;
 import static org.tonguetied.usermanagement.User.FIELD_LASTNAME;
 import static org.tonguetied.usermanagement.User.FIELD_USERNAME;
 import static org.tonguetied.usermanagement.User.QUERY_GET_USERS;
+import static org.tonguetied.usermanagement.User.QUERY_USER_COUNT;
 
 import java.util.List;
 
@@ -29,9 +30,11 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.tonguetied.utils.pagination.PaginatedList;
 
 /**
  * DAO facade to ORM. This facade allows access to permanent storage of User
@@ -57,23 +60,59 @@ public class UserRepositoryImpl extends HibernateDaoSupport implements
         return (User) criteria.uniqueResult();
     }
 
-    public List<User> getUsers()
+    public PaginatedList<User> getUsers(final Integer firstResult,
+            final Integer maxResults)
     {
-        Query query = getSession().getNamedQuery(QUERY_GET_USERS).setCacheable(true);
+        Query query = getSession().getNamedQuery(QUERY_GET_USERS);
         query.setCacheable(true);
-        return query.list();
+        if (firstResult != null) query.setFirstResult(firstResult);
+        if (maxResults != null) query.setMaxResults(maxResults);
+        
+        Long maxListSize = 0L;
+        final List<User> queryList = query.list();
+        if (queryList.size() > 0)
+            maxListSize = (Long) getSession().getNamedQuery(
+                    QUERY_USER_COUNT).uniqueResult();
+        
+        return new PaginatedList<User>(queryList, maxListSize.intValue());
     }
 
-    public List<User> findUsers(final User user)
+    public PaginatedList<User> findUsers(final User user, 
+            final Integer firstResult,
+            final Integer maxResults)
     {
-        Criteria criteria = 
-            getSession().createCriteria(User.class).setCacheable(true);
+        Criteria criteria = createCriteria(user);
+        if (firstResult != null) criteria.setFirstResult(firstResult);
+        if (maxResults != null) criteria.setMaxResults(maxResults);
+        
+        int maxListSize = 0;
+        final List<User> criteriaList = criteria.list();
+        if (criteriaList.size() > 0)
+        {
+            Criteria criteria2 = createCriteria(user);
+            criteria2.setProjection(Projections.rowCount());
+            
+            maxListSize = (Integer) criteria2.uniqueResult();
+        }
+
+        return new PaginatedList<User>(criteria.list(), maxListSize);
+    }
+
+    /**
+     * Create a search criteria object.
+     * 
+     * @param user the object used to create the search criteria
+     * @return the criteria object used to find matches
+     */
+    private Criteria createCriteria(final User user)
+    {
+        Criteria criteria = getSession().createCriteria(User.class);
+        criteria.setCacheable(true);
         addCriteria(criteria, FIELD_USERNAME, user.getUsername());
         addCriteria(criteria, FIELD_FIRSTNAME, user.getFirstName());
         addCriteria(criteria, FIELD_LASTNAME, user.getLastName());
         addCriteria(criteria, FIELD_EMAIL, user.getEmail());
-        
-        return criteria.list();
+        return criteria;
     }
 
     /**

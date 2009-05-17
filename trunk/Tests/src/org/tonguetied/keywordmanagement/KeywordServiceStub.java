@@ -28,6 +28,7 @@ import org.tonguetied.keywordmanagement.KeywordService;
 import org.tonguetied.keywordmanagement.Language;
 import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
+import org.tonguetied.utils.pagination.PaginatedList;
 
 
 /**
@@ -74,13 +75,13 @@ public class KeywordServiceStub implements KeywordService
         this.keywords.remove(id);
     }
 
-    public List<Keyword> findKeywords(final Keyword keyword, boolean ignoreCase,
+    public PaginatedList<Keyword> findKeywords(final Keyword keyword, boolean ignoreCase,
             Integer firstResult, Integer maxResults)
     {
         final Predicate keywordFilter = new KeywordFilter(keyword);
         List<Keyword> results = 
             (List<Keyword>) CollectionUtils.select(keywords.values(), keywordFilter);
-        return results;
+        return new PaginatedList<Keyword>(results, results.size());
     }
 
     public Bundle getBundle(final Long id)
@@ -160,7 +161,7 @@ public class KeywordServiceStub implements KeywordService
         return (List<Keyword>)keywords.values();
     }
 
-    public List<Keyword> getKeywords(Integer firstResult, Integer maxResults)
+    public PaginatedList<Keyword> getKeywords(Integer firstResult, Integer maxResults)
     {
         // TODO Auto-generated method stub
         return null;

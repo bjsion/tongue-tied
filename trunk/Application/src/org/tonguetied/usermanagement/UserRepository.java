@@ -15,9 +15,8 @@
  */
 package org.tonguetied.usermanagement;
 
-import java.util.List;
-
 import org.springframework.dao.DataAccessException;
+import org.tonguetied.utils.pagination.PaginatedList;
 
 
 /**
@@ -62,17 +61,29 @@ public interface UserRepository
     User getUser(final Long id);
     
     /**
-     * Retrieve a set of all {@link User}s from permanent storage.
+     * Retrieve a set of all {@link User}s from permanent storage with page
+     * support.
      * 
+     * @param firstResult a row number, numbered from 0. If <code>null</code>
+     * then then results begin at zero. If the value is negative, then the 
+     * results begin at zero
+     * @param maxResults the maximum number of rows. If <code>null</code> then
+     * all results are returned
      * @return a set of all {@link User}s in the system
      */
-    List<User> getUsers();
+    PaginatedList<User> getUsers(final Integer firstResult,
+            final Integer maxResults);
     
     /**
      * Retrieve all users matching the search criteria from permanent storage.
      * 
      * @param user the search criteria
+     * @param firstResult a row number, numbered from 0. If <code>null</code>
+     * then then results begin at zero
+     * @param maxResults the maximum number of rows. If <code>null</code> then
+     * all results are returned
      * @return the collection of {@link User}s matching the criteria
      */
-    List<User> findUsers(final User user);
+    PaginatedList<User> findUsers(final User user, final Integer firstResult,
+            final Integer maxResults);
 }

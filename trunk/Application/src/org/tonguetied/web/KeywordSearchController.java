@@ -18,6 +18,7 @@ package org.tonguetied.web;
 import static org.tonguetied.web.Constants.BUNDLES;
 import static org.tonguetied.web.Constants.COUNTRIES;
 import static org.tonguetied.web.Constants.LANGUAGES;
+import static org.tonguetied.web.Constants.BTN_SEARCH;
 import static org.tonguetied.web.Constants.SHOW_ALL;
 import static org.tonguetied.web.Constants.STATES;
 import static org.tonguetied.web.Constants.VIEW_PREFERENCES;
@@ -69,6 +70,32 @@ public class KeywordSearchController extends SimpleFormController
             throws Exception
     {
         return searchParameters;
+    }
+
+    @Override
+    public ModelAndView handleRequest(HttpServletRequest request,
+            HttpServletResponse response) throws Exception
+    {
+        ModelAndView mav = null;
+        // Need to intercept get requests to this controller in the scenario 
+        // when sent from a paginated link, so need to display the search 
+        // results
+        if (RequestUtils.isGetMethod(request))
+        {
+            if (logger.isDebugEnabled())
+                logger.debug("evaluating if this a search request");
+            
+            final String searchBtn = request.getParameter(BTN_SEARCH);
+            if (searchBtn != null)
+            {
+                mav = onSubmit(request, response, null, super.getErrorsForNewForm(request));
+            }
+        }
+        
+        if (mav == null)
+            mav = super.handleRequest(request, response);
+        
+        return mav;
     }
 
     @Override

@@ -17,6 +17,8 @@ package org.tonguetied.audit;
 
 import java.util.List;
 
+import org.tonguetied.utils.pagination.PaginatedList;
+
 /**
  * Concrete implementation of the {@link AuditService} interface.
  * 
@@ -29,7 +31,13 @@ public class AuditServiceImpl implements AuditService
 
     public List<AuditLogRecord> getAuditLog()
     {
-        return auditRepository.getAuditLog();
+        return getAuditLog(0, null);
+    }
+
+    public PaginatedList<AuditLogRecord> getAuditLog(final Integer firstResult,
+            final Integer maxResults)
+    {
+        return auditRepository.getAuditLog(firstResult, maxResults);
     }
 
     /**

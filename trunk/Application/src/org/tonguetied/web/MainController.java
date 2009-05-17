@@ -18,14 +18,18 @@ package org.tonguetied.web;
 import static org.tonguetied.web.Constants.AUDIT_LOG;
 import static org.tonguetied.web.Constants.BUNDLES;
 import static org.tonguetied.web.Constants.COUNTRIES;
+import static org.tonguetied.web.Constants.DEFAULT_AUDIT_LOG_PAGE_SIZE;
+import static org.tonguetied.web.Constants.DEFAULT_USER_PAGE_SIZE;
 import static org.tonguetied.web.Constants.KEYWORD_ID;
 import static org.tonguetied.web.Constants.LANGUAGES;
+import static org.tonguetied.web.Constants.MAX_LIST_SIZE;
 import static org.tonguetied.web.Constants.SEARCH_PARAMETERS;
 import static org.tonguetied.web.Constants.SHOW_ALL;
 import static org.tonguetied.web.Constants.STATES;
 import static org.tonguetied.web.Constants.TRANSLATIONS;
 import static org.tonguetied.web.Constants.USER;
 import static org.tonguetied.web.Constants.USERS;
+import static org.tonguetied.web.Constants.USER_SIZE;
 import static org.tonguetied.web.Constants.VIEW_PREFERENCES;
 
 import java.util.HashMap;
@@ -51,6 +55,7 @@ import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
 import org.tonguetied.usermanagement.User;
 import org.tonguetied.usermanagement.UserService;
+import org.tonguetied.utils.pagination.PaginatedList;
 
 
 /**
@@ -62,7 +67,6 @@ import org.tonguetied.usermanagement.UserService;
  */
 public class MainController extends MultiActionController
 {
-
     private KeywordService keywordService;
     private UserService userService;
     private AuditService auditService;
@@ -81,7 +85,6 @@ public class MainController extends MultiActionController
     public ModelAndView keywords(HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
-        List<Keyword> keywords;
         Cookie cookie = CookieUtils.getCookie(request, "menuSelected");
         if (cookie == null)
         {
@@ -100,36 +103,45 @@ public class MainController extends MultiActionController
             showAll = (Boolean) request.getSession().getAttribute(SHOW_ALL);
         }
         
-        if (showAll) {
-            keywords = keywordService.getKeywords(0, viewPreferences.getMaxResults());
+        final int firstResult = PaginationUtils.calculateFirstResult(
+            "keyword", viewPreferences.getMaxResults(), request);
+        
+        final PaginatedList<Keyword> keywords;
+        if (showAll)
+        {
+            keywords = keywordService.getKeywords(firstResult, viewPreferences.getMaxResults());
             searchParameters.initialize();
         }
-        else {
+        else
+        {
             Keyword keyword = searchParameters.getKeyword();
-            if (new Translation().equals(keyword.getTranslations().first())) {
+            if (new Translation().equals(keyword.getTranslations().first()))
+            {
                 keyword.setTranslations(SetUtils.EMPTY_SORTED_SET);
             }
             keywords = 
                 keywordService.findKeywords(keyword,
                         searchParameters.getIgnoreCase(),
-                                        0,
+                                        firstResult,
                                         viewPreferences.getMaxResults());
         }
         
-        List<Translation> translations = 
-            TranslationTransformer.transform(keywords);
-        PreferenceFilter filter = new PreferenceFilter(viewPreferences);
-        CollectionUtils.filter(translations, filter);
+//        List<Translation> translations = 
+//            TranslationTransformer.transform(keywords.getResults());
+//        PreferenceFilter filter = new PreferenceFilter(viewPreferences);
+//        CollectionUtils.filter(translations, filter);
         searchParameters.getKeyword();
 
         Map<String, Object> model = new HashMap<String, Object>();
-        model.put(TRANSLATIONS, translations);
+//        model.put(TRANSLATIONS, translations);
+        model.put("keywords", keywords);
         model.put(LANGUAGES, keywordService.getLanguages());
         model.put(BUNDLES, keywordService.getBundles());
         model.put(COUNTRIES, keywordService.getCountries());
         model.put(STATES, TranslationState.values());
         model.put(SEARCH_PARAMETERS, searchParameters);
         model.put(VIEW_PREFERENCES, viewPreferences);
+        model.put(MAX_LIST_SIZE, keywords.getMaxListSize());
         return new ModelAndView("keyword/keywords", model);
     }
     
@@ -196,9 +208,16 @@ public class MainController extends MultiActionController
     public ModelAndView users(HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
-        List<User> users = userService.getUsers();
+        final int firstResult = PaginationUtils.calculateFirstResult(
+                "user", DEFAULT_USER_PAGE_SIZE, request);
+
+        final PaginatedList<User> users = 
+            userService.getUsers(firstResult, DEFAULT_USER_PAGE_SIZE);
+        
         Map<String, Object> model = new HashMap<String, Object>();
         model.put(USERS, users);
+        model.put(USER_SIZE, DEFAULT_USER_PAGE_SIZE);
+        model.put(MAX_LIST_SIZE, users.getMaxListSize());
         model.put(USER, new User());
         
         return new ModelAndView("user/users", model);
@@ -216,9 +235,18 @@ public class MainController extends MultiActionController
     public ModelAndView auditLog(HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
-        List<AuditLogRecord> auditLog = auditService.getAuditLog();
+        final int firstResult = PaginationUtils.calculateFirstResult(
+                "record", DEFAULT_AUDIT_LOG_PAGE_SIZE, request);
+
+        final PaginatedList<AuditLogRecord> auditLog = 
+            auditService.getAuditLog(firstResult, DEFAULT_AUDIT_LOG_PAGE_SIZE);
         
-        return new ModelAndView("audit/auditLog", AUDIT_LOG, auditLog);
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put(AUDIT_LOG, auditLog);
+        model.put("auditLogSize", DEFAULT_AUDIT_LOG_PAGE_SIZE);
+        model.put(MAX_LIST_SIZE, auditLog.getMaxListSize());
+
+        return new ModelAndView("audit/auditLog", model);
     }
     
     /**

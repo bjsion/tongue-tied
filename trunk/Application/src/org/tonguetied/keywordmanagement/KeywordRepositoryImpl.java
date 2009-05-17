@@ -20,6 +20,8 @@ import static org.hibernate.criterion.Order.asc;
 import static org.hibernate.criterion.Restrictions.conjunction;
 import static org.hibernate.criterion.Restrictions.eq;
 import static org.hibernate.criterion.Restrictions.idEq;
+import static org.tonguetied.keywordmanagement.Keyword.QUERY_GET_KEYWORDS;
+import static org.tonguetied.keywordmanagement.Keyword.QUERY_KEYWORD_COUNT;
 
 import java.util.List;
 import java.util.SortedSet;
@@ -30,8 +32,10 @@ import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Junction;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projections;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.tonguetied.utils.pagination.PaginatedList;
 
 /**
  * DAO facade to ORM. This facade allows access permanent storage of Keyword
@@ -57,16 +61,23 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements
         return (Keyword) criteria.uniqueResult();
     }
 
-    public List<Keyword> getKeywords(final Integer firstResult,
+    public PaginatedList<Keyword> getKeywords(final Integer firstResult,
             final Integer maxResults)
     {
-        Query query = getSession().getNamedQuery(Keyword.QUERY_GET_KEYWORDS);
+        Query query = getSession().getNamedQuery(QUERY_GET_KEYWORDS);
         if (firstResult != null) query.setFirstResult(firstResult);
         if (maxResults != null) query.setMaxResults(maxResults);
-        return query.list();
+        
+        Long maxListSize = 0L;
+        final List<Keyword> queryList = query.list();
+        if (queryList.size() > 0)
+            maxListSize = (Long) getSession().getNamedQuery(
+                    QUERY_KEYWORD_COUNT).uniqueResult();
+        
+        return new PaginatedList<Keyword>(queryList, maxListSize.intValue());
     }
 
-    public List<Keyword> findKeywords(Keyword keyword,
+    public PaginatedList<Keyword> findKeywords(Keyword keyword,
             final boolean ignoreCase, final Integer firstResult,
             final Integer maxResults) throws IllegalArgumentException
     {
@@ -92,7 +103,18 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements
         addTranslationCriteria(criteria, keyword.getTranslations(), ignoreCase,
                 matchMode);
 
-        return criteria.list();
+        Criteria criteria2 = getSession().createCriteria(Keyword.class);
+        criteria2.add(criterionKeyword);
+        addTranslationCriteria(criteria2, keyword.getTranslations(), ignoreCase,
+                matchMode);
+        criteria2.setProjection(Projections.rowCount());
+        
+        int maxListSize = 0;
+        final List<Keyword> criteriaList = criteria.list();
+        if (criteriaList.size() > 0)
+            maxListSize = (Integer) criteria2.uniqueResult();
+        
+        return new PaginatedList<Keyword>(criteriaList, maxListSize);
     }
 
     /**

@@ -20,6 +20,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.providers.encoding.PasswordEncoder;
+import org.tonguetied.utils.pagination.PaginatedList;
 
 
 /**
@@ -48,12 +49,19 @@ public class UserServiceImpl implements UserService
 
     public List<User> getUsers()
     {
-        return userRepository.getUsers();
+        return getUsers(0, null);
     }
 
-    public List<User> findUsers(final User user)
+    public PaginatedList<User> getUsers(final Integer firstResult,
+            final Integer maxResults)
     {
-        return userRepository.findUsers(user);
+        return userRepository.getUsers(firstResult, maxResults);
+    }
+
+    public PaginatedList<User> findUsers(final User user, final Integer firstResult,
+            final Integer maxResults)
+    {
+        return userRepository.findUsers(user, firstResult, maxResults);
     }
 
     /**

@@ -29,6 +29,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -60,7 +61,10 @@ import org.springframework.security.userdetails.UserDetails;
  */
 @Entity
 @AccessType("property")
-@NamedQuery(name=User.QUERY_GET_USERS, query = "from User u order by u.username")
+@NamedQueries({
+    @NamedQuery(name=User.QUERY_USER_COUNT,query="select count(*) from User"),
+    @NamedQuery(name=User.QUERY_GET_USERS, query = "from User u order by u.username")
+})
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @Table(name=User.TABLE_USER)
 public class User implements UserDetails
@@ -94,6 +98,7 @@ public class User implements UserDetails
     private static final String COL_ID = TABLE_USER + "_id";
     private static final String FK_AUTHORITIES = "fk_"+ TABLE_USER + "_" + TABLE_AUTHORITIES;
     protected static final String QUERY_GET_USERS = "get.users";
+    protected static final String QUERY_USER_COUNT = "user.count";
 
     private static final long serialVersionUID = -7800860686467033859L;
 

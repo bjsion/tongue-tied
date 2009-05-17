@@ -145,33 +145,38 @@
 
     <div class="contentPanel">
         <a href="<c:url value="keywords.htm"><c:param name="showAll" value="true"/></c:url>" title="<fmt:message key="get.all.keywords"/>"><fmt:message key="all.keywords"/></a>
-        <display:table name="translations" id="translation" sort="page" requestURI="">
+        <display:table name="keywords" htmlId="keywordsTable" id="keyword" sort="external" pagesize="${viewPreferences.maxResults}" partialList="true" size="maxListSize" requestURI="">
             <display:column titleKey="action" group="1" class="actions">
-                <c:url value="deleteKeyword.htm" var="deleteKeywordUrl" scope="page"><c:param name="keywordId" value="${translation.keyword.id}"/></c:url>
-                <fmt:message key="confirm.keyword.delete" var="confirmDeleteKeywordMsg" scope="page" ><fmt:param value="${translation.keyword.keyword}"/></fmt:message>
+                <c:url value="deleteKeyword.htm" var="deleteKeywordUrl" scope="page"><c:param name="keywordId" value="${keyword.id}"/></c:url>
+                <fmt:message key="confirm.keyword.delete" var="confirmDeleteKeywordMsg" scope="page" ><fmt:param value="${keyword.keyword}"/></fmt:message>
                 <a href="${deleteKeywordUrl}" onclick="return confirm('${fn:escapeXml(confirmDeleteKeywordMsg)}')">
                     <img src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" class="imgLink"/>
                 </a>
             </display:column>
             <display:column titleKey="keyword" group="2" class="keyword" sortable="true">
-                <a href="<c:url value="keyword.htm"><c:param name="keywordId" value="${translation.keyword.id}"/></c:url>">
-                    <c:out value="${translation.keyword.keyword}"/>
+                <a href="<c:url value="keyword.htm"><c:param name="keywordId" value="${keyword.id}"/></c:url>">
+                    <c:out value="${keyword.keyword}"/>
                 </a>
             </display:column>
-            <display:column property="keyword.context" maxLength="60" titleKey="context" group="3" class="context"/>
-            <display:column property="bundle.name" titleKey="bundle" class="bundle"/>
-            <display:column property="language.name" titleKey="language" class="language"/>
-            <display:column titleKey="country" class="country">
-                <c:if test="${not empty translation.country.code and translation.country.code != \"DEFAULT\"}">
-                <img src="<c:url value="/images/flags/${fn:toLowerCase(translation.country.code)}.png"/>" alt="" title="${translation.country.name}"/>
-                </c:if>
-                <c:out value="${translation.country.name}"/>
-            </display:column>
-            <display:column titleKey="translation">
-                <c:out value="${translation.value}"/>
-            </display:column>
-            <display:column titleKey="state" sortable="true">
-                <fmt:message key="${translation.state}"/>
+            <display:column property="context" maxLength="60" titleKey="context" group="3" class="context"/>
+            <c:set var="translations" value="keywords.result[${keyword_rowNum-1}].translations"/>
+            <display:column titleKey="translations" class="sublistHolder">
+                <display:table name="${translations}" id="translation" htmlId="translationTable${keyword_rowNum}" class="sublist">
+                    <display:column property="bundle.name" titleKey="bundle" class="bundle"/>
+                    <display:column property="language.name" titleKey="language" class="language"/>
+                    <display:column titleKey="country" class="country">
+                        <c:if test="${not empty translation.country.code and translation.country.code != \"DEFAULT\"}">
+                        <img src="<c:url value="/images/flags/${fn:toLowerCase(translation.country.code)}.png"/>" alt="" title="${translation.country.name}"/>
+                        </c:if>
+                        <c:out value="${translation.country.name}"/>
+                    </display:column>
+                    <display:column titleKey="translation">
+                        <c:out value="${translation.value}"/>
+                    </display:column>
+                    <display:column titleKey="state">
+                        <fmt:message key="${translation.state}"/>
+                    </display:column>
+                </display:table>
             </display:column>
             <display:setProperty name="basic.empty.showtable" value="true" />
         </display:table>

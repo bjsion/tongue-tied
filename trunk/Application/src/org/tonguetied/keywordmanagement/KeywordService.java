@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
+import org.tonguetied.utils.pagination.PaginatedList;
 
 /**
  * Facade exposing business functions of the TongueTied.
@@ -48,12 +49,13 @@ public interface KeywordService
      * Get all the {@link Keyword}s in the system.
      * 
      * @param firstResult a row number, numbered from 0. If <code>null</code>
-     * then then results begin at zero
+     * then then results begin at zero. If the value is negative, then the 
+     * results begin at zero
      * @param maxResults the maximum number of rows. If <code>null</code> then
      * all results are returned
      * @return all {@link Keyword}s in the system.
      */
-    List<Keyword> getKeywords(final Integer firstResult, final Integer maxResults);
+    PaginatedList<Keyword> getKeywords(final Integer firstResult, final Integer maxResults);
     
     /**
      * Get the {@link Keyword} matching the <code>keywordString</code>.
@@ -76,7 +78,7 @@ public interface KeywordService
      * all results are returned
      * @return a list of all {@link Keyword}s matching the criteria
      */
-    List<Keyword> findKeywords(Keyword keyword, 
+    PaginatedList<Keyword> findKeywords(Keyword keyword, 
                                final boolean ignoreCase,
                                final Integer firstResult,
                                final Integer maxResults);

@@ -26,10 +26,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -56,7 +58,10 @@ import org.tonguetied.audit.Auditable;
  */
 @Entity
 @AccessType("property")
-@NamedQuery(name=Keyword.QUERY_GET_KEYWORDS,query="from Keyword k order by k.keyword")
+@NamedQueries({
+    @NamedQuery(name=Keyword.QUERY_KEYWORD_COUNT,query="select count(*) from Keyword"),
+    @NamedQuery(name=Keyword.QUERY_GET_KEYWORDS,query="from Keyword k order by k.keyword")
+})
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @Table(name=Keyword.TABLE_KEYWORD)
 public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
@@ -68,7 +73,9 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
     
     public static final String TABLE_KEYWORD = "keyword";
     private static final String COL_ID = TABLE_KEYWORD + "_id";
-    public static final String QUERY_GET_KEYWORDS = "get.keywords";
+    protected static final String QUERY_GET_KEYWORDS = "get.keywords";
+    protected static final String QUERY_KEYWORD_COUNT = "keyword.count";
+    
     
     // This attribute is used for optimistic concurrency control in DB
     private Integer version;

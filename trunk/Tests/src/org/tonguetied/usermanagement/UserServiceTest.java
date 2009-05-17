@@ -25,6 +25,7 @@ import org.springframework.security.providers.encoding.PasswordEncoder;
 import org.springframework.test.annotation.ExpectedException;
 import org.springframework.test.annotation.Rollback;
 import org.tonguetied.test.common.AbstractServiceTest;
+import org.tonguetied.utils.pagination.PaginatedList;
 
 /**
  * Unit tests for methods of the {@link UserServiceImpl} implementation of
@@ -36,6 +37,8 @@ import org.tonguetied.test.common.AbstractServiceTest;
 public class UserServiceTest extends AbstractServiceTest
 {
     private User user1;
+    private User user2;
+    private User user3;
 
     private UserService userService;
     private PasswordEncoder encoder;
@@ -43,11 +46,19 @@ public class UserServiceTest extends AbstractServiceTest
     @Override
     protected void onSetUpInTransaction() throws Exception
     {
-        final String password = encoder.encodePassword("password", "username");
-        user1 = new User("username", password, "firstName", "lastName",
+        String password = encoder.encodePassword("password", "username1");
+        user1 = new User("username1", password, "firstName", "lastName",
                 "test@test.com", true, true, true, true);
+        password = encoder.encodePassword("password", "username2");
+        user2 = new User("username2", password, "firstName", "lastName",
+                "test@test.com", true, true, true, true);
+        password = encoder.encodePassword("password", "username3");
+        user3 = new User("username3", password, "anotherName", "different",
+                "other@other.com", true, true, true, true);
 
         getUserRepository().saveOrUpdate(user1);
+        getUserRepository().saveOrUpdate(user2);
+        getUserRepository().saveOrUpdate(user3);
     }
     
     public final void testSaveUserEncodePassword()
@@ -125,10 +136,106 @@ public class UserServiceTest extends AbstractServiceTest
     public final void testGetUsers()
     {
         final List<User> users = userService.getUsers();
-        assertEquals(1, users.size());
+        assertEquals(3, users.size());
         assertTrue(users.contains(user1));
+        assertTrue(users.contains(user2));
+        assertTrue(users.contains(user3));
     }
 
+    /**
+     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer))}.
+     */
+    @Test
+    public final void testGetUsersWithPagination()
+    {
+        final PaginatedList<User> list = userService.getUsers(0, 2);
+        assertEquals(3, list.getMaxListSize());
+        final List<User> users = list;
+        assertEquals(2, users.size());
+        assertTrue(users.contains(user1));
+        assertTrue(users.contains(user2));
+    }
+    
+    /**
+     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer))}.
+     */
+    @Test
+    public final void testGetUsersWithPaginationWithInvalidFirstPositionGreaterThanSize()
+    {
+        final PaginatedList<User> list = userService.getUsers(7, 2);
+        assertEquals(0, list.getMaxListSize());
+        assertTrue(list.isEmpty());
+    }
+    
+    /**
+     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer))}.
+     */
+    @Test
+    public final void testGetUsersWithPaginationWithNegativeFirstPosition()
+    {
+        final PaginatedList<User> list = userService.getUsers(-1, 2);
+        assertEquals(3, list.getMaxListSize());
+        final List<User> users = list;
+        assertEquals(2, users.size());
+        assertTrue(users.contains(user1));
+        assertTrue(users.contains(user2));
+    }
+    
+    /**
+     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer))}.
+     */
+    @Test
+    public final void testGetUsersWithPaginationWithNullFirstPosition()
+    {
+        final PaginatedList<User> list = userService.getUsers(null, 2);
+        assertEquals(3, list.getMaxListSize());
+        final List<User> users = list;
+        assertEquals(2, users.size());
+        assertTrue(users.contains(user1));
+        assertTrue(users.contains(user2));
+    }
+    
+    /**
+     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer))}.
+     */
+    @Test
+    public final void testGetUsersWithPaginationWithZeroMax()
+    {
+        final PaginatedList<User> list = userService.getUsers(0, 0);
+        assertEquals(0, list.getMaxListSize());
+        assertTrue(list.isEmpty());
+    }
+    
+    /**
+     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer))}.
+     */
+    @Test
+    public final void testGetUsersWithPaginationWithNullMax()
+    {
+        final PaginatedList<User> list = userService.getUsers(0, null);
+        assertEquals(3, list.getMaxListSize());
+        final List<User> users = list;
+        assertEquals(3, users.size());
+        assertTrue(users.contains(user1));
+        assertTrue(users.contains(user2));
+        assertTrue(users.contains(user3));
+    }
+    
+    /**
+     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer))}.
+     */
+    @Test
+    public final void testGetUsersWithPaginationWithGreaterThanSize()
+    {
+        final PaginatedList<User> list = userService.getUsers(0, 45);
+        assertEquals(3, list.getMaxListSize());
+        final List<User> users = list;
+        assertEquals(3, users.size());
+        assertTrue(users.contains(user1));
+        assertTrue(users.contains(user2));
+        assertTrue(users.contains(user3));
+    }
+    
     @Test(expected = AuthenticationException.class)
     @ExpectedException(value = AuthenticationException.class)
     public final void testChangePasswordWithInvalidOldPassword()
@@ -173,121 +280,223 @@ public class UserServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test the {@link UserService#findUsers(User)} method for the scenario 
-     * when there are no matching users.
+     * Test the {@link UserService#findUsers(User, Integer, Integer))} method 
+     * for the scenario when there are no matching users.
      */
     @Test
     public final void testFindUsersNoMatches()
     {
         User criteria = new User();
         criteria.setUsername("nonexistant");
-        final List<User> users = userService.findUsers(criteria);
+        final PaginatedList<User> list = userService.findUsers(criteria, 0, null);
+        assertEquals(0, list.getMaxListSize());
+        final List<User> users = list;
         assertTrue(users.isEmpty());
     }
 
     /**
-     * Test the {@link UserService#findUsers(User)} method for the scenario 
-     * when the user criteria is all empty.
+     * Test the {@link UserService#findUsers(User, Integer, Integer))} method 
+     * for the scenario when the user criteria is all empty.
      */
     @Test
     public final void testFindUsersWithEmptyCriteria()
     {
         User criteria = new User();
-        final List<User> users = userService.findUsers(criteria);
-        assertEquals(1, users.size());
+        final PaginatedList<User> list = userService.findUsers(criteria, 0, null);
+        assertEquals(3, list.getMaxListSize());
+        final List<User> users = list;
+        assertEquals(3, users.size());
         assertTrue(users.contains(user1));
+        assertTrue(users.contains(user2));
+        assertTrue(users.contains(user3));
     }
 
     /**
-     * Test the {@link UserService#findUsers(User)} method for the scenario 
-     * when there is more than one matching user
+     * Test the {@link UserService#findUsers(User, Integer, Integer))} method 
+     * for the scenario when there is more than one matching user
      */
     @Test
 //    @Rollback
     public final void testFindUsersWithMutipleMatches()
     {
-        final User user2 = new User("username2", "password", "firstName", "lastName",
-                "test2@test.com", true, true, true, true);
-        userService.saveOrUpdate(user2);
-        final User user3 = new User("username3", "password", "Different", "lastName",
-                "test3@test.com", true, true, true, true);
-        userService.saveOrUpdate(user3);
-        
         User criteria = new User();
         criteria.setFirstName("firstName");
-        final List<User> users = userService.findUsers(criteria);
+        final PaginatedList<User> list = userService.findUsers(criteria, 0, null);
+        assertEquals(2, list.getMaxListSize());
+        final List<User> users = list;
         assertEquals(2, users.size());
         assertTrue(users.contains(user1));
         assertTrue(users.contains(user2));
     }
 
     /**
-     * Test the {@link UserService#findUsers(User)} method for the scenario 
-     * when there is more than one matching user using a wild card matching at
-     * the start
+     * Test the {@link UserService#findUsers(User, Integer, Integer))} method 
+     * for the scenario when there is more than one matching user using a wild 
+     * card matching at the start.
      */
     @Test
 //    @Rollback
     public final void testFindUsersWithWildcardMatchesStart()
     {
-        final User user2 = new User("username2", "password", "firstName", "lastName",
-                "test2@test.com", true, true, true, true);
-        userService.saveOrUpdate(user2);
-        final User user3 = new User("username3", "password", "firstName", "Different",
-                "test3@test.com", true, true, true, true);
-        userService.saveOrUpdate(user3);
-        
         User criteria = new User();
         criteria.setLastName("Name");
-        final List<User> users = userService.findUsers(criteria);
+        final PaginatedList<User> list = userService.findUsers(criteria, 0, null);
+        assertEquals(2, list.getMaxListSize());
+        final List<User> users = list;
         assertEquals(2, users.size());
         assertTrue(users.contains(user1));
         assertTrue(users.contains(user2));
     }
     
     /**
-     * Test the {@link UserService#findUsers(User)} method for the scenario 
-     * when there is more than one matching user using a wild card matching at
-     * the end
+     * Test the {@link UserService#findUsers(User, Integer, Integer))} method 
+     * for the scenario when there is more than one matching user using a wild 
+     * card matching at the end.
      */
     @Test
 //    @Rollback
     public final void testFindUsersWithWildcardMatchesEnd()
     {
-        User user2 = new User("username2", "password", "firstName", "lastName",
-                "test2@test.com", true, true, true, true);
-        userService.saveOrUpdate(user2);
-        User user3 = new User("username3", "password", "firstName", "lastName",
-                "different@different.com", true, true, true, true);
-        userService.saveOrUpdate(user3);
-        
         User criteria = new User();
         criteria.setEmail("test");
-        final List<User> users = userService.findUsers(criteria);
+        final PaginatedList<User> list = userService.findUsers(criteria, 0, null);
+        assertEquals(2, list.getMaxListSize());
+        final List<User> users = list;
         assertEquals(2, users.size());
         assertTrue(users.contains(user1));
         assertTrue(users.contains(user2));
     }
     
     /**
-     * Test the {@link UserService#findUsers(User)} method for the scenario 
-     * when there is more than one matching user but the caps are different
+     * Test the {@link UserService#findUsers(User, Integer, Integer))} method 
+     * for the scenario when there is more than one matching user but the caps 
+     * are different.
      */
     @Test
     @Rollback
     public final void testFindUsersIgnoreCaps()
     {
-        User user2 = new User("username2", "password", "firstName", "lastName",
+        final User user4 = new User("username4", "password", "firstName", "lastName",
                 "test2@test.com", true, true, true, true);
-        userService.saveOrUpdate(user2);
+        userService.saveOrUpdate(user4);
         
         User criteria = new User();
-        criteria.setUsername("USERNAME2");
-        final List<User> users = userService.findUsers(criteria);
+        criteria.setUsername("USERNAME4");
+        final PaginatedList<User> list = userService.findUsers(criteria, 0, null);
+        assertEquals(1, list.getMaxListSize());
+        final List<User> users = list;
         assertEquals(1, users.size());
-        assertTrue(users.contains(user2));
+        assertTrue(users.contains(user4));
     }
     
+    /**
+     * Test method for {@link UserService#findUsers(User, Integer, Integer)}.
+     */
+    @Test
+    public final void testFindUsersWithPagedListInvalidFirstPositionGreaterThanSize()
+    {
+        User criteria = new User();
+        criteria.setUsername("username");
+        final PaginatedList<User> list = userService.findUsers(criteria, 22, 2);
+        assertEquals(0, list.getMaxListSize());
+        final List<User> users = list;
+        assertTrue(users.isEmpty());
+    }
+
+    /**
+     * Test method for {@link UserService#findUsers(User, Integer, Integer)}.
+     */
+    @Test
+    public final void testFindUsersWithPagedListInvalidFirstPositionNegative()
+    {
+        User criteria = new User();
+        criteria.setEmail("test");
+        final PaginatedList<User> list = userService.findUsers(criteria, -1, 2);
+        assertEquals(2, list.getMaxListSize());
+        final List<User> users = list;
+        assertEquals(2, users.size());
+        assertTrue(users.contains(user1));
+        assertTrue(users.contains(user2));
+    }
+  
+    /**
+     * Test method for {@link UserService#findUsers(User, Integer, Integer)}.
+     */
+    @Test
+    public final void testFindUsersWithPagedListNullFirstPosition()
+    {
+        User criteria = new User();
+        criteria.setEmail("test");
+        final PaginatedList<User> list = userService.findUsers(criteria, null, 2);
+        assertEquals(2, list.getMaxListSize());
+        final List<User> users = list;
+        assertEquals(2, users.size());
+        assertTrue(users.contains(user1));
+        assertTrue(users.contains(user2));
+    }
+  
+    /**
+     * Test method for {@link UserService#findUsers(User, Integer, Integer)}.
+     */
+    @Test
+    public final void testFindUsersWithPagedListNullMax()
+    {
+        User criteria = new User();
+        criteria.setEmail("com");
+        final PaginatedList<User> list = userService.findUsers(criteria, 2, null);
+        assertEquals(3, list.getMaxListSize());
+        final List<User> users = list;
+        assertEquals(1, users.size());
+        assertTrue(users.contains(user3));
+    }
+  
+    /**
+     * Test method for {@link UserService#findUsers(User, Integer, Integer)}.
+     */
+    @Test
+    public final void testFindUsersWithPagedListZeroMax()
+    {
+        User criteria = new User();
+        criteria.setEmail("test");
+        final PaginatedList<User> list = userService.findUsers(criteria, null, 0);
+        assertEquals(0, list.getMaxListSize());
+        final List<User> users = list;
+        assertTrue(users.isEmpty());
+    }
+  
+    /**
+     * Test method for {@link UserService#findUsers(User, Integer, Integer)}.
+     */
+    @Test
+    public final void testFindUsersWithPagedListMaxGreaterThanSize()
+    {
+        User criteria = new User();
+        criteria.setUsername("username");
+        final PaginatedList<User> list = userService.findUsers(criteria, 0, 100);
+        assertEquals(3, list.getMaxListSize());
+        final List<User> users = list;
+        assertEquals(3, users.size());
+        assertTrue(users.contains(user1));
+        assertTrue(users.contains(user2));
+        assertTrue(users.contains(user3));
+    }
+  
+    /**
+     * Test method for {@link UserService#findUsers(User, Integer, Integer)}.
+     */
+    @Test
+    public final void testFindUsersWithPagedList()
+    {
+        User criteria = new User();
+        criteria.setUsername("username");
+        final PaginatedList<User> list = userService.findUsers(criteria, 1, 2);
+        assertEquals(3, list.getMaxListSize());
+        final List<User> users = list;
+        assertEquals(2, users.size());
+        assertTrue(users.contains(user3));
+        assertTrue(users.contains(user2));
+    }
+  
     @Override
     protected String[] getTableNames()
     {
