@@ -91,6 +91,7 @@
             <exclude name="java.*"/>
             <exclude name="javax.*"/>
             <exclude name="org.apache.*"/>
+            <exclude name="org.displaytag.*"/>
             <exclude name="org.hibernate*"/>
             <exclude name="org.hsqldb*"/>
             <exclude name="org.mortbay.*"/>

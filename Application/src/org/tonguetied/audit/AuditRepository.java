@@ -18,6 +18,7 @@ package org.tonguetied.audit;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
+import org.tonguetied.utils.pagination.PaginatedList;
 
 
 /**
@@ -43,10 +44,16 @@ public interface AuditRepository
     void delete(AuditLogRecord record);
 
     /**
-     * Retrieve a list of all {@link AuditLogRecord}s from permanent storage. 
-     * The return list will be ordered in reverse chronological order.
+     * Retrieve all {@link AuditLogRecord}s from permanent storage with page
+     * support.
      * 
-     * @return a list of all {@link AuditLogRecord} in the system
+     * @param firstResult a row number, numbered from 0. If <code>null</code>
+     * then then results begin at zero. If the value is negative, then the 
+     * results begin at zero
+     * @param maxResults the maximum number of rows. If <code>null</code> then
+     * all results are returned
+     * @return the {@link List} of all {@link AuditLogRecord}s in the system.
      */
-    List<AuditLogRecord> getAuditLog();
+    PaginatedList<AuditLogRecord> getAuditLog(final Integer firstResult,
+                              final Integer maxResults);
 }

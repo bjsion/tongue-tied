@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
+import org.tonguetied.utils.pagination.PaginatedList;
 
 /**
  * Concrete implementation of the {@link KeywordService}.
@@ -132,12 +133,12 @@ public class KeywordServiceImpl implements KeywordService
         return getKeywords(0, null);
     }
 
-    public List<Keyword> getKeywords(Integer firstResult, Integer maxResults)
+    public PaginatedList<Keyword> getKeywords(Integer firstResult, Integer maxResults)
     {
         return keywordRepository.getKeywords(firstResult, maxResults);
     }
 
-    public List<Keyword> findKeywords(Keyword keyword,
+    public PaginatedList<Keyword> findKeywords(Keyword keyword,
             final boolean ignoreCase, final Integer firstResult,
             final Integer maxResults)
     {

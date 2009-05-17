@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.tonguetied.utils.pagination.PaginatedList;
+
 /**
  * Stub used to simulate UserService methods for unit tests.
  * 
@@ -108,10 +110,22 @@ public class UserServiceStub implements UserService
     /*
      * (non-Javadoc)
      * 
+     * @see org.tonguetied.service.UserService#getUsers()
+     */
+    public PaginatedList<User> getUsers(final Integer firstResult, final Integer maxResult)
+    {
+        final int size = users.size();
+        return new PaginatedList<User>((List<User>)users.values(), size);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.tonguetied.usermanagement.UserService#findUsers(org.tonguetied.usermanagement.User)
      */
-    public List<User> findUsers(User user)
+    public PaginatedList<User> findUsers(User user, final Integer firstResult,
+            final Integer maxResults)
     {
-        return new ArrayList<User>(users.values());
+        return new PaginatedList<User>((List<User>)users.values(), users.size());
     }
 }

@@ -24,6 +24,7 @@ import org.junit.Test;
 import org.tonguetied.audit.AuditLogRecord.Operation;
 import org.tonguetied.keywordmanagement.Keyword;
 import org.tonguetied.test.common.AbstractServiceTest;
+import org.tonguetied.utils.pagination.PaginatedList;
 
 /**
  * Unit tests for methods of the {@link AuditServiceImpl} implementation of
@@ -68,9 +69,149 @@ public class AuditServiceTest extends AbstractServiceTest
         assertEquals(record1, auditLog.get(2));
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.test.common.AbstractServiceTest#getTableNames()
+    /**
+     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer))}.
      */
+    @Test
+    public final void testGetAuditLogWithPagination()
+    {
+        AuditLogRecord record1 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        AuditLogRecord record2 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        AuditLogRecord record3 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        auditRepository.saveOrUpdate(record1);
+        auditRepository.saveOrUpdate(record2);
+        auditRepository.saveOrUpdate(record3);
+
+        PaginatedList<AuditLogRecord> list = auditService.getAuditLog(0, 2);
+        assertEquals(3, list.getMaxListSize());
+        List<AuditLogRecord> auditLog = list;
+        assertEquals(2, auditLog.size());
+        assertEquals(record3, auditLog.get(0));
+        assertEquals(record2, auditLog.get(1));
+    }
+
+    /**
+     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer))}.
+     */
+    @Test
+    public final void testGetAuditLogWithPaginationWithInvalidFirstPositionGreaterThanSize()
+    {
+        AuditLogRecord record1 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        AuditLogRecord record2 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        AuditLogRecord record3 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        auditRepository.saveOrUpdate(record1);
+        auditRepository.saveOrUpdate(record2);
+        auditRepository.saveOrUpdate(record3);
+
+        PaginatedList<AuditLogRecord> list = auditService.getAuditLog(7, 2);
+        assertEquals(0, list.getMaxListSize());
+        assertTrue(list.isEmpty());
+    }
+
+    /**
+     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer))}.
+     */
+    @Test
+    public final void testGetAuditLogWithPaginationWithNegativeFirstPosition()
+    {
+        AuditLogRecord record1 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        AuditLogRecord record2 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        AuditLogRecord record3 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        auditRepository.saveOrUpdate(record1);
+        auditRepository.saveOrUpdate(record2);
+        auditRepository.saveOrUpdate(record3);
+
+        PaginatedList<AuditLogRecord> list = auditService.getAuditLog(-1, 2);
+        assertEquals(3, list.getMaxListSize());
+        List<AuditLogRecord> auditLog = list;
+        assertEquals(2, auditLog.size());
+        assertEquals(record3, auditLog.get(0));
+        assertEquals(record2, auditLog.get(1));
+    }
+
+    /**
+     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer))}.
+     */
+    @Test
+    public final void testGetAuditLogWithPaginationWithNullFirstPosition()
+    {
+        AuditLogRecord record1 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        AuditLogRecord record2 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        AuditLogRecord record3 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        auditRepository.saveOrUpdate(record1);
+        auditRepository.saveOrUpdate(record2);
+        auditRepository.saveOrUpdate(record3);
+
+        PaginatedList<AuditLogRecord> list = auditService.getAuditLog(null, 2);
+        assertEquals(3, list.getMaxListSize());
+        List<AuditLogRecord> auditLog = list;
+        assertEquals(2, auditLog.size());
+        assertEquals(record3, auditLog.get(0));
+        assertEquals(record2, auditLog.get(1));
+    }
+
+    /**
+     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer))}.
+     */
+    @Test
+    public final void testGetAuditLogWithPaginationWithZeroMax()
+    {
+        AuditLogRecord record1 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        AuditLogRecord record2 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        AuditLogRecord record3 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        auditRepository.saveOrUpdate(record1);
+        auditRepository.saveOrUpdate(record2);
+        auditRepository.saveOrUpdate(record3);
+
+        PaginatedList<AuditLogRecord> list = auditService.getAuditLog(0, 0);
+        assertEquals(0, list.getMaxListSize());
+        assertTrue(list.isEmpty());
+    }
+
+    /**
+     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer))}.
+     */
+    @Test
+    public final void testGetAuditLogWithPaginationWithNullMax()
+    {
+        AuditLogRecord record1 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        AuditLogRecord record2 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        AuditLogRecord record3 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        auditRepository.saveOrUpdate(record1);
+        auditRepository.saveOrUpdate(record2);
+        auditRepository.saveOrUpdate(record3);
+
+        PaginatedList<AuditLogRecord> list = auditService.getAuditLog(0, null);
+        assertEquals(3, list.getMaxListSize());
+        List<AuditLogRecord> auditLog = list;
+        assertEquals(3, auditLog.size());
+        assertEquals(record3, auditLog.get(0));
+        assertEquals(record2, auditLog.get(1));
+        assertEquals(record1, auditLog.get(2));
+    }
+
+    /**
+     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer))}.
+     */
+    @Test
+    public final void testGetAuditLogWithPaginationWithMaxGreaterThanSize()
+    {
+        AuditLogRecord record1 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        AuditLogRecord record2 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        AuditLogRecord record3 = new AuditLogRecord(Operation.insert, keyword1, keyword1.toString(), null, "user1");
+        auditRepository.saveOrUpdate(record1);
+        auditRepository.saveOrUpdate(record2);
+        auditRepository.saveOrUpdate(record3);
+
+        PaginatedList<AuditLogRecord> list = auditService.getAuditLog(0, 18);
+        assertEquals(3, list.getMaxListSize());
+        List<AuditLogRecord> auditLog = list;
+        assertEquals(3, auditLog.size());
+        assertEquals(record3, auditLog.get(0));
+        assertEquals(record2, auditLog.get(1));
+        assertEquals(record1, auditLog.get(2));
+    }
+
     @Override
     protected String[] getTableNames()
     {

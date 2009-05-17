@@ -29,6 +29,7 @@ import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
 import org.tonguetied.test.common.AbstractServiceTest;
+import org.tonguetied.utils.pagination.PaginatedList;
 
 /**
  * Unit tests for methods of the {@link KeywordServiceImpl} implementation of
@@ -150,8 +151,9 @@ public class KeywordServiceTest extends AbstractServiceTest
     @Test
     public final void testGetKeywordsWithPagination()
     {
-        final List<Keyword> keywords = keywordService.getKeywords(2, 1);
+        final PaginatedList<Keyword> keywords = keywordService.getKeywords(2, 1);
         assertEquals(1, keywords.size());
+        assertEquals(4, keywords.getMaxListSize());
         assertTrue(keywords.contains(keyword3));
     }
 
@@ -159,10 +161,24 @@ public class KeywordServiceTest extends AbstractServiceTest
      * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer)}.
      */
     @Test
-    public final void testGetKeywordsWithPaginationInvalidFirstPosition()
+    public final void testGetKeywordsWithPaginationInvalidFirstPositionGreaterThanSize()
     {
-        final List<Keyword> keywords = keywordService.getKeywords(8, 1);
+        final PaginatedList<Keyword> keywords = keywordService.getKeywords(8, 1);
         assertTrue(keywords.isEmpty());
+        assertEquals(0, keywords.getMaxListSize());
+    }
+
+    /**
+     * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer)}.
+     */
+    @Test
+    public final void testGetKeywordsWithPaginationNegativeFirstPosition()
+    {
+        final PaginatedList<Keyword> list = keywordService.getKeywords(-1, 1);
+        List<Keyword> keywords = list;
+        assertEquals(1, keywords.size());
+        assertTrue(keywords.contains(keyword1));
+        assertEquals(4, list.getMaxListSize());
     }
 
     /**
@@ -171,12 +187,14 @@ public class KeywordServiceTest extends AbstractServiceTest
     @Test
     public final void testGetKeywordsWithPaginationNullFirstPosition()
     {
-        final List<Keyword> keywords = keywordService.getKeywords(null, null);
+        final PaginatedList<Keyword> list = keywordService.getKeywords(null, null);
+        List<Keyword> keywords = list;
         assertEquals(4, keywords.size());
         assertTrue(keywords.contains(keyword1));
         assertTrue(keywords.contains(keyword2));
         assertTrue(keywords.contains(keyword3));
         assertTrue(keywords.contains(keyword4));
+        assertEquals(4, list.getMaxListSize());
     }
 
     /**
@@ -185,8 +203,10 @@ public class KeywordServiceTest extends AbstractServiceTest
     @Test
     public final void testGetKeywordsWithPaginationZeroMax()
     {
-        final List<Keyword> keywords = keywordService.getKeywords(2, 0);
+        final PaginatedList<Keyword> keywords = keywordService.getKeywords(2, 0);
         assertTrue(keywords.isEmpty());
+        assertEquals(0, keywords.getMaxListSize());
+        
     }
 
     /**
@@ -195,10 +215,28 @@ public class KeywordServiceTest extends AbstractServiceTest
     @Test
     public final void testGetKeywordsWithPaginationNullMax()
     {
-        final List<Keyword> keywords = keywordService.getKeywords(2, null);
+        final PaginatedList<Keyword> list = keywordService.getKeywords(2, null);
+        List<Keyword> keywords = list;
         assertEquals(2, keywords.size());
         assertTrue(keywords.contains(keyword3));
         assertTrue(keywords.contains(keyword4));
+        assertEquals(4, list.getMaxListSize());
+    }
+
+    /**
+     * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer)}.
+     */
+    @Test
+    public final void testGetKeywordsWithPaginationMaxGreaterThanSize()
+    {
+        final PaginatedList<Keyword> list = keywordService.getKeywords(0, 7);
+        List<Keyword> keywords = list;
+        assertEquals(4, keywords.size());
+        assertTrue(keywords.contains(keyword1));
+        assertTrue(keywords.contains(keyword2));
+        assertTrue(keywords.contains(keyword3));
+        assertTrue(keywords.contains(keyword4));
+        assertEquals(4, list.getMaxListSize());
     }
 
     /**
@@ -564,7 +602,7 @@ public class KeywordServiceTest extends AbstractServiceTest
     @Test(expected = IllegalArgumentException.class)
     public final void testFindKeywordsWithKeywordNull()
     {
-        List<Keyword> keywords = null;
+        PaginatedList<Keyword> keywords = null;
         try
         {
             keywords = keywordService.findKeywords(null, true, 0, 20);
@@ -585,9 +623,10 @@ public class KeywordServiceTest extends AbstractServiceTest
     {
         Keyword keyword = new Keyword();
         keyword.setKeyword("unknownText");
-        List<Keyword> keywords = keywordService.findKeywords(keyword, true, 0,
+        PaginatedList<Keyword> keywords = keywordService.findKeywords(keyword, true, 0,
                 null);
         assertTrue(keywords.isEmpty());
+        assertEquals(0, keywords.getMaxListSize());
     }
 
     /**
@@ -599,11 +638,128 @@ public class KeywordServiceTest extends AbstractServiceTest
     {
         Keyword keyword = new Keyword();
         keyword.setKeyword("the");
-        List<Keyword> keywords = keywordService.findKeywords(keyword, true, 0,
+        PaginatedList<Keyword> list = keywordService.findKeywords(keyword, true, 0,
                 null);
+        assertEquals(2, list.getMaxListSize());
+        List<Keyword> keywords = list;
         assertEquals(2, keywords.size());
         assertTrue(keywords.contains(keyword2));
         assertTrue(keywords.contains(keyword4));
+    }
+
+    /**
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
+     */
+    @Test
+    public final void testFindKeywordsByKeywordWithPagedListInvalidFirstPositionGreaterThanSize()
+    {
+        Keyword keyword = new Keyword();
+        keyword.setKeyword("the");
+        PaginatedList<Keyword> keywords = 
+            keywordService.findKeywords(keyword, true, 20, 1);
+        assertTrue(keywords.isEmpty());
+        assertEquals(0, keywords.getMaxListSize());
+    }
+
+    /**
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
+     */
+    @Test
+    public final void testFindKeywordsByKeywordWithPagedListInvalidFirstPositionNegative()
+    {
+        Keyword keyword = new Keyword();
+        keyword.setKeyword("the");
+        PaginatedList<Keyword> list = keywordService.findKeywords(keyword, true, -1, 1);
+        assertEquals(2, list.getMaxListSize());
+        List<Keyword> keywords = list;
+        assertEquals(1, keywords.size());
+        assertTrue(keywords.contains(keyword2));
+    }
+
+    /**
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
+     */
+    @Test
+    public final void testFindKeywordsByKeywordWithPagedListNullFirstPosition()
+    {
+        Keyword keyword = new Keyword();
+        keyword.setKeyword("the");
+        PaginatedList<Keyword> list = keywordService.findKeywords(keyword, true, null, 1);
+        assertEquals(2, list.getMaxListSize());
+        List<Keyword> keywords = list;
+        assertEquals(1, keywords.size());
+        assertTrue(keywords.contains(keyword2));
+    }
+
+    /**
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
+     */
+    @Test
+    public final void testFindKeywordsByKeywordWithPagedListNullMax()
+    {
+        Keyword keyword = new Keyword();
+        keyword.setKeyword("the");
+        PaginatedList<Keyword> list = 
+        	keywordService.findKeywords(keyword, true, 0, null);
+        assertEquals(2, list.getMaxListSize());
+        List<Keyword> keywords = list;
+        assertEquals(2, keywords.size());
+        assertTrue(keywords.contains(keyword2));
+        assertTrue(keywords.contains(keyword4));
+    }
+
+    /**
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
+     */
+    @Test
+    public final void testFindKeywordsByKeywordWithPagedListZeroMax()
+    {
+        Keyword keyword = new Keyword();
+        keyword.setKeyword("the");
+        PaginatedList<Keyword> keywords = 
+        	keywordService.findKeywords(keyword, true, 0, 0);
+        assertTrue(keywords.isEmpty());
+        assertEquals(0, keywords.getMaxListSize());
+    }
+
+    /**
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
+     */
+    @Test
+    public final void testFindKeywordsByKeywordWithPagedListMaxGreaterThanSize()
+    {
+        Keyword keyword = new Keyword();
+        keyword.setKeyword("the");
+        PaginatedList<Keyword> list = 
+        	keywordService.findKeywords(keyword, true, 0, 9);
+        assertEquals(2, list.getMaxListSize());
+        List<Keyword> keywords = list;
+        assertEquals(2, keywords.size());
+        assertTrue(keywords.contains(keyword2));
+        assertTrue(keywords.contains(keyword4));
+    }
+
+    /**
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
+     */
+    @Test
+    public final void testFindKeywordsByKeywordWithPagedList()
+    {
+        Keyword keyword = new Keyword();
+        keyword.setKeyword("the");
+        PaginatedList<Keyword> list = 
+        	keywordService.findKeywords(keyword, true, 0, 1);
+        assertEquals(2, list.getMaxListSize());
+        List<Keyword> keywords = list;
+        assertEquals(1, keywords.size());
+        assertTrue(keywords.contains(keyword2));
     }
 
     /**
@@ -615,8 +771,10 @@ public class KeywordServiceTest extends AbstractServiceTest
     {
         Keyword keyword = new Keyword();
         keyword.setKeyword("");
-        List<Keyword> keywords = keywordService.findKeywords(keyword, true, 0,
+        PaginatedList<Keyword> list = keywordService.findKeywords(keyword, true, 0,
                 null);
+        assertEquals(4, list.getMaxListSize());
+        List<Keyword> keywords = list;
         assertEquals(4, keywords.size());
         assertTrue(keywords.contains(keyword1));
         assertTrue(keywords.contains(keyword2));
@@ -646,8 +804,10 @@ public class KeywordServiceTest extends AbstractServiceTest
         translation.setState(null);
         translation.setValue("st");
         keyword.addTranslation(translation);
-        List<Keyword> keywords = keywordService.findKeywords(keyword, false,
+        PaginatedList<Keyword> list = keywordService.findKeywords(keyword, false,
                 null, null);
+        assertEquals(1, list.getMaxListSize());
+        List<Keyword> keywords = list;
         assertEquals(1, keywords.size());
         assertTrue(keywords.contains(keyword3));
     }
@@ -678,8 +838,10 @@ public class KeywordServiceTest extends AbstractServiceTest
         Translation translation = new Translation();
         translation.setBundle(bundle);
         keyword.addTranslation(translation);
-        final List<Keyword> keywords = keywordService.findKeywords(keyword,
+        final PaginatedList<Keyword> list = keywordService.findKeywords(keyword,
                 false, 0, null);
+        assertEquals(1, list.getMaxListSize());
+        final List<Keyword> keywords = list;
         assertEquals(1, keywords.size());
         assertTrue(keywords.contains(keyword3));
     }
@@ -719,8 +881,10 @@ public class KeywordServiceTest extends AbstractServiceTest
         translation.setState(null);
         translation.setCountry(singapore);
         keyword.addTranslation(translation);
-        final List<Keyword> keywords = keywordService.findKeywords(keyword,
+        final PaginatedList<Keyword> list = keywordService.findKeywords(keyword,
                 false, null, null);
+        assertEquals(2, list.getMaxListSize());
+        final List<Keyword> keywords = list;
         assertEquals(1, keywords.size());
         assertTrue(keywords.contains(keyword4));
     }
@@ -759,8 +923,10 @@ public class KeywordServiceTest extends AbstractServiceTest
         Translation translation = new Translation();
         translation.setState(TranslationState.VERIFIED);
         keyword.addTranslation(translation);
-        final List<Keyword> keywords = keywordService.findKeywords(keyword,
+        final PaginatedList<Keyword> list = keywordService.findKeywords(keyword,
                 false, null, null);
+        assertEquals(1, list.getMaxListSize());
+        final List<Keyword> keywords = list;
         assertEquals(1, keywords.size());
         assertTrue(keywords.contains(keyword1));
     }
@@ -774,9 +940,10 @@ public class KeywordServiceTest extends AbstractServiceTest
     {
         Keyword keyword = new Keyword();
         keyword.addTranslation(new Translation());
-        final List<Keyword> keywords = keywordService.findKeywords(keyword,
+        final PaginatedList<Keyword> keywords = keywordService.findKeywords(keyword,
                 true, 0, null);
         assertTrue(keywords.isEmpty());
+        assertEquals(0, keywords.getMaxListSize());
     }
 
     /**

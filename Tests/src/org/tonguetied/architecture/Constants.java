@@ -33,7 +33,8 @@ public final class Constants
     
     static final String[] PACKAGE_FILTER = new String[] {
         "au.com.bytecode.*",
-        "fmpp*", "freemarker*", "java.*", "javax.*", "org.apache.*", 
+        "fmpp*", "freemarker*", "java.*", "javax.*", "org.apache.*",
+        "org.displaytag.*",
         "org.hibernate*", "org.hsqldb*", "org.mortbay.*", 
         "org.springframework.*", "org.xml.*"
     };

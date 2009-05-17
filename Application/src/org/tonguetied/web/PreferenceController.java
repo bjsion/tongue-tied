@@ -44,8 +44,8 @@ import org.tonguetied.keywordmanagement.Language;
  * @author bsion
  *
  */
-public class PreferenceController extends SimpleFormController {
-
+public class PreferenceController extends SimpleFormController
+{
     private KeywordService keywordService;
     private PreferenceForm viewPreferences;
     
@@ -62,6 +62,32 @@ public class PreferenceController extends SimpleFormController {
             throws Exception
     {
         return viewPreferences;
+    }
+
+    @Override
+    public ModelAndView handleRequest(HttpServletRequest request,
+            HttpServletResponse response) throws Exception
+    {
+        ModelAndView mav = null;
+        // Need to intercept get requests to this controller in the scenario 
+        // when sent from a paginated link, so need to display the search 
+        // results
+        if (RequestUtils.isGetMethod(request))
+        {
+            if (logger.isDebugEnabled())
+                logger.debug("evaluating if this a search request");
+            
+            final String submitBtn = request.getParameter("submitBtn");
+            if (submitBtn != null)
+            {
+                mav = onSubmit(request, response, null, super.getErrorsForNewForm(request));
+            }
+        }
+        
+        if (mav == null)
+            mav = super.handleRequest(request, response);
+        
+        return mav;
     }
 
     @Override

@@ -24,6 +24,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -42,8 +43,12 @@ import org.hibernate.annotations.Type;
  *
  */
 @Entity
-@NamedQuery(name=AuditLogRecord.QUERY_GET_AUDIT_LOG,
+@NamedQueries({
+    @NamedQuery(name=AuditLogRecord.QUERY_AUDIT_LOG_RECORD_COUNT,
+        query="select count(*) from AuditLogRecord"),
+    @NamedQuery(name=AuditLogRecord.QUERY_GET_AUDIT_LOG,
         query="from AuditLogRecord alr order by alr.created desc")
+})
 @Immutable
 @Table(name=AuditLogRecord.TABLE_AUDIT_LOG_RECORD)
 public class AuditLogRecord
@@ -60,6 +65,8 @@ public class AuditLogRecord
     public static final String TABLE_AUDIT_LOG_RECORD = "audit_log_record";
     private static final String COL_ID = TABLE_AUDIT_LOG_RECORD + "_id";
     public static final String QUERY_GET_AUDIT_LOG = "get.audit.log";
+    public static final String QUERY_AUDIT_LOG_RECORD_COUNT = 
+        "audit.log.record.count";
     
     AuditLogRecord()
     {

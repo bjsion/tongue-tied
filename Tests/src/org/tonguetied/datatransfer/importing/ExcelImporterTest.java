@@ -207,7 +207,7 @@ public class ExcelImporterTest extends AbstractServiceTest {
         parameters.setTranslationState(expectedState);
         importer.importData(parameters);
 
-        List<Keyword> keywords = keywordService.getKeywords(0, null);
+        List<Keyword> keywords = keywordService.getKeywords();
         assertEquals(8, keywords.size());
         
         Keyword actual = keywordService.getKeyword(keyword1.getKeyword());

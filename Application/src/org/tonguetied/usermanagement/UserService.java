@@ -17,6 +17,8 @@ package org.tonguetied.usermanagement;
 
 import java.util.List;
 
+import org.tonguetied.utils.pagination.PaginatedList;
+
 
 /**
  * This interface defines the events used for user management.
@@ -68,15 +70,33 @@ public interface UserService {
     List<User> getUsers();
     
     /**
+     * Get all the {@link User}s in the system.
+     * 
+     * @param firstResult a row number, numbered from 0. If <code>null</code>
+     * then then results begin at zero. If the value is negative, then the 
+     * results begin at zero
+     * @param maxResults the maximum number of rows. If <code>null</code> then
+     * all results are returned
+     * @return all {@link User}s in the system.
+     */
+    PaginatedList<User> getUsers(final Integer firstResult,
+            final Integer maxResults);
+
+    /**
      * Find all {@link User}s that match the criteria specified. This method
      * should allow wild card searches on the user attributes.
      * 
      * @param user the object holding the attributes of the search 
      * criteria
+     * @param firstResult a row number, numbered from 0. If <code>null</code>
+     * then then results begin at zero
+     * @param maxResults the maximum number of rows. If <code>null</code> then
+     * all results are returned
      * @return a collection of {@link User} objects matching the search 
      * criteria
      */
-    List<User> findUsers(final User user);
+    PaginatedList<User> findUsers(final User user, final Integer firstResult,
+            final Integer maxResults);
     
     /**
      * Encode the new password and persist the changes to the {@link User}.

@@ -17,6 +17,8 @@ package org.tonguetied.audit;
 
 import java.util.List;
 
+import org.tonguetied.utils.pagination.PaginatedList;
+
 
 /**
  * Interface defining the entry points to the Audit features
@@ -32,4 +34,17 @@ public interface AuditService
      * @return a list of all {@link AuditLogRecord} in the system
      */
     List<AuditLogRecord> getAuditLog();
+
+    /**
+     * Get all the {@link AuditLogRecord}s in the system.
+     * 
+     * @param firstResult a row number, numbered from 0. If <code>null</code>
+     * then then results begin at zero. If the value is negative, then the 
+     * results begin at zero
+     * @param maxResults the maximum number of rows. If <code>null</code> then
+     * all results are returned
+     * @return all {@link AuditLogRecord}s in the system.
+     */
+    PaginatedList<AuditLogRecord> getAuditLog(final Integer firstResult,
+            final Integer maxResults);
 }

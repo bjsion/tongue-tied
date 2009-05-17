@@ -15,11 +15,15 @@
  */
 package org.tonguetied.audit;
 
+import static org.tonguetied.audit.AuditLogRecord.QUERY_AUDIT_LOG_RECORD_COUNT;
+import static org.tonguetied.audit.AuditLogRecord.QUERY_GET_AUDIT_LOG;
+
 import java.util.List;
 
 import org.hibernate.Query;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.tonguetied.utils.pagination.PaginatedList;
 
 
 /**
@@ -31,10 +35,21 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  */
 public class AuditRepositoryImpl extends HibernateDaoSupport implements AuditRepository
 {
-    public List<AuditLogRecord> getAuditLog()
+    @Override
+    public PaginatedList<AuditLogRecord> getAuditLog(final Integer firstResult,
+            final Integer maxResults)
     {
-        Query query = getSession().getNamedQuery(AuditLogRecord.QUERY_GET_AUDIT_LOG);
-        return query.list();
+        Query query = getSession().getNamedQuery(QUERY_GET_AUDIT_LOG);
+        if (firstResult != null) query.setFirstResult(firstResult);
+        if (maxResults != null) query.setMaxResults(maxResults);
+        
+        Long maxListSize = 0L;
+        final List<AuditLogRecord> queryList = query.list();
+        if (queryList.size() > 0)
+            maxListSize = (Long) getSession().getNamedQuery(
+                    QUERY_AUDIT_LOG_RECORD_COUNT).uniqueResult();
+        
+        return new PaginatedList<AuditLogRecord>(queryList, maxListSize.intValue());
     }
 
     public void saveOrUpdate(AuditLogRecord record) throws DataAccessException

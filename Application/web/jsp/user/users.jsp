@@ -41,28 +41,30 @@
         
         <div class="contentPanel">
             <a href="<c:url value="users.htm"/>" title="<fmt:message key="get.all.users"/>"><fmt:message key="all.users"/></a>
-            <display:table name="users" id="user" sort="page" requestURI="">
-                <display:column sortable="true" titleKey="username">
-                    <c:choose>
-                        <c:when test="${currentUsername != user.username}">
-                            <c:url value="/user.htm" var="userUrl"><c:param name="id" value="${user.id}"/></c:url>
-                        </c:when>
-                        <c:otherwise>
-                            <c:url value="/readOnlyUser.htm" var="userUrl"><c:param name="id" value="${user.id}"/></c:url>
-                        </c:otherwise>
-                    </c:choose>
-                    <a href="${userUrl}">
-                    <img src="<c:url value="/images/user.png"/>" alt="" title="${user.username}}" class="imgLink"/>
-                    <c:out value="${user.username}"/>
-                    </a>
-                </display:column>
-                <display:column titleKey="roles" sortable="false">
-                    <c:forEach items="${user.userRights}" var="userRight" varStatus="index">
-                    <fmt:message key="${userRight.permission}"/>
-                    </c:forEach>
-                </display:column>
-                <display:column property="email" titleKey="email" sortable="true"/>
-                <display:column titleKey="action"/>
-            </display:table>
+            <form:form id="userPages" action="${searchAction}" method="post">
+                <display:table name="users" htmlId="userTable" id="user" sort="external" pagesize="${userSize}" partialList="true" size="maxListSize" requestURI="">
+                    <display:column sortable="true" titleKey="username">
+                        <c:choose>
+                            <c:when test="${currentUsername != user.username}">
+                                <c:url value="/user.htm" var="userUrl"><c:param name="id" value="${user.id}"/></c:url>
+                            </c:when>
+                            <c:otherwise>
+                                <c:url value="/readOnlyUser.htm" var="userUrl"><c:param name="id" value="${user.id}"/></c:url>
+                            </c:otherwise>
+                        </c:choose>
+                        <a href="${userUrl}">
+                        <img src="<c:url value="/images/user.png"/>" alt="" title="${user.username}}" class="imgLink"/>
+                        <c:out value="${user.username}"/>
+                        </a>
+                    </display:column>
+                    <display:column titleKey="roles" sortable="false">
+                        <c:forEach items="${user.userRights}" var="userRight" varStatus="index">
+                        <fmt:message key="${userRight.permission}"/>
+                        </c:forEach>
+                    </display:column>
+                    <display:column property="email" titleKey="email" sortable="true"/>
+                    <display:column titleKey="action"/>
+                </display:table>
+            </form:form>
         </div>
     </div>

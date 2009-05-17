@@ -293,3 +293,15 @@ input.deleteImageButton {
 .welcome {
   font-weight: bold;
 }
+
+/******************************************************************************
+* Styles for tables.
+******************************************************************************/
+table.sublist {
+  margin: 0 0 0 0 !important;
+  font-size: 100%;
+}
+
+td.sublistHolder {
+  padding: 0 0 1px 0 !important;
+}

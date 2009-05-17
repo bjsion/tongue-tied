@@ -30,6 +30,7 @@ import org.springframework.orm.hibernate3.HibernateCallback;
  * @author bsion
  * @see <a href="http://blog.hibernate.org/cgi-bin/blosxom.cgi/2004/08/14#fn.html">hibernate pagination</a>
  */
+@Deprecated
 public class PagingHibernateCallback implements HibernateCallback {
     
     private List results;

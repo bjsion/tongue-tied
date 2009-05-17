@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author bsion
  *
  */
-public class CookieUtils
+public final class CookieUtils
 {
 
     /**

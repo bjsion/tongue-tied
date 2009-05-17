@@ -4,7 +4,7 @@
 <%@ taglib prefix="display" uri="http://displaytag.sf.net/el" %>
 
     <div class="content">
-        <display:table name="auditLog" id="record" sort="page" requestURI="">
+        <display:table name="auditLog" htmlId="auditLogTable" id="record" sort="external" pagesize="${auditLogSize}" partialList="true" size="maxListSize" requestURI="">
             <display:column property="username" titleKey="changed.by" sortable="true"/>
             <display:column property="oldValue" titleKey="old.value" sortable="false" escapeXml="true"/>
             <display:column property="newValue" titleKey="new.value" sortable="false" escapeXml="true"/>
