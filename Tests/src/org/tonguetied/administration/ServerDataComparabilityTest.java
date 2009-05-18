@@ -43,18 +43,18 @@ public class ServerDataComparabilityTest extends ComparabilityTestCase
     @Override
     protected Comparable<ServerData> createEqualInstance() throws Exception
     {
-        return new ServerData("1.0.1", "0012", new Date(TICKS_EQUALS));
+        return new ServerData("1.1.0", "0012", new Date(TICKS_EQUALS));
     }
 
     @Override
     protected Comparable<ServerData> createGreaterInstance() throws Exception
     {
-        return new ServerData("1.1.0", "1024", new Date(TICKS_GREATER));
+        return new ServerData("1.10.0", "1024", new Date(TICKS_GREATER));
     }
 
     @Override
     protected Comparable<ServerData> createLessInstance() throws Exception
     {
-        return new ServerData("1.0.0", "5824", new Date(TICKS_LESSER));
+        return new ServerData("1.0.9", "5824", new Date(TICKS_LESSER));
     }
 }
