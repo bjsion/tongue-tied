@@ -82,9 +82,8 @@ public class AuditServiceTest extends AbstractServiceTest
         auditRepository.saveOrUpdate(record2);
         auditRepository.saveOrUpdate(record3);
 
-        PaginatedList<AuditLogRecord> list = auditService.getAuditLog(0, 2);
-        assertEquals(3, list.getMaxListSize());
-        List<AuditLogRecord> auditLog = list;
+        PaginatedList<AuditLogRecord> auditLog = auditService.getAuditLog(0, 2);
+        assertEquals(3, auditLog.getMaxListSize());
         assertEquals(2, auditLog.size());
         assertEquals(record3, auditLog.get(0));
         assertEquals(record2, auditLog.get(1));
@@ -121,9 +120,8 @@ public class AuditServiceTest extends AbstractServiceTest
         auditRepository.saveOrUpdate(record2);
         auditRepository.saveOrUpdate(record3);
 
-        PaginatedList<AuditLogRecord> list = auditService.getAuditLog(-1, 2);
-        assertEquals(3, list.getMaxListSize());
-        List<AuditLogRecord> auditLog = list;
+        PaginatedList<AuditLogRecord> auditLog = auditService.getAuditLog(-1, 2);
+        assertEquals(3, auditLog.getMaxListSize());
         assertEquals(2, auditLog.size());
         assertEquals(record3, auditLog.get(0));
         assertEquals(record2, auditLog.get(1));
@@ -142,9 +140,8 @@ public class AuditServiceTest extends AbstractServiceTest
         auditRepository.saveOrUpdate(record2);
         auditRepository.saveOrUpdate(record3);
 
-        PaginatedList<AuditLogRecord> list = auditService.getAuditLog(null, 2);
-        assertEquals(3, list.getMaxListSize());
-        List<AuditLogRecord> auditLog = list;
+        PaginatedList<AuditLogRecord> auditLog = auditService.getAuditLog(null, 2);
+        assertEquals(3, auditLog.getMaxListSize());
         assertEquals(2, auditLog.size());
         assertEquals(record3, auditLog.get(0));
         assertEquals(record2, auditLog.get(1));
@@ -181,9 +178,8 @@ public class AuditServiceTest extends AbstractServiceTest
         auditRepository.saveOrUpdate(record2);
         auditRepository.saveOrUpdate(record3);
 
-        PaginatedList<AuditLogRecord> list = auditService.getAuditLog(0, null);
-        assertEquals(3, list.getMaxListSize());
-        List<AuditLogRecord> auditLog = list;
+        PaginatedList<AuditLogRecord> auditLog = auditService.getAuditLog(0, null);
+        assertEquals(3, auditLog.getMaxListSize());
         assertEquals(3, auditLog.size());
         assertEquals(record3, auditLog.get(0));
         assertEquals(record2, auditLog.get(1));
@@ -203,9 +199,8 @@ public class AuditServiceTest extends AbstractServiceTest
         auditRepository.saveOrUpdate(record2);
         auditRepository.saveOrUpdate(record3);
 
-        PaginatedList<AuditLogRecord> list = auditService.getAuditLog(0, 18);
-        assertEquals(3, list.getMaxListSize());
-        List<AuditLogRecord> auditLog = list;
+        PaginatedList<AuditLogRecord> auditLog = auditService.getAuditLog(0, 18);
+        assertEquals(3, auditLog.getMaxListSize());
         assertEquals(3, auditLog.size());
         assertEquals(record3, auditLog.get(0));
         assertEquals(record2, auditLog.get(1));

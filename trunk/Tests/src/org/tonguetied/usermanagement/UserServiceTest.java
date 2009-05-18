@@ -148,9 +148,8 @@ public class UserServiceTest extends AbstractServiceTest
     @Test
     public final void testGetUsersWithPagination()
     {
-        final PaginatedList<User> list = userService.getUsers(0, 2);
-        assertEquals(3, list.getMaxListSize());
-        final List<User> users = list;
+        final PaginatedList<User> users = userService.getUsers(0, 2);
+        assertEquals(3, users.getMaxListSize());
         assertEquals(2, users.size());
         assertTrue(users.contains(user1));
         assertTrue(users.contains(user2));
@@ -173,9 +172,8 @@ public class UserServiceTest extends AbstractServiceTest
     @Test
     public final void testGetUsersWithPaginationWithNegativeFirstPosition()
     {
-        final PaginatedList<User> list = userService.getUsers(-1, 2);
-        assertEquals(3, list.getMaxListSize());
-        final List<User> users = list;
+        final PaginatedList<User> users = userService.getUsers(-1, 2);
+        assertEquals(3, users.getMaxListSize());
         assertEquals(2, users.size());
         assertTrue(users.contains(user1));
         assertTrue(users.contains(user2));
@@ -187,9 +185,8 @@ public class UserServiceTest extends AbstractServiceTest
     @Test
     public final void testGetUsersWithPaginationWithNullFirstPosition()
     {
-        final PaginatedList<User> list = userService.getUsers(null, 2);
-        assertEquals(3, list.getMaxListSize());
-        final List<User> users = list;
+        final PaginatedList<User> users = userService.getUsers(null, 2);
+        assertEquals(3, users.getMaxListSize());
         assertEquals(2, users.size());
         assertTrue(users.contains(user1));
         assertTrue(users.contains(user2));
@@ -212,9 +209,8 @@ public class UserServiceTest extends AbstractServiceTest
     @Test
     public final void testGetUsersWithPaginationWithNullMax()
     {
-        final PaginatedList<User> list = userService.getUsers(0, null);
-        assertEquals(3, list.getMaxListSize());
-        final List<User> users = list;
+        final PaginatedList<User> users = userService.getUsers(0, null);
+        assertEquals(3, users.getMaxListSize());
         assertEquals(3, users.size());
         assertTrue(users.contains(user1));
         assertTrue(users.contains(user2));
@@ -227,9 +223,8 @@ public class UserServiceTest extends AbstractServiceTest
     @Test
     public final void testGetUsersWithPaginationWithGreaterThanSize()
     {
-        final PaginatedList<User> list = userService.getUsers(0, 45);
-        assertEquals(3, list.getMaxListSize());
-        final List<User> users = list;
+        final PaginatedList<User> users = userService.getUsers(0, 45);
+        assertEquals(3, users.getMaxListSize());
         assertEquals(3, users.size());
         assertTrue(users.contains(user1));
         assertTrue(users.contains(user2));
@@ -288,9 +283,8 @@ public class UserServiceTest extends AbstractServiceTest
     {
         User criteria = new User();
         criteria.setUsername("nonexistant");
-        final PaginatedList<User> list = userService.findUsers(criteria, 0, null);
-        assertEquals(0, list.getMaxListSize());
-        final List<User> users = list;
+        final PaginatedList<User> users = userService.findUsers(criteria, 0, null);
+        assertEquals(0, users.getMaxListSize());
         assertTrue(users.isEmpty());
     }
 
@@ -302,9 +296,8 @@ public class UserServiceTest extends AbstractServiceTest
     public final void testFindUsersWithEmptyCriteria()
     {
         User criteria = new User();
-        final PaginatedList<User> list = userService.findUsers(criteria, 0, null);
-        assertEquals(3, list.getMaxListSize());
-        final List<User> users = list;
+        final PaginatedList<User> users = userService.findUsers(criteria, 0, null);
+        assertEquals(3, users.getMaxListSize());
         assertEquals(3, users.size());
         assertTrue(users.contains(user1));
         assertTrue(users.contains(user2));
@@ -321,9 +314,8 @@ public class UserServiceTest extends AbstractServiceTest
     {
         User criteria = new User();
         criteria.setFirstName("firstName");
-        final PaginatedList<User> list = userService.findUsers(criteria, 0, null);
-        assertEquals(2, list.getMaxListSize());
-        final List<User> users = list;
+        final PaginatedList<User> users = userService.findUsers(criteria, 0, null);
+        assertEquals(2, users.getMaxListSize());
         assertEquals(2, users.size());
         assertTrue(users.contains(user1));
         assertTrue(users.contains(user2));
@@ -340,9 +332,8 @@ public class UserServiceTest extends AbstractServiceTest
     {
         User criteria = new User();
         criteria.setLastName("Name");
-        final PaginatedList<User> list = userService.findUsers(criteria, 0, null);
-        assertEquals(2, list.getMaxListSize());
-        final List<User> users = list;
+        final PaginatedList<User> users = userService.findUsers(criteria, 0, null);
+        assertEquals(2, users.getMaxListSize());
         assertEquals(2, users.size());
         assertTrue(users.contains(user1));
         assertTrue(users.contains(user2));
@@ -359,9 +350,8 @@ public class UserServiceTest extends AbstractServiceTest
     {
         User criteria = new User();
         criteria.setEmail("test");
-        final PaginatedList<User> list = userService.findUsers(criteria, 0, null);
-        assertEquals(2, list.getMaxListSize());
-        final List<User> users = list;
+        final PaginatedList<User> users = userService.findUsers(criteria, 0, null);
+        assertEquals(2, users.getMaxListSize());
         assertEquals(2, users.size());
         assertTrue(users.contains(user1));
         assertTrue(users.contains(user2));
@@ -382,9 +372,8 @@ public class UserServiceTest extends AbstractServiceTest
         
         User criteria = new User();
         criteria.setUsername("USERNAME4");
-        final PaginatedList<User> list = userService.findUsers(criteria, 0, null);
-        assertEquals(1, list.getMaxListSize());
-        final List<User> users = list;
+        final PaginatedList<User> users = userService.findUsers(criteria, 0, null);
+        assertEquals(1, users.getMaxListSize());
         assertEquals(1, users.size());
         assertTrue(users.contains(user4));
     }
@@ -411,9 +400,8 @@ public class UserServiceTest extends AbstractServiceTest
     {
         User criteria = new User();
         criteria.setEmail("test");
-        final PaginatedList<User> list = userService.findUsers(criteria, -1, 2);
-        assertEquals(2, list.getMaxListSize());
-        final List<User> users = list;
+        final PaginatedList<User> users = userService.findUsers(criteria, -1, 2);
+        assertEquals(2, users.getMaxListSize());
         assertEquals(2, users.size());
         assertTrue(users.contains(user1));
         assertTrue(users.contains(user2));
@@ -427,9 +415,8 @@ public class UserServiceTest extends AbstractServiceTest
     {
         User criteria = new User();
         criteria.setEmail("test");
-        final PaginatedList<User> list = userService.findUsers(criteria, null, 2);
-        assertEquals(2, list.getMaxListSize());
-        final List<User> users = list;
+        final PaginatedList<User> users = userService.findUsers(criteria, null, 2);
+        assertEquals(2, users.getMaxListSize());
         assertEquals(2, users.size());
         assertTrue(users.contains(user1));
         assertTrue(users.contains(user2));
@@ -443,9 +430,8 @@ public class UserServiceTest extends AbstractServiceTest
     {
         User criteria = new User();
         criteria.setEmail("com");
-        final PaginatedList<User> list = userService.findUsers(criteria, 2, null);
-        assertEquals(3, list.getMaxListSize());
-        final List<User> users = list;
+        final PaginatedList<User> users = userService.findUsers(criteria, 2, null);
+        assertEquals(3, users.getMaxListSize());
         assertEquals(1, users.size());
         assertTrue(users.contains(user3));
     }
@@ -458,9 +444,8 @@ public class UserServiceTest extends AbstractServiceTest
     {
         User criteria = new User();
         criteria.setEmail("test");
-        final PaginatedList<User> list = userService.findUsers(criteria, null, 0);
-        assertEquals(0, list.getMaxListSize());
-        final List<User> users = list;
+        final PaginatedList<User> users = userService.findUsers(criteria, null, 0);
+        assertEquals(0, users.getMaxListSize());
         assertTrue(users.isEmpty());
     }
   
@@ -472,9 +457,8 @@ public class UserServiceTest extends AbstractServiceTest
     {
         User criteria = new User();
         criteria.setUsername("username");
-        final PaginatedList<User> list = userService.findUsers(criteria, 0, 100);
-        assertEquals(3, list.getMaxListSize());
-        final List<User> users = list;
+        final PaginatedList<User> users = userService.findUsers(criteria, 0, 100);
+        assertEquals(3, users.getMaxListSize());
         assertEquals(3, users.size());
         assertTrue(users.contains(user1));
         assertTrue(users.contains(user2));
@@ -489,9 +473,8 @@ public class UserServiceTest extends AbstractServiceTest
     {
         User criteria = new User();
         criteria.setUsername("username");
-        final PaginatedList<User> list = userService.findUsers(criteria, 1, 2);
-        assertEquals(3, list.getMaxListSize());
-        final List<User> users = list;
+        final PaginatedList<User> users = userService.findUsers(criteria, 1, 2);
+        assertEquals(3, users.getMaxListSize());
         assertEquals(2, users.size());
         assertTrue(users.contains(user3));
         assertTrue(users.contains(user2));
