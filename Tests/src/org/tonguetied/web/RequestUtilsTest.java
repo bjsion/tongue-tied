@@ -15,7 +15,9 @@
  */
 package org.tonguetied.web;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -60,5 +62,52 @@ public class RequestUtilsTest
         final MockHttpServletRequest request = 
             new MockHttpServletRequest("post", "/");
         assertFalse(RequestUtils.isGetMethod(request));
+    }
+
+    /**
+     * Test method for {@link org.tonguetied.web.RequestUtils#getLongParameter(javax.servlet.http.HttpServletRequest, String)}.
+     */
+    @Test
+    public final void testGetLongParameter()
+    {
+        final MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter("test", "1");
+        final Long value = RequestUtils.getLongParameter(request, "test");
+        assertEquals(1D, value);
+    }
+
+    /**
+     * Test method for {@link org.tonguetied.web.RequestUtils#getLongParameter(javax.servlet.http.HttpServletRequest, String)}.
+     */
+    @Test
+    public final void testGetLongParameterWithEmptyValue()
+    {
+        final MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter("test", "");
+        final Long value = RequestUtils.getLongParameter(request, "test");
+        assertNull(value);
+    }
+
+    /**
+     * Test method for {@link org.tonguetied.web.RequestUtils#getLongParameter(javax.servlet.http.HttpServletRequest, String)}.
+     */
+    @Test
+    public final void testGetLongParameterWithUnknownKey()
+    {
+        final MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter("test", "5");
+        final Long value = RequestUtils.getLongParameter(request, "different");
+        assertNull(value);
+    }
+
+    /**
+     * Test method for {@link org.tonguetied.web.RequestUtils#getLongParameter(javax.servlet.http.HttpServletRequest, String)}.
+     */
+    @Test(expected=NumberFormatException.class)
+    public final void testGetLongParameterWithInvalidValue()
+    {
+        final MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter("test", "adsf");
+        RequestUtils.getLongParameter(request, "test");
     }
 }
