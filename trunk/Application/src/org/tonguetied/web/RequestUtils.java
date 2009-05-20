@@ -17,6 +17,8 @@ package org.tonguetied.web;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * Utility class of common methods for request evaluation.
  * 
@@ -39,5 +41,27 @@ public final class RequestUtils
     static boolean isGetMethod(final HttpServletRequest request)
     {
         return REQUEST_METHOD_GET.equalsIgnoreCase(request.getMethod());
+    }
+    
+    /**
+     * Get the value of the parameter as a Long value.
+     * 
+     * @param request the current request
+     * @param name the name of the parameter
+     * @return the Long value of the parameter, or <code>null</code> if it is
+     * not present
+     * @throws NumberFormatException if the value is not a valid Long
+     */
+    static Long getLongParameter(final HttpServletRequest request,
+            final String name)
+    {
+        final String stringValue = request.getParameter(name);
+        Long value = null;
+        if (StringUtils.isNotBlank(stringValue))
+        {
+            value = Long.parseLong(stringValue);
+        }
+        
+        return value;
     }
 }
