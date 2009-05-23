@@ -63,10 +63,7 @@ public class BundleController extends CancellableFormController {
     protected Object formBackingObject(HttpServletRequest request) 
             throws Exception
     {
-        String stringId = request.getParameter("bundleId");
-        Long id = null;
-        if (stringId != null)
-            id = Long.parseLong(stringId);
+        final Long id = RequestUtils.getLongParameter(request, "bundleId");
         Bundle bundle = keywordService.getBundle(id);
         if (bundle == null)
             bundle = new Bundle();

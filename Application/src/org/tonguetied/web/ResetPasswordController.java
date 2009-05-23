@@ -18,7 +18,6 @@ package org.tonguetied.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.CancellableFormController;
@@ -69,11 +68,11 @@ public class ResetPasswordController extends CancellableFormController
     protected Object formBackingObject(HttpServletRequest request)
             throws Exception
     {
-        final String userIdStr = request.getParameter("userId");
+        final Long userId = RequestUtils.getLongParameter(request, "userId");
         ChangePasswordForm form = new ChangePasswordForm();
-        if (StringUtils.isNotBlank(userIdStr))
+        if (userId != null)
         {
-            form.setUserId(Long.valueOf(userIdStr));
+            form.setUserId(userId);
         }
         return form;
     }

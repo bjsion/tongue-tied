@@ -39,8 +39,8 @@ import org.tonguetied.keywordmanagement.Language.LanguageCode;
  * @author bsion
  *
  */
-public class LanguageController extends CancellableFormController {
-    
+public class LanguageController extends CancellableFormController
+{
     private KeywordService keywordService;
     
     private static final Logger logger = 
@@ -49,17 +49,16 @@ public class LanguageController extends CancellableFormController {
     /**
      * Create new instance of LanguageController 
      */
-    public LanguageController() {
+    public LanguageController()
+    {
         setCommandClass(Language.class);
     }
 
     @Override
     protected Object formBackingObject(HttpServletRequest request) 
-            throws Exception {
-        String stringId = request.getParameter("languageId");
-        Long id = null;
-        if (stringId != null)
-            id = Long.parseLong(stringId);
+            throws Exception
+    {
+        final Long id = RequestUtils.getLongParameter(request, "languageId");
         Language language = keywordService.getLanguage(id);
         if (language == null)
             language = new Language();
@@ -74,7 +73,8 @@ public class LanguageController extends CancellableFormController {
     protected ModelAndView onSubmit(HttpServletRequest request, 
                                     HttpServletResponse response,
                                     Object command,
-                                    BindException errors) throws Exception {
+                                    BindException errors) throws Exception
+    {
         if (logger.isDebugEnabled()) logger.debug("saving language");
         Language language = (Language) command;
         
@@ -86,14 +86,16 @@ public class LanguageController extends CancellableFormController {
     @Override
     protected ModelAndView onCancel(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    Object command) throws Exception {
+                                    Object command) throws Exception
+    {
         return new ModelAndView(getCancelView());
     }
 
     @Override
     protected void initBinder(HttpServletRequest request,
                               ServletRequestDataBinder binder) 
-            throws Exception {
+            throws Exception
+    {
         binder.registerCustomEditor(LanguageCode.class, 
                 new LanguageCodeSupport());
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
@@ -114,7 +116,8 @@ public class LanguageController extends CancellableFormController {
      * 
      * @param keywordService the {@link KeywordService} to set.
      */
-    public void setKeywordService(KeywordService keywordService) {
+    public void setKeywordService(KeywordService keywordService)
+    {
         this.keywordService = keywordService;
     }
 }

@@ -261,8 +261,9 @@ public class MainController extends MultiActionController
     public ModelAndView deleteKeyword(HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
-        final String keywordId = request.getParameter(KEYWORD_ID);
-        keywordService.deleteKeyword(Long.parseLong(keywordId));
+        final Long keywordId = 
+            RequestUtils.getLongParameter(request, KEYWORD_ID);
+        keywordService.deleteKeyword(keywordId);
         
         return new ModelAndView("forward:/keywords.htm");
     }

@@ -21,7 +21,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.validation.BindException;
@@ -85,11 +84,10 @@ public class UserController extends CancellableFormController
     protected Object formBackingObject(HttpServletRequest request)
             throws Exception
     {
-        final String stringId = request.getParameter("id");
+        final Long id = RequestUtils.getLongParameter(request, "id");
         User user = null;
-        if (StringUtils.isNotBlank(stringId))
+        if (id != null)
         {
-            final Long id = Long.parseLong(stringId);
             if (logger.isDebugEnabled()) 
                 logger.debug("looking for user with id: " + id);
             user = userService.getUser(id);

@@ -15,6 +15,7 @@
  */
 package org.tonguetied.web;
 
+import static org.displaytag.tags.TableTagParameters.PARAMETER_PAGE;
 import static org.tonguetied.web.Constants.BUNDLES;
 import static org.tonguetied.web.Constants.COUNTRIES;
 import static org.tonguetied.web.Constants.COUNTRY;
@@ -30,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.displaytag.util.ParamEncoder;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -78,10 +80,7 @@ private KeywordService keywordService;
     protected Object formBackingObject(HttpServletRequest request) 
             throws Exception
     {
-        final String stringId = request.getParameter(KEYWORD_ID);
-        Long id = null;
-        if (stringId != null)
-            id = Long.parseLong(stringId);
+        final Long id = RequestUtils.getLongParameter(request, KEYWORD_ID);
         Keyword keyword = keywordService.getKeyword(id);
         if (keyword == null)
         {
@@ -147,7 +146,11 @@ private KeywordService keywordService;
                                     HttpServletResponse response,
                                     Object command) throws Exception
     {
-        return new ModelAndView(getCancelView());
+        Map<String, Object> model = new HashMap<String, Object>();
+        final String pageParam = 
+            new ParamEncoder("keyword").encodeParameterName(PARAMETER_PAGE);
+        model.put(pageParam, request.getParameter(pageParam));
+        return new ModelAndView(getCancelView(), model);
     }
     
     @Override
@@ -220,7 +223,7 @@ private KeywordService keywordService;
             throws Exception
     {
         final Long translationId = 
-            Long.valueOf(request.getParameter("deleteTranslation"));
+            RequestUtils.getLongParameter(request, "deleteTranslation");
         keyword.removeTranslation(translationId);
         keywordService.saveOrUpdate(keyword);
 
