@@ -15,7 +15,7 @@
  */
 package org.tonguetied.web;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -73,7 +73,7 @@ public class RequestUtilsTest
         final MockHttpServletRequest request = new MockHttpServletRequest();
         request.addParameter("test", "1");
         final Long value = RequestUtils.getLongParameter(request, "test");
-        assertEquals(1D, value);
+        assertArrayEquals(new Long[] {1L}, new Long[] {value});
     }
 
     /**

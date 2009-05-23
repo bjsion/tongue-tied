@@ -39,8 +39,8 @@ import org.tonguetied.keywordmanagement.Country.CountryCode;
  * @author bsion
  *
  */
-public class CountryController extends CancellableFormController {
-    
+public class CountryController extends CancellableFormController
+{
     private KeywordService keywordService;
     
     private static final Logger logger = 
@@ -49,18 +49,17 @@ public class CountryController extends CancellableFormController {
     /**
      * Create new instance of CountryController 
      */
-    public CountryController() {
+    public CountryController()
+    {
         setCommandClass(Country.class);
     }
 
     @Override
     protected Object formBackingObject(HttpServletRequest request) 
-            throws Exception {
-        String stringId = request.getParameter("countryId");
-        Long id = null;
-        if (stringId != null)
-            id = Long.parseLong(stringId);
-        Country  country = keywordService.getCountry (id);
+            throws Exception
+    {
+        final Long id = RequestUtils.getLongParameter(request, "countryId");
+        Country country = keywordService.getCountry(id);
         if (country == null)
             country = new Country();
         
@@ -71,7 +70,8 @@ public class CountryController extends CancellableFormController {
     protected ModelAndView onSubmit(HttpServletRequest request, 
                                     HttpServletResponse response,
                                     Object command,
-                                    BindException errors) throws Exception {
+                                    BindException errors) throws Exception
+    {
         if (logger.isDebugEnabled()) logger.debug("saving country");
         Country country = (Country) command;
         
@@ -83,14 +83,16 @@ public class CountryController extends CancellableFormController {
     @Override
     protected ModelAndView onCancel(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    Object command) throws Exception {
+                                    Object command) throws Exception
+    {
         return new ModelAndView(getCancelView());
     }
 
     @Override
     protected void initBinder(HttpServletRequest request,
                               ServletRequestDataBinder binder) 
-            throws Exception {
+            throws Exception
+    {
         binder.registerCustomEditor(CountryCode.class, 
                 new CountryCodeSupport());
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
@@ -111,7 +113,8 @@ public class CountryController extends CancellableFormController {
      * 
      * @param keywordService the {@link KeywordService} to set.
      */
-    public void setKeywordService(KeywordService keywordService) {
+    public void setKeywordService(KeywordService keywordService)
+    {
         this.keywordService = keywordService;
     }
 }
