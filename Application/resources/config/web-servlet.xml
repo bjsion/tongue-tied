@@ -198,8 +198,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="commandName" value="keyword"/>
         <property name="validator" ref="keywordValidator"/>
         <property name="formView" value="keyword/keyword"/>
-        <property name="successView" value="forward:/keywords.htm"/>
-        <property name="cancelView" value="forward:/keywords.htm"/>
+        <property name="successView" value="redirect:/keywords.htm"/>
+        <property name="cancelView" value="redirect:/keywords.htm"/>
         <property name="keywordService" ref="keywordService"/>
     </bean>
 
