@@ -44,6 +44,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.ForeignKey;
 import org.hibernate.annotations.Type;
 import org.tonguetied.audit.Auditable;
+import org.tonguetied.utils.pagination.Cloneable;
 
 /**
  * A translation is a specific value of a {@link Keyword} for a 
@@ -69,7 +70,7 @@ import org.tonguetied.audit.Auditable;
 })
 @Table(name=Translation.TABLE_TRANSLATION,uniqueConstraints={@UniqueConstraint(columnNames={"keyword_id","language_id","country_id","bundle_id"})})
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class Translation implements Cloneable, Comparable<Translation>, Auditable
+public class Translation implements Cloneable<Translation>, Comparable<Translation>, Auditable
 {
     private Long id;
     private String value;
@@ -294,11 +295,7 @@ public class Translation implements Cloneable, Comparable<Translation>, Auditabl
         return builder.toHashCode();
     }
     
-    /* (non-Javadoc)
-     * @see java.lang.Object#clone()
-     */
-    @Override
-    public Translation clone()
+    public Translation deepClone()
     {
         Translation clone;
         try

@@ -26,6 +26,7 @@
                         </select>
                         </spring:bind>
                     </div>
+                    <h4 class="preference"><fmt:message key="translation.view.filter"/></h4>
                     <div id="languages">
                         <h3><fmt:message key="languages"/></h3>
                         <spring:bind path="viewPreferences.selectedLanguages">
@@ -163,7 +164,7 @@
             </display:column>
             <display:column property="context" maxLength="60" titleKey="context" group="3" class="context"/>
             <c:set var="translations" value="keywords.result[${keyword_rowNum-1}].translations"/>
-            <display:column titleKey="translations" class="sublistHolder">
+            <display:column titleKey="translations" class="sublist">
                 <display:table name="${translations}" id="translation" htmlId="translationTable${keyword_rowNum}" class="sublist">
                     <display:column property="bundle.name" titleKey="bundle" class="bundle"/>
                     <display:column property="language.name" titleKey="language" class="language"/>
@@ -173,10 +174,10 @@
                         </c:if>
                         <c:out value="${translation.country.name}"/>
                     </display:column>
-                    <display:column titleKey="translation">
+                    <display:column titleKey="translation" headerClass="translation">
                         <c:out value="${translation.value}"/>
                     </display:column>
-                    <display:column titleKey="state">
+                    <display:column titleKey="state" headerClass="state">
                         <fmt:message key="${translation.state}"/>
                     </display:column>
                 </display:table>

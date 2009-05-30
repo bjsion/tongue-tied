@@ -16,19 +16,19 @@
 package org.tonguetied.utils.pagination;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
- * Immutable object that wraps a collection of objects that is used for 
- * paginated support. This class contains all the meta information used for 
+ * Collection of objects that is used for paginated support. This class contains all the meta information used for 
  * pagination.
  * 
  * @author bsion
  */
-public class PaginatedList<T> extends ArrayList<T>
+public class PaginatedList<T> extends ArrayList<T> implements Cloneable<PaginatedList<T>>
 {
     private static final long serialVersionUID = 7656155425446828050L;
     private int maxListSize;
@@ -40,7 +40,7 @@ public class PaginatedList<T> extends ArrayList<T>
      * @param maxListSize the max number of records that would be return by an 
      * unpaginated result set
      */
-    public PaginatedList(final List<T> results, final int maxListSize)
+    public PaginatedList(final Collection<T> results, final int maxListSize)
     {
         super(results);
         this.maxListSize = maxListSize;
@@ -66,6 +66,33 @@ public class PaginatedList<T> extends ArrayList<T>
     public T getResult(final int index)
     {
         return super.get(index);
+    }
+
+    /**
+     * Performs a deep copy of this list.
+     * 
+     * @throws CloneNotSupportedException if the list is not a list of 
+     * {@link Cloneable} objects
+     */
+    public PaginatedList<T> deepClone() throws CloneNotSupportedException
+    {
+////        if (!this.getClass().isInstance(Cloneable.class))
+////            throw new CloneNotSupportedException();
+//
+        ArrayList<T> items = new ArrayList<T>();
+        try
+        {
+            for (Cloneable<T> item: (List<Cloneable<T>>) this)
+            {
+                items.add(item.deepClone());
+            }
+        }
+        catch (ClassCastException cce)
+        {
+            throw new CloneNotSupportedException(cce.getMessage());
+        }
+
+        return new PaginatedList<T>(items, maxListSize);
     }
 
     @Override

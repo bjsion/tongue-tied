@@ -162,7 +162,7 @@ public class PreferenceForm
      */
     public void init()
     {
-        this.maxResults = 20;
+        this.maxResults = 10;
     }
     
     @Override

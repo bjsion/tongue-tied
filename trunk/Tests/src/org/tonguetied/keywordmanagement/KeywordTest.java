@@ -97,7 +97,7 @@ public class KeywordTest {
         keyword.setContext(null);
         keyword.setTranslations(null);
         
-        Keyword clone = keyword.clone();
+        Keyword clone = keyword.deepClone();
         
         assertFalse(keyword == clone);
         assertTrue(keyword.getClass() == clone.getClass());
@@ -119,7 +119,7 @@ public class KeywordTest {
         translation.setValue("the value");
         keyword.addTranslation(translation);
         
-        Keyword clone = keyword.clone();
+        Keyword clone = keyword.deepClone();
         
         assertFalse(keyword == clone);
         assertTrue(keyword.getClass() == clone.getClass());

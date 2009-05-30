@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations 
  * under the License. 
  */
-package org.tonguetied.web;
+package org.tonguetied.utils.pagination;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
@@ -23,42 +23,19 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
- * Test suite.
+ * Test suite for package.
  * 
  * @author bsion
  *
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-    AccountFormValidatorTest.class,
-    BundleSupportTest.class,
-    BundleValidatorTest.class,
-    ChangePasswordFormValidatorTest.class,
-    CookieUtilsTest.class,
-    CountryCodeSupportTest.class,
-    CountrySupportTest.class,
-    CountryValidatorTest.class,
-    EmptyPreferenceFilterTest.class,
-    ExportParametersValidatorTest.class,
-    FormatTypeSupportTest.class,
-    ImportValidatorTest.class,
-    KeywordTranslationValidatorTest.class,
-    KeywordValidatorTest.class,
-    LanguageCodeSupportTest.class,
-    LanguageSupportTest.class,
-    LanguageValidatorTest.class,
-    PaginationUtilsTest.class,
-    PermissionSupportTest.class,
-    PreferenceFilterTest.class,
-    PreferenceFormEqualsHashCodeTest.class,
-    RequestUtilsTest.class,
-    SearchFormTest.class,
-    TranslationStateSupportTest.class,
-    UserValidatorTest.class
+    PaginatedListTest.class
 })
 public class AllTests {
 
-    public static Test suite() {
+    public static Test suite()
+    {
         return new JUnit4TestAdapter(AllTests.class);
     }
 }

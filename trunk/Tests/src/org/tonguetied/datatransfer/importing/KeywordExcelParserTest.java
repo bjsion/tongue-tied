@@ -152,7 +152,7 @@ public class KeywordExcelParserTest extends AbstractServiceTest
             "\u05d9\u05d5\u05dd\u0020\u05d0\u0027", TranslationState.UNVERIFIED);
         keyword.addTranslation(translation3_2);
         
-        keyword3 = keyword.clone();
+        keyword3 = keyword.deepClone();
         keyword3.setContext(null);
         for(Translation translation: keyword3.getTranslations())
         {

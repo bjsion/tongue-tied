@@ -155,8 +155,9 @@ public class SearchForm {
      * 
      * @return the keyword of this search form
      */
-    public Keyword getKeyword() {
-        return this.keyword.clone();
+    public Keyword getKeyword()
+    {
+        return this.keyword.deepClone();
     }
     
     /**

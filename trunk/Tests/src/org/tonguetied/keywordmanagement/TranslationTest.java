@@ -70,7 +70,7 @@ public class TranslationTest {
         translation.setValue(null);
         translation.setState(null);
         
-        Translation clone = translation.clone();
+        Translation clone = translation.deepClone();
         
         assertFalse(translation == clone);
         assertTrue(translation.getClass() == clone.getClass());
@@ -89,7 +89,7 @@ public class TranslationTest {
         translation.setValue("joga");
         translation.setState(TranslationState.QUERIED);
 
-        Translation clone = translation.clone();
+        Translation clone = translation.deepClone();
         
         assertFalse(translation == clone);
         assertTrue(translation.getClass() == clone.getClass());

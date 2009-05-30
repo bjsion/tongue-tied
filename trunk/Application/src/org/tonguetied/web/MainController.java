@@ -20,13 +20,13 @@ import static org.tonguetied.web.Constants.BUNDLES;
 import static org.tonguetied.web.Constants.COUNTRIES;
 import static org.tonguetied.web.Constants.DEFAULT_AUDIT_LOG_PAGE_SIZE;
 import static org.tonguetied.web.Constants.DEFAULT_USER_PAGE_SIZE;
+import static org.tonguetied.web.Constants.KEYWORDS;
 import static org.tonguetied.web.Constants.KEYWORD_ID;
 import static org.tonguetied.web.Constants.LANGUAGES;
 import static org.tonguetied.web.Constants.MAX_LIST_SIZE;
 import static org.tonguetied.web.Constants.SEARCH_PARAMETERS;
 import static org.tonguetied.web.Constants.SHOW_ALL;
 import static org.tonguetied.web.Constants.STATES;
-import static org.tonguetied.web.Constants.TRANSLATIONS;
 import static org.tonguetied.web.Constants.USER;
 import static org.tonguetied.web.Constants.USERS;
 import static org.tonguetied.web.Constants.USER_SIZE;
@@ -106,10 +106,11 @@ public class MainController extends MultiActionController
         final int firstResult = PaginationUtils.calculateFirstResult(
             "keyword", viewPreferences.getMaxResults(), request);
         
-        final PaginatedList<Keyword> keywords;
+        PaginatedList<Keyword> keywords;
         if (showAll)
         {
-            keywords = keywordService.getKeywords(firstResult, viewPreferences.getMaxResults());
+            keywords = keywordService.getKeywords(firstResult,
+                    viewPreferences.getMaxResults());
             searchParameters.initialize();
         }
         else
@@ -126,15 +127,11 @@ public class MainController extends MultiActionController
                                         viewPreferences.getMaxResults());
         }
         
-//        List<Translation> translations = 
-//            TranslationTransformer.transform(keywords.getResults());
-//        PreferenceFilter filter = new PreferenceFilter(viewPreferences);
-//        CollectionUtils.filter(translations, filter);
+        keywords = applyViewPreferences(keywords);
         searchParameters.getKeyword();
 
         Map<String, Object> model = new HashMap<String, Object>();
-//        model.put(TRANSLATIONS, translations);
-        model.put("keywords", keywords);
+        model.put(KEYWORDS, keywords);
         model.put(LANGUAGES, keywordService.getLanguages());
         model.put(BUNDLES, keywordService.getBundles());
         model.put(COUNTRIES, keywordService.getCountries());
@@ -143,6 +140,29 @@ public class MainController extends MultiActionController
         model.put(VIEW_PREFERENCES, viewPreferences);
         model.put(MAX_LIST_SIZE, keywords.getMaxListSize());
         return new ModelAndView("keyword/keywords", model);
+    }
+
+    /**
+     * Filters out the translations that the user selected in the 
+     * {@link PreferenceForm}.
+     * 
+     * @param keywords the list of {@link Keyword}s to apply the filter to
+     * @throws CloneNotSupportedException if one of the objects in the list is
+     * not cloneable
+     */
+    private PaginatedList<Keyword> applyViewPreferences(
+            final PaginatedList<Keyword> keywords)
+            throws CloneNotSupportedException
+    {
+        final PreferenceFilter filter = new PreferenceFilter(viewPreferences);
+        // do a deep copy of keywords to detach from hibernate session
+        PaginatedList<Keyword> clone = keywords.deepClone();
+        for (final Keyword keyword : clone)
+        {
+            CollectionUtils.filter(keyword.getTranslations(), filter);
+        }
+        
+        return clone;
     }
     
     /**
@@ -265,7 +285,7 @@ public class MainController extends MultiActionController
             RequestUtils.getLongParameter(request, KEYWORD_ID);
         keywordService.deleteKeyword(keywordId);
         
-        return new ModelAndView("forward:/keywords.htm");
+        return new ModelAndView("redirect:/keywords.htm");
     }
     
     /**

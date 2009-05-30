@@ -68,20 +68,20 @@ span.rtf {
 }
 
 span.pagebanner {
-  background-color: #eee;
+  background-color: #ebebeb;
   border: 1px dotted #999;
   padding: 2px 4px 2px 4px;
-  width: 79%;
+  width: 99%;
   margin-top: 10px;
   display: block;
   border-bottom: none;
 }
 
 span.pagelinks {
-  background-color: #eee;
+  background-color: #ebebeb;
   border: 1px dotted #999;
   padding: 2px 4px 2px 4px;
-  width: 79%;
+  width: 99%;
   display: block;
   border-top: none;
   margin-bottom: -5px;

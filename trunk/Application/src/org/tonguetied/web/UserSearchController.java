@@ -107,6 +107,7 @@ public class UserSearchController extends SimpleFormController
             throws Exception
     {
         if (logger.isDebugEnabled()) logger.debug("searching for users");
+        PaginationUtils.remove("user", request);
         final int firstResult = PaginationUtils.calculateFirstResult(
                 "user", DEFAULT_USER_PAGE_SIZE, request);
 

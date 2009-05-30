@@ -35,7 +35,6 @@ import org.tonguetied.utils.pagination.PaginatedList;
  */
 public class AuditRepositoryImpl extends HibernateDaoSupport implements AuditRepository
 {
-    @Override
     public PaginatedList<AuditLogRecord> getAuditLog(final Integer firstResult,
             final Integer maxResults)
     {

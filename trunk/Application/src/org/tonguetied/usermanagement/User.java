@@ -86,6 +86,7 @@ public class User implements UserDetails
     // This attribute is used for optimistic concurrency control in DB
     private Integer version;
 
+    private static final String FIELD_ID = "id";
     public static final String FIELD_LASTNAME = "lastName";
     public static final String FIELD_FIRSTNAME = "firstName";
     public static final String FIELD_EMAIL = "email";
@@ -412,7 +413,7 @@ public class User implements UserDetails
         // Assert.notNull(authorities[i], "Granted authority element " + i + "
         // is null - GrantedAuthority[] cannot contain any null elements");
         // }
-        this.grantedAuthorities = (GrantedAuthority[])authorities.clone();
+        this.grantedAuthorities = authorities.clone();
     }
 
     /**
@@ -496,7 +497,7 @@ public class User implements UserDetails
     public String toString()
     {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id).append(FIELD_USERNAME, username).append(
+                .append(FIELD_ID, id).append(FIELD_USERNAME, username).append(
                         "password", "********")
                 .append(FIELD_LASTNAME, lastName).append(FIELD_FIRSTNAME,
                         firstName).append(FIELD_EMAIL, email).append(

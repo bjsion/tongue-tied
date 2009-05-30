@@ -33,11 +33,10 @@ public interface Constants {
     public static final String FORMAT_TYPES = "formatTypes";
     public static final String LANGUAGE = "language";
     public static final String LANGUAGES = "languages";
+    static final String KEYWORDS = "keywords";
     public static final String SEARCH_PARAMETERS = "searchParameters";
     public static final String SHOW_ALL = "showAll";
     public static final String STATES = "states";
-    @Deprecated
-    public static final String TRANSLATIONS = "translations";
     public static final String USER = "user";
     public static final String USERS = "users";
     public static final String VIEW_PREFERENCES = "viewPreferences";
@@ -62,6 +61,6 @@ public interface Constants {
 
     static final int DEFAULT_AUDIT_LOG_PAGE_SIZE = 50;
     static final int DEFAULT_USER_PAGE_SIZE = 10;
-	static final String BTN_SEARCH = "searchBtn";
+    static final String BTN_SEARCH = "searchBtn";
 
 }

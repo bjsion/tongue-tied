@@ -20,6 +20,9 @@ import static org.hibernate.criterion.Order.asc;
 import static org.hibernate.criterion.Restrictions.conjunction;
 import static org.hibernate.criterion.Restrictions.eq;
 import static org.hibernate.criterion.Restrictions.idEq;
+import static org.tonguetied.keywordmanagement.Keyword.FIELD_ID;
+import static org.tonguetied.keywordmanagement.Keyword.FIELD_KEYWORD;
+import static org.tonguetied.keywordmanagement.Keyword.FIELD_TRANSLATIONS;
 import static org.tonguetied.keywordmanagement.Keyword.QUERY_GET_KEYWORDS;
 import static org.tonguetied.keywordmanagement.Keyword.QUERY_KEYWORD_COUNT;
 
@@ -29,10 +32,12 @@ import java.util.SortedSet;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Conjunction;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Junction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Subqueries;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.tonguetied.utils.pagination.PaginatedList;
@@ -57,7 +62,7 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements
     public Keyword getKeyword(final String keywordString)
     {
         Criteria criteria = getSession().createCriteria(Keyword.class);
-        criteria.add(eq("keyword", keywordString));
+        criteria.add(eq(FIELD_KEYWORD, keywordString));
         return (Keyword) criteria.uniqueResult();
     }
 
@@ -85,7 +90,7 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements
         {
             throw new IllegalArgumentException("keyword cannot be null");
         }
-        MatchMode matchMode = MatchMode.ANYWHERE;
+        final MatchMode matchMode = MatchMode.ANYWHERE;
         Example criterionKeyword = Example.create(keyword);
         criterionKeyword.enableLike(matchMode);
         if (ignoreCase)
@@ -93,46 +98,75 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements
             criterionKeyword.ignoreCase();
         }
 
+        // Normally, Hibernate performs a left-outer join, when searching for 
+        // an object with collections using Criteria. This returns a ResultSet
+        // that contains duplicate objects. In order to get a unique list of 
+        // Keywords with paginated support, we need to a nested query to find
+        // distinct matching ids, then get the Keywords. The end result is a
+        // subselect in the main query, but only one query is sent.
+        DetachedCriteria dc = DetachedCriteria.forClass(Keyword.class);
+        dc.add(criterionKeyword);
+        dc.addOrder(asc(FIELD_KEYWORD));
+        dc.setResultTransformer(DISTINCT_ROOT_ENTITY);
+        
+        Conjunction conjunction = createTranslationConditions(
+                keyword.getTranslations(), ignoreCase, matchMode);
+        if (conjunction != null)
+            dc.createCriteria(FIELD_TRANSLATIONS).add(conjunction);
+        dc.setProjection(Projections.id());
+
         Criteria criteria = getSession().createCriteria(Keyword.class);
-        criteria.add(criterionKeyword);
-        criteria.addOrder(asc("keyword"));
-        criteria.setResultTransformer(DISTINCT_ROOT_ENTITY);
+        criteria.add(Subqueries.propertyIn(FIELD_ID, dc));
         if (firstResult != null) criteria.setFirstResult(firstResult);
         if (maxResults != null) criteria.setMaxResults(maxResults);
-
-        addTranslationCriteria(criteria, keyword.getTranslations(), ignoreCase,
-                matchMode);
-
-        Criteria criteria2 = getSession().createCriteria(Keyword.class);
-        criteria2.add(criterionKeyword);
-        addTranslationCriteria(criteria2, keyword.getTranslations(), ignoreCase,
-                matchMode);
-        criteria2.setProjection(Projections.rowCount());
         
-        int maxListSize = 0;
         final List<Keyword> criteriaList = criteria.list();
+        int maxListSize = 0;
         if (criteriaList.size() > 0)
-            maxListSize = (Integer) criteria2.uniqueResult();
+        {
+            maxListSize = calculateMaxListSize(criterionKeyword, conjunction);
+        }
         
         return new PaginatedList<Keyword>(criteriaList, maxListSize);
     }
 
     /**
-     * Adds the search criteria for a {@link Translation} to the set of search
-     * parameters.
+     * Run a query to calculate the total number of records that match the 
+     * search criteria.
      * 
-     * @param criteria the existing search criteria object
+     * @param criterion used to create the search criteria
+     * @param conjunction used to create the search criteria
+     * @return the total number of matches for the search criteria
+     */
+    private int calculateMaxListSize(Example criterion, Conjunction conjunction)
+    {
+        Criteria criteria = getSession().createCriteria(Keyword.class);
+        criteria.add(criterion);
+        if (conjunction != null)
+            criteria.createCriteria(FIELD_TRANSLATIONS).add(conjunction);
+        criteria.setProjection(Projections.countDistinct(FIELD_ID));
+        
+        return (Integer) criteria.uniqueResult();
+    }
+
+    /**
+     * Create the search criteria for a {@link Translation}.
+     * 
      * @param translations the translation to add to the criteria
      * @param ignoreCase flag indicating if case should be ignored during search
      * @param matchMode flag indicating the type of string pattern matching
+     * @return the additional search parameters for the {@link Translation}
+     * fields
      */
-    private void addTranslationCriteria(Criteria criteria,
-            SortedSet<Translation> translations, final boolean ignoreCase,
+    private Conjunction createTranslationConditions(
+            SortedSet<Translation> translations,
+            final boolean ignoreCase,
             final MatchMode matchMode)
     {
+        Conjunction conjunction = null;
         if (translations != null && !translations.isEmpty())
         {
-            Translation translation = translations.first();
+            final Translation translation = translations.first();
 
             Example criterionTranslation = Example.create(translation);
             criterionTranslation.enableLike(matchMode);
@@ -141,15 +175,15 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements
                 criterionTranslation.ignoreCase();
             }
 
-            Conjunction conjunction = conjunction();
+            conjunction = conjunction();
             conjunction.add(criterionTranslation);
 
             addBundleCriteria(conjunction, translation.getBundle());
             addCountryCriteria(conjunction, translation.getCountry());
             addLanguageCriteria(conjunction, translation.getLanguage());
-
-            criteria.createCriteria("translations").add(conjunction);
         }
+        
+        return conjunction;
     }
 
     /**
@@ -158,7 +192,7 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements
      * @param junction
      * @param bundle the bundle to compare
      */
-    private void addBundleCriteria(Junction junction, Bundle bundle)
+    private void addBundleCriteria(Junction junction, final Bundle bundle)
     {
         if (bundle != null)
         {
@@ -172,7 +206,7 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements
      * @param junction
      * @param country the country to compare
      */
-    private void addCountryCriteria(Junction junction, Country country)
+    private void addCountryCriteria(Junction junction, final Country country)
     {
         if (country != null)
         {
@@ -186,7 +220,7 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements
      * @param junction
      * @param language the language to compare
      */
-    private void addLanguageCriteria(Junction junction, Language language)
+    private void addLanguageCriteria(Junction junction, final Language language)
     {
         if (language != null)
         {
