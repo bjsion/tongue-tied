@@ -15,7 +15,9 @@
  */
 package org.tonguetied.web;
 
-import static org.displaytag.tags.TableTagParameters.PARAMETER_PAGE;
+import static org.displaytag.tags.TableTagParameters.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.*;
 
 import java.util.Enumeration;
@@ -25,6 +27,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
+import org.tonguetied.utils.pagination.Order;
+import org.tonguetied.web.PaginationUtils.KeyValue;
 
 /**
  * @author bsion
@@ -38,6 +42,10 @@ public class PaginationUtilsTest
     private MockHttpServletRequest request;
     private static final String PAGE_PARAM = 
         new ParamEncoder(VALID_TABLE_ID).encodeParameterName(PARAMETER_PAGE);
+    private static final String PAGE_SORT = 
+        new ParamEncoder(VALID_TABLE_ID).encodeParameterName(PARAMETER_SORT);
+    private static final String PAGE_ORDER = 
+        new ParamEncoder(VALID_TABLE_ID).encodeParameterName(PARAMETER_ORDER);
     private final String PAGE_PARAM_SESSION = 
         new ParamEncoder(VALID_SESSION_TABLE_ID).encodeParameterName(PARAMETER_PAGE);
     
@@ -50,6 +58,8 @@ public class PaginationUtilsTest
     {
         request = new MockHttpServletRequest();
         request.setParameter(PAGE_PARAM, "3");
+        request.setParameter(PAGE_SORT, "test");
+        request.setParameter(PAGE_ORDER, "2");
 
         MockHttpSession session = new MockHttpSession();
         session.setAttribute(PAGE_PARAM_SESSION, Integer.valueOf("9"));
@@ -187,4 +197,72 @@ public class PaginationUtilsTest
         }
         return containsValue;
     }
+    
+    /**
+     * Test method for {@link PaginationUtils#getOrder(String, javax.servlet.http.HttpServletRequest)}
+     */
+    @Test
+    public final void testGetOrder()
+    {
+        final KeyValue<String, Order> keyValue = 
+            PaginationUtils.getOrder(VALID_TABLE_ID, request);
+        assertEquals("test", keyValue.getKey());
+        assertEquals(Order.desc, keyValue.getValue());
+    }
+
+    /**
+     * Test method for {@link PaginationUtils#getOrder(String, javax.servlet.http.HttpServletRequest)}
+     */
+    @Test
+    public final void testGetOrderForUnknownKey()
+    {
+        final KeyValue<String, Order> keyValue = 
+            PaginationUtils.getOrder("unknown", request);
+        assertNull(keyValue);
+        
+    }
+
+    /**
+     * Test method for {@link PaginationUtils#getOrder(String, javax.servlet.http.HttpServletRequest)}
+     */
+    @Test
+    public final void testGetOrderForUnknownValue()
+    {
+        request.setParameter(PAGE_ORDER, "6");
+        final KeyValue<String, Order> keyValue = 
+            PaginationUtils.getOrder(VALID_TABLE_ID, request);
+        assertEquals("test", keyValue.getKey());
+        assertEquals(Order.asc, keyValue.getValue());
+    }
+
+    /**
+     * Test method for {@link PaginationUtils#getOrder(String, javax.servlet.http.HttpServletRequest)}
+     */
+    @Test
+    public final void testGetOrderForInvalidValue()
+    {
+        request.setParameter(PAGE_ORDER, "asdf");
+        final KeyValue<String, Order> keyValue = 
+            PaginationUtils.getOrder(VALID_TABLE_ID, request);
+        assertEquals("test", keyValue.getKey());
+        assertEquals(Order.asc, keyValue.getValue());
+    }
+//
+//    /**
+//     * Test method for {@link PaginationUtils#getOrder(String, javax.servlet.http.HttpServletRequest)}
+//     */
+//    @Test
+//    public final void testGetOrderForNullKey()
+//    {
+//        
+//    }
+//
+//    /**
+//     * Test method for {@link PaginationUtils#getOrder(String, javax.servlet.http.HttpServletRequest)}
+//     */
+//    @Test
+//    public final void testGetOrderForNullValue()
+//    {
+//        
+//    }
 }

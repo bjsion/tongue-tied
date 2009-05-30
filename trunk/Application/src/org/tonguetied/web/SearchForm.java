@@ -30,7 +30,7 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
  * Value object used to store and pass search criteria.
  * 
  * @author bsion
- * @see KeywordService#findKeywords(Keyword, boolean, Integer, Integer)
+ * @see KeywordService#findKeywords(Keyword, boolean, String, Integer, Integer)
  */
 public class SearchForm {
     private Keyword keyword;

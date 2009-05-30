@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
+import org.tonguetied.utils.pagination.Order;
 import org.tonguetied.utils.pagination.PaginatedList;
 
 /**
@@ -130,20 +131,21 @@ public class KeywordServiceImpl implements KeywordService
 
     public List<Keyword> getKeywords()
     {
-        return getKeywords(0, null);
+        return getKeywords(0, null, Order.asc);
     }
 
-    public PaginatedList<Keyword> getKeywords(Integer firstResult, Integer maxResults)
+    public PaginatedList<Keyword> getKeywords(final Integer firstResult, 
+            final Integer maxResults, final Order order)
     {
-        return keywordRepository.getKeywords(firstResult, maxResults);
+        return keywordRepository.getKeywords(firstResult, maxResults, order);
     }
 
     public PaginatedList<Keyword> findKeywords(Keyword keyword,
-            final boolean ignoreCase, final Integer firstResult,
-            final Integer maxResults)
+            final boolean ignoreCase, final Order order,
+            final Integer firstResult, final Integer maxResults)
     {
-        return keywordRepository.findKeywords(keyword, ignoreCase, firstResult,
-                maxResults);
+        return keywordRepository.findKeywords(
+                keyword, ignoreCase, order, firstResult, maxResults);
     }
 
     public Language getLanguage(final Long id)

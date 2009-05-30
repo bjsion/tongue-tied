@@ -15,11 +15,13 @@
  */
 package org.tonguetied.web;
 
-import static org.displaytag.tags.TableTagParameters.PARAMETER_PAGE;
+import static org.displaytag.tags.TableTagParameters.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.displaytag.util.ParamEncoder;
+import org.tonguetied.utils.pagination.Order;
 
 /**
  * Utility class of common methods for paginated display.
@@ -29,6 +31,8 @@ import org.displaytag.util.ParamEncoder;
  */
 public final class PaginationUtils
 {
+    private static final Logger logger = 
+        Logger.getLogger(PaginationUtils.class);
 
     /**
      * Determine the value for the first result. The value is calculated as:
@@ -59,9 +63,53 @@ public final class PaginationUtils
         
         int firstResult = 0;
         if (selectedPage > 0)
+        {
+            if (logger.isDebugEnabled())
+                logger.debug("selected page = " + selectedPage);
             firstResult = (selectedPage-1) * maxResults;
+        }
         
         return firstResult;
+    }
+    
+    /**
+     * Get the Column and and sort order selected by the user.
+     * 
+     * @param tableId the table tag id of the table
+     * @param request the HTTP request 
+     * @return key value pair of column and sort order
+     */
+    static KeyValue<String, Order> getOrder(final String tableId, HttpServletRequest request)
+    {
+        final String sortParam = 
+            new ParamEncoder(tableId).encodeParameterName(PARAMETER_SORT);
+        final String sort = request.getParameter(sortParam);
+        if (logger.isDebugEnabled())
+            logger.debug("selected sort = " + sort);
+        KeyValue<String, Order> keyValue = null;
+        if (sort != null)
+        {
+            final String orderParam = 
+                new ParamEncoder(tableId).encodeParameterName(PARAMETER_ORDER);
+            Integer order = 0;
+            try
+            {
+                order = RequestUtils.getIntegerParameter(request, orderParam);
+                if (logger.isDebugEnabled())
+                    logger.debug("order = " + order);
+                if (order > 0 && order <= Order.values().length)
+                    order--;
+                else
+                    order = 0;
+            }
+            catch (NumberFormatException nfe)
+            {
+                logger.warn(nfe);
+            }
+            keyValue = new KeyValue<String, Order>(sort, Order.values()[order]);
+        }
+        
+        return keyValue;
     }
     
     /**
@@ -74,7 +122,51 @@ public final class PaginationUtils
     {
         final String pageParam = 
             new ParamEncoder(tableId).encodeParameterName(PARAMETER_PAGE);
+        if (logger.isDebugEnabled())
+            logger.debug("removing attribute " + pageParam + "from session");
 
         request.getSession().removeAttribute(pageParam);
+    }
+    
+    /**
+     * A representation of a key value pair.
+     * 
+     * @author bsion
+     *
+     * @param <K>
+     * @param <V>
+     */
+    public static class KeyValue<K, V>
+    {
+        private K key;
+        private V value;
+        
+        /**
+         * Create a new instance of KeyValue.
+         *
+         * @param key
+         * @param value
+         */
+        private KeyValue(K key, V value)
+        {
+            this.key = key;
+            this.value = value;
+        }
+
+        /**
+         * @return the key
+         */
+        public K getKey()
+        {
+            return key;
+        }
+
+        /**
+         * @return the value
+         */
+        public V getValue()
+        {
+            return value;
+        }
     }
 }

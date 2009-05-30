@@ -115,7 +115,7 @@ public class UserServiceStub implements UserService
     public PaginatedList<User> getUsers(final Integer firstResult, final Integer maxResult)
     {
         final int size = users.size();
-        return new PaginatedList<User>((List<User>)users.values(), size);
+        return new PaginatedList<User>(users.values(), size);
     }
 
     /*
@@ -126,6 +126,6 @@ public class UserServiceStub implements UserService
     public PaginatedList<User> findUsers(User user, final Integer firstResult,
             final Integer maxResults)
     {
-        return new PaginatedList<User>((List<User>)users.values(), users.size());
+        return new PaginatedList<User>(users.values(), users.size());
     }
 }

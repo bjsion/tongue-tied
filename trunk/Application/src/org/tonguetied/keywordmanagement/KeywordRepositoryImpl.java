@@ -17,6 +17,7 @@ package org.tonguetied.keywordmanagement;
 
 import static org.hibernate.criterion.CriteriaSpecification.DISTINCT_ROOT_ENTITY;
 import static org.hibernate.criterion.Order.asc;
+import static org.hibernate.criterion.Order.desc;
 import static org.hibernate.criterion.Restrictions.conjunction;
 import static org.hibernate.criterion.Restrictions.eq;
 import static org.hibernate.criterion.Restrictions.idEq;
@@ -24,6 +25,7 @@ import static org.tonguetied.keywordmanagement.Keyword.FIELD_ID;
 import static org.tonguetied.keywordmanagement.Keyword.FIELD_KEYWORD;
 import static org.tonguetied.keywordmanagement.Keyword.FIELD_TRANSLATIONS;
 import static org.tonguetied.keywordmanagement.Keyword.QUERY_GET_KEYWORDS;
+import static org.tonguetied.keywordmanagement.Keyword.QUERY_GET_KEYWORDS_DESC;
 import static org.tonguetied.keywordmanagement.Keyword.QUERY_KEYWORD_COUNT;
 
 import java.util.List;
@@ -40,6 +42,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Subqueries;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.tonguetied.utils.pagination.Order;
 import org.tonguetied.utils.pagination.PaginatedList;
 
 /**
@@ -67,9 +70,14 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements
     }
 
     public PaginatedList<Keyword> getKeywords(final Integer firstResult,
-            final Integer maxResults)
+            final Integer maxResults, final Order order)
     {
-        Query query = getSession().getNamedQuery(QUERY_GET_KEYWORDS);
+        final String queryName;
+        if (Order.desc == order)
+            queryName = QUERY_GET_KEYWORDS_DESC;
+        else
+            queryName = QUERY_GET_KEYWORDS;
+        Query query = getSession().getNamedQuery(queryName);
         if (firstResult != null) query.setFirstResult(firstResult);
         if (maxResults != null) query.setMaxResults(maxResults);
         
@@ -83,8 +91,11 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements
     }
 
     public PaginatedList<Keyword> findKeywords(Keyword keyword,
-            final boolean ignoreCase, final Integer firstResult,
-            final Integer maxResults) throws IllegalArgumentException
+                                            final boolean ignoreCase,
+                                            final Order order,
+                                            final Integer firstResult, 
+                                            final Integer maxResults) 
+            throws IllegalArgumentException
     {
         if (keyword == null)
         {
@@ -106,7 +117,6 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements
         // subselect in the main query, but only one query is sent.
         DetachedCriteria dc = DetachedCriteria.forClass(Keyword.class);
         dc.add(criterionKeyword);
-        dc.addOrder(asc(FIELD_KEYWORD));
         dc.setResultTransformer(DISTINCT_ROOT_ENTITY);
         
         Conjunction conjunction = createTranslationConditions(
@@ -117,6 +127,10 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements
 
         Criteria criteria = getSession().createCriteria(Keyword.class);
         criteria.add(Subqueries.propertyIn(FIELD_ID, dc));
+        if (Order.desc == order)
+            criteria.addOrder(desc(FIELD_KEYWORD));
+        else
+            criteria.addOrder(asc(FIELD_KEYWORD));
         if (firstResult != null) criteria.setFirstResult(firstResult);
         if (maxResults != null) criteria.setMaxResults(maxResults);
         

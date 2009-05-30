@@ -18,6 +18,7 @@ package org.tonguetied.keywordmanagement;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
+import org.tonguetied.utils.pagination.Order;
 import org.tonguetied.utils.pagination.PaginatedList;
 
 
@@ -70,10 +71,11 @@ public interface KeywordRepository
      * results begin at zero
      * @param maxResults the maximum number of rows. If <code>null</code> then
      * all results are returned
+     * @param order indicates the order the results should be returned
      * @return the {@link List} of all {@link Keyword}s in the system.
      */
     PaginatedList<Keyword> getKeywords(final Integer firstResult,
-                              final Integer maxResults);
+                              final Integer maxResults, final Order order);
 
     /**
      * Find all {@link Keyword}s whose matching the search criteria.
@@ -81,6 +83,7 @@ public interface KeywordRepository
      * @param keyword the criteria to search for
      * @param ignoreCase <code>true</code> if case should be ignored. 
      * <code>false</code> otherwise
+     * @param order indicates the order the results should be returned
      * @param firstResult a row number, numbered from 0. If <code>null</code>
      * then then results begin at zero
      * @param maxResults the maximum number of rows. If <code>null</code> then
@@ -91,6 +94,7 @@ public interface KeywordRepository
      */
     PaginatedList<Keyword> findKeywords(Keyword keyword, 
                                final boolean ignoreCase,
+                               final Order order,
                                final Integer firstResult,
                                final Integer maxResults)
             throws IllegalArgumentException;
