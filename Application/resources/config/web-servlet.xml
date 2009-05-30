@@ -224,7 +224,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="commandName" value="user"/>
         <property name="formView" value="user/user"/>
         <property name="validator" ref="userValidator"/>
-        <property name="successView" value="forward:/users.htm"/>
+        <property name="successView" value="redirect:/users.htm"/>
         <property name="cancelView" value="forward:/users.htm"/>
         <property name="userService" ref="userService"/>
     </bean>

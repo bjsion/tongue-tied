@@ -41,7 +41,7 @@
         
         <div class="contentPanel">
             <a href="<c:url value="users.htm"/>" title="<fmt:message key="get.all.users"/>"><fmt:message key="all.users"/></a>
-            <display:table name="users" htmlId="userTable" id="user" sort="external" pagesize="${userSize}" partialList="true" size="maxListSize" requestURI="">
+            <display:table name="users" htmlId="userTable" id="user" sort="external" pagesize="${userSize}" partialList="true" size="maxListSize" requestURI="" keepStatus="true">
                 <display:column sortable="true" titleKey="username">
                     <c:choose>
                         <c:when test="${currentUsername != user.username}">

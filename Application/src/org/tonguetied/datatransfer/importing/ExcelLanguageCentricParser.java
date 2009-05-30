@@ -186,7 +186,7 @@ public class ExcelLanguageCentricParser implements ExcelParser
                                 languages.get(lrec.getColumn()-4);
                             String value = sstrec.getString(lrec.getSSTIndex()).getString();
                             Translation translation = 
-                                baseTranslation.clone();
+                                baseTranslation.deepClone();
                             if (language.getCode() == LanguageCode.zht) {
                                 language = 
                                     keywordService.getLanguage(LanguageCode.zh);

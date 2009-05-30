@@ -46,15 +46,35 @@ public final class PaginationUtils
     {
         final String pageParam = 
             new ParamEncoder(tableId).encodeParameterName(PARAMETER_PAGE);
-        final String selectedPageStr = request.getParameter(pageParam);
-        int firstResult = 0;
-        if (selectedPageStr != null)
+
+        Integer selectedPage = RequestUtils.getIntegerParameter(request, pageParam);
+        if (selectedPage == null)
         {
-            final int selectedPage = Integer.parseInt(selectedPageStr);
-            if (selectedPage > 0)
-                firstResult = (selectedPage-1) * maxResults;
+            final Object attr = request.getSession().getAttribute(pageParam);
+            if (attr != null)
+                selectedPage = (Integer) attr;
+            if (selectedPage == null)
+                selectedPage = 0;
         }
         
+        int firstResult = 0;
+        if (selectedPage > 0)
+            firstResult = (selectedPage-1) * maxResults;
+        
         return firstResult;
+    }
+    
+    /**
+     * Remove the page parameter for a table from the session.
+     * 
+     * @param tableId the table tag id of the table
+     * @param request the HTTP request 
+     */
+    static void remove(final String tableId, HttpServletRequest request)
+    {
+        final String pageParam = 
+            new ParamEncoder(tableId).encodeParameterName(PARAMETER_PAGE);
+
+        request.getSession().removeAttribute(pageParam);
     }
 }

@@ -47,6 +47,7 @@ import org.hibernate.annotations.Sort;
 import org.hibernate.annotations.SortType;
 import org.hibernate.annotations.Type;
 import org.tonguetied.audit.Auditable;
+import org.tonguetied.utils.pagination.Cloneable;
 
 /**
  * A <code>Keyword</code> object maps a relationship between a list of 
@@ -63,7 +64,7 @@ import org.tonguetied.audit.Auditable;
 })
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @Table(name=Keyword.TABLE_KEYWORD)
-public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
+public class Keyword implements Cloneable<Keyword>, Comparable<Keyword>, Auditable
 {
     private Long id;
     private String keyword;
@@ -74,7 +75,9 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
     private static final String COL_ID = TABLE_KEYWORD + "_id";
     protected static final String QUERY_GET_KEYWORDS = "get.keywords";
     protected static final String QUERY_KEYWORD_COUNT = "keyword.count";
-    
+    protected static final String FIELD_ID = "id";
+    protected static final String FIELD_KEYWORD = "keyword";
+    protected static final String FIELD_TRANSLATIONS = "translations";
     
     // This attribute is used for optimistic concurrency control in DB
     private Integer version;
@@ -262,11 +265,8 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
     
     /**
      * Performs a deep copy of this keyword object.
-     *   
-     * @see java.lang.Object#clone()
      */
-    @Override
-    public final Keyword clone()
+    public final Keyword deepClone()
     {
         Keyword clone;
         try
@@ -276,7 +276,7 @@ public class Keyword implements Cloneable, Comparable<Keyword>, Auditable
                 clone.setTranslations(new TreeSet<Translation>());
                 for (Translation translation: translations)
                 {
-                    clone.addTranslation(translation.clone());
+                    clone.addTranslation(translation.deepClone());
                 }
             }
         }

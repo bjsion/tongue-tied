@@ -619,8 +619,8 @@ public class KeywordServiceTest extends AbstractServiceTest
     {
         Keyword keyword = new Keyword();
         keyword.setKeyword("unknownText");
-        PaginatedList<Keyword> keywords = keywordService.findKeywords(keyword, true, 0,
-                null);
+        PaginatedList<Keyword> keywords = 
+            keywordService.findKeywords(keyword, true, 0, null);
         assertTrue(keywords.isEmpty());
         assertEquals(0, keywords.getMaxListSize());
     }
@@ -634,8 +634,8 @@ public class KeywordServiceTest extends AbstractServiceTest
     {
         Keyword keyword = new Keyword();
         keyword.setKeyword("the");
-        PaginatedList<Keyword> keywords = keywordService.findKeywords(keyword, true, 0,
-                null);
+        PaginatedList<Keyword> keywords = 
+            keywordService.findKeywords(keyword, true, 0, null);
         assertEquals(2, keywords.getMaxListSize());
         assertEquals(2, keywords.size());
         assertTrue(keywords.contains(keyword2));
@@ -666,7 +666,8 @@ public class KeywordServiceTest extends AbstractServiceTest
     {
         Keyword keyword = new Keyword();
         keyword.setKeyword("the");
-        PaginatedList<Keyword> keywords = keywordService.findKeywords(keyword, true, -1, 1);
+        PaginatedList<Keyword> keywords = 
+            keywordService.findKeywords(keyword, true, -1, 1);
         assertEquals(2, keywords.getMaxListSize());
         assertEquals(1, keywords.size());
         assertTrue(keywords.contains(keyword2));
@@ -681,7 +682,8 @@ public class KeywordServiceTest extends AbstractServiceTest
     {
         Keyword keyword = new Keyword();
         keyword.setKeyword("the");
-        PaginatedList<Keyword> keywords = keywordService.findKeywords(keyword, true, null, 1);
+        PaginatedList<Keyword> keywords = 
+            keywordService.findKeywords(keyword, true, null, 1);
         assertEquals(2, keywords.getMaxListSize());
         assertEquals(1, keywords.size());
         assertTrue(keywords.contains(keyword2));
@@ -697,7 +699,7 @@ public class KeywordServiceTest extends AbstractServiceTest
         Keyword keyword = new Keyword();
         keyword.setKeyword("the");
         PaginatedList<Keyword> keywords = 
-        	keywordService.findKeywords(keyword, true, 0, null);
+            keywordService.findKeywords(keyword, true, 0, null);
         assertEquals(2, keywords.getMaxListSize());
         assertEquals(2, keywords.size());
         assertTrue(keywords.contains(keyword2));
@@ -714,7 +716,7 @@ public class KeywordServiceTest extends AbstractServiceTest
         Keyword keyword = new Keyword();
         keyword.setKeyword("the");
         PaginatedList<Keyword> keywords = 
-        	keywordService.findKeywords(keyword, true, 0, 0);
+            keywordService.findKeywords(keyword, true, 0, 0);
         assertTrue(keywords.isEmpty());
         assertEquals(0, keywords.getMaxListSize());
     }
@@ -729,7 +731,7 @@ public class KeywordServiceTest extends AbstractServiceTest
         Keyword keyword = new Keyword();
         keyword.setKeyword("the");
         PaginatedList<Keyword> keywords = 
-        	keywordService.findKeywords(keyword, true, 0, 9);
+            keywordService.findKeywords(keyword, true, 0, 9);
         assertEquals(2, keywords.getMaxListSize());
         assertEquals(2, keywords.size());
         assertTrue(keywords.contains(keyword2));
@@ -746,9 +748,122 @@ public class KeywordServiceTest extends AbstractServiceTest
         Keyword keyword = new Keyword();
         keyword.setKeyword("the");
         PaginatedList<Keyword> keywords = 
-        	keywordService.findKeywords(keyword, true, 0, 1);
+            keywordService.findKeywords(keyword, true, 0, 1);
         assertEquals(2, keywords.getMaxListSize());
         assertEquals(1, keywords.size());
+        assertTrue(keywords.contains(keyword2));
+    }
+
+    /**
+     * Test method for
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Integer, Integer)}.
+     */
+    @Test
+    public final void testFindKeywordsByKeywordAndTranslationWithPagedList()
+    {
+        Translation translation1_1 = new Translation();
+        translation1_1.setLanguage(english);
+        translation1_1.setValue("TEST");
+        translation1_1.setCountry(australia);
+        translation1_1.setState(TranslationState.UNVERIFIED);
+        translation1_1.setBundle(bundle);
+        keyword1.addTranslation(translation1_1);
+        Translation translation1_2 = new Translation();
+        translation1_2.setLanguage(english);
+        translation1_2.setValue("testing");
+        translation1_2.setCountry(singapore);
+        translation1_2.setState(TranslationState.QUERIED);
+        translation1_2.setBundle(bundle);
+        keyword1.addTranslation(translation1_2);
+        Translation translation1_3 = new Translation();
+        translation1_3.setLanguage(chinese);
+        translation1_3.setValue("some more test");
+        translation1_3.setCountry(singapore);
+        translation1_3.setState(TranslationState.UNVERIFIED);
+        translation1_3.setBundle(bundle);
+        keyword1.addTranslation(translation1_3);
+        keywordService.saveOrUpdate(keyword1);
+        
+        Translation translation2_1 = new Translation();
+        translation2_1.setLanguage(english);
+        translation2_1.setValue("TEST");
+        translation2_1.setCountry(australia);
+        translation2_1.setState(TranslationState.UNVERIFIED);
+        translation2_1.setBundle(bundle);
+        keyword2.addTranslation(translation2_1);
+        Translation translation2_2 = new Translation();
+        translation2_2.setLanguage(english);
+        translation2_2.setValue("testing");
+        translation2_2.setCountry(singapore);
+        translation2_2.setState(TranslationState.QUERIED);
+        translation2_2.setBundle(bundle);
+        keyword2.addTranslation(translation2_2);
+        Translation translation2_3 = new Translation();
+        translation2_3.setLanguage(chinese);
+        translation2_3.setValue("some more test");
+        translation2_3.setCountry(singapore);
+        translation2_3.setState(TranslationState.UNVERIFIED);
+        translation2_3.setBundle(bundle);
+        keyword2.addTranslation(translation2_3);
+        keywordService.saveOrUpdate(keyword2);
+        
+        Translation translation3_1 = new Translation();
+        translation3_1.setLanguage(english);
+        translation3_1.setValue("TEST");
+        translation3_1.setCountry(australia);
+        translation3_1.setState(TranslationState.UNVERIFIED);
+        translation3_1.setBundle(bundle);
+        keyword3.addTranslation(translation3_1);
+        Translation translation3_2 = new Translation();
+        translation3_2.setLanguage(english);
+        translation3_2.setValue("testing");
+        translation3_2.setCountry(singapore);
+        translation3_2.setState(TranslationState.QUERIED);
+        translation3_2.setBundle(bundle);
+        keyword3.addTranslation(translation3_2);
+        Translation translation3_3 = new Translation();
+        translation3_3.setLanguage(chinese);
+        translation3_3.setValue("some more test");
+        translation3_3.setCountry(singapore);
+        translation3_3.setState(TranslationState.UNVERIFIED);
+        translation3_3.setBundle(bundle);
+        keyword3.addTranslation(translation3_3);
+        keywordService.saveOrUpdate(keyword3);
+        
+        Translation translation4_1 = new Translation();
+        translation4_1.setLanguage(english);
+        translation4_1.setValue("TEST");
+        translation4_1.setCountry(australia);
+        translation4_1.setState(TranslationState.UNVERIFIED);
+        translation4_1.setBundle(bundle);
+        keyword4.addTranslation(translation4_1);
+        Translation translation4_2 = new Translation();
+        translation4_2.setLanguage(english);
+        translation4_2.setValue("testing");
+        translation4_2.setCountry(singapore);
+        translation4_2.setState(TranslationState.UNVERIFIED);
+        translation4_2.setBundle(bundle);
+        keyword4.addTranslation(translation4_2);
+        Translation translation4_3 = new Translation();
+        translation4_3.setLanguage(chinese);
+        translation4_3.setValue("some more test");
+        translation4_3.setCountry(singapore);
+        translation4_3.setState(TranslationState.UNVERIFIED);
+        translation4_3.setBundle(bundle);
+        keyword4.addTranslation(translation4_3);
+        keywordService.saveOrUpdate(keyword4);
+        
+        Keyword keyword = new Keyword();
+        keyword.setKeyword("keyword");
+//        Translation translation = new Translation();
+//        translation.setValue("test");
+//        translation.setState(TranslationState.UNVERIFIED);
+//        keyword.addTranslation(translation);
+        PaginatedList<Keyword> keywords = 
+            keywordService.findKeywords(keyword, true, 0, 2);
+        assertEquals(4, keywords.getMaxListSize());
+        assertEquals(2, keywords.size());
+        assertTrue(keywords.contains(keyword1));
         assertTrue(keywords.contains(keyword2));
     }
 
@@ -783,21 +898,27 @@ public class KeywordServiceTest extends AbstractServiceTest
         translation1.setState(TranslationState.VERIFIED);
         keyword3.addTranslation(translation1);
         Translation translation2 = new Translation();
-        translation2.setValue("test");
+        translation2.setValue("testing");
         translation2.setState(TranslationState.VERIFIED);
         keyword3.addTranslation(translation2);
         keywordService.saveOrUpdate(keyword3);
+        Translation translation3 = new Translation();
+        translation3.setValue("Street");
+        translation3.setState(TranslationState.VERIFIED);
+        keyword4.addTranslation(translation3);
+        keywordService.saveOrUpdate(keyword4);
 
         Keyword keyword = new Keyword();
         Translation translation = new Translation();
         translation.setState(null);
         translation.setValue("st");
         keyword.addTranslation(translation);
-        PaginatedList<Keyword> keywords = keywordService.findKeywords(keyword, false,
-                null, null);
-        assertEquals(1, keywords.getMaxListSize());
-        assertEquals(1, keywords.size());
+        PaginatedList<Keyword> keywords = 
+            keywordService.findKeywords(keyword, true, null, null);
+        assertEquals(2, keywords.getMaxListSize());
+        assertEquals(2, keywords.size());
         assertTrue(keywords.contains(keyword3));
+        assertTrue(keywords.contains(keyword4));
     }
 
     /**
@@ -813,21 +934,28 @@ public class KeywordServiceTest extends AbstractServiceTest
         translation1.setState(TranslationState.UNVERIFIED);
         translation1.setBundle(bundle);
         keyword3.addTranslation(translation1);
-        keywordService.saveOrUpdate(keyword3);
-
         Translation translation2 = new Translation();
         translation2.setLanguage(english);
+        translation2.setCountry(australia);
         translation2.setValue("test");
-        translation2.setState(TranslationState.QUERIED);
-        keyword4.addTranslation(translation2);
+        translation2.setState(TranslationState.UNVERIFIED);
+        translation2.setBundle(bundle);
+        keyword3.addTranslation(translation2);
+        keywordService.saveOrUpdate(keyword3);
+
+        Translation translation3 = new Translation();
+        translation3.setLanguage(english);
+        translation3.setValue("test");
+        translation3.setState(TranslationState.QUERIED);
+        keyword4.addTranslation(translation3);
         keywordService.saveOrUpdate(keyword4);
 
         Keyword keyword = new Keyword();
         Translation translation = new Translation();
         translation.setBundle(bundle);
         keyword.addTranslation(translation);
-        final PaginatedList<Keyword> keywords = keywordService.findKeywords(keyword,
-                false, 0, null);
+        final PaginatedList<Keyword> keywords = 
+            keywordService.findKeywords(keyword, false, 0, null);
         assertEquals(1, keywords.getMaxListSize());
         assertEquals(1, keywords.size());
         assertTrue(keywords.contains(keyword3));
@@ -868,9 +996,9 @@ public class KeywordServiceTest extends AbstractServiceTest
         translation.setState(null);
         translation.setCountry(singapore);
         keyword.addTranslation(translation);
-        final PaginatedList<Keyword> keywords = keywordService.findKeywords(keyword,
-                false, null, null);
-        assertEquals(2, keywords.getMaxListSize());
+        final PaginatedList<Keyword> keywords = 
+            keywordService.findKeywords(keyword, false, null, 1);
+        assertEquals(1, keywords.getMaxListSize());
         assertEquals(1, keywords.size());
         assertTrue(keywords.contains(keyword4));
     }
@@ -909,8 +1037,8 @@ public class KeywordServiceTest extends AbstractServiceTest
         Translation translation = new Translation();
         translation.setState(TranslationState.VERIFIED);
         keyword.addTranslation(translation);
-        final PaginatedList<Keyword> keywords = keywordService.findKeywords(keyword,
-                false, null, null);
+        final PaginatedList<Keyword> keywords = 
+            keywordService.findKeywords(keyword, false, null, null);
         assertEquals(1, keywords.getMaxListSize());
         assertEquals(1, keywords.size());
         assertTrue(keywords.contains(keyword1));
@@ -925,8 +1053,8 @@ public class KeywordServiceTest extends AbstractServiceTest
     {
         Keyword keyword = new Keyword();
         keyword.addTranslation(new Translation());
-        final PaginatedList<Keyword> keywords = keywordService.findKeywords(keyword,
-                true, 0, null);
+        final PaginatedList<Keyword> keywords = 
+            keywordService.findKeywords(keyword, true, 0, null);
         assertTrue(keywords.isEmpty());
         assertEquals(0, keywords.getMaxListSize());
     }

@@ -64,4 +64,48 @@ public final class RequestUtils
         
         return value;
     }
+
+    /**
+     * Get the value of the parameter as a Boolean value.
+     * 
+     * @param request the current request
+     * @param name the name of the parameter
+     * @return the Boolean value of the parameter, or <code>null</code> if it 
+     * is not present
+     * @throws NumberFormatException if the value is not a valid Boolean
+     */
+    static Boolean getBooleanParameter(final HttpServletRequest request,
+            final String name)
+    {
+        final String stringValue = request.getParameter(name);
+        Boolean value = null;
+        if (StringUtils.isNotBlank(stringValue))
+        {
+            value = Boolean.valueOf(stringValue);
+        }
+        
+        return value;
+    }
+    
+    /**
+     * Get the value of the parameter as a Integer value.
+     * 
+     * @param request the current request
+     * @param name the name of the parameter
+     * @return the Integer value of the parameter, or <code>null</code> if it 
+     * is not present
+     * @throws NumberFormatException if the value is not a valid Integer
+     */
+    static Integer getIntegerParameter(final HttpServletRequest request,
+            final String name)
+    {
+        final String stringValue = request.getParameter(name);
+        Integer value = null;
+        if (StringUtils.isNotBlank(stringValue))
+        {
+            value = Integer.valueOf(stringValue);
+        }
+        
+        return value;
+    }
 }

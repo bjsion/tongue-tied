@@ -112,10 +112,12 @@ form fieldset {
   margin-bottom: 0.5em;
   line-height: 1.2em;
 }
+
 form.header {
   display: inline;
   float: right;
 }
+
 form fieldset.header {
   display: inline;
   border: none;
@@ -251,6 +253,13 @@ h3 {
   font-weight: bold;
 }
 
+h4.preference {
+  background: #FFFFFF;
+  font-size: 13px;
+  font-weight: normal;
+  padding: 1px 2px 1px 2px;
+}
+
 h4.message {
   background: #99CC00;
   text-align: center;
@@ -300,8 +309,18 @@ input.deleteImageButton {
 table.sublist {
   margin: 0 0 0 0 !important;
   font-size: 100%;
+  table-layout: fixed;
 }
 
-td.sublistHolder {
+td.sublist {
   padding: 0 0 1px 0 !important;
+  width: 65%;
+}
+
+.sublist th.translation {
+  width: 30%;
+}
+
+.sublist th.state {
+  width: 10%;
 }

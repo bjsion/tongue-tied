@@ -15,7 +15,6 @@
  */
 package org.tonguetied.web;
 
-import static org.displaytag.tags.TableTagParameters.PARAMETER_PAGE;
 import static org.tonguetied.web.Constants.BUNDLES;
 import static org.tonguetied.web.Constants.COUNTRIES;
 import static org.tonguetied.web.Constants.COUNTRY;
@@ -31,7 +30,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.displaytag.util.ParamEncoder;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -146,11 +144,7 @@ private KeywordService keywordService;
                                     HttpServletResponse response,
                                     Object command) throws Exception
     {
-        Map<String, Object> model = new HashMap<String, Object>();
-        final String pageParam = 
-            new ParamEncoder("keyword").encodeParameterName(PARAMETER_PAGE);
-        model.put(pageParam, request.getParameter(pageParam));
-        return new ModelAndView(getCancelView(), model);
+        return new ModelAndView(getCancelView());
     }
     
     @Override
