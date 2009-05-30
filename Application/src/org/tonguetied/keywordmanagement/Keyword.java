@@ -60,7 +60,8 @@ import org.tonguetied.utils.pagination.Cloneable;
 @AccessType("property")
 @NamedQueries({
     @NamedQuery(name=Keyword.QUERY_KEYWORD_COUNT,query="select count(*) from Keyword"),
-    @NamedQuery(name=Keyword.QUERY_GET_KEYWORDS,query="from Keyword k order by k.keyword")
+    @NamedQuery(name=Keyword.QUERY_GET_KEYWORDS,query="from Keyword k order by k.keyword asc"),
+    @NamedQuery(name=Keyword.QUERY_GET_KEYWORDS_DESC,query="from Keyword k order by k.keyword desc")
 })
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @Table(name=Keyword.TABLE_KEYWORD)
@@ -74,6 +75,7 @@ public class Keyword implements Cloneable<Keyword>, Comparable<Keyword>, Auditab
     public static final String TABLE_KEYWORD = "keyword";
     private static final String COL_ID = TABLE_KEYWORD + "_id";
     protected static final String QUERY_GET_KEYWORDS = "get.keywords";
+    protected static final String QUERY_GET_KEYWORDS_DESC = "get.keywords.desc";
     protected static final String QUERY_KEYWORD_COUNT = "keyword.count";
     protected static final String FIELD_ID = "id";
     protected static final String FIELD_KEYWORD = "keyword";

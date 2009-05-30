@@ -55,7 +55,9 @@ import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
 import org.tonguetied.usermanagement.User;
 import org.tonguetied.usermanagement.UserService;
+import org.tonguetied.utils.pagination.Order;
 import org.tonguetied.utils.pagination.PaginatedList;
+import org.tonguetied.web.PaginationUtils.KeyValue;
 
 
 /**
@@ -92,25 +94,25 @@ public class MainController extends MultiActionController
             response.addCookie(cookie);
         }
         
-        final boolean showAll;
-        final String parameter = request.getParameter(SHOW_ALL);
-        if (parameter != null)
-        {
-            showAll = Boolean.parseBoolean(parameter);
-        }
-        else
+        Boolean showAll = RequestUtils.getBooleanParameter(request, SHOW_ALL);
+        if (showAll == null)
         {
             showAll = (Boolean) request.getSession().getAttribute(SHOW_ALL);
         }
         
         final int firstResult = PaginationUtils.calculateFirstResult(
-            "keyword", viewPreferences.getMaxResults(), request);
+           "keyword", viewPreferences.getMaxResults(), request);
+        final KeyValue<String, Order> keyValue = 
+            PaginationUtils.getOrder("keyword", request);
+        Order order = null;
+        if (keyValue != null)
+            order = keyValue.getValue();
         
         PaginatedList<Keyword> keywords;
         if (showAll)
         {
             keywords = keywordService.getKeywords(firstResult,
-                    viewPreferences.getMaxResults());
+                    viewPreferences.getMaxResults(), order);
             searchParameters.initialize();
         }
         else
@@ -123,8 +125,9 @@ public class MainController extends MultiActionController
             keywords = 
                 keywordService.findKeywords(keyword,
                         searchParameters.getIgnoreCase(),
-                                        firstResult,
-                                        viewPreferences.getMaxResults());
+                        order,
+                        firstResult,
+                        viewPreferences.getMaxResults());
         }
         
         keywords = applyViewPreferences(keywords);

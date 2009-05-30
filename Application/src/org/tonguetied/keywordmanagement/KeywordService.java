@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
+import org.tonguetied.utils.pagination.Order;
 import org.tonguetied.utils.pagination.PaginatedList;
 
 /**
@@ -53,9 +54,11 @@ public interface KeywordService
      * results begin at zero
      * @param maxResults the maximum number of rows. If <code>null</code> then
      * all results are returned
+     * @param order indicates the order the results should be returned
      * @return all {@link Keyword}s in the system.
      */
-    PaginatedList<Keyword> getKeywords(final Integer firstResult, final Integer maxResults);
+    PaginatedList<Keyword> getKeywords(final Integer firstResult, 
+            final Integer maxResults, final Order order);
     
     /**
      * Get the {@link Keyword} matching the <code>keywordString</code>.
@@ -72,6 +75,7 @@ public interface KeywordService
      * @param keyword the criteria to search for
      * @param ignoreCase <code>true</code> if case should be ignored. 
      * <code>false</code> otherwise
+     * @param order indicates the order the results should be returned
      * @param firstResult a row number, numbered from 0. If <code>null</code>
      * then then results begin at zero
      * @param maxResults the maximum number of rows. If <code>null</code> then
@@ -80,6 +84,7 @@ public interface KeywordService
      */
     PaginatedList<Keyword> findKeywords(Keyword keyword, 
                                final boolean ignoreCase,
+                               final Order order,
                                final Integer firstResult,
                                final Integer maxResults);
     
