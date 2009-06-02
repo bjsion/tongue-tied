@@ -126,20 +126,20 @@ public class ServletContextInitializer implements ServletContextListener
             if (serverData != null)
                 administrationService.saveOrUpdate(serverData);
         }
-//        // check if we need to update
-//        else
-//        {
-//            if (logger.isDebugEnabled())
-//                logger.debug("attempting to update database");
-//            
-//            ServerData curServerData = createServerData(event.getServletContext());
-//            if (curServerData.compareTo(serverData) > 0)
-//            {
+        // check if we need to update
+        else
+        {
+            if (logger.isDebugEnabled())
+                logger.debug("attempting to update database");
+            
+            ServerData curServerData = createServerData(event.getServletContext());
+            if (curServerData.compareTo(serverData) > 0)
+            {
 //                final String[] schemas = loadSchemas(event.getServletContext(), dialect, curServerData.getVersion());
 //                administrationService.createDatabase(schemas);
-//                administrationService.saveOrUpdate(curServerData);
-//            }
-//        }
+                administrationService.saveOrUpdate(curServerData);
+            }
+        }
     }
 
     /**
