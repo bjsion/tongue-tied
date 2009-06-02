@@ -1,9 +1,9 @@
-#summary One-sentence summary of this page.
+#summary Describes how to configure the embedded webserver.
 #labels Phase-Deploy
 
 = Introduction =
 
-Add your content here.
+TongueTied is distributed with an embedded webserver (unless you are using the war file distribution). This document describes how to configure the embedded Jetty webserver.
 
 
 = Details =
