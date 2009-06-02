@@ -21,8 +21,9 @@ package org.tonguetied.web;
  * @author bsion
  *
  */
-public interface Constants {
-
+public interface Constants
+{
+    public static final String APPLY_FILTER = "applyFilter";
     public static final String AUDIT_LOG = "auditLog";
     public static final String BUNDLES = "bundles";
     public static final String COUNTRIES = "countries";
