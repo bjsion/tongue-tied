@@ -3,7 +3,7 @@
 
 = Introduction =
 
-TongueTied is distributed with an embedded webserver (unless you are using the war file distribution). This document describes how to configure the embedded Jetty webserver.
+!TongueTied is distributed with an embedded webserver (unless you are using the war file distribution). This document describes how to configure the embedded Jetty webserver.
 
 
 = Details =
