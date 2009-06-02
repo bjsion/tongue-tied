@@ -198,8 +198,7 @@ public class ServerData implements Comparable<ServerData>
      */
     public int compareTo(ServerData other)
     {
-        return new CompareToBuilder().append(version, other.version).
-            append(buildDate, other.buildDate).toComparison();
+        return new CompareToBuilder().append(version, other.version).toComparison();
     }
 
     @Override
