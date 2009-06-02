@@ -165,7 +165,24 @@
             <display:column property="context" maxLength="60" titleKey="context" group="3" class="context"/>
             <c:set var="translations" value="keywords.result[${keyword_rowNum-1}].translations"/>
             <display:column titleKey="translations" class="sublist">
+                <%--display:table id="translationHeader" htmlId="translationTableHeader" class="sublist">
+<display:setProperty name="basic.empty.showtable" value="true"/>
+                    <display:column titleKey="bundle" class="bundle"/>
+                    <display:column titleKey="language" class="language"/>
+                    <display:column titleKey="country" class="country"/>
+                    <display:column titleKey="translation" headerClass="translation"/>
+                    <display:column titleKey="state" headerClass="state"/>
+                </display:table--%>
                 <display:table name="${translations}" id="translation" htmlId="translationTable${keyword_rowNum}" class="sublist">
+                    <c:choose>
+                        <c:when test="${applyFilter}">
+<fmt:message key="translation.filtered.sublist.msg.empty_list" var="emptyListMsg" scope="page"/>
+                        </c:when>
+                        <c:otherwise>
+<fmt:message key="translation.sublist.msg.empty_list" var="emptyListMsg" scope="page"/>
+                        </c:otherwise>
+                    </c:choose>
+<display:setProperty name="basic.msg.empty_list" value="${emptyListMsg}"/>
                     <display:column property="bundle.name" titleKey="bundle" class="bundle"/>
                     <display:column property="language.name" titleKey="language" class="language"/>
                     <display:column titleKey="country" class="country">
