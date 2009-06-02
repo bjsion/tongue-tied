@@ -15,6 +15,7 @@
  */
 package org.tonguetied.web;
 
+import static org.tonguetied.web.Constants.APPLY_FILTER;
 import static org.tonguetied.web.Constants.BUNDLES;
 import static org.tonguetied.web.Constants.COUNTRIES;
 import static org.tonguetied.web.Constants.LANGUAGES;
@@ -98,8 +99,22 @@ public class PreferenceController extends SimpleFormController
     {
         if (logger.isDebugEnabled()) 
             logger.debug("setting view preferences");
+        
+        request.getSession().setAttribute(APPLY_FILTER, isFilterApplied());
 
         return new ModelAndView(getSuccessView());
+    }
+    
+    private boolean isFilterApplied()
+    {
+        return (isFilterApplied(viewPreferences.getSelectedBundles()) ||
+                isFilterApplied(viewPreferences.getSelectedCountries()) ||
+                isFilterApplied(viewPreferences.getSelectedLanguages()));
+    }
+    
+    private boolean isFilterApplied(List<?> list)
+    {
+        return list == null? false: !list.isEmpty();
     }
 
     @Override
