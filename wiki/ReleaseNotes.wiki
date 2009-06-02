@@ -1,6 +1,17 @@
 #summary Release Note.
 #labels Phase-Deploy,Featured
 
+= 1.2.0 =
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=6 Issue 6] Add pagination support
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=15 Issue 15] Keyword sort fails after a search
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=58 Issue 58] Saving value of an existing keyword causes error
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=65 Issue 65] Html text for a keyword/translation causes rendering issues in the audit log tab
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=66 Issue 66] Deleting a translation for a new keyword fails.
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=67 Issue 67] Filtering on bundles and columns gives unexpected result
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=69 Issue 69] Table display in IE is not following a column layout
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=71 Issue 71] Favicon not displaying in IE
+ 
+
 = 1.1.0 =
  * [http://code.google.com/p/tongue-tied/issues/detail?id=18 Issue 18] Add support for Postgres db
  * [http://code.google.com/p/tongue-tied/issues/detail?id=53 Issue 53] New Keywords are not displaying in the keyword listing in the main screen
