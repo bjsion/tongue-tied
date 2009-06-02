@@ -310,6 +310,7 @@ table.sublist {
   margin: 0 0 0 0 !important;
   font-size: 100%;
   table-layout: fixed;
+  border: none;
 }
 
 td.sublist {

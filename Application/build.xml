@@ -375,6 +375,7 @@
             </webinf>
             <classes dir="${config.dir}">
                 <include name="tonguetied*.properties"/>
+                <include name="displaytag*.properties"/>
                 <include name="language.properties"/>
             </classes>
             <classes dir="${generated.dir}">
