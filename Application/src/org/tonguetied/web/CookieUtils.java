@@ -28,7 +28,7 @@ public final class CookieUtils
 {
 
     /**
-     * Find the cookie matching the cookie name <code>name</code>.
+     * Find the first cookie matching the cookie name <code>name</code>.
      * 
      * @param request the request to process
      * @param name the name of the cookie to find
