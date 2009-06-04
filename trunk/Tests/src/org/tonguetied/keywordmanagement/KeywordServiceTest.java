@@ -162,7 +162,7 @@ public class KeywordServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer, String)}.
+     * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer, Order)}.
      */
     @Test
     public final void testGetKeywordsWithPagination()
@@ -174,7 +174,7 @@ public class KeywordServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer, String)}.
+     * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer, Order)}.
      */
     @Test
     public final void testGetKeywordsWithPaginationInvalidFirstPositionGreaterThanSize()
@@ -185,7 +185,7 @@ public class KeywordServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer, String)}.
+     * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer, Order)}.
      */
     @Test
     public final void testGetKeywordsWithPaginationNegativeFirstPosition()
@@ -197,7 +197,7 @@ public class KeywordServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer, String)}.
+     * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer, Order)}.
      */
     @Test
     public final void testGetKeywordsWithPaginationNullFirstPosition()
@@ -212,7 +212,7 @@ public class KeywordServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer, String)}.
+     * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer, Order)}.
      */
     @Test
     public final void testGetKeywordsWithPaginationZeroMax()
@@ -224,7 +224,7 @@ public class KeywordServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer, String)}.
+     * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer, Order)}.
      */
     @Test
     public final void testGetKeywordsWithPaginationNullMax()
@@ -237,7 +237,7 @@ public class KeywordServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer, String)}.
+     * Test method for {@link KeywordServiceImpl#getKeywords(Integer, Integer, Order)}.
      */
     @Test
     public final void testGetKeywordsWithPaginationMaxGreaterThanSize()
@@ -504,7 +504,7 @@ public class KeywordServiceTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, String, Integer, Integer)}.
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Order, Integer, Integer)}.
      */
     @Test
     public final void testFindBundlesWithNoMatches()
@@ -609,7 +609,7 @@ public class KeywordServiceTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, String, Integer, Integer)}.
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Order, Integer, Integer)}.
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testFindKeywordsWithKeywordNull()
@@ -628,7 +628,7 @@ public class KeywordServiceTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, String, Integer, Integer)}.
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Order, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsWithNoMatches()
@@ -643,7 +643,7 @@ public class KeywordServiceTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, String, Integer, Integer)}.
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Order, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsByKeyword()
@@ -660,7 +660,7 @@ public class KeywordServiceTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, String, Integer, Integer)}.
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Order, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsByKeywordWithPagedListInvalidFirstPositionGreaterThanSize()
@@ -675,7 +675,7 @@ public class KeywordServiceTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, String, Integer, Integer)}.
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Order, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsByKeywordWithPagedListInvalidFirstPositionNegative()
@@ -691,7 +691,7 @@ public class KeywordServiceTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, String, Integer, Integer)}.
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Order, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsByKeywordWithPagedListNullFirstPosition()
@@ -707,7 +707,7 @@ public class KeywordServiceTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, String, Integer, Integer)}.
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Order, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsByKeywordWithPagedListNullMax()
@@ -724,7 +724,7 @@ public class KeywordServiceTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, String, Integer, Integer)}.
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Order, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsByKeywordWithPagedListZeroMax()
@@ -739,7 +739,7 @@ public class KeywordServiceTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, String, Integer, Integer)}.
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Order, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsByKeywordWithPagedListMaxGreaterThanSize()
@@ -756,7 +756,7 @@ public class KeywordServiceTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, String, Integer, Integer)}.
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Order, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsByKeywordWithPagedList()
@@ -772,7 +772,7 @@ public class KeywordServiceTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, String, Integer, Integer)}.
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Order, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsByKeywordAndTranslationWithPagedList()
@@ -885,7 +885,7 @@ public class KeywordServiceTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, String, Integer, Integer)}.
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Order, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsByKeywordEmptyString()
@@ -904,7 +904,7 @@ public class KeywordServiceTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, String, Integer, Integer)}.
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Order, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsOrderDecending()
@@ -923,7 +923,7 @@ public class KeywordServiceTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, String, Integer, Integer)}.
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Order, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsByTranslationValue()
@@ -958,7 +958,7 @@ public class KeywordServiceTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, String, Integer, Integer)}.
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Order, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsByBundle()
@@ -998,7 +998,7 @@ public class KeywordServiceTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, String, Integer, Integer)}.
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Order, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsByCountry()
@@ -1040,7 +1040,7 @@ public class KeywordServiceTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, String, Integer, Integer)}.
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Order, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsByTranslationState()
@@ -1081,7 +1081,7 @@ public class KeywordServiceTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, String, Integer, Integer)}.
+     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#findKeywords(Keyword, boolean, Order, Integer, Integer)}.
      */
     @Test
     public final void testFindKeywordsWithEmptyKeyword()

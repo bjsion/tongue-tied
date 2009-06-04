@@ -143,7 +143,7 @@ public class UserServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer))}.
+     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer)}.
      */
     @Test
     public final void testGetUsersWithPagination()
@@ -156,7 +156,7 @@ public class UserServiceTest extends AbstractServiceTest
     }
     
     /**
-     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer))}.
+     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer)}.
      */
     @Test
     public final void testGetUsersWithPaginationWithInvalidFirstPositionGreaterThanSize()
@@ -167,7 +167,7 @@ public class UserServiceTest extends AbstractServiceTest
     }
     
     /**
-     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer))}.
+     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer)}.
      */
     @Test
     public final void testGetUsersWithPaginationWithNegativeFirstPosition()
@@ -180,7 +180,7 @@ public class UserServiceTest extends AbstractServiceTest
     }
     
     /**
-     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer))}.
+     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer)}.
      */
     @Test
     public final void testGetUsersWithPaginationWithNullFirstPosition()
@@ -193,7 +193,7 @@ public class UserServiceTest extends AbstractServiceTest
     }
     
     /**
-     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer))}.
+     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer)}.
      */
     @Test
     public final void testGetUsersWithPaginationWithZeroMax()
@@ -204,7 +204,7 @@ public class UserServiceTest extends AbstractServiceTest
     }
     
     /**
-     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer))}.
+     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer)}.
      */
     @Test
     public final void testGetUsersWithPaginationWithNullMax()
@@ -218,7 +218,7 @@ public class UserServiceTest extends AbstractServiceTest
     }
     
     /**
-     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer))}.
+     * Test method for {@link UserServiceImpl#getUsers(Integer, Integer)}.
      */
     @Test
     public final void testGetUsersWithPaginationWithGreaterThanSize()
@@ -275,7 +275,7 @@ public class UserServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test the {@link UserService#findUsers(User, Integer, Integer))} method 
+     * Test the {@link UserService#findUsers(User, Integer, Integer)} method 
      * for the scenario when there are no matching users.
      */
     @Test
@@ -289,7 +289,7 @@ public class UserServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test the {@link UserService#findUsers(User, Integer, Integer))} method 
+     * Test the {@link UserService#findUsers(User, Integer, Integer)} method 
      * for the scenario when the user criteria is all empty.
      */
     @Test
@@ -305,7 +305,7 @@ public class UserServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test the {@link UserService#findUsers(User, Integer, Integer))} method 
+     * Test the {@link UserService#findUsers(User, Integer, Integer)} method 
      * for the scenario when there is more than one matching user
      */
     @Test
@@ -322,7 +322,7 @@ public class UserServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test the {@link UserService#findUsers(User, Integer, Integer))} method 
+     * Test the {@link UserService#findUsers(User, Integer, Integer)} method 
      * for the scenario when there is more than one matching user using a wild 
      * card matching at the start.
      */
@@ -340,7 +340,7 @@ public class UserServiceTest extends AbstractServiceTest
     }
     
     /**
-     * Test the {@link UserService#findUsers(User, Integer, Integer))} method 
+     * Test the {@link UserService#findUsers(User, Integer, Integer)} method 
      * for the scenario when there is more than one matching user using a wild 
      * card matching at the end.
      */
@@ -358,7 +358,7 @@ public class UserServiceTest extends AbstractServiceTest
     }
     
     /**
-     * Test the {@link UserService#findUsers(User, Integer, Integer))} method 
+     * Test the {@link UserService#findUsers(User, Integer, Integer)} method 
      * for the scenario when there is more than one matching user but the caps 
      * are different.
      */

@@ -70,7 +70,7 @@ public class AuditServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer))}.
+     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer)}.
      */
     @Test
     public final void testGetAuditLogWithPagination()
@@ -90,7 +90,7 @@ public class AuditServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer))}.
+     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer)}.
      */
     @Test
     public final void testGetAuditLogWithPaginationWithInvalidFirstPositionGreaterThanSize()
@@ -108,7 +108,7 @@ public class AuditServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer))}.
+     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer)}.
      */
     @Test
     public final void testGetAuditLogWithPaginationWithNegativeFirstPosition()
@@ -128,7 +128,7 @@ public class AuditServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer))}.
+     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer)}.
      */
     @Test
     public final void testGetAuditLogWithPaginationWithNullFirstPosition()
@@ -148,7 +148,7 @@ public class AuditServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer))}.
+     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer)}.
      */
     @Test
     public final void testGetAuditLogWithPaginationWithZeroMax()
@@ -166,7 +166,7 @@ public class AuditServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer))}.
+     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer)}.
      */
     @Test
     public final void testGetAuditLogWithPaginationWithNullMax()
@@ -187,7 +187,7 @@ public class AuditServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer))}.
+     * Test method for {@link org.tonguetied.audit.AuditService#getAuditLog(Integer, Integer)}.
      */
     @Test
     public final void testGetAuditLogWithPaginationWithMaxGreaterThanSize()
