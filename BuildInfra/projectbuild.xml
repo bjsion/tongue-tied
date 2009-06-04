@@ -12,7 +12,8 @@
     <property name="application.war.file" value="tonguetied.war"/>
     
     <!-- temporary directories -->
-    <property name="output.dir" value="${infra.home}/output"/>
+    <property name="docs.dir" value="${infra.home}/docs"/>
+    <property name="docs.metrics.dir" value="${docs.dir}/metrics"/>
 
     <!-- target used to invoke a build script with a set of properties -->
     <!-- param: module.path -->
@@ -84,7 +85,8 @@
     
     <target name="global.code.metrics" description="Perform architectural code metrics for the entire application, ie all projects">
         <echo message="Performing code metrics for application ${ant.project.name}..."/>
-        <jdepend format="xml" outputfile="${output.dir}/jdepend_metrics.xml">
+        <mkdir dir="${docs.metrics.dir}"/>
+        <jdepend format="xml" outputfile="${docs.metrics.dir}/jdepend_metrics.xml">
             <exclude name="au.com.bytecode.*"/>
             <exclude name="fmpp*"/>
             <exclude name="freemarker*"/>
@@ -104,21 +106,21 @@
         </jdepend>
         
         <echo message="creating html output of code metrics"/>
-        <xslt in="${output.dir}/jdepend_metrics.xml"
-              out="${output.dir}/jdepend.html" 
+        <xslt in="${docs.metrics.dir}/jdepend_metrics.xml"
+              out="${docs.metrics.dir}/jdepend.html" 
               style="${ant.home}/etc/jdepend.xsl">
             <outputproperty name="method" value="html"/>
         </xslt>
         
         <echo message="creating diagram of code metrics"/>
-        <xslt in="${output.dir}/jdepend_metrics.xml"
-              out="${output.dir}/jdepend.dot"
+        <xslt in="${docs.metrics.dir}/jdepend_metrics.xml"
+              out="${docs.metrics.dir}/jdepend.dot"
               style="${3rdparty.home}/jDepend/2.9.1/jdepend2dot.xsl">
         </xslt>
         
         <!-- Cannot guarentee that every machine has Graphviz installed so don't
              fail the task if the graph cannot be generated. -->
-        <exec executable="dot" failifexecutionfails="false" dir="${output.dir}">
+        <exec executable="dot" failifexecutionfails="false" dir="${docs.metrics.dir}">
             <arg value="-Tjpg"/>
             <arg value="-o"/>
             <arg value="jdepend-${ant.project.name}.jpg"/>

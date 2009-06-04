@@ -30,8 +30,7 @@
     <property name="generated.dir" value="${server.home}/generated"/>
     <property name="docs.api.dir" value="${docs.dir}/api"/>
     <property name="logs.dir" value="${server.home}/logs"/>
-    <property name="output.dir" value="${server.home}/output"/>
-    <property name="compiled.reports.dir" value="${generated.dir}/reports"/>
+    <property name="docs.findbugs.dir" value="${docs.dir}/findbugs"/>
     <property name="build.details.file" value="${generated.dir}/buildNumber.properties"/>
     <property name="keystore.file" value="${generated.dir}/keystore"/>
 
@@ -54,9 +53,8 @@
         <mkdir dir="${classes.dir}"/>
         <mkdir dir="${build.dir}"/>
         <mkdir dir="${docs.dir}"/>
+        <mkdir dir="${docs.findbugs.dir}"/>
         <mkdir dir="${generated.dir}"/>
-        <mkdir dir="${output.dir}"/>
-        <mkdir dir="${compiled.reports.dir}"/>
         <mkdir dir="${logs.dir}"/>
         <available file="${keystore.file}" property="is.keystore.available"/>
     </target>
@@ -69,7 +67,6 @@
     <target name="clean" depends="clean.classes" description="Remove all generated files, including but not limited to classes, log files and jar files">
         <delete dir="${build.dir}" failonerror="true" deleteonexit="true"/>
         <delete dir="${docs.dir}" failonerror="true" deleteonexit="true"/>
-        <delete dir="${output.dir}" failonerror="true" deleteonexit="true"/>
         <delete dir="${generated.dir}" failonerror="true" deleteonexit="true"/>
         <delete dir="${logs.dir}" failonerror="true" deleteonexit="true"/>
     </target>
@@ -155,13 +152,13 @@
                   effort="max"
                   jvmargs="-Xmx256M"
                   output="xml:withMessages"
-                  outputFile="${output.dir}/${findbugs.xml.file}">
+                  outputFile="${docs.findbugs.dir}/${findbugs.xml.file}">
             <auxclasspath refid="compile.classpath"/>
             <sourcepath path="${src.dir}"/>
             <class location="${build.dir}/${module.jarfile}"/>
         </findbugs>
-        <xslt in="${output.dir}/${findbugs.xml.file}"
-              out="${output.dir}/${findbugs.xml.file}.html"
+        <xslt in="${docs.findbugs.dir}/${findbugs.xml.file}"
+              out="${docs.findbugs.dir}/${findbugs.xml.file}.html"
               style="${findbugs.home}/src/xsl/fancy.xsl">
             <outputproperty name="method" value="html"/>
         </xslt>

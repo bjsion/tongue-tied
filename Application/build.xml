@@ -49,13 +49,12 @@
     <property name="docs.beandoc.dir" value="${docs.dir}/beandoc"/>
     <property name="docs.hibernate.dir" value="${docs.dir}/hibernate"/>
     <property name="docs.schema.dir" value="${docs.dir}/schema"/>
+    <property name="docs.findbugs.dir" value="${docs.dir}/findbugs"/>
     <property name="logs.dir" value="${application.home}/logs"/>
-    <property name="output.dir" value="${application.home}/output"/>
     <property name="hibernate.propsfile" value="hibernate.properties"/>
     <property name="schema.file" value="${db.dialect}-schema.sql"/>
     <property name="mapping.files.timestamp" value="${generated.dir}/mapping.files.timestamp"/>
     <property name="schema.file.timestamp" value="${generated.dir}/schema.file.timestamp"/>
-    <property name="compiled.reports.dir" value="${generated.dir}/reports"/>
     <property name="build.details.file" value="${generated.dir}/buildNumber.properties"/>
 
 
@@ -152,9 +151,9 @@
         <mkdir dir="${build.dir}/war"/>
         <mkdir dir="${docs.dir}"/>
         <mkdir dir="${docs.beandoc.dir}"/>
+        <mkdir dir="${docs.findbugs.dir}"/>
         <mkdir dir="${generated.dir}"/>
         <mkdir dir="${generated.sql.dir}"/>
-        <mkdir dir="${output.dir}"/>
         <mkdir dir="${compiled.reports.dir}"/>
         <mkdir dir="${logs.dir}"/>
     </target>
@@ -167,7 +166,6 @@
     <target name="clean" depends="clean.classes" description="Remove all generated files, including but not limited to classes, log files and jar files">
         <delete dir="${build.dir}" failonerror="true" deleteonexit="true"/>
         <delete dir="${docs.dir}" failonerror="true" deleteonexit="true"/>
-        <delete dir="${output.dir}" failonerror="true" deleteonexit="true"/>
         <delete dir="${generated.dir}" failonerror="true" deleteonexit="true"/>
         <delete dir="${logs.dir}" failonerror="true" deleteonexit="true"/>
     </target>
@@ -511,13 +509,13 @@
                   effort="max"
                   jvmargs="-Xmx256M"
                   output="xml:withMessages"
-                  outputFile="${output.dir}/${findbugs.xml.file}">
+                  outputFile="${docs.findbugs.dir}/${findbugs.xml.file}">
             <auxclasspath refid="compile.classpath"/>
             <sourcepath path="${src.dir}"/>
             <class location="${build.dir}/${module.jarfile}"/>
         </findbugs>
-        <xslt in="${output.dir}/${findbugs.xml.file}"
-              out="${output.dir}/${findbugs.xml.file}.html"
+        <xslt in="${docs.findbugs.dir}/${findbugs.xml.file}"
+              out="${docs.findbugs.dir}/${findbugs.xml.file}.html"
               style="${findbugs.home}/src/xsl/fancy.xsl">
             <outputproperty name="method" value="html"/>
         </xslt>
