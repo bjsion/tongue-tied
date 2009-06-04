@@ -22,7 +22,8 @@
     <property name="data.dir" value="${tests.home}/data"/>
     <property name="docs.dir" value="${tests.home}/docs"/>
     <property name="docs.api.dir" value="${docs.dir}/api"/>
-    <property name="output.dir" value="${tests.home}/output"/>
+    <property name="docs.junit.dir" value="${docs.dir}/junit"/>
+    <property name="docs.findbugs.dir" value="${docs.dir}/findbugs"/>
 
     <property name="build.debug" value="on"/>
 
@@ -85,8 +86,8 @@
     <target name="init">
         <mkdir dir="${classes.dir}"/>
         <mkdir dir="${build.dir}"/>
-        <mkdir dir="${output.dir}"/>
         <mkdir dir="${docs.dir}"/>
+        <mkdir dir="${docs.findbugs.dir}"/>
         <mkdir dir="${data.dir}"/>
     </target>
 
@@ -97,7 +98,6 @@
 
     <target name="clean" depends="clean.classes" description="Remove all generated files, including but not limited to classes, log files and jar files">
         <delete dir="${build.dir}" failonerror="true" deleteonexit="true"/>
-        <delete dir="${output.dir}" failonerror="true" deleteonexit="true"/>
         <delete dir="${docs.dir}" failonerror="true" deleteonexit="true"/>   
         <delete dir="${data.dir}" failonerror="true" deleteonexit="true"/>
     </target>
@@ -150,7 +150,7 @@
             <formatter type="xml" />
             <sysproperty key="user.dir" value="${user.dir.apa}"/>
 
-            <batchtest fork="yes" todir="${output.dir}">
+            <batchtest fork="yes" todir="${docs.junit.dir}">
                 <fileset dir="${src.dir}">
                     <include name="org/tonguetied/**/AllTests.java"/>
                 </fileset>
@@ -158,11 +158,11 @@
         </junit>
 
         <echo message="Generating report of unit tests" />
-        <junitreport todir="${output.dir}">
-            <fileset dir="${output.dir}">
+        <junitreport todir="${docs.junit.dir}">
+            <fileset dir="${docs.junit.dir}">
                 <include name="TEST-*.xml"/>
             </fileset>
-            <report format="frames" todir="${output.dir}"/>
+            <report format="frames" todir="${docs.junit.dir}"/>
         </junitreport>
         
         <fail if="has.tests.failed">
@@ -180,7 +180,7 @@
                     location="${3rdparty.home}/XMLEntities/datatypes.dtd"/>
             </xmlcatalog>
             <schema namespace="http://www.springframework.org/schema/beans"
-            	file="${3rdparty.home}/XMLEntities/spring-beans-2.5.xsd"/>
+                    file="${3rdparty.home}/XMLEntities/spring-beans-2.5.xsd"/>
             <fileset dir="${config.dir}" id="xml.resources">
                 <include name="**/*-context.xml"/>
             </fileset>
@@ -193,13 +193,13 @@
                   reportlevel="low"   
                   effort="max" 
                   output="xml:withMessages"
-                  outputFile="${output.dir}/${findbugs.xml.file}">
+                  outputFile="${docs.findbugs.dir}/${findbugs.xml.file}">
             <auxclasspath refid="compile.classpath"/>
             <sourcepath path="${src.dir}"/>
             <class location="${build.dir}/${module.jarfile}"/>
         </findbugs>
-        <xslt in="${output.dir}/${findbugs.xml.file}" 
-              out="${output.dir}/${findbugs.xml.file}.html"
+        <xslt in="${docs.findbugs.dir}/${findbugs.xml.file}" 
+              out="${docs.findbugs.dir}/${findbugs.xml.file}.html"
               style="${findbugs.home}/src/xsl/fancy.xsl">
             <outputproperty name="method" value="html"/>
         </xslt>
