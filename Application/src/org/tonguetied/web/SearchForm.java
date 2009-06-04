@@ -20,7 +20,6 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
-import org.tonguetied.keywordmanagement.KeywordService;
 import org.tonguetied.keywordmanagement.Language;
 import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
@@ -30,7 +29,8 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
  * Value object used to store and pass search criteria.
  * 
  * @author bsion
- * @see KeywordService#findKeywords(Keyword, boolean, String, Integer, Integer)
+ * @see org.tonguetied.keywordmanagement.KeywordService#findKeywords(
+ * Keyword, boolean, org.tonguetied.utils.pagination.Order, Integer, Integer)
  */
 public class SearchForm {
     private Keyword keyword;
