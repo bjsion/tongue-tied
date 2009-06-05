@@ -23,25 +23,29 @@ package org.tonguetied.web;
  */
 public interface Constants
 {
-    public static final String APPLY_FILTER = "applyFilter";
-    public static final String AUDIT_LOG = "auditLog";
-    public static final String BUNDLES = "bundles";
-    public static final String COUNTRIES = "countries";
-    public static final String COUNTRY = "country";
-    public static final String FIELD_CODE = "code";
-    public static final String FIELD_NAME = "name";
-    public static final String FIELD_RESOURCE_NAME = "resourceName";
-    public static final String FORMAT_TYPES = "formatTypes";
-    public static final String LANGUAGE = "language";
-    public static final String LANGUAGES = "languages";
-    static final String KEYWORDS = "keywords";
-    public static final String SEARCH_PARAMETERS = "searchParameters";
-    public static final String SHOW_ALL = "showAll";
-    public static final String STATES = "states";
-    public static final String USER = "user";
-    public static final String USERS = "users";
-    public static final String VIEW_PREFERENCES = "viewPreferences";
+    static final String APPLY_FILTER = "applyFilter";
+    static final String AUDIT_LOG = "auditLog";
+    static final String BTN_SEARCH = "searchBtn";
+    static final String BUNDLES = "bundles";
+    static final String COUNTRIES = "countries";
+    static final String COUNTRY = "country";
+    static final String FIELD_CODE = "code";
+    static final String FIELD_NAME = "name";
+    static final String FIELD_RESOURCE_NAME = "resourceName";
+    static final String FORMAT_TYPES = "formatTypes";
+    static final String LANGUAGE = "language";
+    static final String LANGUAGES = "languages";
+    static final String MAX_LIST_SIZE = "maxListSize";
     static final String KEYWORD_ID = "keywordId";
+    static final String KEYWORDS = "keywords";
+    static final String PAGE_SIZES = "pageSizes";
+    static final String SEARCH_PARAMETERS = "searchParameters";
+    static final String SHOW_ALL = "showAll";
+    static final String STATES = "states";
+    static final String USER = "user";
+    static final String USER_SIZE = "userSize";
+    static final String USERS = "users";
+    static final String VIEW_PREFERENCES = "viewPreferences";
 
     static final char SPACE_SEPARATOR = ' ';
     static final char LINE_SEPARATOR = '\u2007';
@@ -57,11 +61,8 @@ public interface Constants
     static final char LINE_FEED = '\u000A';
 //    private static final char CARRIAGE_RETURN = '\u000D';
  */
-    static final String MAX_LIST_SIZE = "maxListSize";
-    static final String USER_SIZE = "userSize";
 
     static final int DEFAULT_AUDIT_LOG_PAGE_SIZE = 50;
     static final int DEFAULT_USER_PAGE_SIZE = 10;
-    static final String BTN_SEARCH = "searchBtn";
-
+    static final int[] KEYWORD_PAGE_SIZE_OPTIONS = {10, 25, 50};
 }

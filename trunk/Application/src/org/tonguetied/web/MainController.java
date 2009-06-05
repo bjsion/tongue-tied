@@ -22,8 +22,10 @@ import static org.tonguetied.web.Constants.DEFAULT_AUDIT_LOG_PAGE_SIZE;
 import static org.tonguetied.web.Constants.DEFAULT_USER_PAGE_SIZE;
 import static org.tonguetied.web.Constants.KEYWORDS;
 import static org.tonguetied.web.Constants.KEYWORD_ID;
+import static org.tonguetied.web.Constants.KEYWORD_PAGE_SIZE_OPTIONS;
 import static org.tonguetied.web.Constants.LANGUAGES;
 import static org.tonguetied.web.Constants.MAX_LIST_SIZE;
+import static org.tonguetied.web.Constants.PAGE_SIZES;
 import static org.tonguetied.web.Constants.SEARCH_PARAMETERS;
 import static org.tonguetied.web.Constants.SHOW_ALL;
 import static org.tonguetied.web.Constants.STATES;
@@ -142,6 +144,7 @@ public class MainController extends MultiActionController
         model.put(SEARCH_PARAMETERS, searchParameters);
         model.put(VIEW_PREFERENCES, viewPreferences);
         model.put(MAX_LIST_SIZE, keywords.getMaxListSize());
+        model.put(PAGE_SIZES, KEYWORD_PAGE_SIZE_OPTIONS);
         return new ModelAndView("keyword/keywords", model);
     }
 
