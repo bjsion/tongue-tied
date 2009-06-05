@@ -17,12 +17,9 @@
                         <spring:bind path="viewPreferences.maxResults">
                         <label for="${status.expression}"><fmt:message key="max.results"/></label>
                         <select name="<c:out value="${status.expression}"/>" id="<c:out value="${status.expression}"/>" size="1">
-                            <c:set var="size" value="10" scope="page"/>
-                            <option <c:if test="${size == status.value}">selected="selected"</c:if> value="${size}"><c:out value="${size}"/></option>
-                            <c:set var="size" value="25" scope="page"/>
-                            <option <c:if test="${size == status.value}">selected="selected"</c:if> value="${size}"><c:out value="${size}"/></option>
-                            <c:set var="size" value="50" scope="page"/>
-                            <option <c:if test="${size == status.value}">selected="selected"</c:if> value="${size}"><c:out value="${size}"/></option>
+                        <c:forEach items="${pageSizes}" var="size">
+                            <option <c:if test="${size == status.value}">selected="selected"</c:if> value="${size}">${size}</option>
+                        </c:forEach>
                         </select>
                         </spring:bind>
                     </div>
