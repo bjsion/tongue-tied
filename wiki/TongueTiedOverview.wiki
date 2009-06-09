@@ -1,4 +1,5 @@
 #summary Overview of the TongueTied Application.
+#sidebar GlobalSideBar
 
 = Introduction =
 
