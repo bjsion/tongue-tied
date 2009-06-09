@@ -13,4 +13,6 @@ Add your content here.  Format your content with:
   * Headings, paragraphs, and lists
   * Automatic links to other wiki pages
 
-<wiki:gadget url="http://www.ohloh.net/p/gwt/widgets/tonguetied.xml" height="250" border="0" />
+<wiki:gadget url="http://www.ohloh.net/p/46004/widgets/project_cocomo.xml" height="240"  border="0" />
+
+<wiki:gadget url="http://www.ohloh.net/p/46004/widgets/project_users.xml?style=blue" height="100"  border="0" />
