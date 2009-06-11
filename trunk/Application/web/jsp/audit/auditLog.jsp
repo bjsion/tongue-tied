@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net/el" %>
 
-    <div class="content">
+    <div class="content listing">
         <display:table name="auditLog" htmlId="auditLogTable" id="record" sort="external" pagesize="${auditLogSize}" partialList="true" size="maxListSize" requestURI="">
             <display:column property="username" titleKey="changed.by" sortable="true"/>
             <display:column property="oldValue" titleKey="old.value" sortable="false" escapeXml="true"/>

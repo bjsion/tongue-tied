@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net/el" %>
 
-    <div class="content">
+    <div class="content listing">
         <display:table name="bundles" id="bundle" sort="page" requestURI="">
             <display:column sortable="true" titleKey="bundle.name" url="/bundle.htm" paramId="bundleId" paramProperty="id">
                 <c:out value="${bundle.name}"/>
