@@ -76,6 +76,11 @@ div.tabBody div.content {
   margin-top: 15px;
 }
 
+div.listing {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 div.pagefooter {
   clear: both;
   float: left;

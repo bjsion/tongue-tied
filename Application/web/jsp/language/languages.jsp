@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net/el" %>
 
-    <div class="content">
+    <div class="content listing">
         <display:table name="languages" id="language" sort="page" requestURI="">
             <display:column sortable="true" titleKey="language.name" url="/language.htm" paramId="languageId" paramProperty="id">
                 <c:out value="${language.name}"/>

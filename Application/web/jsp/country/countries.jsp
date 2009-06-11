@@ -5,7 +5,7 @@
 <%@ taglib prefix="display" uri="http://displaytag.sf.net/el" %>
 
 
-    <div class="content">
+    <div class="content listing">
         <display:table name="countries" id="country" sort="page" requestURI="">
             <display:column>
                 <c:if test="${country.code != \"DEFAULT\"}">
