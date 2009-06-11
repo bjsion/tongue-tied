@@ -270,7 +270,8 @@ public class DataServiceImpl implements DataService
      */
     private File getExportPath(final boolean reset)
     {
-        if (reset) {
+        if (reset)
+        {
             final DateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
             outputDir = new File(outputRoot, formatter.format(new Date()));
         }
@@ -280,7 +281,7 @@ public class DataServiceImpl implements DataService
 
     public void importData(ImportParameters parameters)
     {
-        long start = System.currentTimeMillis();
+        final long start = System.currentTimeMillis();
         if (logger.isDebugEnabled()) 
             logger.debug("importing based on filter " + parameters);
         
@@ -288,8 +289,9 @@ public class DataServiceImpl implements DataService
             ImporterFactory.getImporter(parameters.getFormatType(), keywordService);
         importer.importData(parameters);
         
-        if (logger.isInfoEnabled()) {
-            long totalMillis = System.currentTimeMillis() - start;
+        if (logger.isInfoEnabled())
+        {
+            final long totalMillis = System.currentTimeMillis() - start;
             logger.info("import complete in " + (totalMillis/1000) + " seconds");
         }
     }
