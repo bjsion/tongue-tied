@@ -82,11 +82,12 @@
     <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
         <classpath path="${findbugs.home}/lib/findbugs-ant.jar"/>
     </taskdef>
-	
+
     <target name="init">
         <mkdir dir="${classes.dir}"/>
         <mkdir dir="${build.dir}"/>
         <mkdir dir="${docs.dir}"/>
+        <mkdir dir="${docs.junit.dir}"/>
         <mkdir dir="${docs.findbugs.dir}"/>
         <mkdir dir="${data.dir}"/>
     </target>
