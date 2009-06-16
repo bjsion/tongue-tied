@@ -49,7 +49,8 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
  * @author bsion
  *
  */
-public class ExportController extends CancellableFormController {
+public class ExportController extends CancellableFormController
+{
     
     private KeywordService keywordService;
     private DataService dataService;
@@ -60,13 +61,15 @@ public class ExportController extends CancellableFormController {
     /**
      * Create new instance of CountryController 
      */
-    public ExportController() {
+    public ExportController()
+    {
         setCommandClass(ExportParameters.class);
     }
 
     @Override
     protected Object formBackingObject(HttpServletRequest request) 
-            throws Exception {
+            throws Exception
+    {
         ExportParameters exportParameters = new ExportParameters();
         
         return exportParameters;
@@ -76,7 +79,8 @@ public class ExportController extends CancellableFormController {
     protected ModelAndView onSubmit(HttpServletRequest request, 
                                     HttpServletResponse response,
                                     Object command,
-                                    BindException errors) throws Exception {
+                                    BindException errors) throws Exception
+    {
         if (logger.isDebugEnabled()) logger.debug("beginning export");
         ExportParameters parameters = (ExportParameters) command;
         
@@ -88,7 +92,8 @@ public class ExportController extends CancellableFormController {
     @Override
     protected void initBinder(HttpServletRequest request,
                               ServletRequestDataBinder binder) 
-            throws Exception {
+            throws Exception
+    {
         binder.registerCustomEditor(Language.class,  
                 new LanguageSupport(keywordService.getLanguages()));
         binder.registerCustomEditor(Country.class, 
@@ -118,7 +123,8 @@ public class ExportController extends CancellableFormController {
      * 
      * @param keywordService the {@link KeywordService} to set.
      */
-    public void setKeywordService(KeywordService keywordService) {
+    public void setKeywordService(KeywordService keywordService)
+    {
         this.keywordService = keywordService;
     }
     
@@ -127,7 +133,8 @@ public class ExportController extends CancellableFormController {
      * 
      * @param dataService the {@link DataService} to set.
      */
-    public void setDataService(DataService dataService) {
+    public void setDataService(DataService dataService)
+    {
         this.dataService = dataService;
     }
 }

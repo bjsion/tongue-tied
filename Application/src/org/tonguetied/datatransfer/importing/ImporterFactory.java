@@ -16,6 +16,7 @@
 package org.tonguetied.datatransfer.importing;
 
 import org.tonguetied.datatransfer.common.FormatType;
+import org.tonguetied.datatransfer.dao.TransferRepository;
 import org.tonguetied.keywordmanagement.KeywordService;
 
 /**
@@ -32,10 +33,12 @@ public class ImporterFactory
      * 
      * @param formatType the input format of the data to process
      * @param keywordService interface to persistent storage
+     * @param transferRepository the interface to the data transfer repository
      * @return The newly created <code>Importer</code>
      */
     public static final Importer getImporter(
-            final FormatType formatType, KeywordService keywordService) 
+            final FormatType formatType, KeywordService keywordService, 
+            TransferRepository transferRepository) 
     {
         Importer importer = null;
         
@@ -53,11 +56,11 @@ public class ImporterFactory
                 break;
             case xls:
                 parser = new ExcelKeywordParser(keywordService);
-                importer = new ExcelImporter(parser, keywordService);
+                importer = new ExcelImporter(parser, keywordService, transferRepository);
                 break;
             case xlsLanguage:
                 parser = new ExcelLanguageCentricParser(keywordService);
-                importer = new ExcelImporter(parser, keywordService);
+                importer = new ExcelImporter(parser, keywordService, transferRepository);
                 break;
         }
         

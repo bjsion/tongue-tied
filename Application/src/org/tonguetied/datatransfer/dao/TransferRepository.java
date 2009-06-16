@@ -17,10 +17,10 @@ package org.tonguetied.datatransfer.dao;
 
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
 import org.tonguetied.datatransfer.common.ExportParameters;
-import org.tonguetied.keywordmanagement.Country;
+import org.tonguetied.keywordmanagement.Keyword;
 import org.tonguetied.keywordmanagement.Translation;
-import org.tonguetied.keywordmanagement.Country.CountryCode;
 
 
 /**
@@ -31,15 +31,13 @@ import org.tonguetied.keywordmanagement.Country.CountryCode;
 public interface TransferRepository 
 {
     /**
-     * Retrieve the {@link Country} from permanent storage.
+     * Persist a {@link Keyword} to permanent storage.
      * 
-     * @param code the unique {@link CountryCode} identifying the {@link Country}.
-     * @return the {@link Country} matching the <code>id</code> or 
-     * <code>null<code> if no match is found.
+     * @param keyword the keyword item to save or update.
+     * @throws DataAccessException if the operation fails.
      */
-    Country getCountry(final CountryCode code);
+    void saveOrUpdate(Keyword keyword) throws DataAccessException;
     
-
     /**
      * Execute a report query to locate all {@link Translation}s that match the
      * export criteria specified in the {@link ExportParameters}.

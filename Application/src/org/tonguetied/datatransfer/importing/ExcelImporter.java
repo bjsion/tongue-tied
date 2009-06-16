@@ -26,6 +26,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.poi.hssf.eventusermodel.HSSFEventFactory;
 import org.apache.poi.hssf.eventusermodel.HSSFRequest;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.tonguetied.datatransfer.dao.TransferRepository;
 import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
 import org.tonguetied.keywordmanagement.Keyword;
 import org.tonguetied.keywordmanagement.KeywordService;
@@ -44,16 +45,19 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
 public class ExcelImporter extends Importer
 {
     private ExcelParser parser;
+    private TransferRepository transferRepository;
     
     /**
      * Create a new instance of ExcelImporter.
      * 
      * @param parser the type of excel parser to use
      * @param keywordService the interface to keyword functions
+     * @param transferRepository the interface to the data transfer repository
      */
-    public ExcelImporter(ExcelParser parser, KeywordService keywordService)
+    public ExcelImporter(ExcelParser parser, KeywordService keywordService, TransferRepository transferRepository)
     {
         super(keywordService);
+        this.transferRepository = transferRepository;
         this.parser = parser;
     }
 
@@ -124,11 +128,10 @@ public class ExcelImporter extends Importer
             }
             else
             {
-                Keyword reference = keywords.get(entry.getKey());
                 // find translation by business key
                 Predicate predicate; 
                 Translation translation; 
-                for (Translation refTranslation : reference.getTranslations())
+                for (Translation refTranslation : entry.getValue().getTranslations())
                 {
                     predicate = new TranslationPredicate(
                             refTranslation.getBundle(), 
@@ -148,7 +151,7 @@ public class ExcelImporter extends Importer
                 }
             }
             
-            getKeywordService().saveOrUpdate(keyword);
+            transferRepository.saveOrUpdate(keyword);
         }
         
         if (logger.isInfoEnabled())

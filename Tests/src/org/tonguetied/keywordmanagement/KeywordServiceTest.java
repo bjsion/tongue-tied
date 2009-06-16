@@ -24,6 +24,7 @@ import static org.tonguetied.keywordmanagement.Translation.TABLE_TRANSLATION;
 import java.util.List;
 
 import org.junit.Test;
+import org.springframework.test.annotation.ExpectedException;
 import org.springframework.test.annotation.Rollback;
 import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
@@ -1117,8 +1118,7 @@ public class KeywordServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#deleteKeyword(Long)}.
+     * Test method for {@link KeywordServiceImpl#deleteKeyword(Long)}.
      */
     @Test
     public final void testDeleteKeywordWithoutTranslations()
@@ -1130,20 +1130,14 @@ public class KeywordServiceTest extends AbstractServiceTest
     }
 
     /**
-     * Test method for
-     * {@link org.tonguetied.keywordmanagement.KeywordServiceImpl#deleteKeyword(Long)}.
+     * Test method for {@link KeywordServiceImpl#deleteKeyword(Long)}.
      */
     @Test(expected = IllegalArgumentException.class)
+    @ExpectedException(IllegalArgumentException.class)
     public final void testDeleteKeywordInvalidId()
     {
-        try
-        {
-            keywordService.deleteKeyword(-1L);
-        }
-        catch (IllegalArgumentException iae)
-        {
-
-        }
+        keywordService.deleteKeyword(-1L);
+        fail("method should not have succeeded");
     }
 
     @Override

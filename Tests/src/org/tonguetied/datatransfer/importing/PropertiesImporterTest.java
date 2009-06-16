@@ -30,6 +30,7 @@ import java.util.SortedSet;
 import org.apache.commons.io.FileUtils;
 import org.tonguetied.datatransfer.common.FormatType;
 import org.tonguetied.datatransfer.common.ImportParameters;
+import org.tonguetied.datatransfer.dao.TransferRepository;
 import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
@@ -52,6 +53,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
 {
 
     private KeywordService keywordService;
+    private TransferRepository transferRepository;
     private Language defaultLanguage;
     private Language hebrew;
     private Language arabic;
@@ -149,7 +151,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
                 + FormatType.properties.getDefaultFileExtension());
         byte[] input = FileUtils.readFileToByteArray(file);
         final Importer importer = ImporterFactory.getImporter(FormatType.properties,
-                keywordService);
+                keywordService, transferRepository);
         TranslationState expectedState = TranslationState.VERIFIED;
         ImportParameters parameters = new ImportParameters();
         parameters.setData(input);
@@ -226,7 +228,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
         final String fileName = "PropertiesImporterTest_XX";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.properties,
-                keywordService);
+                keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertEquals(2, errorCodes.size());
         assertTrue(errorCodes.contains(ImportErrorCode.illegalCountry));
@@ -242,7 +244,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
         final String fileName = "PropertiesImporterTest_AL";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.properties,
-                keywordService);
+                keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertEquals(1, errorCodes.size());
         assertEquals(ImportErrorCode.unknownCountry, errorCodes.get(0));
@@ -257,7 +259,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
         final String fileName = "PropertiesImporterTest_IL";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
-                .getImporter(FormatType.properties, keywordService);
+                .getImporter(FormatType.properties, keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertTrue(errorCodes.isEmpty());
         assertEquals(bundle1, importer.getBundle());
@@ -274,7 +276,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
         final String fileName = "PropertiesImporterTest_xx";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.properties,
-                keywordService);
+                keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertEquals(2, errorCodes.size());
         assertTrue(errorCodes.contains(ImportErrorCode.illegalLanguage));
@@ -290,7 +292,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
         final String fileName = "PropertiesImporterTest_es";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.properties,
-                keywordService);
+                keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertEquals(1, errorCodes.size());
         assertEquals(ImportErrorCode.unknownLanguage, errorCodes.get(0));
@@ -305,7 +307,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
         final String fileName = "PropertiesImporterTest_he";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
-                .getImporter(FormatType.properties, keywordService);
+                .getImporter(FormatType.properties, keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertTrue(errorCodes.isEmpty());
         assertEquals(bundle1, importer.getBundle());
@@ -322,7 +324,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
         final String fileName = "unknown.properties";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.properties,
-                keywordService);
+                keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertEquals(1, errorCodes.size());
         assertEquals(ImportErrorCode.unknownBundle, errorCodes.get(0));
@@ -337,7 +339,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
         final String fileName = "PropertiesImporterTest";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
-                .getImporter(FormatType.properties, keywordService);
+                .getImporter(FormatType.properties, keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertTrue(errorCodes.isEmpty());
         assertEquals(bundle1, importer.getBundle());
@@ -355,7 +357,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
         final String fileName = "PropertiesImporterTest_ar_AL";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.properties,
-                keywordService);
+                keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertEquals(1, errorCodes.size());
         assertEquals(ImportErrorCode.unknownCountry, errorCodes.get(0));
@@ -371,7 +373,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
         final String fileName = "PropertiesImporterTest_ar_AL";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.properties,
-                keywordService);
+                keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertEquals(1, errorCodes.size());
         assertEquals(ImportErrorCode.unknownCountry, errorCodes.get(0));
@@ -387,7 +389,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
         final String fileName = "PropertiesImporterTest_es_YE";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.properties,
-                keywordService);
+                keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertEquals(1, errorCodes.size());
         assertEquals(ImportErrorCode.unknownLanguage, errorCodes.get(0));
@@ -403,7 +405,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
         final String fileName = "PropertiesImporterTest_xx_YE";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.properties,
-                keywordService);
+                keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertEquals(2, errorCodes.size());
         assertTrue(errorCodes.contains(ImportErrorCode.unknownLanguage));
@@ -420,7 +422,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
         final String fileName = "PropertiesImporterTest_he_IL";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
-                .getImporter(FormatType.properties, keywordService);
+                .getImporter(FormatType.properties, keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertTrue(errorCodes.isEmpty());
         assertEquals(bundle1, importer.getBundle());
@@ -437,7 +439,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
         final String fileName = "PropertiesImporterTest_ar_YE_DD";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(
-                FormatType.properties, keywordService);
+                FormatType.properties, keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertEquals(3, errorCodes.size());
         assertTrue(errorCodes.contains(ImportErrorCode.unknownCountry));
@@ -452,7 +454,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
     public final void testIsCountryCodeValid() throws Exception
     {
         final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
-                .getImporter(FormatType.properties, keywordService);
+                .getImporter(FormatType.properties, keywordService, transferRepository);
         assertTrue(importer.isCountryCode("GH"));
     }
 
@@ -463,7 +465,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
     public final void testIsCountryCodeInvalid() throws Exception
     {
         final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
-                .getImporter(FormatType.properties, keywordService);
+                .getImporter(FormatType.properties, keywordService, transferRepository);
         assertFalse(importer.isCountryCode("aa"));
     }
 
@@ -474,7 +476,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
     public final void testIsCountryCodeEmpty() throws Exception
     {
         final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
-                .getImporter(FormatType.properties, keywordService);
+                .getImporter(FormatType.properties, keywordService, transferRepository);
         assertFalse(importer.isCountryCode(""));
     }
 
@@ -485,7 +487,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
     public final void testIsCountryCodeNull() throws Exception
     {
         final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
-                .getImporter(FormatType.properties, keywordService);
+                .getImporter(FormatType.properties, keywordService, transferRepository);
         assertFalse(importer.isCountryCode(null));
     }
 
@@ -496,7 +498,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
     public final void testEvaluateValueWithNull()
     {
         final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
-                .getImporter(FormatType.properties, keywordService);
+                .getImporter(FormatType.properties, keywordService, transferRepository);
         final String actual = importer.evaluateValue(null);
         assertNull(actual);
     }
@@ -508,7 +510,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
     public final void testEvaluateValueEmptyString()
     {
         final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
-                .getImporter(FormatType.properties, keywordService);
+                .getImporter(FormatType.properties, keywordService, transferRepository);
         final String actual = importer.evaluateValue("");
         assertNull(actual);
     }
@@ -520,7 +522,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
     public final void testEvaluateValueWithEscapeChars()
     {
         final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
-                .getImporter(FormatType.properties, keywordService);
+                .getImporter(FormatType.properties, keywordService, transferRepository);
         final String actual = importer.evaluateValue("abc\t123\nnew line");
         assertEquals("abc\\t123\\nnew line", actual);
     }
@@ -532,7 +534,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
     public final void testEvaluateValueWithAlreadyEscapedValue()
     {
         final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
-                .getImporter(FormatType.properties, keywordService);
+                .getImporter(FormatType.properties, keywordService, transferRepository);
         final String escapedString = "abc\\t123\\nnew line";
         final String actual = importer.evaluateValue(escapedString);
         assertEquals("abc\\t123\\nnew line", actual);
@@ -545,7 +547,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
     public final void testEvaluateValueWithUnicodeValue()
     {
         final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
-                .getImporter(FormatType.properties, keywordService);
+                .getImporter(FormatType.properties, keywordService, transferRepository);
         final String escapedString = "\u4e2d\u6587";
         final String actual = importer.evaluateValue(escapedString);
         assertEquals("\\u4E2D\\u6587", actual);
@@ -558,7 +560,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
     public final void testEvaluateValue()
     {
         final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
-                .getImporter(FormatType.properties, keywordService);
+                .getImporter(FormatType.properties, keywordService, transferRepository);
         final String plainString = "plain value";
         final String actual = importer.evaluateValue(plainString);
         assertEquals(plainString, actual);

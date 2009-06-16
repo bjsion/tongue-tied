@@ -29,6 +29,7 @@ import java.util.SortedSet;
 import org.apache.commons.io.FileUtils;
 import org.tonguetied.datatransfer.common.FormatType;
 import org.tonguetied.datatransfer.common.ImportParameters;
+import org.tonguetied.datatransfer.dao.TransferRepository;
 import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
@@ -54,6 +55,7 @@ public final class CsvImporterTest extends AbstractServiceTest
 {
 
     private KeywordService keywordService;
+    private TransferRepository transferRepository;
     private Language defaultLanguage;
     private Language hebrew;
     private Language arabic;
@@ -151,7 +153,7 @@ public final class CsvImporterTest extends AbstractServiceTest
                 + FormatType.csv.getDefaultFileExtension());
         byte[] input = FileUtils.readFileToByteArray(file);
         final Importer importer = ImporterFactory.getImporter(FormatType.csv,
-                keywordService);
+                keywordService, transferRepository);
         TranslationState expectedState = TranslationState.VERIFIED;
         ImportParameters parameters = new ImportParameters();
         parameters.setData(input);
@@ -230,7 +232,7 @@ public final class CsvImporterTest extends AbstractServiceTest
                 + FormatType.csv.getDefaultFileExtension());
         byte[] input = FileUtils.readFileToByteArray(file);
         final Importer importer = ImporterFactory.getImporter(FormatType.csv,
-                keywordService);
+                keywordService, transferRepository);
         TranslationState expectedState = TranslationState.VERIFIED;
         ImportParameters parameters = new ImportParameters();
         parameters.setData(input);
@@ -278,7 +280,7 @@ public final class CsvImporterTest extends AbstractServiceTest
                 + FormatType.csv.getDefaultFileExtension());
         byte[] input = FileUtils.readFileToByteArray(file);
         final Importer importer = ImporterFactory.getImporter(FormatType.csv,
-                keywordService);
+                keywordService, transferRepository);
         TranslationState expectedState = TranslationState.VERIFIED;
         ImportParameters parameters = new ImportParameters();
         parameters.setData(input);

@@ -30,6 +30,7 @@ import java.util.SortedSet;
 import org.apache.commons.io.FileUtils;
 import org.tonguetied.datatransfer.common.FormatType;
 import org.tonguetied.datatransfer.common.ImportParameters;
+import org.tonguetied.datatransfer.dao.TransferRepository;
 import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
@@ -51,6 +52,7 @@ import org.tonguetied.test.common.AbstractServiceTest;
 public final class ResourceImporterTest extends AbstractServiceTest
 {
     private KeywordService keywordService;
+    private TransferRepository transferRepository;
     private Language defaultLanguage;
     private Language hebrew;
     private Language arabic;
@@ -163,7 +165,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
                 + FormatType.resx.getDefaultFileExtension());
         byte[] input = FileUtils.readFileToByteArray(file);
         final Importer importer = ImporterFactory.getImporter(FormatType.resx,
-                keywordService);
+                keywordService, transferRepository);
         TranslationState expectedState = TranslationState.VERIFIED;
         ImportParameters parameters = new ImportParameters();
         parameters.setData(input);
@@ -246,7 +248,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
                 + FormatType.resx.getDefaultFileExtension());
         byte[] input = FileUtils.readFileToByteArray(file);
         final Importer importer = ImporterFactory.getImporter(FormatType.resx,
-                keywordService);
+                keywordService, transferRepository);
         TranslationState expectedState = TranslationState.VERIFIED;
         ImportParameters parameters = new ImportParameters();
         parameters.setData(input);
@@ -328,7 +330,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         final String fileName = "ResourceImporterTest-XX";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.resx,
-                keywordService);
+                keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertEquals(2, errorCodes.size());
         assertTrue(errorCodes.contains(ImportErrorCode.illegalCountry));
@@ -344,7 +346,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         final String fileName = "ResourceImporterTest-AL";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.resx,
-                keywordService);
+                keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertEquals(1, errorCodes.size());
         assertEquals(ImportErrorCode.unknownCountry, errorCodes.get(0));
@@ -359,7 +361,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         final String fileName = "ResourceImporterTest-IL";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final ResourceImporter importer = (ResourceImporter) ImporterFactory
-                .getImporter(FormatType.resx, keywordService);
+                .getImporter(FormatType.resx, keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertTrue(errorCodes.isEmpty());
         assertEquals(bundle1, importer.getBundle());
@@ -376,7 +378,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         final String fileName = "ResourceImporterTest.xx";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.resx,
-                keywordService);
+                keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertEquals(2, errorCodes.size());
         assertTrue(errorCodes.contains(ImportErrorCode.illegalLanguage));
@@ -392,7 +394,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         final String fileName = "ResourceImporterTest.es";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.resx,
-                keywordService);
+                keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertEquals(1, errorCodes.size());
         assertEquals(ImportErrorCode.unknownLanguage, errorCodes.get(0));
@@ -407,7 +409,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         final String fileName = "ResourceImporterTest.he";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final ResourceImporter importer = (ResourceImporter) ImporterFactory
-                .getImporter(FormatType.resx, keywordService);
+                .getImporter(FormatType.resx, keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertTrue(errorCodes.isEmpty());
         assertEquals(bundle1, importer.getBundle());
@@ -424,7 +426,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         final String fileName = "ResourceImporterTest.zh-CHS";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final ResourceImporter importer = (ResourceImporter) ImporterFactory
-                .getImporter(FormatType.resx, keywordService);
+                .getImporter(FormatType.resx, keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertTrue(errorCodes.isEmpty());
         assertEquals(bundle1, importer.getBundle());
@@ -441,7 +443,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         final String fileName = "ResourceImporterTest.zh-CHT";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final ResourceImporter importer = (ResourceImporter) ImporterFactory
-                .getImporter(FormatType.resx, keywordService);
+                .getImporter(FormatType.resx, keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertTrue(errorCodes.isEmpty());
         assertEquals(bundle1, importer.getBundle());
@@ -458,7 +460,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         final String fileName = "unknown";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.resx,
-                keywordService);
+                keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertEquals(1, errorCodes.size());
         assertEquals(ImportErrorCode.unknownBundle, errorCodes.get(0));
@@ -472,7 +474,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
     {
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final ResourceImporter importer = (ResourceImporter) ImporterFactory
-                .getImporter(FormatType.resx, keywordService);
+                .getImporter(FormatType.resx, keywordService, transferRepository);
         importer.validate(RESOURCE_NAME_VALID, errorCodes);
         assertTrue(errorCodes.isEmpty());
         assertEquals(bundle1, importer.getBundle());
@@ -490,7 +492,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         final String fileName = "ResourceImporterTest.ar-AL";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.resx,
-                keywordService);
+                keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertEquals(1, errorCodes.size());
         assertEquals(ImportErrorCode.unknownCountry, errorCodes.get(0));
@@ -506,7 +508,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         final String fileName = "ResourceImporterTest.ar-AL";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.resx,
-                keywordService);
+                keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertEquals(1, errorCodes.size());
         assertEquals(ImportErrorCode.unknownCountry, errorCodes.get(0));
@@ -522,7 +524,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         final String fileName = "ResourceImporterTest.es-YE";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.resx,
-                keywordService);
+                keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertEquals(1, errorCodes.size());
         assertEquals(ImportErrorCode.unknownLanguage, errorCodes.get(0));
@@ -538,7 +540,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         final String fileName = "ResourceImporterTest.xx-YE";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.resx,
-                keywordService);
+                keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertEquals(2, errorCodes.size());
         assertTrue(errorCodes.contains(ImportErrorCode.unknownLanguage));
@@ -555,7 +557,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         final String fileName = "ResourceImporterTest.he-IL";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final ResourceImporter importer = (ResourceImporter) ImporterFactory
-                .getImporter(FormatType.resx, keywordService);
+                .getImporter(FormatType.resx, keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertTrue(errorCodes.isEmpty());
         assertEquals(bundle1, importer.getBundle());
@@ -572,7 +574,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         String fileName = "ResourceImporterTest.ar-YE.DD";
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(
-                FormatType.resx, keywordService);
+                FormatType.resx, keywordService, transferRepository);
         importer.validate(fileName, errorCodes);
         assertEquals(3, errorCodes.size());
         assertTrue(errorCodes.contains(ImportErrorCode.unknownCountry));
@@ -595,7 +597,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
     public final void testIsCountryCodeValid() throws Exception
     {
         final ResourceImporter importer = (ResourceImporter) ImporterFactory
-                .getImporter(FormatType.resx, keywordService);
+                .getImporter(FormatType.resx, keywordService, transferRepository);
         assertTrue(importer.isCountryCode("GH"));
     }
 
@@ -606,7 +608,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
     public final void testIsCountryCodeInvalid() throws Exception
     {
         final ResourceImporter importer = (ResourceImporter) ImporterFactory
-                .getImporter(FormatType.resx, keywordService);
+                .getImporter(FormatType.resx, keywordService, transferRepository);
         assertFalse(importer.isCountryCode("aa"));
     }
 
@@ -617,7 +619,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
     public final void testIsCountryCodeEmpty() throws Exception
     {
         final ResourceImporter importer = (ResourceImporter) ImporterFactory
-                .getImporter(FormatType.resx, keywordService);
+                .getImporter(FormatType.resx, keywordService, transferRepository);
         assertFalse(importer.isCountryCode(""));
     }
 
@@ -628,7 +630,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
     public final void testIsCountryCodeNull() throws Exception
     {
         final ResourceImporter importer = (ResourceImporter) ImporterFactory
-                .getImporter(FormatType.resx, keywordService);
+                .getImporter(FormatType.resx, keywordService, transferRepository);
         assertFalse(importer.isCountryCode(null));
     }
 

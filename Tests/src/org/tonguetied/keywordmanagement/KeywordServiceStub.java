@@ -164,8 +164,7 @@ public class KeywordServiceStub implements KeywordService
 
     public PaginatedList<Keyword> getKeywords(Integer firstResult, Integer maxResults, Order order)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return new PaginatedList<Keyword>(keywords.values(), keywords.size());
     }
 
     public Language getLanguage(final Long id)

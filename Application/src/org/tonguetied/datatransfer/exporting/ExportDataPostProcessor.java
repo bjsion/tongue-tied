@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.tonguetied.datatransfer.common.ExportParameters;
-import org.tonguetied.datatransfer.dao.TransferRepository;
+import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Translation;
 
 /**
@@ -38,13 +38,12 @@ public interface ExportDataPostProcessor
      * <code>translations</code>.
      * 
      * @param translations the list of {@link Translation}s to transform
-     * @param transferRepository interface to keyword dao
+     * @param defaultCountry an instance of the default {@link Country}
      * @return List of objects that may or may not be of type
      *         {@link Translation} that is a different representation of the
      *         <code>translations</code>
      */
-    List<?> transformData(List<Translation> translations,
-            TransferRepository transferRepository);
+    List<?> transformData(List<Translation> translations, final Country defaultCountry);
 
     /**
      * Add additional data used by the template to format the export data

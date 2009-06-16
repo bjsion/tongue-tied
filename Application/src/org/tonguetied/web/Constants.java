@@ -64,5 +64,4 @@ public interface Constants
 
     static final int DEFAULT_AUDIT_LOG_PAGE_SIZE = 50;
     static final int DEFAULT_USER_PAGE_SIZE = 10;
-    static final int[] KEYWORD_PAGE_SIZE_OPTIONS = {10, 25, 50};
 }

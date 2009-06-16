@@ -22,7 +22,6 @@ import static org.tonguetied.web.Constants.DEFAULT_AUDIT_LOG_PAGE_SIZE;
 import static org.tonguetied.web.Constants.DEFAULT_USER_PAGE_SIZE;
 import static org.tonguetied.web.Constants.KEYWORDS;
 import static org.tonguetied.web.Constants.KEYWORD_ID;
-import static org.tonguetied.web.Constants.KEYWORD_PAGE_SIZE_OPTIONS;
 import static org.tonguetied.web.Constants.LANGUAGES;
 import static org.tonguetied.web.Constants.MAX_LIST_SIZE;
 import static org.tonguetied.web.Constants.PAGE_SIZES;
@@ -76,7 +75,9 @@ public class MainController extends MultiActionController
     private AuditService auditService;
     private PreferenceForm viewPreferences;
     private SearchForm searchParameters;
-    
+
+    private static final int[] KEYWORD_PAGE_SIZE_OPTIONS = {10, 25, 50};
+
     /**
      * Handler method that acts as an HTTP interface to the 
      * {@linkplain KeywordService#getKeywords()} method.

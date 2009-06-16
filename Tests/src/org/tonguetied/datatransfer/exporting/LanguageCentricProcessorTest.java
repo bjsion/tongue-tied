@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
-import org.springframework.test.annotation.ExpectedException;
 import org.tonguetied.datatransfer.common.ExportParameters;
 import org.tonguetied.datatransfer.dao.TransferRepository;
 import org.tonguetied.keywordmanagement.Bundle;
@@ -74,7 +73,6 @@ public class LanguageCentricProcessorTest extends AbstractServiceTest {
 //    private static Translation translation3_3;
     
     private KeywordService keywordService;
-    private TransferRepository transferRepository;
     
     @Override
     protected void onSetUpInTransaction() throws Exception {
@@ -175,17 +173,53 @@ public class LanguageCentricProcessorTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.datatransfer.exporting.LanguageCentricProcessor#transformData(List, TransferRepository)}.
      */
     @Test
-    public final void testTransformDataWithNullList() {
+    public final void testTransformDataWithNullList()
+    {
         LanguageCentricProcessor processor = new LanguageCentricProcessor();
-        List<KeywordByLanguage> actual = processor.transformData(null, transferRepository);
+        List<KeywordByLanguage> actual = processor.transformData(null, defaultCountry);
         assertTrue(actual.isEmpty());
     }
 
     /**
      * Test method for {@link org.tonguetied.datatransfer.exporting.LanguageCentricProcessor#transformData(List, TransferRepository)}.
      */
-    @ExpectedException(NullPointerException.class)
-    public final void testTransformDataWithNullRepository() {
+    public final void testTransformDataWithNullDefaultCountry()
+    {
+        List<KeywordByLanguage> expected = new ArrayList<KeywordByLanguage>();
+        KeywordByLanguage item =new KeywordByLanguage(keyword1.getKeyword(), 
+                    keyword1.getContext(), 
+                    bundle, 
+                    argentina);
+        item.addTranslation(translation1_1.getLanguage().getCode(), translation1_1.getValue());
+        expected.add(item);
+        item = new KeywordByLanguage(keyword1.getKeyword(),
+                keyword1.getContext(), 
+                bundle,
+                chile);
+        item.addTranslation(translation1_2.getLanguage().getCode(), translation1_2.getValue());
+        expected.add(item);
+        item = new KeywordByLanguage(keyword1.getKeyword(), 
+                keyword1.getContext(), 
+                bundle, 
+                defaultCountry);
+        item.addTranslation(translation1_3.getLanguage().getCode(), translation1_3.getValue());
+        item.addTranslation(translation1_4.getLanguage().getCode(), translation1_4.getValue());
+        expected.add(item);
+        
+        item = new KeywordByLanguage(keyword2.getKeyword(), 
+                keyword2.getContext(), 
+                bundle, 
+                defaultCountry);
+        item.addTranslation(translation2_1.getLanguage().getCode(), translation2_1.getValue());
+        expected.add(item);
+        
+        item = new KeywordByLanguage(keyword2.getKeyword(), 
+                keyword2.getContext(), 
+                bundle, 
+                null);
+        item.addTranslation(LanguageCode.zht, translation2_2.getValue());
+        expected.add(item);
+        
         LanguageCentricProcessor processor = new LanguageCentricProcessor();
         List<Translation> translations = new ArrayList<Translation>();
         translations.add(translation1_1);
@@ -196,16 +230,18 @@ public class LanguageCentricProcessorTest extends AbstractServiceTest {
         translations.add(translation2_2);
 
         List<KeywordByLanguage> actual = processor.transformData(translations, null);
-        assertTrue(actual.isEmpty());
+        assertEquals(expected.size(), actual.size());
+        assertEquals(expected, actual);
     }
 
     /**
      * Test method for {@link org.tonguetied.datatransfer.exporting.LanguageCentricProcessor#transformData(List, TransferRepository)}.
      */
     @Test
-    public final void testTransformDataWithEmptyList() {
+    public final void testTransformDataWithEmptyList()
+    {
         LanguageCentricProcessor processor = new LanguageCentricProcessor();
-        List<KeywordByLanguage> actual = processor.transformData(new ArrayList<Translation>(), transferRepository);
+        List<KeywordByLanguage> actual = processor.transformData(new ArrayList<Translation>(), defaultCountry);
         assertTrue(actual.isEmpty());
     }
     
@@ -213,7 +249,8 @@ public class LanguageCentricProcessorTest extends AbstractServiceTest {
      * Test method for {@link org.tonguetied.datatransfer.exporting.LanguageCentricProcessor#transformData(List, TransferRepository)}.
      */
     @Test
-    public final void testTransformData() {
+    public final void testTransformData()
+    {
         List<KeywordByLanguage> expected = new ArrayList<KeywordByLanguage>();
         KeywordByLanguage item =new KeywordByLanguage(keyword1.getKeyword(), 
                     keyword1.getContext(), 
@@ -252,7 +289,7 @@ public class LanguageCentricProcessorTest extends AbstractServiceTest {
         translations.add(translation2_1);
         translations.add(translation2_2);
 
-        List<KeywordByLanguage> actual = processor.transformData(translations, transferRepository);
+        List<KeywordByLanguage> actual = processor.transformData(translations, defaultCountry);
         assertEquals(expected.size(), actual.size());
 //        for (int i = 0; i < actual.size(); i++) {
 //            assertEquals(expected.getC, actual.get(i));
@@ -304,9 +341,5 @@ public class LanguageCentricProcessorTest extends AbstractServiceTest {
     {
         return new String[] {TABLE_TRANSLATION, TABLE_KEYWORD, TABLE_BUNDLE, 
                 TABLE_COUNTRY, TABLE_LANGUAGE};
-    }
-
-    public void setTransferRepository(TransferRepository transferRepository) {
-        this.transferRepository = transferRepository;
     }
 }
