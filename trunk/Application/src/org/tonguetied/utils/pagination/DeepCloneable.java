@@ -22,7 +22,7 @@ package org.tonguetied.utils.pagination;
  * @author bsion
  *
  */
-public interface Cloneable<T> extends java.lang.Cloneable
+public interface DeepCloneable<T> extends java.lang.Cloneable
 {
 
     /**

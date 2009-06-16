@@ -47,7 +47,7 @@ import org.hibernate.annotations.Sort;
 import org.hibernate.annotations.SortType;
 import org.hibernate.annotations.Type;
 import org.tonguetied.audit.Auditable;
-import org.tonguetied.utils.pagination.Cloneable;
+import org.tonguetied.utils.pagination.DeepCloneable;
 
 /**
  * A <code>Keyword</code> object maps a relationship between a list of 
@@ -65,7 +65,8 @@ import org.tonguetied.utils.pagination.Cloneable;
 })
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @Table(name=Keyword.TABLE_KEYWORD)
-public class Keyword implements Cloneable<Keyword>, Comparable<Keyword>, Auditable
+public class Keyword implements DeepCloneable<Keyword>, Comparable<Keyword>, 
+        Auditable
 {
     private Long id;
     private String keyword;
