@@ -50,9 +50,10 @@ public class ResourceImporter extends AbstractSingleResourceImporter
     /**
      * Create a new instance of ResourceImporter.
      * 
-     * @param keywordService
+     * @param keywordService the interface to keyword functions
      */
-    public ResourceImporter(KeywordService keywordService) {
+    public ResourceImporter(KeywordService keywordService)
+    {
         super(keywordService);
     }
 

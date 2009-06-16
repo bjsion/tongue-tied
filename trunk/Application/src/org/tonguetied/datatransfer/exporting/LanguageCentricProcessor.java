@@ -25,7 +25,6 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.log4j.Logger;
 import org.tonguetied.datatransfer.common.ExportParameters;
-import org.tonguetied.datatransfer.dao.TransferRepository;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
@@ -49,7 +48,9 @@ public class LanguageCentricProcessor implements ExportDataPostProcessor
     /* (non-Javadoc)
      * @see org.tonguetied.service.ExportDataPostProcessor#transformData()
      */
-    public List<KeywordByLanguage> transformData(List<Translation> translations, TransferRepository transferRepository) {
+    public List<KeywordByLanguage> transformData(List<Translation> translations, 
+            final Country defaultCountry)
+    {
         List<KeywordByLanguage> results = new ArrayList<KeywordByLanguage>();
         if (translations != null) {
             if (logger.isDebugEnabled()) {
@@ -57,7 +58,6 @@ public class LanguageCentricProcessor implements ExportDataPostProcessor
                         " objects");
             }
             KeywordByLanguage item;
-            Country defaultCountry = transferRepository.getCountry(CountryCode.DEFAULT);
             for (Translation translation : translations) {
                 LanguageCode languageCode = null;
                 if (CountryCode.TW == translation.getCountry().getCode()) {
@@ -81,10 +81,8 @@ public class LanguageCentricProcessor implements ExportDataPostProcessor
         return results;
     }
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.ExportDataPostProcessor#addData(java.util.Map)
-     */
-    public void addData(Map<String, Object> root, ExportParameters parameters) {
+    public void addData(Map<String, Object> root, ExportParameters parameters)
+    {
         List<Language> languages = new ArrayList<Language>();
         for (Language language: parameters.getLanguages()) {
             languages.add(language);

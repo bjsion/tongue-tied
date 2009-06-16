@@ -67,7 +67,7 @@ public class CsvImporter extends Importer
     /**
      * Create a new instance of CsvImporter.
      * 
-     * @param keywordService
+     * @param keywordService the interface to keyword functions
      */
     public CsvImporter(KeywordService keywordService)
     {

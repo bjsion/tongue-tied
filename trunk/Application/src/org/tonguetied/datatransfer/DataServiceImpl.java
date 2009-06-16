@@ -50,9 +50,11 @@ import org.tonguetied.datatransfer.exporting.ExportException;
 import org.tonguetied.datatransfer.exporting.Native2AsciiDirective;
 import org.tonguetied.datatransfer.importing.Importer;
 import org.tonguetied.datatransfer.importing.ImporterFactory;
+import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.KeywordService;
 import org.tonguetied.keywordmanagement.Language;
 import org.tonguetied.keywordmanagement.Translation;
+import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
 
 import fmpp.ProcessingException;
@@ -199,8 +201,10 @@ public class DataServiceImpl implements DataService
             if (logger.isDebugEnabled()) 
                 logger.debug("post processing results using: " + postProcessor.getClass());
             
+            final Country defaultCountry = 
+                keywordService.getCountry(CountryCode.DEFAULT);
             List<?> results = 
-                postProcessor.transformData(translations, transferRepository);
+                postProcessor.transformData(translations, defaultCountry);
             root.put("items", results);
 //                if (parameters.getLanguages().contains(arg0))
             Language traditionalChinese = new Language();
@@ -286,7 +290,8 @@ public class DataServiceImpl implements DataService
             logger.debug("importing based on filter " + parameters);
         
         Importer importer = 
-            ImporterFactory.getImporter(parameters.getFormatType(), keywordService);
+            ImporterFactory.getImporter(parameters.getFormatType(), 
+                    keywordService, transferRepository);
         importer.importData(parameters);
         
         if (logger.isInfoEnabled())

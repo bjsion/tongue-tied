@@ -33,7 +33,8 @@ import org.tonguetied.keywordmanagement.KeywordServiceStub;
  *
  */
 @RunWith(value=Parameterized.class)
-public class ImporterFactoryTest {
+public class ImporterFactoryTest
+{
     
     private FormatType formatType;
     private Class<? extends Importer> expectedClass;
@@ -66,7 +67,8 @@ public class ImporterFactoryTest {
      */
     @Test
     public final void testCreateImporter() {
-        Importer importer = ImporterFactory.getImporter(formatType, new KeywordServiceStub());
+        Importer importer = ImporterFactory.getImporter(
+                formatType, new KeywordServiceStub(), null);
         assertEquals(expectedClass, importer.getClass());
         assertNotNull(importer.getKeywordService());
     }

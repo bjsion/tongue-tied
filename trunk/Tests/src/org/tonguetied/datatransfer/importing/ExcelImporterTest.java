@@ -28,6 +28,7 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.tonguetied.datatransfer.common.FormatType;
 import org.tonguetied.datatransfer.common.ImportParameters;
+import org.tonguetied.datatransfer.dao.TransferRepository;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
@@ -44,7 +45,8 @@ import org.tonguetied.test.common.AbstractServiceTest;
  * @author bsion
  *
  */
-public class ExcelImporterTest extends AbstractServiceTest {
+public class ExcelImporterTest extends AbstractServiceTest
+{
 
     private Language defaultLanguage;
     private Language hebrew;
@@ -71,6 +73,7 @@ public class ExcelImporterTest extends AbstractServiceTest {
     private Translation translation2_4;
     
     private KeywordService keywordService;
+    private TransferRepository transferRepository;
     
     @Override
     protected void onSetUpInTransaction() throws Exception {
@@ -200,7 +203,8 @@ public class ExcelImporterTest extends AbstractServiceTest {
         File input = new File(TEST_DATA_DIR, "LanguageCentricImportData.xls");
         byte[] bytes = FileUtils.readFileToByteArray(input);
         
-        Importer importer = ImporterFactory.getImporter(FormatType.xlsLanguage, keywordService);
+        Importer importer = ImporterFactory.getImporter(
+                FormatType.xlsLanguage, keywordService, transferRepository);
         TranslationState expectedState = TranslationState.VERIFIED;
         ImportParameters parameters = new ImportParameters();
         parameters.setData(bytes);
@@ -241,7 +245,13 @@ public class ExcelImporterTest extends AbstractServiceTest {
                 TABLE_COUNTRY, TABLE_LANGUAGE};
     }
 
-    public void setKeywordService(KeywordService keywordService) {
+    public void setKeywordService(KeywordService keywordService)
+    {
         this.keywordService = keywordService;
+    }
+
+    public void setTransferRepository(TransferRepository transferRepository)
+    {
+        this.transferRepository = transferRepository;
     }
 }

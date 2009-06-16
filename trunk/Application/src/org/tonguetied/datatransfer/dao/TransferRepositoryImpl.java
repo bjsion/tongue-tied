@@ -15,18 +15,15 @@
  */
 package org.tonguetied.datatransfer.dao;
 
-import static org.hibernate.criterion.Restrictions.eq;
-
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.tonguetied.datatransfer.common.ExportParameters;
-import org.tonguetied.keywordmanagement.Country;
+import org.tonguetied.keywordmanagement.Keyword;
 import org.tonguetied.keywordmanagement.Translation;
-import org.tonguetied.keywordmanagement.Country.CountryCode;
 
 
 /**
@@ -36,14 +33,15 @@ import org.tonguetied.keywordmanagement.Country.CountryCode;
  * @author bsion
  *
  */
-public class TransferRepositoryImpl extends HibernateDaoSupport implements TransferRepository
+public class TransferRepositoryImpl extends HibernateDaoSupport 
+        implements TransferRepository
 {
-    public Country getCountry(final CountryCode code) {
-        Criteria criteria = getSession().createCriteria(Country.class);
-        criteria.add(eq("code", code));
-        return (Country) criteria.uniqueResult();
+    public void saveOrUpdate(Keyword keyword) throws DataAccessException
+    {
+        getHibernateTemplate().saveOrUpdate(keyword);
+        getHibernateTemplate().flush();
     }
-    
+
     public List<Translation> findTranslations(ExportParameters parameters)
     {
         if (logger.isDebugEnabled())
