@@ -28,7 +28,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
  * 
  * @author bsion
  */
-public class PaginatedList<T> extends ArrayList<T> implements Cloneable<PaginatedList<T>>
+public class PaginatedList<T> extends ArrayList<T> implements DeepCloneable<PaginatedList<T>>
 {
     private static final long serialVersionUID = 7656155425446828050L;
     private int maxListSize;
@@ -72,7 +72,7 @@ public class PaginatedList<T> extends ArrayList<T> implements Cloneable<Paginate
      * Performs a deep copy of this list.
      * 
      * @throws CloneNotSupportedException if the list is not a list of 
-     * {@link Cloneable} objects
+     * {@link DeepCloneable} objects
      */
     public PaginatedList<T> deepClone() throws CloneNotSupportedException
     {
@@ -82,7 +82,7 @@ public class PaginatedList<T> extends ArrayList<T> implements Cloneable<Paginate
         ArrayList<T> items = new ArrayList<T>();
         try
         {
-            for (Cloneable<T> item: (List<Cloneable<T>>) this)
+            for (DeepCloneable<T> item: (List<DeepCloneable<T>>) this)
             {
                 items.add(item.deepClone());
             }
