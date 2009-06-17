@@ -17,6 +17,7 @@ package org.tonguetied.keywordmanagement;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
 
@@ -26,7 +27,9 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
  * @author bsion
  *
  */
-public class KeywordFactory {
+public class KeywordFactory
+{
+    private static final Logger logger = Logger.getLogger(KeywordFactory.class);
 
     /**
      * Create a new {@link Keyword} with a new {@link Translation} for each 
@@ -53,6 +56,9 @@ public class KeywordFactory {
             throw new IllegalArgumentException(
                     "Cannot provide a null list of languages");
         }
+        
+        if (logger.isDebugEnabled()) 
+            logger.debug("creating new keyword based on list of languages");
         
         Keyword keyword = new Keyword();
         for(Language language: languages)
@@ -90,6 +96,9 @@ public class KeywordFactory {
             throw new IllegalArgumentException(
                     "Cannot provide a null list of countries");
         }
+        
+        if (logger.isDebugEnabled()) 
+            logger.debug("creating new keyword based on list of countries");
         
         Keyword keyword = new Keyword();
         for(Country country: countries)
