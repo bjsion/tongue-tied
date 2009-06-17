@@ -19,9 +19,10 @@ import static org.tonguetied.usermanagement.User.FIELD_EMAIL;
 import static org.tonguetied.usermanagement.User.FIELD_FIRSTNAME;
 import static org.tonguetied.usermanagement.User.FIELD_LASTNAME;
 import static org.tonguetied.usermanagement.User.FIELD_USERNAME;
+import static org.tonguetied.web.Constants.BTN_SEARCH;
 import static org.tonguetied.web.Constants.DEFAULT_USER_PAGE_SIZE;
 import static org.tonguetied.web.Constants.MAX_LIST_SIZE;
-import static org.tonguetied.web.Constants.BTN_SEARCH;
+import static org.tonguetied.web.Constants.TABLE_ID_USER;
 import static org.tonguetied.web.Constants.USER;
 import static org.tonguetied.web.Constants.USERS;
 import static org.tonguetied.web.Constants.USER_SIZE;
@@ -107,9 +108,9 @@ public class UserSearchController extends SimpleFormController
             throws Exception
     {
         if (logger.isDebugEnabled()) logger.debug("searching for users");
-        PaginationUtils.remove("user", request);
+        PaginationUtils.remove(TABLE_ID_USER, request);
         final int firstResult = PaginationUtils.calculateFirstResult(
-                "user", DEFAULT_USER_PAGE_SIZE, request);
+                TABLE_ID_USER, DEFAULT_USER_PAGE_SIZE, request);
 
         final User user = (User) command;
         final PaginatedList<User> users = 

@@ -45,6 +45,8 @@ public interface Constants
     static final String USER = "user";
     static final String USER_SIZE = "userSize";
     static final String USERS = "users";
+    static final String TABLE_ID_KEYWORD = "keyword";
+    static final String TABLE_ID_USER = "user";
     static final String VIEW_PREFERENCES = "viewPreferences";
 
     static final char SPACE_SEPARATOR = ' ';
