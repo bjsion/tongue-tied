@@ -52,7 +52,7 @@
                         </c:otherwise>
                     </c:choose>
                     <a href="${userUrl}">
-                    <img src="<c:url value="/images/user.png"/>" alt="" title="${user.username}}" class="imgLink"/>
+                    <img src="<c:url value="/images/user.png"/>" alt="" title="${user.username}" class="imgLink"/>
                     <c:out value="${user.username}"/>
                     </a>
                 </display:column>
@@ -62,7 +62,6 @@
                     </c:forEach>
                 </display:column>
                 <display:column property="email" titleKey="email" sortable="true"/>
-                <display:column titleKey="action"/>
             </display:table>
         </div>
     </div>
