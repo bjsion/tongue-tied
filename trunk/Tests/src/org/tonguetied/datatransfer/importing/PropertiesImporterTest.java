@@ -31,6 +31,7 @@ import org.apache.commons.io.FileUtils;
 import org.tonguetied.datatransfer.common.FormatType;
 import org.tonguetied.datatransfer.common.ImportParameters;
 import org.tonguetied.datatransfer.dao.TransferRepository;
+import org.tonguetied.datatransfer.dao.TransferRepositoryStub;
 import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
@@ -53,7 +54,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
 {
 
     private KeywordService keywordService;
-    private TransferRepository transferRepository;
+    private TransferRepository transferRepository = new TransferRepositoryStub();
     private Language defaultLanguage;
     private Language hebrew;
     private Language arabic;
