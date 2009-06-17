@@ -65,6 +65,8 @@ private KeywordService keywordService;
     
     private static final Logger logger = 
         Logger.getLogger(KeywordController.class);
+    private final String KEYWORD_VIEW_NAME = 
+        "redirect:/keyword.htm?"+KEYWORD_ID+"=";
 
     /**
      * Create new instance of KeywordController 
@@ -196,6 +198,9 @@ private KeywordService keywordService;
                                         Keyword keyword)
             throws Exception 
     {
+        if (logger.isDebugEnabled())
+            logger.debug("adding new translation to keyword");
+        
         KeywordValidator validator = (KeywordValidator) getValidator();
         validator.validateDuplicates(keyword.getTranslations(), new TranslationPredicate(null, null, null), errors);
         if (!errors.hasErrors())
@@ -204,7 +209,7 @@ private KeywordService keywordService;
             keywordService.saveOrUpdate(keyword);
         }
         
-        return new ModelAndView("redirect:/keyword.htm?keywordId="+keyword.getId());
+        return new ModelAndView(KEYWORD_VIEW_NAME + keyword.getId());
     }
     
     /**
@@ -216,12 +221,15 @@ private KeywordService keywordService;
                                            Keyword keyword)
             throws Exception
     {
+        if (logger.isDebugEnabled())
+            logger.debug("removing translation from keyword");
+
         final Long translationId = 
             RequestUtils.getLongParameter(request, "deleteTranslation");
         keyword.removeTranslation(translationId);
         keywordService.saveOrUpdate(keyword);
 
-        return new ModelAndView("redirect:/keyword.htm?keywordId="+keyword.getId());
+        return new ModelAndView(KEYWORD_VIEW_NAME + keyword.getId());
     }
 
     /**
