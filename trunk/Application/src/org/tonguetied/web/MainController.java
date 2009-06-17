@@ -28,6 +28,8 @@ import static org.tonguetied.web.Constants.PAGE_SIZES;
 import static org.tonguetied.web.Constants.SEARCH_PARAMETERS;
 import static org.tonguetied.web.Constants.SHOW_ALL;
 import static org.tonguetied.web.Constants.STATES;
+import static org.tonguetied.web.Constants.TABLE_ID_KEYWORD;
+import static org.tonguetied.web.Constants.TABLE_ID_USER;
 import static org.tonguetied.web.Constants.USER;
 import static org.tonguetied.web.Constants.USERS;
 import static org.tonguetied.web.Constants.USER_SIZE;
@@ -104,9 +106,9 @@ public class MainController extends MultiActionController
         }
         
         final int firstResult = PaginationUtils.calculateFirstResult(
-           "keyword", viewPreferences.getMaxResults(), request);
+           TABLE_ID_KEYWORD, viewPreferences.getMaxResults(), request);
         final KeyValue<String, Order> keyValue = 
-            PaginationUtils.getOrder("keyword", request);
+            PaginationUtils.getOrder(TABLE_ID_KEYWORD, request);
         Order order = null;
         if (keyValue != null)
             order = keyValue.getValue();
@@ -236,7 +238,7 @@ public class MainController extends MultiActionController
             HttpServletResponse response) throws Exception
     {
         final int firstResult = PaginationUtils.calculateFirstResult(
-                "user", DEFAULT_USER_PAGE_SIZE, request);
+                TABLE_ID_USER, DEFAULT_USER_PAGE_SIZE, request);
 
         final PaginatedList<User> users = 
             userService.getUsers(firstResult, DEFAULT_USER_PAGE_SIZE);
