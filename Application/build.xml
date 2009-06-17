@@ -50,7 +50,6 @@
     <property name="docs.hibernate.dir" value="${docs.dir}/hibernate"/>
     <property name="docs.schema.dir" value="${docs.dir}/schema"/>
     <property name="docs.findbugs.dir" value="${docs.dir}/findbugs"/>
-    <property name="logs.dir" value="${application.home}/logs"/>
     <property name="hibernate.propsfile" value="hibernate.properties"/>
     <property name="schema.file" value="${db.dialect}-schema.sql"/>
     <property name="mapping.files.timestamp" value="${generated.dir}/mapping.files.timestamp"/>
@@ -154,8 +153,6 @@
         <mkdir dir="${docs.findbugs.dir}"/>
         <mkdir dir="${generated.dir}"/>
         <mkdir dir="${generated.sql.dir}"/>
-        <mkdir dir="${compiled.reports.dir}"/>
-        <mkdir dir="${logs.dir}"/>
     </target>
 
     <target name="clean.classes" description="Remove all compiled classes">
@@ -167,7 +164,6 @@
         <delete dir="${build.dir}" failonerror="true" deleteonexit="true"/>
         <delete dir="${docs.dir}" failonerror="true" deleteonexit="true"/>
         <delete dir="${generated.dir}" failonerror="true" deleteonexit="true"/>
-        <delete dir="${logs.dir}" failonerror="true" deleteonexit="true"/>
     </target>
 
     <target name="compile" depends="init" description="Generate all the class files for this module">
