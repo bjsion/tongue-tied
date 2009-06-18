@@ -61,7 +61,16 @@
                     <fmt:message key="${userRight.permission}"/>
                     </c:forEach>
                 </display:column>
-                <display:column property="email" titleKey="email" sortable="true"/>
+                <display:column titleKey="account.enabled" sortable="false">
+                    <c:choose>
+                        <c:when test="${user.enabled}">
+                    <fmt:message key="enabled.true"/>
+                        </c:when>
+                        <c:otherwise>
+                    <fmt:message key="enabled.false"/>
+                        </c:otherwise>
+                    </c:choose>
+                </display:column>
             </display:table>
         </div>
     </div>
