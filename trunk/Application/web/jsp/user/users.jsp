@@ -62,14 +62,7 @@
                     </c:forEach>
                 </display:column>
                 <display:column titleKey="account.enabled" sortable="false">
-                    <c:choose>
-                        <c:when test="${user.enabled}">
-                    <fmt:message key="enabled.true"/>
-                        </c:when>
-                        <c:otherwise>
-                    <fmt:message key="enabled.false"/>
-                        </c:otherwise>
-                    </c:choose>
+                    <fmt:message key="enabled.${user.enabled}"/>
                 </display:column>
             </display:table>
         </div>
