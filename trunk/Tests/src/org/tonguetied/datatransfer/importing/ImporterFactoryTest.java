@@ -15,7 +15,7 @@
  */
 package org.tonguetied.datatransfer.importing;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
@@ -29,6 +29,8 @@ import org.tonguetied.datatransfer.common.FormatType;
 import org.tonguetied.keywordmanagement.KeywordServiceStub;
 
 /**
+ * Unit tests for class {@link ImporterFactory}.
+ * 
  * @author bsion
  *
  */
@@ -40,13 +42,15 @@ public class ImporterFactoryTest
     private Class<? extends Importer> expectedClass;
 
     @Parameters
-    public static final Collection<Object[]> data() {
+    public static final Collection<Object[]> data()
+    {
         return Arrays.asList(new Object[][] {
                 {FormatType.xls, ExcelImporter.class},
                 {FormatType.xlsLanguage, ExcelImporter.class},
                 {FormatType.properties, PropertiesImporter.class},
                 {FormatType.csv, CsvImporter.class},
-                {FormatType.resx, ResourceImporter.class}
+                {FormatType.resx, ResourceImporter.class},
+                {null, null}
         });
     }
 
@@ -57,20 +61,42 @@ public class ImporterFactoryTest
      * @param expectedClass the expected class type that should be created
      */
     public ImporterFactoryTest(FormatType formatType,
-            Class<? extends Importer> expectedClass) {
+            Class<? extends Importer> expectedClass)
+    {
         this.formatType = formatType;
         this.expectedClass = expectedClass;
     }
 
     /**
-     * Test method for {@link org.tonguetied.datatransfer.importing.ImporterFactory#getImporter(FormatType, org.tonguetied.keywordmanagement.KeywordService)}.
+     * Test method for {@link ImporterFactory#getImporter(FormatType, org.tonguetied.keywordmanagement.KeywordService, org.tonguetied.datatransfer.dao.TransferRepository)}.
      */
     @Test
-    public final void testCreateImporter() {
-        Importer importer = ImporterFactory.getImporter(
-                formatType, new KeywordServiceStub(), null);
-        assertEquals(expectedClass, importer.getClass());
-        assertNotNull(importer.getKeywordService());
+    public final void testCreateImporter()
+    {
+        if (formatType != null)
+        {
+            final Importer importer = ImporterFactory.getImporter(
+                    formatType, new KeywordServiceStub(), null);
+            assertEquals(expectedClass, importer.getClass());
+            assertNotNull(importer.getKeywordService());
+        }
     }
 
+    /**
+     * Test method for {@link ImporterFactory#getImporter(FormatType, org.tonguetied.keywordmanagement.KeywordService, org.tonguetied.datatransfer.dao.TransferRepository)}.
+     */
+    @Test(expected=IllegalArgumentException.class)
+    public final void testCreateImporterWithNull()
+    {
+        if (formatType == null)
+        {
+            ImporterFactory.getImporter(
+                    formatType, new KeywordServiceStub(), null);
+            fail("should not reach here");
+        }
+        else
+        {
+            throw new IllegalArgumentException();
+        }
+    }
 }

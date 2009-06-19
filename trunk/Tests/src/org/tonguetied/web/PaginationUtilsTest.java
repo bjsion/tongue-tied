@@ -183,7 +183,8 @@ public class PaginationUtilsTest
      */
     private boolean containsValue(final String parameter)
     {
-        Enumeration<String> names = request.getSession().getAttributeNames();
+        Enumeration<String> names = 
+            (Enumeration<String>) request.getSession().getAttributeNames();
         String name;
         boolean containsValue = false;
         while (names.hasMoreElements())
