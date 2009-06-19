@@ -15,6 +15,7 @@
  */
 package org.tonguetied.datatransfer.importing;
 
+import org.apache.log4j.Logger;
 import org.tonguetied.datatransfer.common.FormatType;
 import org.tonguetied.datatransfer.dao.TransferRepository;
 import org.tonguetied.keywordmanagement.KeywordService;
@@ -27,6 +28,9 @@ import org.tonguetied.keywordmanagement.KeywordService;
  */
 public class ImporterFactory
 {
+    private static final Logger logger = 
+        Logger.getLogger(ImporterFactory.class);
+    
     
     /**
      * Factory method to create the appropriate <code>Importer</code>.
@@ -40,7 +44,13 @@ public class ImporterFactory
             final FormatType formatType, KeywordService keywordService, 
             TransferRepository transferRepository) 
     {
+        if (formatType == null)
+            throw new IllegalArgumentException("formatType cannot be null");
+        
         Importer importer = null;
+        
+        if (logger.isDebugEnabled())
+            logger.debug("creating importer for type: " + formatType);
         
         ExcelParser parser;
         switch (formatType)
