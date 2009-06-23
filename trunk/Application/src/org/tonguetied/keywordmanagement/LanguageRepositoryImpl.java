@@ -70,5 +70,6 @@ public class LanguageRepositoryImpl extends HibernateDaoSupport implements
     public void delete(Language language)
     {
         getSession().delete(language);
+        getSession().flush();
     }
 }

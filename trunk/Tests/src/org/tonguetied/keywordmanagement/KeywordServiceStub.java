@@ -71,9 +71,24 @@ public class KeywordServiceStub implements KeywordService
         deleteKeyword(keyword.getId());
     }
 
-    public void deleteKeyword(Long id)
+    public void deleteKeyword(final Long id)
     {
         this.keywords.remove(id);
+    }
+
+    public void deleteCountry(final Long id)
+    {
+        this.countries.remove(id);
+    }
+
+    public void deleteLanguage(final Long id)
+    {
+        this.languages.remove(id);
+    }
+
+    public void deleteBundle(final Long id)
+    {
+        this.bundles.remove(id);
     }
 
     public PaginatedList<Keyword> findKeywords(final Keyword keyword, boolean ignoreCase,
@@ -150,7 +165,8 @@ public class KeywordServiceStub implements KeywordService
         return keywords.get(id);
     }
 
-    public Keyword getKeyword(final String keywordString) {
+    public Keyword getKeyword(final String keywordString)
+    {
         final Predicate keywordFilter = new KeywordStringFilter(keywordString);
         Keyword result = 
             (Keyword) CollectionUtils.find(keywords.values(), keywordFilter);
@@ -172,14 +188,16 @@ public class KeywordServiceStub implements KeywordService
         return languages.get(id);
     }
 
-    public Language getLanguage(final LanguageCode code) {
+    public Language getLanguage(final LanguageCode code)
+    {
         final Predicate languageCodeFilter = new LanguageCodeFilter(code); 
         Language language = 
             (Language) CollectionUtils.find(languages.values(), languageCodeFilter);
         return language;
     }
 
-    public List<Language> getLanguages() {
+    public List<Language> getLanguages()
+    {
         return (List<Language>)this.languages.values();
     }
 

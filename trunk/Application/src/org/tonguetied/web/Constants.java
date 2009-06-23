@@ -26,14 +26,17 @@ public interface Constants
     static final String APPLY_FILTER = "applyFilter";
     static final String AUDIT_LOG = "auditLog";
     static final String BTN_SEARCH = "searchBtn";
+    static final String BUNDLE_ID = "bundleId";
     static final String BUNDLES = "bundles";
     static final String COUNTRIES = "countries";
     static final String COUNTRY = "country";
+    static final String COUNTRY_ID = "countryId";
     static final String FIELD_CODE = "code";
     static final String FIELD_NAME = "name";
     static final String FIELD_RESOURCE_NAME = "resourceName";
     static final String FORMAT_TYPES = "formatTypes";
     static final String LANGUAGE = "language";
+    static final String LANGUAGE_ID = "languageId";
     static final String LANGUAGES = "languages";
     static final String MAX_LIST_SIZE = "maxListSize";
     static final String KEYWORD_ID = "keywordId";

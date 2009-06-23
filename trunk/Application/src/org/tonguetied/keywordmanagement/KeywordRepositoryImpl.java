@@ -39,6 +39,7 @@ import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Junction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Subqueries;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -249,6 +250,14 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements
         else
             getHibernateTemplate().merge(keyword);
         getHibernateTemplate().flush();
+    }
+
+    public int getReferences(final String propertyName, final Object value)
+    {
+        Criteria criteria = getSession().createCriteria(Translation.class);
+        criteria.add(Restrictions.eq(propertyName, value));
+        criteria.setProjection(Projections.rowCount());
+        return ((Integer) criteria.uniqueResult());
     }
 
     public void delete(Keyword keyword)

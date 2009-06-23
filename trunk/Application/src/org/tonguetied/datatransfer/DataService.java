@@ -29,8 +29,8 @@ import org.tonguetied.datatransfer.importing.ImportException;
  * @author bsion
  *
  */
-public interface DataService {
-
+public interface DataService
+{
     /**
      * Create a snapshot of data from persistence and transform it into the 
      * desired format. 

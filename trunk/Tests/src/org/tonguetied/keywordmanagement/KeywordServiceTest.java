@@ -1132,11 +1132,113 @@ public class KeywordServiceTest extends AbstractServiceTest
     /**
      * Test method for {@link KeywordServiceImpl#deleteKeyword(Long)}.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected=IllegalArgumentException.class)
     @ExpectedException(IllegalArgumentException.class)
     public final void testDeleteKeywordInvalidId()
     {
         keywordService.deleteKeyword(-1L);
+        fail("method should not have succeeded");
+    }
+    
+    @Test
+    public final void testDeleteCountry()
+    {
+        keywordService.deleteCountry(singapore.getId());
+        final List<Country> countries = keywordService.getCountries();
+        assertEquals(1, countries.size());
+        assertEquals(australia, countries.get(0));
+    }
+
+    @Test(expected=ReferenceException.class)
+    @ExpectedException(ReferenceException.class)
+    public final void testDeleteCountryInUse()
+    {
+        Translation translation1 = new Translation();
+        translation1.setLanguage(english);
+        translation1.setCountry(australia);
+        translation1.setValue("test");
+        translation1.setState(TranslationState.UNVERIFIED);
+        translation1.setBundle(bundle);
+        keyword1.addTranslation(translation1);
+        keywordService.saveOrUpdate(keyword1);
+        
+        keywordService.deleteCountry(australia.getId());
+        final List<Country> countries = keywordService.getCountries();
+        assertEquals(2, countries.size());
+        assertTrue(countries.contains(singapore));
+        assertTrue(countries.contains(australia));
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    @ExpectedException(IllegalArgumentException.class)
+    public final void testDeleteCountryWithInvalidId()
+    {
+        keywordService.deleteCountry(-1L);
+        fail("method should not have succeeded");
+    }
+    
+    @Test
+    public final void testDeleteLanguage()
+    {
+        keywordService.deleteLanguage(chinese.getId());
+        final List<Language> languages = keywordService.getLanguages();
+        assertEquals(1, languages.size());
+        assertEquals(english, languages.get(0));
+    }
+
+    @Test(expected=ReferenceException.class)
+    @ExpectedException(ReferenceException.class)
+    public final void testDeleteLanguageInUse()
+    {
+        Translation translation1 = new Translation();
+        translation1.setLanguage(english);
+        translation1.setCountry(australia);
+        translation1.setValue("test");
+        translation1.setState(TranslationState.UNVERIFIED);
+        translation1.setBundle(bundle);
+        keyword1.addTranslation(translation1);
+        keywordService.saveOrUpdate(keyword1);
+        
+        keywordService.deleteLanguage(english.getId());
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    @ExpectedException(IllegalArgumentException.class)
+    public final void testDeleteLanguageWithInvalidId()
+    {
+        keywordService.deleteLanguage(-1L);
+        fail("method should not have succeeded");
+    }
+    
+    @Test
+    public final void testDeleteBundle()
+    {
+        keywordService.deleteBundle(bundle.getId());
+        final List<Bundle> bundles = keywordService.getBundles();
+        assertTrue(bundles.isEmpty());
+    }
+
+    @Test(expected=ReferenceException.class)
+    @ExpectedException(ReferenceException.class)
+    public final void testDeleteBundleInUse()
+    {
+        Translation translation1 = new Translation();
+        translation1.setLanguage(english);
+        translation1.setCountry(australia);
+        translation1.setValue("test");
+        translation1.setState(TranslationState.UNVERIFIED);
+        translation1.setBundle(bundle);
+        keyword1.addTranslation(translation1);
+        keywordService.saveOrUpdate(keyword1);
+        
+        keywordService.deleteBundle(bundle.getId());
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    @ExpectedException(IllegalArgumentException.class)
+    public final void testDeleteBundleWithInvalidId()
+    {
+        keywordService.deleteBundle(-1L);
         fail("method should not have succeeded");
     }
 

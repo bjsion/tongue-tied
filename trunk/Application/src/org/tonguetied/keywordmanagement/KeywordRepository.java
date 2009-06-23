@@ -98,4 +98,14 @@ public interface KeywordRepository
                                final Integer firstResult,
                                final Integer maxResults)
             throws IllegalArgumentException;
+    
+    /**
+     * Determines if there are any translations that reference this objects 
+     * passed in.
+     * 
+     * @param propertyName the name of the property to check
+     * @param value the value to of the property to check
+     * @return the total number of references to the input object
+     */
+    int getReferences(final String propertyName, final Object value);
 }
