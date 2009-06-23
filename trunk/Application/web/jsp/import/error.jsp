@@ -12,6 +12,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" media="all" type="text/css" href="<c:url value="/css/tonguetied.css"/>"/>
+<!--[if IE]>
+<link rel="stylesheet" media="all" type="text/css" href="<c:url value="/css/ie.css"/>"/>
+<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="<c:url value="/images/favicon.ico"/>"/>
+<![endif]-->
+<link rel="icon" type="image/vnd.microsoft.icon" href="<c:url value="/images/favicon.ico"/>"/>
 <title><fmt:message key="application.short.name"/></title>
 </head>
 <body>
