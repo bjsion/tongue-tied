@@ -90,10 +90,12 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 <!-- Bundle -->
                 <entry key="/bundle.htm" value-ref="bundleController"/>
                 <entry key="/bundles.htm" value-ref="mainController"/>
+                <entry key="/deleteBundle.htm" value-ref="mainController"/>
                 
                 <!-- Country -->
                 <entry key="/country.htm" value-ref="countryController"/>
                 <entry key="/countries.htm" value-ref="mainController"/>
+                <entry key="/deleteCountry.htm" value-ref="mainController"/>
                 
                 <!-- Export -->
                 <entry key="/export.htm" value-ref="exportController"/>
@@ -102,6 +104,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 <!-- Language -->
                 <entry key="/language.htm" value-ref="languageController"/>
                 <entry key="/languages.htm" value-ref="mainController"/>
+                <entry key="/deleteLanguage.htm" value-ref="mainController"/>
                 
                 <!-- Keyword -->
                 <entry key="/keyword.htm" value-ref="keywordController"/>
