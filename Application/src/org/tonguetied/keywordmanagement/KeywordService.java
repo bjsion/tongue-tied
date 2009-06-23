@@ -232,4 +232,37 @@ public interface KeywordService
      * @param keyword the {@linkplain Keyword} to be removed.
      */
     void delete(Keyword keyword);
+    
+    /**
+     * Remove the {@link Country} matching the <code>id</code>. If other 
+     * objects reference this object, then the object is not removed from 
+     * persistence.
+     * 
+     * @param id the unique identifier of the {@link Country} to be removed.
+     * @throws ReferenceException thrown if other objects have references to 
+     * this object
+     */
+    void deleteCountry(final Long id);
+
+    /**
+     * Remove the {@link Language} matching the <code>id</code>. If other 
+     * objects reference this object, then the object is not removed from 
+     * persistence.
+     * 
+     * @param id the unique identifier of the {@link Language} to be removed.
+     * @throws ReferenceException thrown if other objects have references to 
+     * this object
+     */
+    void deleteLanguage(final Long id);
+
+    /**
+     * Remove the {@link Bundle} matching the <code>id</code>. If other 
+     * objects reference this object, then the object is not removed from 
+     * persistence.
+     * 
+     * @param id the unique identifier of the {@link Bundle} to be removed.
+     * @throws ReferenceException thrown if other objects have references to 
+     * this object
+     */
+    void deleteBundle(final Long id);
 }

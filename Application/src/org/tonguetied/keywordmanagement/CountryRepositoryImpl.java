@@ -65,9 +65,10 @@ public class CountryRepositoryImpl extends HibernateDaoSupport implements
             getHibernateTemplate().saveOrUpdate(country);
         getHibernateTemplate().flush();
     }
-
+    
     public void delete(Country country)
     {
         getSession().delete(country);
+        getSession().flush();
     }
 }

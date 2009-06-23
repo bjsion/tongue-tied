@@ -169,6 +169,34 @@ public class KeywordServiceImpl implements KeywordService
         delete(keyword);
     }
 
+    @Override
+    public void deleteCountry(final Long id)
+    {
+        Country country = getCountry(id);
+        final int totalReferences = keywordRepository.getReferences("country.id", id);
+        if (totalReferences > 0)
+            throw new ReferenceException(country.getName(), totalReferences);
+        countryRepository.delete(country);
+    }
+
+    public void deleteLanguage(final Long id)
+    {
+        Language language = getLanguage(id);
+        final int totalReferences = keywordRepository.getReferences("language.id", id);
+        if (totalReferences > 0)
+            throw new ReferenceException(language.getName(), totalReferences);
+        languageRepository.delete(language);
+    }
+
+    public void deleteBundle(final Long id)
+    {
+        Bundle bundle = getBundle(id);
+        final int totalReferences = keywordRepository.getReferences("bundle.id", id);
+        if (totalReferences > 0)
+            throw new ReferenceException(bundle.getName(), totalReferences);
+        bundleRepository.delete(bundle);
+    }
+
     public void saveOrUpdate(Country country)
     {
         countryRepository.saveOrUpdate(country);
@@ -183,7 +211,6 @@ public class KeywordServiceImpl implements KeywordService
     {
         keywordRepository.saveOrUpdate(keyword);
     }
-
 
     public void saveOrUpdate(Bundle bundle)
     {

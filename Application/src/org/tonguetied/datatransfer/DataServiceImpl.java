@@ -86,7 +86,8 @@ public class DataServiceImpl implements DataService
      * Create a new instance of the DataServiceImpl. After this constructor
      * has been called the {@link #init()} method should be called.
      */
-    public DataServiceImpl() {
+    public DataServiceImpl()
+    {
     }
     
     /**
@@ -95,20 +96,24 @@ public class DataServiceImpl implements DataService
      *  
      * @throws ExportException if the exporter is fails to configure
      */
-    public void init() throws ExportException {
+    public void init() throws ExportException
+    {
         if (logger.isDebugEnabled())
             logger.debug("loading freemarker settings");
-        try {
+        try
+        {
             settings = new Settings(BASE_DIR);
             settings.set(NAME_SOURCE_ROOT, sourceRoot);
             settings.set(NAME_OUTPUT_ENCODING, "UTF-8");
             freemarker.log.Logger.selectLoggerLibrary(LIBRARY_LOG4J);
             createOutputDirectory();
         }
-        catch (SettingException se) {
+        catch (SettingException se)
+        {
             throw new ExportException(se);
         }
-        catch (ClassNotFoundException cnfe) {
+        catch (ClassNotFoundException cnfe)
+        {
             throw new ExportException(cnfe);
         }
     }
@@ -181,7 +186,6 @@ public class DataServiceImpl implements DataService
             float totalMillis = System.currentTimeMillis() - start;
             logger.info("export complete in " + (totalMillis/1000) + " seconds");
         }
-
     }
 
     /**
@@ -193,11 +197,13 @@ public class DataServiceImpl implements DataService
      * @return a map of parameters used by the templating mechanism
      */
     private Map<String, Object> postProcess(final ExportParameters parameters,
-            List<Translation> translations) {
+            List<Translation> translations)
+    {
         Map<String, Object> root = new HashMap<String, Object>();
         ExportDataPostProcessor postProcessor = 
             ExportDataPostProcessorFactory.getPostProcessor(parameters.getFormatType());
-        if (postProcessor != null) {
+        if (postProcessor != null)
+        {
             if (logger.isDebugEnabled()) 
                 logger.debug("post processing results using: " + postProcessor.getClass());
             
@@ -214,25 +220,29 @@ public class DataServiceImpl implements DataService
             Collections.sort(parameters.getLanguages());
             root.put("languages", parameters.getLanguages());
         }
-        else {
+        else
+        {
             root.put("translations", translations);
         }
         
         return root;
     }
     
-    public void createArchive(File directory) throws ExportException, IllegalArgumentException {
+    public void createArchive(File directory) throws ExportException, IllegalArgumentException
+    {
         if (!directory.isDirectory())
             throw new IllegalArgumentException("expecting a directory");
         
         ZipOutputStream zos = null;
-        try {
+        try
+        {
             File[] files = directory.listFiles();
-            if (files.length > 0) {
+            if (files.length > 0)
+            {
                 File archive = new File(directory, directory.getName()+".zip");
-                zos = new ZipOutputStream(
-                        new FileOutputStream(archive));
-                for (File file : files) {
+                zos = new ZipOutputStream(new FileOutputStream(archive));
+                for (File file : files)
+                {
                     zos.putNextEntry(new ZipEntry(file.getName()));
                     IOUtils.write(FileUtils.readFileToByteArray(file), zos);
                     zos.closeEntry();
@@ -243,10 +253,12 @@ public class DataServiceImpl implements DataService
                             + archive);
             }
         }
-        catch (IOException ioe) {
+        catch (IOException ioe)
+        {
             throw new ExportException(ioe);
         }
-        finally {
+        finally
+        {
             IOUtils.closeQuietly(zos);
         }
     }
@@ -283,7 +295,7 @@ public class DataServiceImpl implements DataService
         return outputDir;
     }
 
-    public void importData(ImportParameters parameters)
+    public void importData(final ImportParameters parameters)
     {
         final long start = System.currentTimeMillis();
         if (logger.isDebugEnabled()) 

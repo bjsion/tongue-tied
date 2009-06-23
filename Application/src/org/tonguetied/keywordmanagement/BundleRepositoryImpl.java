@@ -106,5 +106,6 @@ public class BundleRepositoryImpl extends HibernateDaoSupport implements
     public void delete(Bundle bundle)
     {
         getSession().delete(bundle);
+        getSession().flush();
     }
 }

@@ -17,7 +17,9 @@ package org.tonguetied.web;
 
 import static org.tonguetied.web.Constants.AUDIT_LOG;
 import static org.tonguetied.web.Constants.BUNDLES;
+import static org.tonguetied.web.Constants.BUNDLE_ID;
 import static org.tonguetied.web.Constants.COUNTRIES;
+import static org.tonguetied.web.Constants.*;
 import static org.tonguetied.web.Constants.DEFAULT_AUDIT_LOG_PAGE_SIZE;
 import static org.tonguetied.web.Constants.DEFAULT_USER_PAGE_SIZE;
 import static org.tonguetied.web.Constants.KEYWORDS;
@@ -54,6 +56,7 @@ import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
 import org.tonguetied.keywordmanagement.KeywordService;
 import org.tonguetied.keywordmanagement.Language;
+import org.tonguetied.keywordmanagement.ReferenceException;
 import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
 import org.tonguetied.usermanagement.User;
@@ -295,6 +298,87 @@ public class MainController extends MultiActionController
         keywordService.deleteKeyword(keywordId);
         
         return new ModelAndView("redirect:/keywords.htm");
+    }
+    
+    /**
+     * Handler method that acts as an HTTP interface to the 
+     * {@linkplain KeywordService#deleteBundle(Long)} method.
+     * 
+     * @param request the current HTTP request.
+     * @param response the current HTTP response.
+     * @return a ModelAndView to render.
+     * @throws Exception in case of errors.
+     */
+    public ModelAndView deleteBundle(HttpServletRequest request,
+            HttpServletResponse response) throws Exception
+    {
+        final Long bundleId = 
+            RequestUtils.getLongParameter(request, BUNDLE_ID);
+        Map<String, Object> model = new HashMap<String, Object>();
+        try
+        {
+            keywordService.deleteBundle(bundleId);
+        }
+        catch (ReferenceException re)
+        {
+            model.put("error", re);
+        }
+        
+        return new ModelAndView("forward:/bundles.htm", model);
+    }
+    
+    /**
+     * Handler method that acts as an HTTP interface to the 
+     * {@linkplain KeywordService#deleteCountry(Long)} method.
+     * 
+     * @param request the current HTTP request.
+     * @param response the current HTTP response.
+     * @return a ModelAndView to render.
+     * @throws Exception in case of errors.
+     */
+    public ModelAndView deleteCountry(HttpServletRequest request,
+            HttpServletResponse response) throws Exception
+    {
+        final Long countryId = 
+            RequestUtils.getLongParameter(request, COUNTRY_ID);
+        Map<String, Object> model = new HashMap<String, Object>();
+        try
+        {
+            keywordService.deleteCountry(countryId);
+        }
+        catch (ReferenceException re)
+        {
+            model.put("error", re);
+        }
+        
+        return new ModelAndView("forward:/countries.htm", model);
+    }
+    
+    /**
+     * Handler method that acts as an HTTP interface to the 
+     * {@linkplain KeywordService#deleteCountry(Long)} method.
+     * 
+     * @param request the current HTTP request.
+     * @param response the current HTTP response.
+     * @return a ModelAndView to render.
+     * @throws Exception in case of errors.
+     */
+    public ModelAndView deleteLanguage(HttpServletRequest request,
+            HttpServletResponse response) throws Exception
+    {
+        final Long languageId = 
+            RequestUtils.getLongParameter(request, LANGUAGE_ID);
+        Map<String, Object> model = new HashMap<String, Object>();
+        try
+        {
+            keywordService.deleteLanguage(languageId);
+        }
+        catch (ReferenceException re)
+        {
+            model.put("error", re);
+        }
+        
+        return new ModelAndView("forward:/languages.htm", model);
     }
     
     /**
