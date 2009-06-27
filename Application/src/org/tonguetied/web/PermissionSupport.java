@@ -33,8 +33,9 @@ public class PermissionSupport extends PropertyEditorSupport
     @Override
     public String getAsText()
     {
-        final Object value = getValue();
-        return value == null ? "" : ((Permission) value).toString();
+        final Permission permission = (Permission)getValue();
+        
+        return permission == null ? "" : permission.toString();
     }
 
     @Override
@@ -45,7 +46,9 @@ public class PermissionSupport extends PropertyEditorSupport
         if (StringUtils.isEmpty(string))
             value = null;
         else
+        {
             value = Permission.valueOf(string);
+        }
 
         setValue(value);
     }

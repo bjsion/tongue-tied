@@ -15,6 +15,8 @@
  */
 package org.tonguetied.usermanagement;
 
+import static org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -25,8 +27,7 @@ import javax.persistence.Enumerated;
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.AccessType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -206,17 +207,17 @@ public class UserRight implements Comparable<UserRight>, Serializable {
         return isEqual;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
     @Override
-    public String toString() {
-        return new ReflectionToStringBuilder(this, 
-                ToStringStyle.SHORT_PREFIX_STYLE).toString();
+    public String toString()
+    {
+        ToStringBuilder builder = new ToStringBuilder(this, SHORT_PREFIX_STYLE);
+        builder.append("permission", permission);
+        return builder.toString();
     }
     
-    public static enum Permission {
-        ROLE_ADMIN, ROLE_USER, ROLE_VERIFIER
+    public static enum Permission
+    {
+        ROLE_ADMIN, ROLE_USER, ROLE_VERIFIER, ROLE_DEVELOPER
         // should be read, write, verify, administer
     }
 }

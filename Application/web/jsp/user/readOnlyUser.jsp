@@ -5,32 +5,34 @@
 
     <div class="content">
     <c:url value="/user.htm" var="userUrl" scope="page"/>
-    <form:form id="userForm" method="post" action="${userUrl}" commandName="user">
+    <form:form id="userForm" method="post" action="${userUrl}" commandName="userForm">
         <%-- We need to bind the id as the form is in the request and would be lost when submitted --%>
         <fieldset>
-            <form:hidden path="id"/>
             <legend><fmt:message key="user.details"/></legend>
             <div>
-                <fmt:message key="username"/>&nbsp;:&nbsp;${user.username}
+                <span class="contentLabel"><fmt:message key="username"/>:</span>
+                <span class="contentValue"><c:out value="${userForm.user.username}"/></span>
             </div>
             <div>
-                <fmt:message key="first.name"/>&nbsp;:&nbsp;${user.firstName}
+                <span class="contentLabel"><fmt:message key="first.name"/>:</span>
+                <span class="contentValue"><c:out value="${userForm.user.firstName}"/></span>
             </div>
             <div>
-                <fmt:message key="last.name"/>&nbsp;:&nbsp;${user.lastName}
+                <span class="contentLabel"><fmt:message key="last.name"/>:</span>
+                <span class="contentValue">${userForm.user.lastName}</span>
             </div>
             <div>
-                <fmt:message key="email"/>&nbsp;:&nbsp;${user.email}
+                <span class="contentLabel"><fmt:message key="email"/>:</span>
+                <span class="contentValue">${userForm.user.email}</span>
             </div>
             <div>
-                <form:label path="enabled" cssClass="content"><fmt:message key="is.enabled"/></form:label>
-                <form:checkbox path="enabled" id="enabled" disabled="true"/>
+                <span class="contentLabel"><fmt:message key="account.enabled"/>:</span>
+                <span class="contentValue"><fmt:message key="enabled.${userForm.user.enabled}"/></span>
             </div>
         </fieldset>
         <fieldset>
             <legend><fmt:message key="authorities"/></legend>
-            <c:forEach items="${user.userRights}" var="userRight" varStatus="index">
-            <form:hidden path="userRights[${index.index}].user.id" id="userRight${index.index}.user.id"/>
+            <c:forEach items="${userForm.user.userRights}" var="userRight" varStatus="index">
             <div>
                 <fmt:message key="user.role"/>&nbsp;:&nbsp;<fmt:message key="${userRight.permission}"/>
             </div>

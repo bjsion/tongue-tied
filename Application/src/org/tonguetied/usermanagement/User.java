@@ -315,8 +315,8 @@ public class User implements UserDetails
                 authorities.add(authority);
             }
 
-            this.setAuthorities(authorities
-                    .toArray(new GrantedAuthority[authorities.size()]));
+            this.setAuthorities(authorities.toArray(
+                    new GrantedAuthority[authorities.size()]));
         }
     }
 
@@ -335,20 +335,58 @@ public class User implements UserDetails
         }
 
         this.userRights.add(userRight);
+        final GrantedAuthority authority = new GrantedAuthorityImpl(userRight
+                .getPermission().name());
+        Set<GrantedAuthority> authorities = getAuthoritiesAsSet();
+        if (!authorities.contains(authority))
+        {
+            authorities.add(authority);
+        }
+        this.setAuthorities(authorities.toArray(
+                new GrantedAuthority[authorities.size()]));
+    }
+
+    /**
+     * Convenience method to remove a {@link UserRight} from this User. If the
+     * UserRight does not exist then no action is taken.
+     * 
+     * @param userRight the authorized permission to remove
+     * @throws IllegalArgumentException if the <tt>userRight</tt> is
+     *         <tt>null</tt> or the <tt>permission</tt> is <tt>null</tt>
+     */
+    public void removeUserRight(UserRight userRight)
+    {
+        if (userRight == null || userRight.getPermission() == null)
+        {
+            throw new IllegalArgumentException("userRight cannot be null");
+        }
+
+        this.userRights.remove(userRight);
+        
+        final GrantedAuthority authority = 
+            new GrantedAuthorityImpl(userRight.getPermission().name());
+        Set<GrantedAuthority> authorities = getAuthoritiesAsSet();
+        authorities.remove(authority);
+        this.setAuthorities(authorities.toArray(
+                new GrantedAuthority[authorities.size()]));
+    }
+
+    /**
+     * Convert the authorities array to a set. If the authorities array is null
+     * then an empty set is returned.
+     * 
+     * @return a set of authorities.
+     */
+    @Transient
+    private Set<GrantedAuthority> getAuthoritiesAsSet()
+    {
         Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
         if (this.grantedAuthorities != null)
         {
             authorities = new HashSet<GrantedAuthority>(Arrays
                     .asList(this.grantedAuthorities));
         }
-        GrantedAuthority authority = new GrantedAuthorityImpl(userRight
-                .getPermission().name());
-        if (!authorities.contains(authority))
-        {
-            authorities.add(authority);
-        }
-        this.setAuthorities(authorities
-                .toArray(new GrantedAuthority[authorities.size()]));
+        return authorities;
     }
 
     @Column(name="account_non_expired",nullable=false)
