@@ -54,7 +54,12 @@
                         <div class="checkbox">
                             <input type="checkbox" id="${status.expression}${countryIndex.index}" name="${status.expression}" value="${country.id}" <c:if test="${selected}">checked="checked"</c:if>/>
                             <input type="hidden" name="_${status.expression}"/>
-                            <label for="${status.expression}${countryIndex.index}"><c:out value="${country.name}"/></label>
+                            <label for="${status.expression}${countryIndex.index}">
+                            <c:if test="${not empty country.code and country.code != \"DEFAULT\"}">
+                            <img src="<c:url value="/images/flags/${fn:toLowerCase(country.code)}.png"/>" alt="" title="${country.name}"/>
+                            </c:if>
+                            <c:out value="${country.name}"/>
+                            </label>
                         </div>
                                 <c:remove var="selected"/>
                             </c:forEach>
