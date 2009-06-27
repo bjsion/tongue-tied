@@ -15,12 +15,12 @@
  */
 package org.tonguetied.web;
 
-import static org.tonguetied.usermanagement.User.FIELD_EMAIL;
-import static org.tonguetied.usermanagement.User.FIELD_FIRSTNAME;
-import static org.tonguetied.usermanagement.User.FIELD_LASTNAME;
-import static org.tonguetied.usermanagement.User.FIELD_PASSWORD;
-import static org.tonguetied.usermanagement.User.FIELD_REPEATED_PASSWORD;
-import static org.tonguetied.usermanagement.User.FIELD_USERNAME;
+import static org.tonguetied.web.UserForm.FIELD_USER_EMAIL;
+import static org.tonguetied.web.UserForm.FIELD_USER_FIRSTNAME;
+import static org.tonguetied.web.UserForm.FIELD_USER_LASTNAME;
+import static org.tonguetied.web.UserForm.FIELD_USER_PASSWORD;
+import static org.tonguetied.web.UserForm.FIELD_USER_REPEATED_PASSWORD;
+import static org.tonguetied.web.UserForm.FIELD_USER_USERNAME;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -38,29 +38,18 @@ public class UserValidator implements Validator
 {
     private UserService userService;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.springframework.validation.Validator#supports(java.lang.Class)
-     */
     public boolean supports(Class clazz)
     {
-        return User.class.isAssignableFrom(clazz);
+        return UserForm.class.isAssignableFrom(clazz);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.springframework.validation.Validator#validate(java.lang.Object,
-     *      org.springframework.validation.Errors)
-     */
     public void validate(Object target, Errors errors)
     {
-        User user = (User) target;
-        validateMandatoryFields(user, errors);
-        validateDuplicates(user, errors);
-        validateEmail(user.getEmail(), errors);
-        validatePassword(user, errors);
+        UserForm userForm = (UserForm) target;
+        validateMandatoryFields(userForm.getUser(), errors);
+        validateDuplicates(userForm.getUser(), errors);
+        validateEmail(userForm.getUser().getEmail(), errors);
+        validatePassword(userForm.getUser(), errors);
     }
 
     /**
@@ -75,12 +64,12 @@ public class UserValidator implements Validator
         // check for duplicates of new records only
         if (user.getId() == null)
         {
-            ValidationUtils.rejectIfEmpty(errors, FIELD_PASSWORD,
+            ValidationUtils.rejectIfEmpty(errors, FIELD_USER_PASSWORD,
                     "error.password.required");
             if (user.getPassword() != null)
             {
                 if (!user.getPassword().equals(user.getRepeatedPassword()))
-                    errors.rejectValue(FIELD_REPEATED_PASSWORD, "error.password.mismatch");
+                    errors.rejectValue(FIELD_USER_REPEATED_PASSWORD, "error.password.mismatch");
             }
         }
     }
@@ -94,13 +83,13 @@ public class UserValidator implements Validator
      */
     private void validateMandatoryFields(final User user, Errors errors)
     {
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, FIELD_USERNAME,
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, FIELD_USER_USERNAME,
                 "error.username.required", null, "default");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, FIELD_FIRSTNAME,
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, FIELD_USER_FIRSTNAME,
                 "error.first.name.required", null, "default");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, FIELD_LASTNAME,
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, FIELD_USER_LASTNAME,
                 "error.last.name.required", null, "default");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, FIELD_EMAIL,
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, FIELD_USER_EMAIL,
                 "error.email.required", null, "default");
     }
 
@@ -119,7 +108,7 @@ public class UserValidator implements Validator
             User other = userService.getUser(user.getUsername());
             if (other != null)
             {
-                errors.rejectValue(FIELD_USERNAME, "error.user.already.exists",
+                errors.rejectValue(FIELD_USER_USERNAME, "error.user.already.exists",
                         new String[] { user.getUsername() }, "default");
             }
         }
@@ -137,7 +126,7 @@ public class UserValidator implements Validator
     {
         if (!WebValidationUtils.isEmailValid(email))
         {
-            errors.rejectValue(FIELD_EMAIL, "error.invalid.email");
+            errors.rejectValue(FIELD_USER_EMAIL, "error.invalid.email");
         }
     }
 

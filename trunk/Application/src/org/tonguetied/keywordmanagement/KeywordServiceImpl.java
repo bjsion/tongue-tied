@@ -169,7 +169,6 @@ public class KeywordServiceImpl implements KeywordService
         delete(keyword);
     }
 
-    @Override
     public void deleteCountry(final Long id)
     {
         Country country = getCountry(id);

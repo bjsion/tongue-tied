@@ -36,10 +36,14 @@ import org.tonguetied.usermanagement.UserRight.Permission;
 
 
 /**
+ * Test class for the logic methods of the {@link User} class. This test class
+ * does not test the ORM persistence methods.
+ * 
  * @author bsion
- *
+ * @see UserPersistenceTest
  */
-public class UserTest {
+public class UserTest
+{
     private User user1;
     private Language tamil;
     private Country india;
@@ -49,7 +53,8 @@ public class UserTest {
      * @throws java.lang.Exception
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws Exception
+    {
         user1 = new User("username", "password", "firstName", "lastName", "test@test.com", true, true, true, true);
         tamil = new Language();
         tamil.setCode(LanguageCode.ta);
@@ -62,10 +67,11 @@ public class UserTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.usermanagement.User#setUserRights(SortedSet)}.
+     * Test method for {@link User#setUserRights(SortedSet)}.
      */
     @Test
-    public final void testSetUserRights() {
+    public final void testSetUserRights()
+    {
         UserRight userRight1 = new UserRight(Permission.ROLE_USER, tamil, india, bundle);
         UserRight userRight2 = new UserRight(Permission.ROLE_ADMIN, tamil, india, bundle);
         SortedSet<UserRight> userRights = new TreeSet<UserRight>();
@@ -84,10 +90,11 @@ public class UserTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.usermanagement.User#setUserRights(SortedSet)}.
+     * Test method for {@link User#setUserRights(SortedSet)}.
      */
     @Test
-    public final void testSetUserRightsToNull() {
+    public final void testSetUserRightsToNull()
+    {
         user1.setUserRights(null);
         
         GrantedAuthority[] authorities = user1.getAuthorities();
@@ -95,10 +102,11 @@ public class UserTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.usermanagement.User#addUserRight(org.tonguetied.usermanagement.UserRight)}.
+     * Test method for {@link User#addUserRight(UserRight)}.
      */
     @Test
-    public final void testAddNewUserRightToEmptyList() {
+    public final void testAddNewUserRightToEmptyList()
+    {
         UserRight userRight1 = new UserRight(Permission.ROLE_USER, tamil, india, bundle);
         user1.addUserRight(userRight1);
         
@@ -111,10 +119,11 @@ public class UserTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.usermanagement.User#addUserRight(org.tonguetied.usermanagement.UserRight)}.
+     * Test method for {@link User#addUserRight(UserRight)}.
      */
     @Test
-    public final void testAddNewUserRightToExistingList() {
+    public final void testAddNewUserRightToExistingList()
+    {
         UserRight userRight1 = new UserRight(Permission.ROLE_USER, tamil, india, bundle);
         SortedSet<UserRight> userRights = new TreeSet<UserRight>();
         userRights.add(userRight1);
@@ -133,10 +142,11 @@ public class UserTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.usermanagement.User#addUserRight(org.tonguetied.usermanagement.UserRight)}.
+     * Test method for {@link User#addUserRight(UserRight)}.
      */
     @Test
-    public final void testAddExistingUserRight() {
+    public final void testAddExistingUserRight()
+    {
         UserRight userRight1 = new UserRight(Permission.ROLE_USER, tamil, india, bundle);
         UserRight userRight2 = new UserRight(Permission.ROLE_ADMIN, tamil, india, bundle);
         SortedSet<UserRight> userRights = new TreeSet<UserRight>();
@@ -156,10 +166,11 @@ public class UserTest {
     }
 
     /**
-     * Test method for {@link org.tonguetied.usermanagement.User#addUserRight(org.tonguetied.usermanagement.UserRight)}.
+     * Test method for {@link User#addUserRight(UserRight)}.
      */
     @Test
-    public final void testAddNullUserRightToEmptyUserRights() {
+    public final void testAddNullUserRightToEmptyUserRights()
+    {
         try {
             user1.addUserRight(null);
             fail("adding null userright should throw exception");
@@ -170,10 +181,11 @@ public class UserTest {
     }
     
     /**
-     * Test method for {@link org.tonguetied.usermanagement.User#addUserRight(org.tonguetied.usermanagement.UserRight)}.
+     * Test method for {@link User#addUserRight(UserRight)}.
      */
     @Test
-    public final void testAddNullUserRightToExistingUserRights() {
+    public final void testAddNullUserRightToExistingUserRights()
+    {
         UserRight userRight1 = new UserRight(Permission.ROLE_USER, tamil, india, bundle);
         UserRight userRight2 = new UserRight(Permission.ROLE_ADMIN, tamil, india, bundle);
         SortedSet<UserRight> userRights = new TreeSet<UserRight>();
@@ -194,5 +206,72 @@ public class UserTest {
             };
             assertArrayEquals(expectedAuthorities, authorities);
         }
+    }
+    
+    /**
+     * Test method for {@link User#removeUserRight(UserRight)}.
+     */
+    @Test
+    public final void testRemoveExistingUserRight()
+    {
+        UserRight userRight1 = new UserRight(Permission.ROLE_USER, tamil, india, bundle);
+        UserRight userRight2 = new UserRight(Permission.ROLE_ADMIN, tamil, india, bundle);
+        SortedSet<UserRight> userRights = new TreeSet<UserRight>();
+        userRights.add(userRight1);
+        userRights.add(userRight2);
+        
+        user1.setUserRights(userRights);
+        
+        user1.removeUserRight(new UserRight(Permission.ROLE_ADMIN, null, null, null));
+
+        GrantedAuthority[] authorities = user1.getAuthorities();
+        assertEquals(1, authorities.length);
+        GrantedAuthority[] expectedAuthorities = new GrantedAuthority[] {
+                new GrantedAuthorityImpl(Permission.ROLE_USER.name())
+        };
+        assertArrayEquals(expectedAuthorities, authorities);
+    }
+    
+    /**
+     * Test method for {@link User#removeUserRight(UserRight)}.
+     */
+    @Test
+    public final void testRemoveNonExistentUserRight()
+    {
+        UserRight userRight1 = new UserRight(Permission.ROLE_USER, tamil, india, bundle);
+        UserRight userRight2 = new UserRight(Permission.ROLE_ADMIN, tamil, india, bundle);
+        SortedSet<UserRight> userRights = new TreeSet<UserRight>();
+        userRights.add(userRight1);
+        userRights.add(userRight2);
+        
+        user1.setUserRights(userRights);
+        
+        user1.removeUserRight(new UserRight(Permission.ROLE_VERIFIER, tamil, india, bundle));
+
+        GrantedAuthority[] authorities = user1.getAuthorities();
+        assertEquals(2, authorities.length);
+        GrantedAuthority[] expectedAuthorities = new GrantedAuthority[] {
+                new GrantedAuthorityImpl(Permission.ROLE_ADMIN.name()),
+                new GrantedAuthorityImpl(Permission.ROLE_USER.name())
+        };
+        assertArrayEquals(expectedAuthorities, authorities);
+    }
+    
+    /**
+     * Test method for {@link User#removeUserRight(UserRight)}.
+     */
+    @Test(expected=IllegalArgumentException.class)
+    public final void testRemoveUserRightWithNullPermission()
+    {
+        user1.removeUserRight(new UserRight(null, tamil, india, bundle));
+    }
+    
+    /**
+     * Test method for {@link User#removeUserRight(UserRight)}.
+     */
+    @Test(expected=IllegalArgumentException.class)
+    public final void testRemoveNullUserRight()
+    {
+        user1.removeUserRight(null);
     }
 }

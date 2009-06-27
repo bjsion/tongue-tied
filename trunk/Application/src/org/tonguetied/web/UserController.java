@@ -17,6 +17,7 @@ package org.tonguetied.web;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,23 +52,15 @@ public class UserController extends CancellableFormController
      */
     public UserController()
     {
-        setCommandClass(User.class);
+        setCommandClass(UserForm.class);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.springframework.web.servlet.mvc.BaseCommandController#initBinder(javax.servlet.http.HttpServletRequest,
-     *      org.springframework.web.bind.ServletRequestDataBinder)
-     */
     @Override
     protected void initBinder(HttpServletRequest request,
             ServletRequestDataBinder binder) throws Exception
     {
         binder.registerCustomEditor(Permission.class, new PermissionSupport());
-        binder
-                .registerCustomEditor(String.class, new StringTrimmerEditor(
-                        true));
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
 
     @Override
@@ -75,7 +68,13 @@ public class UserController extends CancellableFormController
             throws Exception
     {
         Map<String, Object> model = new HashMap<String, Object>();
-        model.put("permissions", Permission.values());
+//        model.put("permissions", Permission.values());
+        Map<Permission, Boolean> permissions = new HashMap<Permission, Boolean>();
+        for (Permission permission: Permission.values())
+        {
+            permissions.put(permission, false);
+        }
+        model.put("permissionsMap", permissions);
 
         return model;
     }
@@ -95,6 +94,8 @@ public class UserController extends CancellableFormController
 
         if (user == null)
         {
+            if (logger.isDebugEnabled()) 
+                logger.debug("creating new user");
             user = new User();
             user.setAccountNonExpired(true);
             user.setAccountNonLocked(true);
@@ -106,7 +107,7 @@ public class UserController extends CancellableFormController
             user.addUserRight(userRight);
         }
 
-        return user;
+        return new UserForm(user);
     }
 
     @Override
@@ -115,7 +116,18 @@ public class UserController extends CancellableFormController
             throws Exception
     {
         if (logger.isDebugEnabled()) logger.debug("saving user");
-        User user = (User) command;
+        final UserForm userForm = (UserForm) command;
+        User user = userForm.getUser();
+        
+        for (final Entry<Permission, Boolean> entry: userForm.getPermissions().entrySet())
+        {
+            final UserRight userRight = 
+                new UserRight(entry.getKey(), null, null, null);
+            if (entry.getValue())
+                user.addUserRight(userRight);
+            else
+                user.removeUserRight(userRight);
+        }
 
         userService.saveOrUpdate(user);
 

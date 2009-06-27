@@ -18,11 +18,11 @@
             <legend><fmt:message key="keyword.details"/></legend>
             <div>
                 <form:label path="keyword" cssClass="content"><fmt:message key="keyword.id"/></form:label>
-                <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+                <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN,ROLE_DEVELOPER">
                 <form:input path="keyword"/>
                 <form:errors path="keyword" cssClass="error"/>
                 </security:authorize>
-                <security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
+                <security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN,ROLE_DEVELOPER">
                 ${keyword.keyword}
                 </security:authorize>
             </div>
@@ -65,7 +65,7 @@
                         <td>
                             <form:hidden path="translations[${index.index}].id" id="translation${index.index}.id"/>
                             <form:hidden path="translations[${index.index}].version" id="translation${index.index}.version"/>
-                            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+                            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN,ROLE_DEVELOPER">
                             <c:choose>
                                 <c:when test="${not empty translation.id}">
                                     <c:set var="translationId" value="${translation.id}" scope="page"/>
@@ -83,43 +83,43 @@
                             </security:authorize>
                         </td>
                         <td>
-                            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+                            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN,ROLE_DEVELOPER">
                             <form:select path="translations[${index.index}].language" id="translation${index.index}.language" size="1">
                                 <form:option value=""><fmt:message key="please.select"/></form:option>
                                 <form:options items="${languages}" itemValue="id" itemLabel="name"/>
                             </form:select>
                             </security:authorize>
-                            <security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
+                            <security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN,ROLE_DEVELOPER">
                             ${translation.language.name}
                             </security:authorize>
                         </td>
                         <td>
-                            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+                            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN,ROLE_DEVELOPER">
                             <form:select path="translations[${index.index}].country" id="translation${index.index}.country" size="1">
                                 <form:option value=""><fmt:message key="please.select"/></form:option>
                                 <form:options items="${countries}" itemValue="id" itemLabel="name"/>
                             </form:select>
                             </security:authorize>
-                            <security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
+                            <security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN,ROLE_DEVELOPER">
                             ${translation.country.name}
                             </security:authorize>
                         </td>
                         <td>
-                            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+                            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN,ROLE_DEVELOPER">
                             <form:select path="translations[${index.index}].bundle" id="translation${index.index}.bundle" size="1">
                                 <form:option value=""><fmt:message key="please.select"/></form:option>
                                 <form:options items="${bundles}" itemValue="id" itemLabel="name"/>
                             </form:select>
                             </security:authorize>
-                            <security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
+                            <security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN,ROLE_DEVELOPER">
                             ${translation.bundle.name}
                             </security:authorize>
                         </td>
                         <td>
-                            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+                            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN,ROLE_DEVELOPER">
                             <form:textarea path="translations[${index.index}].value" id="translation${index.index}.value" rows="4" cols="100%"/>
                             </security:authorize>
-                            <security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
+                            <security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN,ROLE_DEVELOPER">
                             <c:out value="${translation.value}" escapeXml="true"/>
                             </security:authorize>
                         </td>
@@ -146,13 +146,13 @@
             </table>
         </fieldset>
         <div class="submit">
-            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN,ROLE_DEVELOPER">
             <input type="submit" id="add" name="add" value="<fmt:message key="add.translation"/>" class="button"/>
             </security:authorize>
             <input type="submit" id="save" name="save" value="<fmt:message key="save"/>" class="button"/>
             <input type="submit" id="_cancel" name="_cancel" value="<fmt:message key="cancel"/>" class="button"/>
             <input type="reset" id="reset" name="reset" value="<fmt:message key="reset"/>" class="button"/>
-            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+            <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN,ROLE_DEVELOPER">
             <input type="submit" id="delete" name="delete" value="<fmt:message key="remove.keyword"/>" class="button" onclick="return confirm('${fn:escapeXml(confirmDeleteKeywordMsg)}')"/>
             </security:authorize>
         </div>

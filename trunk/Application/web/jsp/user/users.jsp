@@ -58,7 +58,7 @@
                 </display:column>
                 <display:column titleKey="roles" sortable="false">
                     <c:forEach items="${user.userRights}" var="userRight" varStatus="index">
-                    <fmt:message key="${userRight.permission}"/>
+                    <p><fmt:message key="${userRight.permission}"/></p>
                     </c:forEach>
                 </display:column>
                 <display:column titleKey="account.enabled" sortable="false">

@@ -18,12 +18,7 @@ package org.tonguetied.web;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.tonguetied.usermanagement.User.FIELD_EMAIL;
-import static org.tonguetied.usermanagement.User.FIELD_FIRSTNAME;
-import static org.tonguetied.usermanagement.User.FIELD_LASTNAME;
-import static org.tonguetied.usermanagement.User.FIELD_PASSWORD;
-import static org.tonguetied.usermanagement.User.FIELD_REPEATED_PASSWORD;
-import static org.tonguetied.usermanagement.User.FIELD_USERNAME;
+import static org.tonguetied.web.UserForm.*;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -51,35 +46,35 @@ import org.tonguetied.usermanagement.UserServiceStub;
 public class UserValidatorTest
 {
     private UserService userService;
-    private User user;
+    private UserForm userForm;
     private String fieldName;
 
     @Parameters
     public static final Collection<Object[]> data()
     {
         return Arrays.asList(new Object[][] {
-//                {null, "username", "password", "password", "firstName", "lastName", "test@test.com", true, FIELD_USERNAME},
-                {null, "", "password", "password", "firstName", "lastName", "test@test.com", true, FIELD_USERNAME},
-                {null, "   ", "password", "password", "firstName", "lastName", "test@test.com", true, FIELD_USERNAME},
-                {null, null, "password", "password", "firstName", "lastName", "test@test.com", true, FIELD_USERNAME},
-                {null, "username", "password", "password", "", "lastName", "test@test.com", true, FIELD_FIRSTNAME},
-                {null, "username", "password", "password", "   ", "lastName", "test@test.com", true, FIELD_FIRSTNAME},
-                {null, "username", "password", "password", null, "lastName", "test@test.com", true, FIELD_FIRSTNAME},
-                {null, "username", "password", "password", "firstName", "", "test@test.com", true, FIELD_LASTNAME},
-                {null, "username", "password", "password", "firstName", "   ", "test@test.com", true, FIELD_LASTNAME},
-                {null, "username", "password", "password", "firstName", null, "test@test.com", true, FIELD_LASTNAME},
-                {null, "username", "password", "password", "firstName", "lastName", "", true, FIELD_EMAIL},
-                {null, "username", "password", "password", "firstName", "lastName", "\t\t", true, FIELD_EMAIL},
-                {null, "username", "password", "password", "firstName", "lastName", null, true, FIELD_EMAIL},
-                {null, "username", "password", "password", "firstName", "lastName", "email", true, FIELD_EMAIL},
-                {null, "username", "password", "password", "firstName", "lastName", "test@email", true, FIELD_EMAIL},
-                {null, "username", "password", "password", "firstName", "lastName", "test.com", true, FIELD_EMAIL},
-                {null, "username", "password", "password", "firstName", "lastName", "@.com", true, FIELD_EMAIL},
-                {null, "existing", "existing", "existing", "existing", "existing", "test@test.com", true, FIELD_USERNAME},
+//                {null, "username", "password", "password", "firstName", "lastName", "test@test.com", true, FIELD_USER_USERNAME},
+                {null, "", "password", "password", "firstName", "lastName", "test@test.com", true, FIELD_USER_USERNAME},
+                {null, "   ", "password", "password", "firstName", "lastName", "test@test.com", true, FIELD_USER_USERNAME},
+                {null, null, "password", "password", "firstName", "lastName", "test@test.com", true, FIELD_USER_USERNAME},
+                {null, "username", "password", "password", "", "lastName", "test@test.com", true, FIELD_USER_FIRSTNAME},
+                {null, "username", "password", "password", "   ", "lastName", "test@test.com", true, FIELD_USER_FIRSTNAME},
+                {null, "username", "password", "password", null, "lastName", "test@test.com", true, FIELD_USER_FIRSTNAME},
+                {null, "username", "password", "password", "firstName", "", "test@test.com", true, FIELD_USER_LASTNAME},
+                {null, "username", "password", "password", "firstName", "   ", "test@test.com", true, FIELD_USER_LASTNAME},
+                {null, "username", "password", "password", "firstName", null, "test@test.com", true, FIELD_USER_LASTNAME},
+                {null, "username", "password", "password", "firstName", "lastName", "", true, FIELD_USER_EMAIL},
+                {null, "username", "password", "password", "firstName", "lastName", "\t\t", true, FIELD_USER_EMAIL},
+                {null, "username", "password", "password", "firstName", "lastName", null, true, FIELD_USER_EMAIL},
+                {null, "username", "password", "password", "firstName", "lastName", "email", true, FIELD_USER_EMAIL},
+                {null, "username", "password", "password", "firstName", "lastName", "test@email", true, FIELD_USER_EMAIL},
+                {null, "username", "password", "password", "firstName", "lastName", "test.com", true, FIELD_USER_EMAIL},
+                {null, "username", "password", "password", "firstName", "lastName", "@.com", true, FIELD_USER_EMAIL},
+                {null, "existing", "existing", "existing", "existing", "existing", "test@test.com", true, FIELD_USER_USERNAME},
                 {1L, "existing", "existing", "existing", "existing", "existing", "test@test.com", true, null},
-                {null, "username", null, "password", "firstName", "lastName", "test@test.com", true, FIELD_PASSWORD},
-                {null, "username", null, null, "firstName", "lastName", "test@test.com", true, FIELD_PASSWORD},
-                {null, "username", "password", "different", "firstName", "lastName", "test@test.com", true, FIELD_REPEATED_PASSWORD},
+                {null, "username", null, "password", "firstName", "lastName", "test@test.com", true, FIELD_USER_PASSWORD},
+                {null, "username", null, null, "firstName", "lastName", "test@test.com", true, FIELD_USER_PASSWORD},
+                {null, "username", "password", "different", "firstName", "lastName", "test@test.com", true, FIELD_USER_REPEATED_PASSWORD},
                 {1L, "username", "password", "different", "firstName", "lastName", "test@test.com", true, null},
                 {1L, "username", null, "password", "firstName", "lastName", "test@test.com", true, null},
                 });
@@ -95,9 +90,10 @@ public class UserValidatorTest
                             final boolean isEnabled,
                             final String fieldName)
     {
-        this.user = new User(username, password, firstName, lastName, email, isEnabled, true, true, true);
-        this.user.setId(id);
-        this.user.setRepeatedPassword(repeatedPassword);
+        User user = new User(username, password, firstName, lastName, email, isEnabled, true, true, true);
+        user.setId(id);
+        user.setRepeatedPassword(repeatedPassword);
+        this.userForm = new UserForm(user);
         this.fieldName = fieldName;
     }
     
@@ -117,8 +113,8 @@ public class UserValidatorTest
     {
         UserValidator validator = new UserValidator();
         validator.setUserService(userService);
-        Errors errors = new BindException(this.user, "user");
-        validator.validate(this.user, errors);
+        Errors errors = new BindException(this.userForm, "userForm");
+        validator.validate(this.userForm, errors);
         
         if (fieldName == null)
         {
@@ -128,23 +124,23 @@ public class UserValidatorTest
         {
             assertFalse(errors.getAllErrors().isEmpty());
             FieldError error = errors.getFieldError(fieldName);
-            if (FIELD_USERNAME.equals(fieldName)) {
-                assertEquals(this.user.getUsername(), error.getRejectedValue());
+            if (FIELD_USER_USERNAME.equals(fieldName)) {
+                assertEquals(this.userForm.getUser().getUsername(), error.getRejectedValue());
             }
-            if (FIELD_FIRSTNAME.equals(fieldName)) {
-                assertEquals(this.user.getFirstName(), error.getRejectedValue());
+            if (FIELD_USER_FIRSTNAME.equals(fieldName)) {
+                assertEquals(this.userForm.getUser().getFirstName(), error.getRejectedValue());
             }
-            if (FIELD_LASTNAME.equals(fieldName)) {
-                assertEquals(this.user.getLastName(), error.getRejectedValue());
+            if (FIELD_USER_LASTNAME.equals(fieldName)) {
+                assertEquals(this.userForm.getUser().getLastName(), error.getRejectedValue());
             }
-            if (FIELD_EMAIL.equals(fieldName)) {
-                assertEquals(this.user.getEmail(), error.getRejectedValue());
+            if (FIELD_USER_EMAIL.equals(fieldName)) {
+                assertEquals(this.userForm.getUser().getEmail(), error.getRejectedValue());
             }
-            if (FIELD_PASSWORD.equals(fieldName)) {
-                assertEquals(this.user.getPassword(), error.getRejectedValue());
+            if (FIELD_USER_PASSWORD.equals(fieldName)) {
+                assertEquals(this.userForm.getUser().getPassword(), error.getRejectedValue());
             }
-            if (FIELD_REPEATED_PASSWORD.equals(fieldName)) {
-                assertEquals(this.user.getRepeatedPassword(), error.getRejectedValue());
+            if (FIELD_USER_REPEATED_PASSWORD.equals(fieldName)) {
+                assertEquals(this.userForm.getUser().getRepeatedPassword(), error.getRejectedValue());
             }
             assertFalse(error.isBindingFailure());
         }

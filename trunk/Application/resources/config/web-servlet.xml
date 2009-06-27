@@ -224,7 +224,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     </bean>
 
     <bean name="userController" class="org.tonguetied.web.UserController">
-        <property name="commandName" value="user"/>
+        <property name="commandName" value="userForm"/>
         <property name="formView" value="user/user"/>
         <property name="validator" ref="userValidator"/>
         <property name="successView" value="redirect:/users.htm"/>
@@ -233,7 +233,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     </bean>
 
     <bean name="readOnlyUserController" class="org.tonguetied.web.UserController">
-        <property name="commandName" value="user"/>
+        <property name="commandName" value="userForm"/>
         <property name="formView" value="user/readOnlyUser"/>
         <property name="cancelView" value="forward:/users.htm"/>
         <property name="userService" ref="userService"/>

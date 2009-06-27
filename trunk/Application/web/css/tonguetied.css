@@ -158,6 +158,23 @@ form label.content {
   width: 200px;
 }
 
+span.contentLabel {
+  clear: left; 
+  display: block; 
+  padding-right: 10px;
+  margin-bottom: 0.5em;
+  text-align: right;
+  float: left;
+  width: 200px;
+}
+
+span.contentValue {
+  display: block; 
+  padding-right: 10px;
+  margin-bottom: 0.5em;
+  float: left;
+}
+
 form label.sidepanel {
   text-align: left;
   font-size: 12px;
@@ -234,6 +251,7 @@ form div.checkbox input {
   left: 0;
   position: absolute;
   top: 1px;
+  vertical-align: top;
 }
 
 /*
@@ -242,6 +260,10 @@ form div.submit {
   float: right;
 }
 */
+
+input[type=checkbox] {
+  border: none;
+}
 
 
 /******************************************************************************
