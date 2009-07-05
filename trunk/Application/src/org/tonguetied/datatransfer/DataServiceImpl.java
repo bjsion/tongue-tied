@@ -40,6 +40,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.SystemUtils;
 import org.apache.log4j.Logger;
+import org.springframework.core.io.Resource;
 import org.tonguetied.datatransfer.common.ExportParameters;
 import org.tonguetied.datatransfer.common.FormatType;
 import org.tonguetied.datatransfer.common.ImportParameters;
@@ -73,7 +74,7 @@ public class DataServiceImpl implements DataService
     private Settings settings;
     private TransferRepository transferRepository;
     private KeywordService keywordService;
-    private String sourceRoot;
+    private File sourceRoot;
     private File outputRoot;
     private File outputDir;
     
@@ -103,7 +104,7 @@ public class DataServiceImpl implements DataService
         try
         {
             settings = new Settings(BASE_DIR);
-            settings.set(NAME_SOURCE_ROOT, sourceRoot);
+            settings.set(NAME_SOURCE_ROOT, sourceRoot.getPath());
             settings.set(NAME_OUTPUT_ENCODING, "UTF-8");
             freemarker.log.Logger.selectLoggerLibrary(LIBRARY_LOG4J);
             createOutputDirectory();
@@ -331,12 +332,22 @@ public class DataServiceImpl implements DataService
     }
 
     /**
+     * Assign the directory containing the templates.
+     * 
      * @param sourceRoot the directory on the file system where template files
      * are stored 
      */
-    public void setSourceRoot(final String sourceRoot)
+    public void setSourceRoot(final Resource sourceRoot)
     {
-        this.sourceRoot = sourceRoot;
+        try
+        {
+            this.sourceRoot = sourceRoot.getFile();
+        }
+        catch (IOException ioe)
+        {
+            throw new ExportException(ioe);
+        }
+
     }
 
     /**
