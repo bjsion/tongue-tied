@@ -28,6 +28,38 @@ ul.inline li a {
   color: #474747;
 }
 
+li.fileView {
+  background-image: url(../images/page_white.png);
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  padding: 3px 10px 3px 25px;
+  list-style: none;
+}
+
+li.directory {
+  background-image: url(../images/folder.png);
+}
+
+li.xls {
+  background-image: url(../images/page_white_excel.png);
+}
+
+li.resx {
+  background-image: url(../images/page_white_csharp.png);
+}
+
+li.properties {
+  background-image: url(../images/page_white_text.png);
+}
+
+li.csv {
+  background-image: url(../images/page_white_text.png);
+}
+
+li.zip {
+  background-image: url(../images/page_white_zip.png);
+}
+
 /******************************************************************************
 * Styles for content layout.
 ******************************************************************************/
@@ -100,6 +132,25 @@ div.submit {
   float: right;
 }
 
+div.dirBreadcrumbs {
+  clear: both;
+  border-color: #cccccc;
+  border-width: 1px;
+  border-style: solid;
+  margin-right: 10px;
+  margin-left: 10px;
+  padding: 5px 3px;
+}
+
+div.dirListing {
+  clear: both;
+  border-color: #cccccc;
+  border-width: 1px;
+  border-style: solid;
+  margin-right: 10px;
+  margin-left: 10px;
+  padding: 2px 10px;
+}
 
 /******************************************************************************
 * Styles for form display.
