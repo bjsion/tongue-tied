@@ -40,6 +40,7 @@ import org.junit.runners.Suite.SuiteClasses;
     CountryValidatorTest.class,
     EmptyPreferenceFilterTest.class,
     ExportParametersValidatorTest.class,
+    FileBeanTest.class,
     FormatTypeSupportTest.class,
     ImportValidatorTest.class,
     KeywordTranslationValidatorTest.class,

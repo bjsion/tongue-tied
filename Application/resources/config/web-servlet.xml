@@ -100,6 +100,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 <!-- Export -->
                 <entry key="/export.htm" value-ref="exportController"/>
                 <entry key="/import.htm" value-ref="importController"/>
+                <entry key="/export*.dir" value-ref="directoryViewController"/>
+                <entry key="/export/**/*.dir" value-ref="directoryViewController"/>
                 
                 <!-- Language -->
                 <entry key="/language.htm" value-ref="languageController"/>
@@ -270,6 +272,10 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="validator" ref="accountFormValidator"/>
         <property name="successView" value="user/accountDetails"/>
         <property name="userService" ref="userService"/>
+    </bean>
+
+    <bean name="directoryViewController" class="org.tonguetied.web.DirectoryViewController">
+        <property name="suffix" value=".dir"/>
     </bean>
 
     <bean id="bundleValidator" autowire="byName" dependency-check="objects" class="org.tonguetied.web.BundleValidator"/>

@@ -50,7 +50,7 @@
             <init-param>
                 <param-name>debug.pagewriter</param-name>
                 <param-value>true</param-value>
-            </init-param>         
+            </init-param>
     </filter>
     
     <filter-mapping>
@@ -126,6 +126,11 @@
     <servlet-mapping>
         <servlet-name>web</servlet-name>
         <url-pattern>*.htm</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>web</servlet-name>
+        <url-pattern>*.dir</url-pattern>
     </servlet-mapping>
     
     <session-config>
