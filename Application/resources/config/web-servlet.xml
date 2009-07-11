@@ -183,8 +183,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="commandName" value="export"/>
         <property name="formView" value="export/export"/>
         <property name="validator" ref="exportParametersValidator"/>
-        <property name="successView" value="forward:/export/"/>
-        <property name="cancelView" value="forward:/export/"/>
+        <property name="successView" value="forward:/export.dir"/>
+        <property name="cancelView" value="forward:/export.dir"/>
         <property name="dataService" ref="dataService"/>
         <property name="keywordService" ref="keywordService"/>
     </bean>

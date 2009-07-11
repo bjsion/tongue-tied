@@ -27,8 +27,7 @@
             <Item name="NewBundle" title="new.bundle" page="/bundle.htm" toolTip="help.new.bundle.sub.menu"/>
         </Menu>
         <Menu name="TabbedImportExport" title="import.export.tab" page="/export.htm" toolTip="help.import.export.tab">
-            <Item name="ExportList" title="export.listing" page="/export/" toolTip="help.export.listing.sub.menu"/>
-            <Item name="ExportList2" title="export.listing2" page="/export.dir" toolTip="help.export.listing.sub.menu"/>
+            <Item name="ExportList" title="export.listing" page="/export.dir" toolTip="help.export.listing.sub.menu"/>
             <Item name="Export" title="export" page="/export.htm" toolTip="help.export.sub.menu"/>
             <Item name="Import" title="import" page="/import.htm" toolTip="help.import.sub.menu" roles="ROLE_ADMIN,ROLE_USER,ROLE_DEVELOPER"/>
         </Menu>

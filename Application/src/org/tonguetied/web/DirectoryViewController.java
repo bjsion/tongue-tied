@@ -15,11 +15,8 @@
  */
 package org.tonguetied.web;
 
-import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +25,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
 /**
+ * Manages the display of directory that is within the context of this
+ * application.
+ * 
  * @author bsion
  *
  */
@@ -53,9 +53,6 @@ public class DirectoryViewController extends AbstractController
         FileBean baseDirectory = new FileBean(homePath);
         if (logger.isInfoEnabled())
             logger.info("displaying contents of basedir = " + baseDirectory);
-//        final File homeDirectory = 
-//            new File(request.getSession().getServletContext().getRealPath("/"));
-//        List<String> parents = getParents(baseDirectory.getParentFile(), homeDirectory);
         int lastIndex = servletPath.lastIndexOf("/");
         final String[] parents;
         if (lastIndex > 0)
@@ -71,20 +68,6 @@ public class DirectoryViewController extends AbstractController
         return new ModelAndView("export/fileListing", model);
     }
 
-    private List<String> getParents(final File directory, final File homeDirectory)
-    {
-        List<String> parents = new Stack<String>();
-        if (!directory.equals(homeDirectory))
-        {
-            List<String> grandParents = 
-                getParents(directory.getParentFile(), homeDirectory);
-            parents.addAll(grandParents);
-            parents.add(directory.getName());
-        }
-        
-        return parents;
-    }
-    
     /**
      * @param suffix the suffix to set
      */

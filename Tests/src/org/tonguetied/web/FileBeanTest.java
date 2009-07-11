@@ -15,6 +15,7 @@
  */
 package org.tonguetied.web;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -30,6 +31,17 @@ import org.junit.Test;
  */
 public class FileBeanTest
 {
+
+    /**
+     * Test method for {@link org.tonguetied.web.FileBean#getLastModifiedDate()}.
+     */
+    @Test
+    public final void testGetFilesWithNoFiles()
+    {
+        final FileBean file = new FileBean("test");
+        final FileBean[] files = file.getFiles();
+        assertArrayEquals(new FileBean[0], files);
+    }
 
     /**
      * Test method for {@link org.tonguetied.web.FileBean#getLastModifiedDate()}.
