@@ -60,6 +60,16 @@ li.zip {
   background-image: url(../images/page_white_zip.png);
 }
 
+li.upOneLevel {
+  list-style: none;
+  padding: 4px 0px 7px 0px;
+}
+
+.fileAttributes {
+  float: right;
+  text-align: right;
+}
+
 /******************************************************************************
 * Styles for content layout.
 ******************************************************************************/
@@ -149,6 +159,8 @@ div.dirListing {
   border-style: solid;
   margin-right: 10px;
   margin-left: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   padding: 2px 10px;
 }
 

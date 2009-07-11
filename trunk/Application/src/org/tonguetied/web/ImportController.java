@@ -38,8 +38,8 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
 
 /**
- * Manage the submission of export requests. This controller is responsible 
- * for either creating a new data export to a specified format. 
+ * Manage the submission of import requests. This controller is responsible 
+ * for importing in new or existing keywords to the system.
  * 
  * @author bsion
  *

@@ -10,26 +10,36 @@
         <c:forEach items="${parents}" var="parent">
             <c:set value="${urlString}/${parent}" var="urlString" scope="page"/>
             <c:url value="${urlString}${suffix}" var="parentUrl" />
-            /<a href="${parentUrl}">${parent}</a>
+            /<a href="${parentUrl}" title="<fmt:message key="go.to"><fmt:param value="${parent}"/></fmt:message>">${parent}</a>
         </c:forEach>
             /${baseDir.name}
             </span>
         </div>
         <div class="dirListing">
             <ul>
-                <li><a href="${parentUrl}"><fmt:message key="up.one.level"/></a></li>
+                <li class="upOneLevel"><a href="${parentUrl}" title="<fmt:message key="go.up.one.level"/>">..</a></li>
             <c:forEach items="${baseDir.files}" var="child">
                 <c:choose>
                     <c:when test="${child.directory}">
                         <c:url value="${baseDir.name}/${child.name}${suffix}" var="fileUrl"/>
                         <c:set var="liClass" value="directory" scope="page"/>
+                        <fmt:message key="go.to" var="itemTitle" scope="page">
+                            <fmt:param value="${child.name}"/>
+                        </fmt:message>
                     </c:when>
                     <c:otherwise>
                         <c:url value="${baseDir.name}/${child.name}" var="fileUrl"/>
                         <c:set var="liClass" value="${child.fileType}" scope="page"/>
+                        <fmt:message key="download.file" var="itemTitle" scope="page"/>
                     </c:otherwise>
                 </c:choose>
-                <li class="fileView ${liClass}"><a href="${fileUrl}">${child.name}</a> length = ${child.size}</li>
+                <li class="fileView ${liClass}">
+                    <a href="${fileUrl}" title="${itemTitle}">${child.name}</a>
+                    <span class="fileAttributes">
+                        <c:if test="${child.file}">${child.size mod 1000}<fmt:message key="kilo.byte.suffix"/>&nbsp</c:if>
+                        <fmt:formatDate value="${child.lastModifiedDate}" pattern="EEE dd MMM yyyy hh:mm a"/>
+                    </span>
+                </li>
             </c:forEach>
             </ul>
         </div>

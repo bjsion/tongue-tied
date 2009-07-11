@@ -152,6 +152,7 @@ public class DataServiceImpl implements DataService
         try
         {
             File exportPath = getExportPath(true);
+            exportPath.mkdir();
             settings.set(NAME_OUTPUT_ROOT, exportPath.getAbsolutePath());
             settings.set(NAME_SOURCES, 
                     getTemplateName(parameters.getFormatType()));
@@ -169,7 +170,8 @@ public class DataServiceImpl implements DataService
             settings.addProgressListener(new LoggerProgressListener());
             settings.execute();
             
-            if (parameters.isResultPackaged()) {
+            if (parameters.isResultPackaged())
+            {
                 createArchive(exportPath);
             }
         }
@@ -339,15 +341,35 @@ public class DataServiceImpl implements DataService
      */
     public void setSourceRoot(final Resource sourceRoot)
     {
+        this.sourceRoot = getFile(sourceRoot);
+    }
+
+    /**
+     * @param outputRoot the base directory on the file system where all 
+     * generated export files should be saved.
+     */
+    public void setOutputRoot(final Resource outputRoot)
+    {
+        this.outputRoot = getFile(outputRoot);
+    }
+
+    /**
+     * Get the file object from the resource
+     * 
+     * @param resource the resource object from which to get the file
+     * @throws ExportException thrown if an error occurs trying to get the file
+     * from the resource
+     */
+    private File getFile(final Resource resource) throws ExportException
+    {
         try
         {
-            this.sourceRoot = sourceRoot.getFile();
+            return resource.getFile();
         }
         catch (IOException ioe)
         {
             throw new ExportException(ioe);
         }
-
     }
 
     /**
@@ -356,14 +378,5 @@ public class DataServiceImpl implements DataService
     public void setKeywordService(final KeywordService keywordService)
     {
         this.keywordService = keywordService;
-    }
-
-    /**
-     * @param outputRoot the base directory on the file system where all 
-     * generated export files should be saved.
-     */
-    public void setOutputRoot(final String outputRoot)
-    {
-        this.outputRoot = new File(outputRoot);
     }
 }

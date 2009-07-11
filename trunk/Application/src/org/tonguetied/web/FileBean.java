@@ -60,19 +60,29 @@ public class FileBean extends File
     }
     
     /**
-     * Java bean accessor method for view technology.
+     * Java bean accessor method for view technology. If the directory does not
+     * contain any files then an empty array is returned.
      * 
      * @see File#listFiles()
-     * @return
+     * @return an array of FileBeans listing the contents of this directory
      */
     public FileBean[] getFiles()
     {
         final File[] files = super.listFiles();
-        FileBean[] fileBeans = new FileBean[files.length];
-        for (int i=0; i<files.length; i++)
+        FileBean[] fileBeans;
+        if (files != null)
         {
-            fileBeans[i] = new FileBean(files[i]);
+            fileBeans = new FileBean[files.length];
+            for (int i=0; i<files.length; i++)
+            {
+                fileBeans[i] = new FileBean(files[i]);
+            }
         }
+        else
+        {
+            fileBeans = new FileBean[0];
+        }
+        
         return fileBeans;
     }
     
