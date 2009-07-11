@@ -67,6 +67,7 @@ public class ResourcesTemplateTest extends TemplateTester
     private Translation translation1_2;
     private Translation translation2_1;
     private Translation translation2_2;
+    private Translation translation2_3;
     private Translation translation3_1;
     private Translation translation3_2;
     private Translation translation3_3;
@@ -149,6 +150,14 @@ public class ResourcesTemplateTest extends TemplateTester
         translation2_2.setKeyword(keyword2);
         translation2_2.setState(TranslationState.VERIFIED);
         keyword2.addTranslation(translation2_2);
+        translation2_3 = new Translation();
+        translation2_3.setBundle(bundle);
+        translation2_3.setCountry(usa);
+        translation2_3.setLanguage(english);
+        translation2_3.setKeyword(keyword2);
+        translation2_3.setValue(null);
+        translation2_3.setState(TranslationState.VERIFIED);
+        keyword2.addTranslation(translation2_3);
         
         keyword3 = new Keyword();
         keyword3.setKeyword("KeywordThree");
@@ -182,6 +191,7 @@ public class ResourcesTemplateTest extends TemplateTester
         translations.add(translation1_2);
         translations.add(translation2_1);
         translations.add(translation2_2);
+        translations.add(translation2_3);
         translations.add(translation3_1);
         translations.add(translation3_2);
         translations.add(translation3_3);
@@ -190,13 +200,15 @@ public class ResourcesTemplateTest extends TemplateTester
     }
 
     @Override
-    public void destroy() throws Exception {
+    public void destroy() throws Exception
+    {
         super.destroy();
         super.setTranslations(null);
     }
 
     @Override
-    public void runAssertions() throws Exception {
+    public void runAssertions() throws Exception
+    {
         Collection<File> files = FileUtils.listFiles(getOutputDir(), getOutputExtensions(), false);
         assertEquals(3, files.size());
         DocumentBuilder builder = 
@@ -229,6 +241,8 @@ public class ResourcesTemplateTest extends TemplateTester
                 assertXpathExists("/root/data[@name=\"akeyword\"]", document);
                 assertXpathEvaluatesTo("split line \\\ncontinue on second", 
                         "/root/data[@name=\"akeyword\"]/value", document);
+                assertXpathExists("/root/data[@name=\"anotherkeyword\"]", document);
+                assertXpathEvaluatesTo("", "/root/data[@name=\"anotherkeyword\"]/value", document);
                 assertXpathExists("/root/data[@name=\"KeywordThree\"]", document);
                 assertXpathEvaluatesTo("", "/root/data[@name=\"KeywordThree\"]/value", document);
             }

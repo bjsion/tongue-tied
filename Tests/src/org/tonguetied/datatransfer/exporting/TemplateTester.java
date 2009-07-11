@@ -24,6 +24,7 @@ import static fmpp.setting.Settings.NAME_SOURCE_ROOT;
 import static freemarker.log.Logger.LIBRARY_LOG4J;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.fail;
 import static org.tonguetied.datatransfer.exporting.Constants.TEST_CONFIG_DIR;
 
 import java.io.ByteArrayInputStream;
@@ -132,7 +133,14 @@ public abstract class TemplateTester
     public final void testTemplate() throws Exception 
     {
         assertNotNull(translations);
+        try
+        {
         processTemplate();
+        }
+        catch (Exception e)
+        {
+            fail(e.getMessage());
+        }
         
         runAssertions();
     }
