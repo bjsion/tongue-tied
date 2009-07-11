@@ -71,7 +71,7 @@
     </#if>
     <@pp.changeOutputFile name="${fileName}" append=true/>
     <data name="${translation.keyword.keyword}">
-        <value>${translation.value?xml}</value>
+        <value>${(translation.value!)?xml}</value>
     </data>
 </#list>
 <#list fileNames as fileName>
