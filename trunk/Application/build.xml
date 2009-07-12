@@ -88,7 +88,6 @@
         <pathelement location="${3rdparty.home}/Log4j/1.2.15/log4j.jar"/>
         <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-lang-2.4.jar"/>
         <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-collections-3.2.1.jar"/>
-        <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-cli-1.1.jar"/>
         <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-io-1.4.jar"/>
         <path refid="fmpp.classpath"/>
         <pathelement location="${3rdparty.home}/POI/3.0.2/poi.jar"/>
@@ -140,8 +139,11 @@
     </taskdef>
 
     <target name="resolve" description="Retrieve dependencies with ivy">
-        <property name="ivy.default.ivy.user.dir" value="${dependencies.home}"/>
-        <ivy:retrieve/>
+        <!--property name="ivy.default.ivy.user.dir" value="${dependencies.home}"/-->
+        <echo>${ivy.conf.dir}</echo>
+        <ivy:settings file="${application.home}/ivysettings.xml"/>
+        <ivy:resolve />
+        <!--ivy:retrieve/-->
     </target>
 
     <target name="init">
@@ -353,6 +355,7 @@
                 <include name="*.xml"/>
                 <include name="log4j.properties"/>
                 <include name="fmpp.cfg"/>
+                <exclude name="ehcache.xml"/>
                 <exclude name="web.xml"/>
             </webinf>
             <webinf dir="${web.dir}">
@@ -371,6 +374,7 @@
                 <include name="tonguetied*.properties"/>
                 <include name="displaytag*.properties"/>
                 <include name="language.properties"/>
+                <include name="ehcache.xml"/>
             </classes>
             <classes dir="${generated.dir}">
                 <include name="buildNumber.properties"/>
@@ -416,6 +420,11 @@
                 file="${3rdparty.home}/XMLEntities/xml.xsd"/>
             <schema namespace="http://java.sun.com/xml/ns/javaee"
                 file="${3rdparty.home}/XMLEntities/web-app_2_5.xsd"/>
+        </schemavalidate>
+        <schemavalidate file="${config.dir}/ehcache.xml" 
+            nonamespacefile="${3rdparty.home}/XMLEntities/ehcache.xsd">
+            <schema namespace="http://www.w3.org/2001/XMLSchema"
+                file="${3rdparty.home}/XMLEntities/XMLSchema.xsd"/>
         </schemavalidate>
         <xmlvalidate warn="yes" failonerror="true">
             <fileset dir="${config.dir}" id="xml.resources">
