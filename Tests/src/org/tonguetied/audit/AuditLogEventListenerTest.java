@@ -234,6 +234,60 @@ public class AuditLogEventListenerTest extends PersistenceTestBase
     }
 
     @Test
+    public final void testCreateTranslationWithNullBundleCountryLanguage()
+    {
+        Session session = getSession();
+        Transaction tx = session.beginTransaction();
+        
+        Translation translation = new Translation();
+        translation.setValue("new value");
+        translation.setState(TranslationState.VERIFIED);
+        translation.setBundle(null);
+        translation.setCountry(null);
+        translation.setLanguage(null);
+        translation.setKeyword(keyword);
+
+        keyword.addTranslation(translation);
+        session.saveOrUpdate(keyword);
+        session.flush();
+        session.close();
+        assertTrue(tx.isActive());
+        
+        final String expectedNewValue = "bundle = " + null + "\n"
+            + "country = " + null + "\n"
+            + "keyword = " +keyword.toLogString()+ "\n"
+            + "language = " +null+ "\n"
+            + "state = "+ TranslationState.VERIFIED +"\n"
+            + "value = new value\n";
+//        final String expectedTranslationValue = "bundle = " + bundle.getName() + "\n"
+//            + "country = " + country.getName() + "\n"
+//            + "keyword = " +keyword.toLogString()+ "\n"
+//            + "language = " +language.getName()+ "\n"
+//            + "state = "+ TranslationState.VERIFIED +"\n"
+//            + "value = new value\n";
+//        
+        session = getSession();
+        tx = session.beginTransaction();
+        Criteria criteria = session.createCriteria(AuditLogRecord.class);
+        List<AuditLogRecord> records = criteria.list();
+        assertEquals(5, records.size());
+        AuditLogRecord newRecord = records.get(2);
+        assertEquals(Operation.insert, newRecord.getMessage());
+        assertEquals(expectedNewValue, newRecord.getNewValue());
+        assertNull(newRecord.getOldValue());
+        newRecord = records.get(3);
+        assertEquals(Operation.update, newRecord.getMessage());
+//        assertEquals(expectedTranslationValue, newRecord.getNewValue());
+        assertNull(newRecord.getOldValue());
+        newRecord = records.get(4);
+        assertEquals(Operation.update, newRecord.getMessage());
+//        assertEquals(expectedTranslationValue, newRecord.getNewValue());
+        assertNull(newRecord.getOldValue());
+        tx.rollback();
+        session.close();
+    }
+
+    @Test
     public final void testSaveUnchangedEntity()
     {
         Session session = getSession();
