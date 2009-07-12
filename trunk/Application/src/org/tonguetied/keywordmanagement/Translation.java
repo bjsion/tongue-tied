@@ -321,11 +321,11 @@ public class Translation implements DeepCloneable<Translation>,
     {
         StringBuilder builder = new StringBuilder();
         builder.append("Translation[bundle=").
-            append(bundle.toLogString()).
+            append(bundle == null? null: bundle.toLogString()).
             append(", country=").
-            append(country.toLogString()).
+            append(country == null? null: country.toLogString()).
             append(", language=").
-            append(language.toLogString()).
+            append(language == null? null: language.toLogString()).
             append(", state=").
             append(state).
             append(", value=").
