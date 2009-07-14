@@ -42,7 +42,7 @@ public class FileBean extends File
     /**
      * Create a new instance of FileBean.
      * 
-     * @param pathName the string location of the path
+     * @param file The parent abstract pathname
      */
     public FileBean(final File file)
     {
@@ -96,6 +96,11 @@ public class FileBean extends File
         return new Date(super.lastModified());
     }
     
+    /**
+     * Return the type of this file based off the suffix.
+     * 
+     * @return string indicating the type of this file
+     */
     public String getFileType()
     {
         final String name = super.getName();
