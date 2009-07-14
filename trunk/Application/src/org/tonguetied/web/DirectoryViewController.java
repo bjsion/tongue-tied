@@ -43,7 +43,8 @@ public class DirectoryViewController extends AbstractController
         if (logger.isDebugEnabled())
             logger.debug("servletPath = " + servletPath);
         if (servletPath.toString().endsWith(suffix))
-            servletPath.delete(servletPath.length()-4, servletPath.length());
+            servletPath.delete(servletPath.length()-suffix.length(),
+                    servletPath.length());
         
         final String homePath = 
             request.getSession().getServletContext().getRealPath(servletPath.toString());
@@ -56,7 +57,7 @@ public class DirectoryViewController extends AbstractController
         int lastIndex = servletPath.lastIndexOf("/");
         final String[] parents;
         if (lastIndex > 0)
-            parents = servletPath.substring(1, lastIndex).toString().split("/");
+            parents = servletPath.substring(1, lastIndex).split("/");
         else
             parents = new String[]{};
         
