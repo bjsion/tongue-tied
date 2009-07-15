@@ -1,6 +1,17 @@
 #summary Release Note.
 #labels Phase-Deploy,Featured
 
+= 1.2.1 =
+ * Minor Cosmetic UI changes
+ * Improvements to caching
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=72 Issue 72] Import of translations causes error
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=73 Issue 73] Users are allowed more than one role
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=74 Issue 74] Add ability to delete Bundles, Countries and Languages
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=75 Issue 75] Export function does not work properly for war file distributable
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=76 Issue 76] .Net resource export throws error when translation value is null
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=77 Issue 77] Adding a translation causes a !NullPointerException
+
+
 = 1.2.0 =
  * [http://code.google.com/p/tongue-tied/issues/detail?id=6 Issue 6] Add pagination support
  * [http://code.google.com/p/tongue-tied/issues/detail?id=15 Issue 15] Keyword sort fails after a search
