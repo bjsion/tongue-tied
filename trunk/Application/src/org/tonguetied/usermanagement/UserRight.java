@@ -217,7 +217,7 @@ public class UserRight implements Comparable<UserRight>, Serializable {
     
     public static enum Permission
     {
-        ROLE_ADMIN, ROLE_USER, ROLE_VERIFIER, ROLE_DEVELOPER
+        ROLE_ADMIN, ROLE_USER, ROLE_VERIFIER, ROLE_DEV
         // should be read, write, verify, administer
     }
 }
