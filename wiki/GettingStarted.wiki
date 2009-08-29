@@ -14,7 +14,7 @@ Here you will learn how to set up !TongueTied after you have installed it. This 
   # Create your resource bundles. 
   # Select the "Bundles" tab. 
   # Select the "New Bundle" option.
-  # Complete the form and save.
+  # Complete the form and save. Please note that the Resource Name of the bundle should *NOT* include the resource suffix (e.g. .properties, .resx, .csv etc). !TongueTied will determine the resource file suffix when importing or exporting
   # Create a language. 
   # Select the "Languages" tab. 
   # Select the "New Language" option.
