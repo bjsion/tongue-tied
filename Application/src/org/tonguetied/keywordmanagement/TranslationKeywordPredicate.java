@@ -20,29 +20,36 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  * This predicate is used to find {@link Translation}s based off its 
- * business keys of {@link Bundle}, {@link Country} and {@link Language}.
+ * business keys of {@link Bundle}, {@link Country} and {@link Language} for a
+ * particular {@link Keyword}.
  * 
  * @author bsion
  *
  */
-public final class TranslationPredicate implements Predicate
+public final class TranslationKeywordPredicate implements Predicate
 {
     private Bundle bundle;
     private Country country;
     private Language language;
+    private String keyword;
     
     /**
      * Create a new instance of TranslationPredicate.
      * 
+     * @param keyword the value of the keyword
      * @param bundle the {@link Bundle} on which to search
      * @param country the {@link Country} on which to search
      * @param language the {@link Language} on which to search
      */
-    public TranslationPredicate(final Bundle bundle, final Country country, final Language language)
+    public TranslationKeywordPredicate(final String keyword, 
+            final Bundle bundle, 
+            final Country country, 
+            final Language language)
     {
         this.bundle = bundle;
         this.country = country;
         this.language = language;
+        this.keyword = keyword;
     }
     
     /** 
@@ -59,7 +66,8 @@ public final class TranslationPredicate implements Predicate
         Translation translation = (Translation) object;
         
         EqualsBuilder builder = new EqualsBuilder();
-        builder.append(language, translation.getLanguage()).
+        builder.append(keyword, translation.getKeyword().getKeyword()).
+            append(language, translation.getLanguage()).
             append(country, translation.getCountry()).
             append(bundle, translation.getBundle());
         
@@ -88,5 +96,13 @@ public final class TranslationPredicate implements Predicate
     public final Language getLanguage()
     {
         return language;
+    }
+
+    /**
+     * @return the keyword
+     */
+    public final String getKeyword()
+    {
+        return keyword;
     }
 }

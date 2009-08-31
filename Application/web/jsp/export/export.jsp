@@ -45,7 +45,8 @@
             </div>
             <div>
                 <form:label path="formatType" cssClass="content"><fmt:message key="export.type"/></form:label>
-                <form:select path="formatType" size="1">
+                <form:select path="formatType" size="1" onchange="toggleSection(document.getElementById('formatType').value == 'properties'
+             || document.getElementById('formatType').value == 'resx','globalsSection')">
                     <form:option value=""><fmt:message key="please.select"/></form:option>
                     <c:forEach items="${formatTypes}" var="type">
                         <c:if test="${formatType == type}">
@@ -61,6 +62,10 @@
                 <form:label path="resultPackaged" cssClass="content"><fmt:message key="package.result"/></form:label>
                 <form:checkbox path="resultPackaged" id="resultPackaged"/>
             </div>
+            <div id="globalsSection" class="hidden">
+                <form:label path="globalsMerged" cssClass="content"><fmt:message key="merge.global.bundles"/></form:label>
+                <form:checkbox path="globalsMerged" id="globalsMerged"/>
+            </div>
         </fieldset>
         <div class="submit">
             <input type="submit" id="export" name="export" value="<fmt:message key="export"/>" class="button"/>
@@ -69,3 +74,6 @@
         </div>
     </form:form>
     </div>
+    
+<script type="text/javascript" src="<c:url value="/scripts/tonguetied.js"/>"></script>
+

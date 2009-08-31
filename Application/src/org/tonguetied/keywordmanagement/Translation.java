@@ -86,10 +86,14 @@ public class Translation implements DeepCloneable<Translation>,
     
     public static final String TABLE_TRANSLATION = "translation";
     private static final String COL_ID = TABLE_TRANSLATION + "_id";
-    private static final String FK_BUNDLE = "fk_"+ Bundle.TABLE_BUNDLE + "_" + TABLE_TRANSLATION;
-    private static final String FK_COUNTRY = "fk_"+ Country.TABLE_COUNTRY + "_" + TABLE_TRANSLATION;
-    private static final String FK_KEYWORD = "fk_"+ Keyword.TABLE_KEYWORD + "_" + TABLE_TRANSLATION;
-    private static final String FK_LANGUAGE = "fk_"+ Language.TABLE_LANGUAGE + "_" + TABLE_TRANSLATION;
+    private static final String FK_BUNDLE = 
+        "fk_"+ Bundle.TABLE_BUNDLE + "_" + TABLE_TRANSLATION;
+    private static final String FK_COUNTRY = 
+        "fk_"+ Country.TABLE_COUNTRY + "_" + TABLE_TRANSLATION;
+    private static final String FK_KEYWORD = 
+        "fk_"+ Keyword.TABLE_KEYWORD + "_" + TABLE_TRANSLATION;
+    private static final String FK_LANGUAGE = 
+        "fk_"+ Language.TABLE_LANGUAGE + "_" + TABLE_TRANSLATION;
     
     /**
      * Name of the query to search for translations.

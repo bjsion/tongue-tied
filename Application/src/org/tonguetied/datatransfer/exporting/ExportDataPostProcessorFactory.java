@@ -15,7 +15,11 @@
  */
 package org.tonguetied.datatransfer.exporting;
 
+import org.tonguetied.datatransfer.common.ExportParameters;
 import org.tonguetied.datatransfer.common.FormatType;
+import org.tonguetied.keywordmanagement.Country;
+import org.tonguetied.keywordmanagement.KeywordService;
+import org.tonguetied.keywordmanagement.Country.CountryCode;
 
 
 /**
@@ -31,16 +35,28 @@ public class ExportDataPostProcessorFactory
      * Factory method to create the appropriate <code>ExportDataPostProcessor</code>.
      * 
      * @param formatType the input format of the data to process
+     * @param parameters the parameters used to filter and format the data
+     * @param keywordService the {@link KeywordService}
      * @return The newly created <code>ExportDataPostProcessor</code>
      */
-    public static final ExportDataPostProcessor getPostProcessor(FormatType formatType) 
+    public static final ExportDataPostProcessor getPostProcessor(
+            final FormatType formatType, 
+            final ExportParameters parameters, 
+            final KeywordService keywordService) 
     {
         ExportDataPostProcessor postProcessor = null;
         
         switch (formatType)
         {
+            case properties:
+            case resx:
+                postProcessor = new ResourcePostProcessor(parameters);
+                break;
             case xlsLanguage:
-                postProcessor = new LanguageCentricProcessor(); 
+                final Country defaultCountry = 
+                    keywordService.getCountry(CountryCode.DEFAULT);
+                postProcessor = new LanguageCentricProcessor(
+                        parameters, defaultCountry);
                 break;
             default:
                 postProcessor = null;

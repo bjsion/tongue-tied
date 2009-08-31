@@ -30,19 +30,20 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
 
 /**
- * Test class for the {@link TranslationPredicate} class.
+ * Test class for the {@link TranslationKeywordPredicate} class.
  * 
  * @author bsion
  *
  */
 @RunWith(value=Parameterized.class)
-public class TranslationPredicateTest
+public class TranslationKeyowrdPredicateTest
 {
     private Translation translation;
     private boolean expected;
     private boolean expectedWithNullBundle;
     private boolean expectedWithNullCountry;
     private boolean expectedWithNullLanguage;
+    private String keywordValue;
     
 //    private static TranslationPredicate predicate;
     private static Country mexico;
@@ -77,13 +78,16 @@ public class TranslationPredicateTest
         bundle2.setResourceName("bundle2");
         
         return Arrays.asList(new Object[][] {
-                {spanish, mexico, bundle1, true, false, false, false},
-                {null, mexico, bundle1, false, false, false, true},
-                {basque, mexico, bundle1, false, false, false, false},
-                {spanish, null, bundle1, false, false, true, false},
-                {spanish, spain, bundle1, false, false, false, false},
-                {spanish, mexico, null, false, true, false, false},
-                {spanish, mexico, bundle2, false, false, false, false}
+                {null, spanish, mexico, bundle1, false, false, false, false},
+                {"", spanish, mexico, bundle1, false, false, false, false},
+                {"unknown", spanish, mexico, bundle1, false, false, false, false},
+                {"test", spanish, mexico, bundle1, true, false, false, false},
+                {"test", null, mexico, bundle1, false, false, false, true},
+                {"test", basque, mexico, bundle1, false, false, false, false},
+                {"test", spanish, null, bundle1, false, false, true, false},
+                {"test", spanish, spain, bundle1, false, false, false, false},
+                {"test", spanish, mexico, null, false, true, false, false},
+                {"test", spanish, mexico, bundle2, false, false, false, false}
         });
     }
 
@@ -96,7 +100,8 @@ public class TranslationPredicateTest
      * @param expectedWithNullCountry 
      * @param expectedWithNullLanguage 
      */
-    public TranslationPredicateTest(final Language language,
+    public TranslationKeyowrdPredicateTest(final String keywordValue,
+            final Language language,
             final Country country, 
             final Bundle bundle, 
             final boolean expected, 
@@ -109,6 +114,7 @@ public class TranslationPredicateTest
         this.expectedWithNullCountry = expectedWithNullCountry;
         this.expectedWithNullLanguage = expectedWithNullLanguage;
         this.translation = new Translation(bundle, country, language, "test", TranslationState.VERIFIED);
+        this.keywordValue = keywordValue;
         Keyword keyword = new Keyword();
         keyword.setKeyword("test");
         keyword.addTranslation(translation);
@@ -121,8 +127,8 @@ public class TranslationPredicateTest
     @Test
     public final void testEvaluate()
     {
-        final TranslationPredicate predicate =
-            new TranslationPredicate(bundle1, mexico, spanish);
+        final TranslationKeywordPredicate predicate =
+            new TranslationKeywordPredicate(keywordValue, bundle1, mexico, spanish);
         final boolean actual = predicate.evaluate(translation);
         assertEquals(expected, actual);
     }
@@ -130,8 +136,8 @@ public class TranslationPredicateTest
     @Test
     public final void testEvaluateWithNullBundle()
     {
-        final TranslationPredicate predicate = 
-            new TranslationPredicate(null, mexico, spanish);
+        final TranslationKeywordPredicate predicate = 
+            new TranslationKeywordPredicate(keywordValue, null, mexico, spanish);
         final boolean actual = predicate.evaluate(translation);
         assertEquals(expectedWithNullBundle, actual);
     }
@@ -139,8 +145,8 @@ public class TranslationPredicateTest
     @Test
     public final void testEvaluateWithNullCountry()
     {
-        final TranslationPredicate predicate = 
-            new TranslationPredicate(bundle1, null, spanish);
+        final TranslationKeywordPredicate predicate = 
+            new TranslationKeywordPredicate(keywordValue, bundle1, null, spanish);
         final boolean actual = predicate.evaluate(translation);
         assertEquals(expectedWithNullCountry, actual);
     }
@@ -148,8 +154,8 @@ public class TranslationPredicateTest
     @Test
     public final void testEvaluateWithNullLanguage()
     {
-        final TranslationPredicate predicate = 
-            new TranslationPredicate(bundle1, mexico, null);
+        final TranslationKeywordPredicate predicate = 
+            new TranslationKeywordPredicate(keywordValue, bundle1, mexico, null);
         final boolean actual = predicate.evaluate(translation);
         assertEquals(expectedWithNullLanguage, actual);
     }

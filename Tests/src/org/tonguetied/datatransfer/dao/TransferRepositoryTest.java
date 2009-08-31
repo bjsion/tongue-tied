@@ -36,7 +36,14 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
 import org.tonguetied.test.common.AbstractServiceTest;
 
 
-public class TransferRepositoryTest extends AbstractServiceTest {
+/**
+ * Test class for {@link TransferRepositoryImpl}
+ * 
+ * @author bsion
+ *
+ */
+public class TransferRepositoryTest extends AbstractServiceTest
+{
     
     private Country singapore;
     private Country australia;

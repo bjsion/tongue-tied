@@ -36,36 +36,58 @@ import org.tonguetied.keywordmanagement.Language.LanguageCode;
 
 
 /**
+ * Performs data manipulation for language centric data.
+ * 
  * @author bsion
  *
  */
 public class LanguageCentricProcessor implements ExportDataPostProcessor
 {
-    
+    private Country defaultCountry;
+    private ExportParameters parameters;
+
+    protected static final String KEY_LANGUAGES = "languages";
     private static final Logger logger = 
         Logger.getLogger(LanguageCentricProcessor.class);
 
-    /* (non-Javadoc)
-     * @see org.tonguetied.service.ExportDataPostProcessor#transformData()
+    /**
+     * Create a new instance of the LanguageCentricProcessor.
+     * 
+     * @param parameters the parameters used to filter and format the data. 
+     * Cannot be <code>null</code>
+     * @param defaultCountry the default country
      */
-    public List<KeywordByLanguage> transformData(List<Translation> translations, 
-            final Country defaultCountry)
+    public LanguageCentricProcessor(ExportParameters parameters, 
+            Country defaultCountry)
+    {
+        if (parameters == null)
+            throw new IllegalArgumentException("parameters cannot be null");
+        
+        this.parameters = parameters;
+        this.defaultCountry = defaultCountry;
+    }
+
+    public List<KeywordByLanguage> transformData(List<Translation> translations)
     {
         List<KeywordByLanguage> results = new ArrayList<KeywordByLanguage>();
-        if (translations != null) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("transforming " + translations.size() + 
-                        " objects");
+        if (translations != null)
+        {
+            if (logger.isDebugEnabled())
+            {
+                logger.debug("transforming "+translations.size()+" objects");
             }
             KeywordByLanguage item;
-            for (Translation translation : translations) {
+            for (Translation translation : translations)
+            {
                 LanguageCode languageCode = null;
-                if (CountryCode.TW == translation.getCountry().getCode()) {
+                if (CountryCode.TW == translation.getCountry().getCode())
+                {
                     translation.setCountry(defaultCountry);
                     languageCode = LanguageCode.zht;
                 }
                 item = findItem(results, translation);
-                if (item == null) {
+                if (item == null)
+                {
                     item = new KeywordByLanguage(
                             translation.getKeyword().getKeyword(),
                             translation.getKeyword().getContext(),
@@ -80,25 +102,16 @@ public class LanguageCentricProcessor implements ExportDataPostProcessor
         
         return results;
     }
-
-    public void addData(Map<String, Object> root, ExportParameters parameters)
+    
+    public void addItems(Map<String, Object> root)
     {
-        List<Language> languages = new ArrayList<Language>();
-        for (Language language: parameters.getLanguages()) {
-            languages.add(language);
-            if (LanguageCode.zh.equals(language.getCode())) {
-                for (Country country : parameters.getCountries()) {
-                    if (CountryCode.TW.equals(country.getCode())) {
-                        Language traditionalChinese = new Language();
-                        traditionalChinese.setCode(LanguageCode.zht);
-                        traditionalChinese.setName("Traditional Chinese");
-                        languages.add(traditionalChinese);
-                    }
-                }
-            }
-        }
+        Language traditionalChinese = new Language();
+        traditionalChinese.setCode(LanguageCode.zht);
+        traditionalChinese.setName("Traditional Chinese");
+        List<Language> languages = parameters.getLanguages();
+        languages.add(traditionalChinese);
         Collections.sort(languages);
-        root.put("languages", languages);
+        root.put(KEY_LANGUAGES, languages);
     }
 
     /**
@@ -133,7 +146,8 @@ public class LanguageCentricProcessor implements ExportDataPostProcessor
      * @author bsion
      *
      */
-    private static class LanguagePredicate implements Predicate {
+    private static class LanguagePredicate implements Predicate
+    {
         private String keyword;
         private String context;
         private Bundle bundle;
@@ -158,10 +172,8 @@ public class LanguageCentricProcessor implements ExportDataPostProcessor
             this.country = country;
         }
 
-        /* (non-Javadoc)
-         * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
-         */
-        public boolean evaluate(Object object) {
+        public boolean evaluate(Object object)
+        {
             KeywordByLanguage item = (KeywordByLanguage) object;
             EqualsBuilder builder = new EqualsBuilder();
             return builder.append(keyword, item.getKeyword()).

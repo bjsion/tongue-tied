@@ -36,6 +36,7 @@ import org.junit.runners.Suite.SuiteClasses;
     LanguageCentricProcessorTest.class,
     Native2AsciiDirectiveTest.class,
     Native2AsciiWriterTest.class,
+    ResourcePostProcessorTest.class,
     PropertiesTemplateTest.class,
     ResourcesTemplateTest.class
 })
