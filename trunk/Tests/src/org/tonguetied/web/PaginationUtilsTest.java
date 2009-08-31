@@ -15,10 +15,13 @@
  */
 package org.tonguetied.web;
 
-import static org.displaytag.tags.TableTagParameters.*;
+import static org.displaytag.tags.TableTagParameters.PARAMETER_ORDER;
+import static org.displaytag.tags.TableTagParameters.PARAMETER_PAGE;
+import static org.displaytag.tags.TableTagParameters.PARAMETER_SORT;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Enumeration;
 
@@ -31,6 +34,8 @@ import org.tonguetied.utils.pagination.Order;
 import org.tonguetied.web.PaginationUtils.KeyValue;
 
 /**
+ * Test the utility methods of the class {@link PaginationUtils}.
+ * 
  * @author bsion
  *
  */
