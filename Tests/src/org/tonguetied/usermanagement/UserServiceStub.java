@@ -69,7 +69,6 @@ public class UserServiceStub implements UserService
      */
     public User getUser(Long id)
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
