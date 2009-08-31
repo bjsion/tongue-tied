@@ -36,7 +36,16 @@
                 <li class="fileView ${liClass}">
                     <a href="${fileUrl}" title="${itemTitle}">${child.name}</a>
                     <span class="fileAttributes">
-                        <c:if test="${child.file}"><fmt:formatNumber type="number" value="${child.size div 1000}" maxFractionDigits="1" /><fmt:message key="kilo.byte.suffix"/>&nbsp</c:if>
+                        <c:if test="${child.file}">
+                            <c:choose>
+                                <c:when test="${child.size < 1000}">
+                            <c:out value="${child.size}"/><fmt:message key="byte.suffix"/>&nbsp
+                                </c:when>
+                                <c:otherwise>
+                            <fmt:formatNumber type="number" value="${child.size div 1000}" maxFractionDigits="1" /><fmt:message key="kilo.byte.suffix"/>&nbsp
+                                </c:otherwise>
+                            </c:choose>
+                        </c:if>
                         <fmt:formatDate value="${child.lastModifiedDate}" pattern="EEE dd MMM yyyy hh:mm a"/>
                     </span>
                 </li>
