@@ -97,7 +97,8 @@ public class User implements UserDetails
     public static final String TABLE_USER = "internal_user";
     public static final String TABLE_AUTHORITIES = "authorities";
     private static final String COL_ID = TABLE_USER + "_id";
-    private static final String FK_AUTHORITIES = "fk_"+ TABLE_USER + "_" + TABLE_AUTHORITIES;
+    private static final String FK_AUTHORITIES = 
+        "fk_"+ TABLE_USER + "_" + TABLE_AUTHORITIES;
     protected static final String QUERY_GET_USERS = "get.users";
     protected static final String QUERY_USER_COUNT = "user.count";
 
