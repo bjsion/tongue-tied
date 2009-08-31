@@ -18,13 +18,11 @@ package org.tonguetied.datatransfer.exporting;
 import java.util.List;
 import java.util.Map;
 
-import org.tonguetied.datatransfer.common.ExportParameters;
-import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Translation;
 
 /**
- * Data post processor that performs transformations / formatting of data
- * retrieved from persistence.
+ * Data post processor that performs transformations / formatting of data after
+ * it has been retrieved from persistence.
  * 
  * @author bsion
  * 
@@ -38,19 +36,17 @@ public interface ExportDataPostProcessor
      * <code>translations</code>.
      * 
      * @param translations the list of {@link Translation}s to transform
-     * @param defaultCountry an instance of the default {@link Country}
      * @return List of objects that may or may not be of type
      *         {@link Translation} that is a different representation of the
      *         <code>translations</code>
      */
-    List<?> transformData(List<Translation> translations, final Country defaultCountry);
-
+    List<?> transformData(List<Translation> translations);
+    
     /**
-     * Add additional data used by the template to format the export data
+     * If any data needs to be added specifically passed to the templating 
+     * engine for this export type, then add it here.
      * 
-     * @param root the root level object passed to the templating library
-     * @param parameters the {@link ExportParameters} used to generate this
-     *        export
+     * @param root the data object
      */
-    void addData(Map<String, Object> root, ExportParameters parameters);
+    void addItems(Map<String, Object> root);
 }

@@ -40,6 +40,7 @@ public class ExportParameters
     private TranslationState translationState;
     private FormatType formatType;
     private boolean isResultPackaged;
+    private boolean isGlobalsMerged;
 
     /**
      * Create a new instance of the export parameters.
@@ -67,7 +68,7 @@ public class ExportParameters
         this.bundles = bundles;
     }
 
-    public void addBundle(Bundle bundle)
+    public void addBundle(final Bundle bundle)
     {
         this.bundles.add(bundle);
     }
@@ -88,7 +89,7 @@ public class ExportParameters
         this.countries = countries;
     }
 
-    public void addCountry(Country country)
+    public void addCountry(final Country country)
     {
         this.countries.add(country);
     }
@@ -104,7 +105,7 @@ public class ExportParameters
     /**
      * @param formatType the {@link FormatType} to set
      */
-    public void setFormatType(FormatType formatType)
+    public void setFormatType(final FormatType formatType)
     {
         this.formatType = formatType;
     }
@@ -125,7 +126,7 @@ public class ExportParameters
         this.languages = languages;
     }
 
-    public void addLanguage(Language language)
+    public void addLanguage(final Language language)
     {
         this.languages.add(language);
     }
@@ -141,13 +142,13 @@ public class ExportParameters
     /**
      * @param translationState the {@link TranslationState} to export
      */
-    public void setTranslationState(TranslationState translationState)
+    public void setTranslationState(final TranslationState translationState)
     {
         this.translationState = translationState;
     }
 
     /**
-     * @return the a flag indicating if the resultant export files should be
+     * @return a flag indicating if the resultant export files should be
      *         packaged and compressed into one file
      */
     public boolean isResultPackaged()
@@ -158,9 +159,26 @@ public class ExportParameters
     /**
      * @param isResultPackaged the isResultPackaged to set
      */
-    public void setResultPackaged(boolean isResultPackaged)
+    public void setResultPackaged(final boolean isResultPackaged)
     {
         this.isResultPackaged = isResultPackaged;
+    }
+
+    /**
+     * @return a flag indicating if global bundle translations should be merged
+     * into the normal bundles
+     */
+    public boolean isGlobalsMerged()
+    {
+        return isGlobalsMerged;
+    }
+
+    /**
+     * @param isGlobalsMerged the isGlobalsMerged to set
+     */
+    public void setGlobalsMerged(final boolean isGlobalsMerged)
+    {
+        this.isGlobalsMerged = isGlobalsMerged;
     }
 
     @Override

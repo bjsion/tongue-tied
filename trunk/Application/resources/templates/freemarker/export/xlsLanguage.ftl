@@ -48,7 +48,7 @@
         </Style>
     </Styles>
     <Worksheet ss:Name="Sheet1">
-        <Table ss:ExpandedColumnCount="${languages?size + 4}" ss:ExpandedRowCount="${items?size + 1}" x:FullColumns="1" x:FullRows="1">
+        <Table ss:ExpandedColumnCount="${languages?size + 4}" ss:ExpandedRowCount="${translations?size + 1}" x:FullColumns="1" x:FullRows="1">
             <Column ss:Width="226.5"/>
             <Column ss:StyleID="s21" ss:AutoFitWidth="0" ss:Width="149.25"/>
             <Column ss:Width="100"/>
@@ -65,7 +65,7 @@
                 <Cell ss:StyleID="s24"><Data ss:Type="String">${language.name}</Data></Cell>
                 </#list>
             </Row>
-            <#list items as item>
+            <#list translations as item>
             <Row>
                 <Cell><Data ss:Type="String">${item.keyword}</Data></Cell>
                 <Cell><Data ss:Type="String">${item.context!?xml}</Data></Cell>

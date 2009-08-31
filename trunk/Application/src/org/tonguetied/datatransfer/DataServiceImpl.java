@@ -28,7 +28,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -51,12 +50,8 @@ import org.tonguetied.datatransfer.exporting.ExportException;
 import org.tonguetied.datatransfer.exporting.Native2AsciiDirective;
 import org.tonguetied.datatransfer.importing.Importer;
 import org.tonguetied.datatransfer.importing.ImporterFactory;
-import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.KeywordService;
-import org.tonguetied.keywordmanagement.Language;
 import org.tonguetied.keywordmanagement.Translation;
-import org.tonguetied.keywordmanagement.Country.CountryCode;
-import org.tonguetied.keywordmanagement.Language.LanguageCode;
 
 import fmpp.ProcessingException;
 import fmpp.progresslisteners.LoggerProgressListener;
@@ -144,7 +139,7 @@ public class DataServiceImpl implements DataService
             throw new IllegalArgumentException("cannot perform export without" +
                     " an export type set");
         }
-        long start = System.currentTimeMillis();
+        final long start = System.currentTimeMillis();
         
         if (logger.isDebugEnabled()) 
             logger.debug("exporting based on filter " + parameters);
@@ -152,7 +147,9 @@ public class DataServiceImpl implements DataService
         try
         {
             File exportPath = getExportPath(true);
-            exportPath.mkdir();
+            final boolean isDirCreated = exportPath.mkdir();
+            if (!isDirCreated)
+                logger.warn("failed to create directory: " + exportPath);
             settings.set(NAME_OUTPUT_ROOT, exportPath.getAbsolutePath());
             settings.set(NAME_SOURCES, 
                     getTemplateName(parameters.getFormatType()));
@@ -186,7 +183,7 @@ public class DataServiceImpl implements DataService
         
         if (logger.isInfoEnabled())
         {
-            float totalMillis = System.currentTimeMillis() - start;
+            final float totalMillis = System.currentTimeMillis() - start;
             logger.info("export complete in " + (totalMillis/1000) + " seconds");
         }
     }
@@ -203,25 +200,18 @@ public class DataServiceImpl implements DataService
             List<Translation> translations)
     {
         Map<String, Object> root = new HashMap<String, Object>();
-        ExportDataPostProcessor postProcessor = 
-            ExportDataPostProcessorFactory.getPostProcessor(parameters.getFormatType());
+        final ExportDataPostProcessor postProcessor = 
+            ExportDataPostProcessorFactory.getPostProcessor(parameters.getFormatType(), parameters, keywordService);
         if (postProcessor != null)
         {
             if (logger.isDebugEnabled()) 
-                logger.debug("post processing results using: " + postProcessor.getClass());
+                logger.debug("post processing results using: " + 
+                        postProcessor.getClass());
             
-            final Country defaultCountry = 
-                keywordService.getCountry(CountryCode.DEFAULT);
-            List<?> results = 
-                postProcessor.transformData(translations, defaultCountry);
-            root.put("items", results);
-//                if (parameters.getLanguages().contains(arg0))
-            Language traditionalChinese = new Language();
-            traditionalChinese.setCode(LanguageCode.zht);
-            traditionalChinese.setName("Traditional Chinese");
-            parameters.addLanguage(traditionalChinese);
-            Collections.sort(parameters.getLanguages());
-            root.put("languages", parameters.getLanguages());
+            final List<?> results = postProcessor.transformData(translations);
+            
+            root.put("translations", results);
+            postProcessor.addItems(root);
         }
         else
         {
@@ -242,7 +232,7 @@ public class DataServiceImpl implements DataService
             File[] files = directory.listFiles();
             if (files.length > 0)
             {
-                File archive = new File(directory, directory.getName()+".zip");
+                final File archive = new File(directory, directory.getName()+".zip");
                 zos = new ZipOutputStream(new FileOutputStream(archive));
                 for (File file : files)
                 {
@@ -253,7 +243,7 @@ public class DataServiceImpl implements DataService
                 
                 if (logger.isDebugEnabled())
                     logger.debug("archived " + files.length + " files to " 
-                            + archive);
+                            + archive.getPath());
             }
         }
         catch (IOException ioe)
