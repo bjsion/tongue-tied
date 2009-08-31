@@ -174,6 +174,8 @@ public class ExcelKeywordParser implements ExcelParser
                                         if (StringUtils.isNotBlank(cellValue))
                                             keyword.setContext(cellValue);
                                         break;
+                                    default:
+                                        break;
                                 }
                             }
                             else if (lrec.getColumn() == 2)
@@ -226,6 +228,8 @@ public class ExcelKeywordParser implements ExcelParser
                         }
                         
                     }
+                    break;
+                default:
                     break;
             }
         }

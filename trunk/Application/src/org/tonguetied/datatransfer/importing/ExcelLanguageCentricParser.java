@@ -206,6 +206,8 @@ public class ExcelLanguageCentricParser implements ExcelParser
                         }
                     }
                     break;
+                default:
+                    break;
             }
         }
     }
