@@ -150,7 +150,7 @@
     </div>
 
     <div class="contentPanel">
-        <a href="<c:url value="keywords.htm"><c:param name="showAll" value="true"/></c:url>" title="<fmt:message key="get.all.keywords"/>"><fmt:message key="all.keywords"/></a>
+        <a href="<c:url value="keywords.htm"><c:param name="showAllKeywords" value="true"/></c:url>" title="<fmt:message key="get.all.keywords"/>"><fmt:message key="all.keywords"/></a>
         <display:table name="keywords" htmlId="keywordsTable" id="keyword" sort="external" pagesize="${viewPreferences.maxResults}" partialList="true" size="maxListSize" requestURI="">
             <display:column titleKey="action" group="1" class="actions">
                 <c:url value="deleteKeyword.htm" var="deleteKeywordUrl" scope="page"><c:param name="keywordId" value="${keyword.id}"/></c:url>

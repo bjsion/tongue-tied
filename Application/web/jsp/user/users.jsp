@@ -11,7 +11,7 @@
         <div id="left">
             <div class="sidepanel">
                 <c:url value="/userSearch.htm" var="searchAction" scope="page"/>
-                <form:form id="searchParameters" method="post" action="${searchAction}" commandName="user">
+                <form:form id="searchParameters" method="post" action="${searchAction}" commandName="userSearch">
                     <fieldset>
                         <legend><fmt:message key="search"/></legend>
                         <div>
@@ -40,7 +40,7 @@
         </div>
         
         <div class="contentPanel">
-            <a href="<c:url value="users.htm"/>" title="<fmt:message key="get.all.users"/>"><fmt:message key="all.users"/></a>
+            <a href="<c:url value="users.htm"><c:param name="showAllUsers" value="true"/></c:url>" title="<fmt:message key="get.all.users"/>"><fmt:message key="all.users"/></a>
             <display:table name="users" htmlId="userTable" id="user" sort="external" pagesize="${userSize}" partialList="true" size="maxListSize" requestURI="" keepStatus="true">
                 <display:column sortable="true" titleKey="username">
                     <c:choose>

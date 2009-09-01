@@ -477,11 +477,18 @@ public class User implements UserDetails
         this.version = version;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#equals(java.lang.Object)
+    /**
+     * Clears the contents of this object, sets all attributes to their initial
+     * value state. 
      */
+    public void initialize()
+    {
+        this.username = null;
+        this.lastName = null;
+        this.firstName = null;
+        this.email = null;
+    }
+    
     @Override
     public boolean equals(Object obj)
     {
@@ -508,11 +515,6 @@ public class User implements UserDetails
         return isEqual;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode()
     {
@@ -527,11 +529,6 @@ public class User implements UserDetails
         return hashCode;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString()
     {

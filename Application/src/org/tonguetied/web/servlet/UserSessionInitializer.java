@@ -15,7 +15,8 @@
  */
 package org.tonguetied.web.servlet;
 
-import static org.tonguetied.web.Constants.SHOW_ALL;
+import static org.tonguetied.web.Constants.SHOW_ALL_KEYWORDS;
+import static org.tonguetied.web.Constants.SHOW_ALL_USERS;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
@@ -47,7 +48,8 @@ public class UserSessionInitializer implements HttpSessionListener
         if (logger.isDebugEnabled())
             logger.debug("setting user session attributes");
         HttpSession session = event.getSession();
-        session.setAttribute(SHOW_ALL, true);
+        session.setAttribute(SHOW_ALL_KEYWORDS, true);
+        session.setAttribute(SHOW_ALL_USERS, true);
     }
 
     /**
