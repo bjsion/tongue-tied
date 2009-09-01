@@ -30,6 +30,7 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
@@ -82,6 +83,7 @@ public class UserRepositoryImpl extends HibernateDaoSupport implements
             final Integer maxResults)
     {
         Criteria criteria = createCriteria(user);
+        criteria.addOrder(Order.asc(FIELD_USERNAME));
         if (firstResult != null) criteria.setFirstResult(firstResult);
         if (maxResults != null) criteria.setMaxResults(maxResults);
         
