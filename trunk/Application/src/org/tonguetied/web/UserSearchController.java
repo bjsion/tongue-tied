@@ -15,20 +15,9 @@
  */
 package org.tonguetied.web;
 
-import static org.tonguetied.usermanagement.User.FIELD_EMAIL;
-import static org.tonguetied.usermanagement.User.FIELD_FIRSTNAME;
-import static org.tonguetied.usermanagement.User.FIELD_LASTNAME;
-import static org.tonguetied.usermanagement.User.FIELD_USERNAME;
 import static org.tonguetied.web.Constants.BTN_SEARCH;
-import static org.tonguetied.web.Constants.DEFAULT_USER_PAGE_SIZE;
-import static org.tonguetied.web.Constants.MAX_LIST_SIZE;
+import static org.tonguetied.web.Constants.SHOW_ALL_USERS;
 import static org.tonguetied.web.Constants.TABLE_ID_USER;
-import static org.tonguetied.web.Constants.USER;
-import static org.tonguetied.web.Constants.USERS;
-import static org.tonguetied.web.Constants.USER_SIZE;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,8 +29,6 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.tonguetied.usermanagement.User;
-import org.tonguetied.usermanagement.UserService;
-import org.tonguetied.utils.pagination.PaginatedList;
 
 /**
  * Controller for processing user search requests.
@@ -51,10 +38,10 @@ import org.tonguetied.utils.pagination.PaginatedList;
  */
 public class UserSearchController extends SimpleFormController
 {
-    private UserService userService;
+    private User userSearch;
 
-    private static final Logger logger = Logger
-            .getLogger(UserSearchController.class);
+    private static final Logger logger = 
+        Logger.getLogger(UserSearchController.class);
 
     /**
      * Create new instance of KeywordSearchController
@@ -68,7 +55,7 @@ public class UserSearchController extends SimpleFormController
     protected Object formBackingObject(HttpServletRequest request)
             throws Exception
     {
-        return new User();
+        return userSearch;
     }
 
     @Override
@@ -87,12 +74,7 @@ public class UserSearchController extends SimpleFormController
             final String searchBtn = request.getParameter(BTN_SEARCH);
             if (searchBtn != null)
             {
-                User user = new User();
-                user.setEmail(request.getParameter(FIELD_EMAIL));
-                user.setFirstName(request.getParameter(FIELD_FIRSTNAME));
-                user.setLastName(request.getParameter(FIELD_LASTNAME));
-                user.setUsername(request.getParameter(FIELD_USERNAME));
-                mav = onSubmit(request, response, user, super.getErrorsForNewForm(request));
+                mav = onSubmit(request, response, null, super.getErrorsForNewForm(request));
             }
         }
         
@@ -109,36 +91,25 @@ public class UserSearchController extends SimpleFormController
     {
         if (logger.isDebugEnabled()) logger.debug("searching for users");
         PaginationUtils.remove(TABLE_ID_USER, request);
-        final int firstResult = PaginationUtils.calculateFirstResult(
-                TABLE_ID_USER, DEFAULT_USER_PAGE_SIZE, request);
+        request.getSession().setAttribute(SHOW_ALL_USERS, false);
 
-        final User user = (User) command;
-        final PaginatedList<User> users = 
-            userService.findUsers(user, firstResult, DEFAULT_USER_PAGE_SIZE);
-        Map<String, Object> model = new HashMap<String, Object>();
-        model.put(USERS, users);
-        model.put(USER_SIZE, DEFAULT_USER_PAGE_SIZE);
-        model.put(MAX_LIST_SIZE, users.getMaxListSize());
-        model.put(USER, user);
-
-        return new ModelAndView(getSuccessView(), model);
+        return new ModelAndView(getSuccessView());
     }
 
     @Override
     protected void initBinder(HttpServletRequest request,
             ServletRequestDataBinder binder) throws Exception
     {
-        binder.registerCustomEditor(String.class, new StringTrimmerEditor(
-                        true));
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
 
     /**
-     * Assign the {@link UserService}.
+     * Assign the {@link User} object used to as the search parameters.
      * 
-     * @param userService the {@link UserService} to set.
+     * @param userSearch the {@link User} to set
      */
-    public void setUserService(UserService userService)
+    public void setUserSearch(User userSearch)
     {
-        this.userService = userService;
+        this.userSearch = userSearch;
     }
 }

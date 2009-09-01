@@ -43,7 +43,8 @@ public interface Constants
     static final String KEYWORDS = "keywords";
     static final String PAGE_SIZES = "pageSizes";
     static final String SEARCH_PARAMETERS = "searchParameters";
-    static final String SHOW_ALL = "showAll";
+    static final String SHOW_ALL_KEYWORDS = "showAllKeywords";
+    static final String SHOW_ALL_USERS = "showAllUsers";
     static final String STATES = "states";
     static final String USER = "user";
     static final String USER_SIZE = "userSize";

@@ -29,11 +29,11 @@ import static org.tonguetied.web.Constants.LANGUAGE_ID;
 import static org.tonguetied.web.Constants.MAX_LIST_SIZE;
 import static org.tonguetied.web.Constants.PAGE_SIZES;
 import static org.tonguetied.web.Constants.SEARCH_PARAMETERS;
-import static org.tonguetied.web.Constants.SHOW_ALL;
+import static org.tonguetied.web.Constants.SHOW_ALL_KEYWORDS;
+import static org.tonguetied.web.Constants.SHOW_ALL_USERS;
 import static org.tonguetied.web.Constants.STATES;
 import static org.tonguetied.web.Constants.TABLE_ID_KEYWORD;
 import static org.tonguetied.web.Constants.TABLE_ID_USER;
-import static org.tonguetied.web.Constants.USER;
 import static org.tonguetied.web.Constants.USERS;
 import static org.tonguetied.web.Constants.USER_SIZE;
 import static org.tonguetied.web.Constants.VIEW_PREFERENCES;
@@ -81,6 +81,7 @@ public class MainController extends MultiActionController
     private AuditService auditService;
     private PreferenceForm viewPreferences;
     private SearchForm searchParameters;
+    private User userSearch;
 
     private static final int[] KEYWORD_PAGE_SIZE_OPTIONS = {10, 25, 50};
 
@@ -103,10 +104,10 @@ public class MainController extends MultiActionController
             response.addCookie(cookie);
         }
         
-        Boolean showAll = RequestUtils.getBooleanParameter(request, SHOW_ALL);
+        Boolean showAll = RequestUtils.getBooleanParameter(request, SHOW_ALL_KEYWORDS);
         if (showAll == null)
         {
-            showAll = (Boolean) request.getSession().getAttribute(SHOW_ALL);
+            showAll = (Boolean) request.getSession().getAttribute(SHOW_ALL_KEYWORDS);
         }
         
         final int firstResult = PaginationUtils.calculateFirstResult(
@@ -241,17 +242,31 @@ public class MainController extends MultiActionController
     public ModelAndView users(HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
+        Boolean showAll = RequestUtils.getBooleanParameter(request, SHOW_ALL_USERS);
+        if (showAll == null)
+        {
+            showAll = (Boolean) request.getSession().getAttribute(SHOW_ALL_USERS);
+        }
+        
         final int firstResult = PaginationUtils.calculateFirstResult(
                 TABLE_ID_USER, DEFAULT_USER_PAGE_SIZE, request);
 
-        final PaginatedList<User> users = 
-            userService.getUsers(firstResult, DEFAULT_USER_PAGE_SIZE);
+        PaginatedList<User> users;
+        if (showAll)
+        {
+            users = userService.getUsers(firstResult, DEFAULT_USER_PAGE_SIZE);
+            userSearch.initialize();
+        }
+        else
+        {
+            users = userService.findUsers(userSearch, firstResult, DEFAULT_USER_PAGE_SIZE);
+        }
         
         Map<String, Object> model = new HashMap<String, Object>();
         model.put(USERS, users);
         model.put(USER_SIZE, DEFAULT_USER_PAGE_SIZE);
         model.put(MAX_LIST_SIZE, users.getMaxListSize());
-        model.put(USER, new User());
+        model.put("userSearch", userSearch);
         
         return new ModelAndView("user/users", model);
     }
@@ -430,5 +445,15 @@ public class MainController extends MultiActionController
     public void setSearchParameters(SearchForm searchParameters)
     {
         this.searchParameters = searchParameters;
+    }
+
+    /**
+     * Assign the {@link User} object used to as the search parameters.
+     * 
+     * @param userSearch the {@link User} to set
+     */
+    public void setUserSearch(User userSearch)
+    {
+        this.userSearch = userSearch;
     }
 }

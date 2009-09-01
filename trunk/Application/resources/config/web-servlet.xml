@@ -147,6 +147,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean name="mainController" class="org.tonguetied.web.MainController">
         <property name="viewPreferences" ref="viewPreferences"/>
         <property name="searchParameters" ref="searchParameters"/>
+        <property name="userSearch" ref="userSearch"/>
         <property name="userService" ref="userService"/>
         <property name="auditService" ref="auditService"/>
         <property name="keywordService" ref="keywordService"/>
@@ -242,10 +243,10 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     </bean>
 
     <bean name="userSearchController" class="org.tonguetied.web.UserSearchController">
-        <property name="commandName" value="user"/>
+        <property name="commandName" value="userSearch"/>
         <property name="formView" value="user/users"/>
-        <property name="successView" value="user/users"/>
-        <property name="userService" ref="userService"/>
+        <property name="successView" value="forward:/users.htm"/>
+        <property name="userSearch" ref="userSearch"/>
     </bean>
 
     <bean name="changePasswordController" class="org.tonguetied.web.ChangePasswordController">
@@ -293,6 +294,10 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     </bean>
 
     <bean name="searchParameters" class="org.tonguetied.web.SearchForm" scope="session">
+        <aop:scoped-proxy/>
+    </bean>
+
+    <bean name="userSearch" class="org.tonguetied.usermanagement.User" scope="session">
         <aop:scoped-proxy/>
     </bean>
 

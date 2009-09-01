@@ -19,7 +19,7 @@ import static org.tonguetied.web.Constants.BUNDLES;
 import static org.tonguetied.web.Constants.COUNTRIES;
 import static org.tonguetied.web.Constants.LANGUAGES;
 import static org.tonguetied.web.Constants.BTN_SEARCH;
-import static org.tonguetied.web.Constants.SHOW_ALL;
+import static org.tonguetied.web.Constants.SHOW_ALL_KEYWORDS;
 import static org.tonguetied.web.Constants.STATES;
 import static org.tonguetied.web.Constants.VIEW_PREFERENCES;
 
@@ -54,8 +54,8 @@ public class KeywordSearchController extends SimpleFormController
     private PreferenceForm viewPreferences;
     private SearchForm searchParameters;
 
-    private static final Logger logger = Logger
-            .getLogger(KeywordSearchController.class);
+    private static final Logger logger = 
+            Logger.getLogger(KeywordSearchController.class);
 
     /**
      * Create new instance of KeywordSearchController
@@ -105,7 +105,7 @@ public class KeywordSearchController extends SimpleFormController
     {
         if (logger.isDebugEnabled()) logger.debug("searching for keywords");
 
-        request.getSession().setAttribute(SHOW_ALL, false);
+        request.getSession().setAttribute(SHOW_ALL_KEYWORDS, false);
 
         return new ModelAndView(getSuccessView());
     }
