@@ -15,8 +15,18 @@
  */
 package org.tonguetied.web;
 
-import static org.tonguetied.web.Constants.FIELD_NAME;
-import static org.tonguetied.web.Constants.*;
+import static org.tonguetied.keywordmanagement.Bundle.FIELD_NAME;
+import static org.tonguetied.keywordmanagement.Bundle.FIELD_RESOURCE_NAME;
+import static org.tonguetied.web.Constants.FILE_SEPARATOR;
+import static org.tonguetied.web.Constants.FORM_FEED;
+import static org.tonguetied.web.Constants.GROUP_SEPARATOR;
+import static org.tonguetied.web.Constants.HORIZONTAL_TABULATION;
+import static org.tonguetied.web.Constants.LINE_SEPARATOR;
+import static org.tonguetied.web.Constants.PARAGRAPH_SEPARATOR;
+import static org.tonguetied.web.Constants.RECORD_SEPARATOR;
+import static org.tonguetied.web.Constants.SPACE_SEPARATOR;
+import static org.tonguetied.web.Constants.UNIT_SEPARATOR;
+import static org.tonguetied.web.Constants.VERTICAL_TABULATION;
 
 import java.util.List;
 

@@ -209,7 +209,8 @@ public class ResourcesTemplateTest extends TemplateTester
     @Override
     public void runAssertions() throws Exception
     {
-        Collection<File> files = FileUtils.listFiles(getOutputDir(), getOutputExtensions(), false);
+        final Collection<File> files = FileUtils.listFiles(
+                getOutputDir().getAbsoluteFile(), getOutputExtensions(), false);
         assertEquals(3, files.size());
         DocumentBuilder builder = 
             DocumentBuilderFactory.newInstance().newDocumentBuilder();

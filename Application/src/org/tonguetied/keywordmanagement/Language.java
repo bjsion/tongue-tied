@@ -58,6 +58,8 @@ public class Language implements Comparable<Language>, AuditSupport
     @Column(nullable=false)
     private String name;
     
+    public static final String FIELD_CODE = "code";
+    public static final String FIELD_NAME = "name";
     public static final String TABLE_LANGUAGE = "language";
     private static final String COL_ID = TABLE_LANGUAGE + "_id";
     protected static final String QUERY_GET_LANAGUAGES = "get.languages";

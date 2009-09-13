@@ -31,9 +31,6 @@ public interface Constants
     static final String COUNTRIES = "countries";
     static final String COUNTRY = "country";
     static final String COUNTRY_ID = "countryId";
-    static final String FIELD_CODE = "code";
-    static final String FIELD_NAME = "name";
-    static final String FIELD_RESOURCE_NAME = "resourceName";
     static final String FORMAT_TYPES = "formatTypes";
     static final String LANGUAGE = "language";
     static final String LANGUAGE_ID = "languageId";

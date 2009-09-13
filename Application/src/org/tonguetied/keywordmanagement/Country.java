@@ -59,6 +59,8 @@ public class Country implements Comparable<Country>, AuditSupport
     @Column(nullable=false)
     private String name;
     
+    public static final String FIELD_CODE = "code";
+    public static final String FIELD_NAME = "name";
     public static final String TABLE_COUNTRY = "country";
     private static final String COL_ID = TABLE_COUNTRY + "_id";
     protected static final String QUERY_GET_COUNTRIES = "get.countries";

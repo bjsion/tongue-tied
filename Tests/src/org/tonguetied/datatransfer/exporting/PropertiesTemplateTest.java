@@ -36,6 +36,8 @@ import org.tonguetied.keywordmanagement.Language.LanguageCode;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
 /**
+ * Test class for testing the output from the properties template.
+ * 
  * @author bsion
  *
  */
@@ -185,7 +187,8 @@ public class PropertiesTemplateTest extends TemplateTester
     @Override
     public void runAssertions() throws Exception
     {
-        Collection<File> files = FileUtils.listFiles(getOutputDir(), getOutputExtensions(), false);
+        final Collection<File> files = FileUtils.listFiles(
+                getOutputDir().getAbsoluteFile(), getOutputExtensions(), false);
         assertEquals(3, files.size());
         Properties expected;
         Properties actual;

@@ -15,8 +15,8 @@
  */
 package org.tonguetied.web;
 
-import static org.tonguetied.web.Constants.FIELD_CODE;
-import static org.tonguetied.web.Constants.FIELD_NAME;
+import static org.tonguetied.keywordmanagement.Language.FIELD_CODE;
+import static org.tonguetied.keywordmanagement.Language.FIELD_NAME;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
