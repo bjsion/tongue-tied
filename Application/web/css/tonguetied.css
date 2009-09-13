@@ -178,6 +178,10 @@ form {
   margin: 0 auto;
 }
 
+form.login {
+  max-width: 50em;
+}
+
 form fieldset {
   display: block;
   border: 1px dotted;
