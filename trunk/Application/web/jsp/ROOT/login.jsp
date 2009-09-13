@@ -23,14 +23,13 @@
 
 <body>
     <div>
-        <img src="<c:url value="/images/application_logo.png"/>" alt="<fmt:message key="application.logo"/>" title="<fmt:message key="application.logo"/>" class="logo"/>
+        <img src="<c:url value="/images/application_logo.png"/>" alt="<fmt:message key="application.short.name"/>" title="<fmt:message key="application.short.name"/>" class="logo"/>
     </div>
-    <h1><fmt:message key="login"/></h1>
     <%-- this form-login-page form is also used as the 
          form-error-page to ask for a login again.
          --%>
 
-    <form id="loginForm" action="<c:url value='j_spring_security_check'/>" method="post">
+    <form id="loginForm" action="<c:url value='j_spring_security_check'/>" method="post" class="login">
         <fieldset>
             <legend><fmt:message key="login"/></legend>
             <c:if test="${not empty param.login_error}">
@@ -40,20 +39,20 @@
               </span>
             </c:if>
             <div>
-                <label id="labelUsername" for="j_username"><fmt:message key="username"/></label>
+                <label id="labelUsername" for="j_username" class="content"><fmt:message key="username"/></label>
                 <input type="text" id="j_username" name="j_username" <c:if test="${not empty param.login_error}">value="<%= (String) session.getAttribute(AuthenticationProcessingFilter.SPRING_SECURITY_LAST_USERNAME_KEY) %>"</c:if>/>
             </div>
             <div>
-                <label id="labelPassword" for="j_password"><fmt:message key="password"/></label>
+                <label id="labelPassword" for="j_password" class="content"><fmt:message key="password"/></label>
                 <input type="password" id="j_password" name="j_password"/>
             </div>
             <div>
+                <label id="labelRememberMe" for="_spring_security_remember_me" class="content"><fmt:message key="remember.me"/></label>
                 <input type="checkbox" id="_spring_security_remember_me" name="_spring_security_remember_me"/>
-                <label id="labelRememberMe" for="_spring_security_remember_me"><fmt:message key="remember.me"/></label>
             </div>
         </fieldset>
-        <div>
-    	   <input name="submit" type="submit" value="<fmt:message key="login"/>" class="button"/>
+        <div class="submit">
+           <input name="submit" type="submit" value="<fmt:message key="login"/>" class="button"/>
            <input name="reset" type="reset" value="<fmt:message key="reset"/>" class="button"/>
         </div>
     </form>
