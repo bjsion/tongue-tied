@@ -238,10 +238,10 @@
                 <include name="bsh.jar"/>
                 <include name="LICENSE.bsh.txt"/>
             </lib>
-            <!--lib dir="${3rdparty.home}/c3p0/0.9.1.2">
+            <lib dir="${3rdparty.home}/c3p0/0.9.1.2">
                 <include name="c3p0.jar"/>
                 <include name="LICENSE.c3p0.txt"/>
-            </lib-->
+            </lib>
             <lib dir="${3rdparty.home}/cglib/2.2">
                 <include name="cglib-nodep-2.2.jar"/>
             </lib>
