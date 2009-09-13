@@ -199,6 +199,7 @@ public class Keyword implements DeepCloneable<Keyword>, Comparable<Keyword>,
     public void remove(Translation translation)
     {
         this.translations.remove(translation);
+        translation.setKeyword(null);
     }
     
     /**
@@ -223,9 +224,6 @@ public class Keyword implements DeepCloneable<Keyword>, Comparable<Keyword>,
         this.version = version;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
     public int compareTo(final Keyword other)
     {
         return new CompareToBuilder().append(keyword, other.keyword).
@@ -355,7 +353,7 @@ public class Keyword implements DeepCloneable<Keyword>, Comparable<Keyword>,
          */
         public boolean evaluate(Object object)
         {
-            Translation translation = (Translation) object;
+            final Translation translation = (Translation) object;
             
             return id.equals(translation.getId());
         }

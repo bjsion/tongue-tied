@@ -17,6 +17,8 @@ package org.tonguetied.web;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.tonguetied.keywordmanagement.Language.FIELD_CODE;
+import static org.tonguetied.keywordmanagement.Language.FIELD_NAME;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -48,9 +50,6 @@ public class LanguageValidatorTest
     private Language language;
     private String fieldName;
 
-    private static final String FIELD_CODE = "code";
-    private static final String FIELD_NAME = "name";
-    
     @Parameters
     public static final Collection<Object[]> data()
     {

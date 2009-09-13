@@ -17,8 +17,8 @@ package org.tonguetied.web;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.tonguetied.web.Constants.FIELD_NAME;
-import static org.tonguetied.web.Constants.FIELD_RESOURCE_NAME;
+import static org.tonguetied.keywordmanagement.Bundle.FIELD_NAME;
+import static org.tonguetied.keywordmanagement.Bundle.FIELD_RESOURCE_NAME;
 
 import java.util.Arrays;
 import java.util.Collection;

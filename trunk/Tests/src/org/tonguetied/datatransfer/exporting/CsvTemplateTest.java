@@ -179,11 +179,11 @@ public class CsvTemplateTest extends TemplateTester
     @Override
     public void runAssertions() throws Exception
     {
-        Collection<File> files = 
-            FileUtils.listFiles(getOutputDir(), getOutputExtensions(), false);
+        final Collection<File> files = 
+            FileUtils.listFiles(getOutputDir().getAbsoluteFile(), getOutputExtensions(), false);
         assertEquals(1, files.size());
         final List<String> lines = 
-            FileUtils.readLines(new File(getOutputDir(), "csv."+FILE_EXTENSION));
+            FileUtils.readLines(new File(getOutputDir().getAbsoluteFile(), "csv."+FILE_EXTENSION));
         assertEquals(6, lines.size());
         assertEquals(EXPECTED_LINE_1, lines.get(0));
         assertEquals(EXPECTED_LINE_2, lines.get(1));

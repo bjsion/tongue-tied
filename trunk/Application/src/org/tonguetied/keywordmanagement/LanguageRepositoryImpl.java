@@ -17,6 +17,7 @@ package org.tonguetied.keywordmanagement;
 
 import static org.hibernate.criterion.Restrictions.eq;
 import static org.hibernate.criterion.Restrictions.idEq;
+import static org.tonguetied.keywordmanagement.Language.FIELD_CODE;
 import static org.tonguetied.keywordmanagement.Language.QUERY_GET_LANAGUAGES;
 
 import java.util.List;
@@ -29,7 +30,7 @@ import org.tonguetied.keywordmanagement.Language.LanguageCode;
 
 /**
  * DAO facade to ORM. This facade allows access permanent storage of Language
- * related data via the Hibernate orm model.
+ * related data via the Hibernate ORM model.
  * 
  * @author bsion
  * 
@@ -48,13 +49,15 @@ public class LanguageRepositoryImpl extends HibernateDaoSupport implements
     {
         Criteria criteria = getSession().createCriteria(Language.class);
         criteria.add(idEq(id));
+        criteria.setCacheable(true);
         return (Language) criteria.uniqueResult();
     }
 
     public Language getLanguage(final LanguageCode code)
     {
         Criteria criteria = getSession().createCriteria(Language.class);
-        criteria.add(eq("code", code));
+        criteria.add(eq(FIELD_CODE, code));
+        criteria.setCacheable(true);
         return (Language) criteria.uniqueResult();
     }
 

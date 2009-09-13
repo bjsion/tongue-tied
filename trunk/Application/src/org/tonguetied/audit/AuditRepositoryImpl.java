@@ -28,7 +28,7 @@ import org.tonguetied.utils.pagination.PaginatedList;
 
 /**
  * DAO facade to ORM. This facade allows access to permanent storage of Audit
- * related data via the Hibernate orm model.
+ * related data via the Hibernate ORM model.
  * 
  * @author bsion
  *

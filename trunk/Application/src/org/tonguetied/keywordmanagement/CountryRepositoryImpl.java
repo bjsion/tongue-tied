@@ -17,6 +17,8 @@ package org.tonguetied.keywordmanagement;
 
 import static org.hibernate.criterion.Restrictions.eq;
 import static org.hibernate.criterion.Restrictions.idEq;
+import static org.tonguetied.keywordmanagement.Country.FIELD_CODE;
+import static org.tonguetied.keywordmanagement.Country.QUERY_GET_COUNTRIES;
 
 import java.util.List;
 
@@ -28,7 +30,7 @@ import org.tonguetied.keywordmanagement.Country.CountryCode;
 
 /**
  * DAO facade to ORM. This facade allows access permanent storage of Country
- * related data via the Hibernate orm model.
+ * related data via the Hibernate ORM model.
  * 
  * @author bsion
  * 
@@ -40,19 +42,21 @@ public class CountryRepositoryImpl extends HibernateDaoSupport implements
     {
         Criteria criteria = getSession().createCriteria(Country.class);
         criteria.add(idEq(id));
+        criteria.setCacheable(true);
         return (Country) criteria.uniqueResult();
     }
 
     public Country getCountry(final CountryCode code)
     {
         Criteria criteria = getSession().createCriteria(Country.class);
-        criteria.add(eq("code", code));
+        criteria.add(eq(FIELD_CODE, code));
+        criteria.setCacheable(true);
         return (Country) criteria.uniqueResult();
     }
 
     public List<Country> getCountries()
     {
-        Query query = getSession().getNamedQuery(Country.QUERY_GET_COUNTRIES);
+        Query query = getSession().getNamedQuery(QUERY_GET_COUNTRIES);
         query.setCacheable(true);
         return query.list();
     }

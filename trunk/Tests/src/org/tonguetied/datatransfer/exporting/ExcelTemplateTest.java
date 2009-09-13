@@ -209,7 +209,8 @@ public class ExcelTemplateTest extends TemplateTester
     @Override
     public void runAssertions() throws Exception
     {
-        Collection<File> files = FileUtils.listFiles(getOutputDir(), getOutputExtensions(), false);
+        final Collection<File> files = FileUtils.listFiles(
+                getOutputDir().getAbsoluteFile(), getOutputExtensions(), false);
         assertEquals(1, files.size());
 //        File file = files.iterator().next();
 //        DocumentBuilder builder = 

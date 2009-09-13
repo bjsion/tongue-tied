@@ -62,6 +62,7 @@ public class ServerDataRepositoryImpl extends HibernateDaoSupport
     {
         Criteria criteria = getSession().createCriteria(ServerData.class);
         criteria.add(idEq(id));
+        criteria.setCacheable(true);
         return (ServerData) criteria.uniqueResult();
     }
 

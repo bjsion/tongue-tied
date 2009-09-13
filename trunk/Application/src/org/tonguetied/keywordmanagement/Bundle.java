@@ -74,6 +74,8 @@ public class Bundle implements Comparable<Bundle>, AuditSupport
     @Column(name="is_global",nullable = false)
     private boolean isGlobal;
 
+    public static final String FIELD_NAME = "name";
+    public static final String FIELD_RESOURCE_NAME = "resourceName";
     public static final String TABLE_BUNDLE = "bundle";
     private static final String COL_ID = TABLE_BUNDLE + "_id";
     protected static final String QUERY_GET_DEFAULT_BUNDLE = "get.default.bundle";
