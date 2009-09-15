@@ -27,7 +27,7 @@
     <property name="src.dir" value="${tests.home}/src"/>
     <property name="resources.dir" value="${tests.home}/resources"/>
     <property name="config.dir" value="${resources.dir}/config"/>
-    <property name="findbugs.home" value="${3rdparty.home}/findbugs/1.3.8"/>
+    <property name="findbugs.home" value="${3rdparty.home}/findbugs/1.3.9"/>
     <property name="findbugs.xml.file" value="${ant.project.name}-bug-report.xml"/>
  
     <!-- temporary directories -->
