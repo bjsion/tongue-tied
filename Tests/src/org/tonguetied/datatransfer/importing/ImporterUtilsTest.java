@@ -26,6 +26,7 @@ import org.junit.Test;
 import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
 import org.tonguetied.keywordmanagement.Country.CountryCode;
 import org.tonguetied.keywordmanagement.Language.LanguageCode;
+import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
 /**
  * Class contain unit tests for the {@link ImporterUtilsTest} class.
@@ -111,4 +112,41 @@ public class ImporterUtilsTest
         assertTrue(errorCodes.isEmpty());
     }
 
+    /**
+     * Test method for {@link org.tonguetied.datatransfer.importing.ImporterUtils#evaluateTranslationState(String, List)}.
+     */
+    @Test
+    public final void testEvaluateTranslationState()
+    {
+        List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
+        TranslationState state = ImporterUtils.evaluateTranslationState("UNVERIFIED", errorCodes);
+        assertEquals(TranslationState.UNVERIFIED, state);
+        assertTrue(errorCodes.isEmpty());
+    }
+    
+    /**
+     * Test method for {@link org.tonguetied.datatransfer.importing.ImporterUtils#evaluateTranslationState(String, List)}.
+     */
+    @Test
+    public final void testEvaluateIllegalTranslationState()
+    {
+        List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
+        TranslationState state = ImporterUtils.evaluateTranslationState("illegal", errorCodes);
+        assertEquals(1, errorCodes.size());
+        assertTrue(errorCodes.contains(ImportErrorCode.illegalTranslationState));
+        assertNull(state);
+    }
+
+    /**
+     * Test method for {@link org.tonguetied.datatransfer.importing.ImporterUtils#evaluateTranslationState(String, List)}.
+     */
+    @Test
+    public final void testEvaluateNullTranslationState()
+    {
+        List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
+        TranslationState state = ImporterUtils.evaluateTranslationState(null, errorCodes);
+        assertEquals(1, errorCodes.size());
+        assertTrue(errorCodes.contains(ImportErrorCode.illegalTranslationState));
+        assertNull(state);
+    }
 }
