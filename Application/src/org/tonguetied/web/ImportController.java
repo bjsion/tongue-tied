@@ -15,6 +15,7 @@
  */
 package org.tonguetied.web;
 
+import static org.tonguetied.web.Constants.BUNDLES;
 import static org.tonguetied.web.Constants.FORMAT_TYPES;
 import static org.tonguetied.web.Constants.STATES;
 
@@ -34,6 +35,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.CancellableFormController;
 import org.tonguetied.datatransfer.DataService;
 import org.tonguetied.datatransfer.common.FormatType;
+import org.tonguetied.keywordmanagement.Bundle;
+import org.tonguetied.keywordmanagement.KeywordService;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
 
@@ -44,9 +47,10 @@ import org.tonguetied.keywordmanagement.Translation.TranslationState;
  * @author bsion
  *
  */
-public class ImportController extends CancellableFormController {
-    
+public class ImportController extends CancellableFormController
+{
     private DataService dataService;
+    private KeywordService keywordService;
     
     private static final Logger logger = 
         Logger.getLogger(ImportController.class);
@@ -54,13 +58,15 @@ public class ImportController extends CancellableFormController {
     /**
      * Create new instance of CountryController 
      */
-    public ImportController() {
+    public ImportController()
+    {
         setCommandClass(ImportBean.class);
     }
 
     @Override
     protected Object formBackingObject(HttpServletRequest request) 
-            throws Exception {
+            throws Exception
+    {
         return new ImportBean();
     }
 
@@ -68,19 +74,22 @@ public class ImportController extends CancellableFormController {
     protected ModelAndView onSubmit(HttpServletRequest request, 
                                     HttpServletResponse response,
                                     Object command,
-                                    BindException errors) throws Exception {
+                                    BindException errors) throws Exception
+    {
         if (logger.isDebugEnabled()) logger.debug("beginning import");
         // cast the bean
         ImportBean bean = (ImportBean) command;
 
         // let's see if there's content there
         MultipartFile file = bean.getFileUploadBean().getFile();
-        if (file != null) {
+        if (file != null && !file.isEmpty())
+        {
             bean.getParameters().setFileName(FilenameUtils.getBaseName(file.getOriginalFilename()));
             bean.getParameters().setData(file.getBytes());
             dataService.importData(bean.getParameters());
         }
-        else {
+        else
+        {
             // hmm, that's strange, the user did not upload anything
         }
 
@@ -102,9 +111,13 @@ public class ImportController extends CancellableFormController {
     {
         // to actually be able to convert Multipart instance to byte[]
         // we have to register a custom editor
-        binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
-        binder.registerCustomEditor(FormatType.class, new FormatTypeSupport()); 
-        binder.registerCustomEditor(TranslationState.class, new TranslationStateSupport()); 
+        binder.registerCustomEditor(byte[].class, 
+                new ByteArrayMultipartFileEditor());
+        binder.registerCustomEditor(FormatType.class, new FormatTypeSupport());
+        binder.registerCustomEditor(TranslationState.class, 
+                new TranslationStateSupport()); 
+        binder.registerCustomEditor(Bundle.class, 
+                new BundleSupport(keywordService.getBundles()));
     }
 
     @Override
@@ -114,6 +127,7 @@ public class ImportController extends CancellableFormController {
         Map<String, Object> model = new HashMap<String, Object>();
         model.put(FORMAT_TYPES, FormatType.values());
         model.put(STATES, TranslationState.values());
+        model.put(BUNDLES, keywordService.getBundles());
         
         return model;
     }
@@ -126,5 +140,15 @@ public class ImportController extends CancellableFormController {
     public void setDataService(final DataService dataService)
     {
         this.dataService = dataService;
+    }
+
+    /**
+     * Assign the {@link KeywordService}
+     * 
+     * @param keywordService the keywordService to set
+     */
+    public void setKeywordService(KeywordService keywordService)
+    {
+        this.keywordService = keywordService;
     }
 }

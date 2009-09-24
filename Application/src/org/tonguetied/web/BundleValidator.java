@@ -50,24 +50,29 @@ public class BundleValidator implements Validator
     private static final char[] WHITESPACE_CHARS = new char[] {
             SPACE_SEPARATOR, LINE_SEPARATOR, PARAGRAPH_SEPARATOR,
             HORIZONTAL_TABULATION, VERTICAL_TABULATION, FORM_FEED,
-            FILE_SEPARATOR, GROUP_SEPARATOR, RECORD_SEPARATOR, UNIT_SEPARATOR };
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.springframework.validation.Validator#supports(java.lang.Class)
+            FILE_SEPARATOR, GROUP_SEPARATOR, RECORD_SEPARATOR, UNIT_SEPARATOR,
+            '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '+',
+            '=', '|', '{', '}', '[', ']', ':', ';', '"', '\'', ',', '<', '>',
+            '?'};
+            
+    /**
+     * The regular expression string used to evaluate strings.
      */
+//    private static final String RESOURCE_REGEX_EXPRESSION = ".+@.+\\.[a-z]+";
+//    private static final String RESOURCE_REGEX_EXPRESSION = "[^@\\?]";
+//    private static final String RESOURCE_REGEX_EXPRESSION = ".+[\\S]+[\\w]+";
+    
+    /**
+     * the resource name pattern string
+     */
+//    private static final Pattern resourceNamePattern = 
+//        Pattern.compile(RESOURCE_REGEX_EXPRESSION);
+
     public boolean supports(Class clazz)
     {
         return Bundle.class.isAssignableFrom(clazz);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.springframework.validation.Validator#validate(java.lang.Object,
-     *      org.springframework.validation.Errors)
-     */
     public void validate(Object target, Errors errors)
     {
         validateMandatoryFields((Bundle) target, errors);
@@ -133,12 +138,24 @@ public class BundleValidator implements Validator
      */
     private void validateCharacterSet(final Bundle bundle, Errors errors)
     {
+        //TODO: use a regular expression for this.
         if (StringUtils.containsAny(bundle.getResourceName(), WHITESPACE_CHARS))
         {
             errors.rejectValue(FIELD_RESOURCE_NAME,
                     "error.resource.name.contains.invalid.char",
                     new String[] { bundle.getResourceName() }, "default");
         }
+//        if (bundle.getResourceName() != null)
+//        {
+//            final Matcher m = 
+//                resourceNamePattern.matcher(bundle.getResourceName());
+//            if (m.matches())
+//            {
+//                errors.rejectValue(FIELD_RESOURCE_NAME,
+//                        "error.resource.name.contains.invalid.char",
+//                        new String[] { bundle.getResourceName() }, "default");
+//            }
+//        }
     }
 
     /**

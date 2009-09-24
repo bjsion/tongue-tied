@@ -14,8 +14,9 @@
             </div>
             <div>
                 <form:label path="parameters.formatType" cssClass="content"><fmt:message key="file.type"/></form:label>
-                <form:select path="parameters.formatType" size="1">
-                    <form:option value=""><fmt:message key="please.select"/></form:option>
+                <form:select path="parameters.formatType" size="1" onchange="toggleSection(document.getElementById('parameters.formatType').value == 'properties'
+             || document.getElementById('parameters.formatType').value == 'resx','bundleSection')">
+                    <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
                     <c:forEach items="${formatTypes}" var="type">
                         <c:if test="${formatType == type}">
                             <c:set var="selected" value="true"/>
@@ -26,10 +27,18 @@
                 </form:select>
                 <form:errors path="parameters.formatType" cssClass="error"/>
             </div>
+            <div id="bundleSection" <c:if test="${(import.parameters.formatType != 'properties') && (import.parameters.formatType != 'resx')}">class="hidden"</c:if>>
+                <form:label path="parameters.bundle" cssClass="content"><fmt:message key="bundle"/></form:label>
+                <form:select path="parameters.bundle" id="parameters.bundle">
+                    <form:option value="" cssClass="select"><fmt:message key="select.bundle"/></form:option>
+                    <form:options items="${bundles}" itemValue="id" itemLabel="name"/>
+                </form:select>
+                <form:errors path="parameters.bundle" cssClass="error"/>
+            </div>
             <div>
                 <form:label path="parameters.translationState" cssClass="content"><fmt:message key="translation.state"/></form:label>
                 <form:select path="parameters.translationState" size="1">
-                    <form:option value=""><fmt:message key="please.select"/></form:option>
+                    <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
                     <c:forEach items="${states}" var="state">
                         <c:if test="${translationState == state}">
                             <c:set var="selected" value="true"/>
@@ -48,3 +57,5 @@
         </div>
     </form:form>
     </div>
+
+<script type="text/javascript" src="<c:url value="/scripts/tonguetied.js"/>"></script>

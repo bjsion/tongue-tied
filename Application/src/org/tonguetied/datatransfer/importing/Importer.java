@@ -21,6 +21,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.tonguetied.datatransfer.common.ImportParameters;
 import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
+import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Keyword;
 import org.tonguetied.keywordmanagement.KeywordService;
 import org.tonguetied.keywordmanagement.Translation;
@@ -110,12 +111,11 @@ public abstract class Importer
     {
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         validate(parameters.getData(), errorCodes);
-        validate(parameters.getFileName(), errorCodes);
+        validate(parameters.getFileName(), parameters.getBundle(), errorCodes);
 
         if (!errorCodes.isEmpty())
         {
-            logger.warn("failed to import files. errorCodes (" + errorCodes
-                    + ")");
+            logger.warn("failed to import files. errorCodes ("+errorCodes+")");
             throw new ImportException(errorCodes);
         }
     }
@@ -146,13 +146,14 @@ public abstract class Importer
      * file name. The default implementation does nothing.
      * 
      * @param fileName the fileName corresponding to the input file
+     * @param bundle TODO
      * @param errorCodes the list of existing {@link ImportErrorCode}s. Cannot
      *        be <code>null</code>
      * @throws ImportException if an error occurs during the validation process.
      *         The {@link ImportException} may contain additional information as
      *         to why the import failed
      */
-    protected void validate(final String fileName,
+    protected void validate(final String fileName, final Bundle bundle,
             List<ImportErrorCode> errorCodes) throws ImportException
     {
         // default implementation does nothing
