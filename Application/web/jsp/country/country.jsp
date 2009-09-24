@@ -12,7 +12,7 @@
             <div>
                 <form:label path="code" cssClass="content"><fmt:message key="country.code"/></form:label>
                 <form:select path="code" size="1">
-                    <form:option value=""><fmt:message key="please.select"/></form:option>
+                    <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
                     <form:options items="${countryCodes}"/>
                 </form:select>
                 <form:errors path="code" cssClass="error"/>

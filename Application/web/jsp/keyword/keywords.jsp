@@ -101,28 +101,28 @@
                     <div>
                         <form:label path="bundle" cssClass="sidepanel"><fmt:message key="bundle"/></form:label>
                         <form:select path="bundle" size="1" cssClass="sidepanel">
-                            <form:option value=""><fmt:message key="please.select"/></form:option>
+                            <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
                             <form:options items="${bundles}" itemValue="id" itemLabel="name"/>
                         </form:select>
                     </div>
                     <div>
                         <form:label path="country" cssClass="sidepanel"><fmt:message key="country"/></form:label>
                         <form:select path="country" size="1" cssClass="sidepanel">
-                            <form:option value=""><fmt:message key="please.select"/></form:option>
+                            <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
                             <form:options items="${countries}" itemValue="id" itemLabel="name"/>
                         </form:select>
                     </div>
                     <div>
                         <form:label path="language" cssClass="sidepanel"><fmt:message key="language"/></form:label>
                         <form:select path="language" size="1" cssClass="sidepanel">
-                            <form:option value=""><fmt:message key="please.select"/></form:option>
+                            <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
                             <form:options items="${languages}" itemValue="id" itemLabel="name"/>
                         </form:select>
                     </div>
                     <div>
                         <form:label path="translationState" cssClass="sidepanel"><fmt:message key="translation.state"/></form:label>
                         <form:select path="translationState" size="1" cssClass="sidepanel">
-                            <form:option value=""><fmt:message key="please.select"/></form:option>
+                            <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
                             <c:forEach items="${states}" var="state">
                                 <c:if test="${translationState == state}">
                                     <c:set var="selected" value="true"/>

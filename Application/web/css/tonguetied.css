@@ -291,6 +291,10 @@ form option {
   color: #000;
 }
 
+form option.select {
+  font-style: italic;
+}
+
 form input.button {
   font-weight: bold;
   display: inline;

@@ -32,7 +32,7 @@
             <div>
                 <form:label path="translationState" cssClass="content"><fmt:message key="translation.state"/></form:label>
                 <form:select path="translationState" size="1">
-                    <form:option value=""><fmt:message key="please.select"/></form:option>
+                    <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
                     <c:forEach items="${states}" var="state">
                         <c:if test="${translationState == state}">
                             <c:set var="selected" value="true"/>
@@ -47,7 +47,7 @@
                 <form:label path="formatType" cssClass="content"><fmt:message key="export.type"/></form:label>
                 <form:select path="formatType" size="1" onchange="toggleSection(document.getElementById('formatType').value == 'properties'
              || document.getElementById('formatType').value == 'resx','globalsSection')">
-                    <form:option value=""><fmt:message key="please.select"/></form:option>
+                    <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
                     <c:forEach items="${formatTypes}" var="type">
                         <c:if test="${formatType == type}">
                             <c:set var="selected" value="true"/>
