@@ -62,7 +62,7 @@
                 <form:label path="resultPackaged" cssClass="content"><fmt:message key="package.result"/></form:label>
                 <form:checkbox path="resultPackaged" id="resultPackaged"/>
             </div>
-            <div id="globalsSection" class="hidden">
+            <div id="globalsSection" <c:if test="${(export.formatType != 'properties') && (export.formatType != 'resx')}">class="hidden"</c:if>>
                 <form:label path="globalsMerged" cssClass="content"><fmt:message key="merge.global.bundles"/></form:label>
                 <form:checkbox path="globalsMerged" id="globalsMerged"/>
             </div>
