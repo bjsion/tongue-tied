@@ -85,7 +85,7 @@
                         <td>
                             <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN,ROLE_DEV">
                             <form:select path="translations[${index.index}].language" id="translation${index.index}.language" size="1">
-                                <form:option value=""><fmt:message key="please.select"/></form:option>
+                                <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
                                 <form:options items="${languages}" itemValue="id" itemLabel="name"/>
                             </form:select>
                             </security:authorize>
@@ -96,7 +96,7 @@
                         <td>
                             <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN,ROLE_DEV">
                             <form:select path="translations[${index.index}].country" id="translation${index.index}.country" size="1">
-                                <form:option value=""><fmt:message key="please.select"/></form:option>
+                                <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
                                 <form:options items="${countries}" itemValue="id" itemLabel="name"/>
                             </form:select>
                             </security:authorize>
@@ -107,7 +107,7 @@
                         <td>
                             <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN,ROLE_DEV">
                             <form:select path="translations[${index.index}].bundle" id="translation${index.index}.bundle" size="1">
-                                <form:option value=""><fmt:message key="please.select"/></form:option>
+                                <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
                                 <form:options items="${bundles}" itemValue="id" itemLabel="name"/>
                             </form:select>
                             </security:authorize>
