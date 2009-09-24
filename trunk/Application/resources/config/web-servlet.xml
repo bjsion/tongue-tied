@@ -196,6 +196,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="successView" value="forward:/keywords.htm"/>
         <property name="cancelView" value="forward:/export/"/>
         <property name="dataService" ref="dataService"/>
+        <property name="keywordService" ref="keywordService"/>
         <property name="validator" ref="importValidator"/>
     </bean>
 

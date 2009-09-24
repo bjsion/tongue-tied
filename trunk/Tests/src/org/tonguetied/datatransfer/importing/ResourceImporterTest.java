@@ -324,7 +324,92 @@ public final class ResourceImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link ResourceImporter#validate(String, List)}.
+     * {@link ResourceImporter#importData(ImportParameters)}.
+     */
+    public final void testImportDataWithPresetBundle() throws Exception
+    {
+        final String fileName = RESOURCE_NAME_VALID;
+        File file = new File(TEST_DATA_DIR, fileName + "."
+                + FormatType.resx.getDefaultFileExtension());
+        byte[] input = FileUtils.readFileToByteArray(file);
+        final Importer importer = ImporterFactory.getImporter(FormatType.resx,
+                keywordService, transferRepository);
+        TranslationState expectedState = TranslationState.VERIFIED;
+        ImportParameters parameters = new ImportParameters();
+        parameters.setData(input);
+        parameters.setTranslationState(expectedState);
+        parameters.setFileName(fileName);
+        parameters.setBundle(bundle2);
+        importer.importData(parameters);
+        Keyword actual = keywordService.getKeyword("importTestOne");
+        assertNotNull(actual);
+        assertNull(actual.getContext());
+        SortedSet<Translation> translations = actual.getTranslations();
+        assertEquals(1, translations.size());
+        Object[] actualTranslations = actual.getTranslations().toArray();
+        Translation actualTranslation = (Translation) actualTranslations[0];
+        assertEquals(defaultCountry, actualTranslation.getCountry());
+        assertEquals(defaultLanguage, actualTranslation.getLanguage());
+        assertEquals(bundle2, actualTranslation.getBundle());
+        assertEquals(expectedState, actualTranslation.getState());
+        assertEquals("plain text", actualTranslation.getValue());
+
+        actual = keywordService.getKeyword("importTestTwo");
+        assertNotNull(actual);
+        assertEquals("this is has an empty value", actual.getContext());
+        translations = actual.getTranslations();
+        assertEquals(1, translations.size());
+        actualTranslations = actual.getTranslations().toArray();
+        actualTranslation = (Translation) actualTranslations[0];
+        assertEquals(defaultCountry, actualTranslation.getCountry());
+        assertEquals(defaultLanguage, actualTranslation.getLanguage());
+        assertEquals(bundle2, actualTranslation.getBundle());
+        assertEquals(expectedState, actualTranslation.getState());
+        assertNull(actualTranslation.getValue());
+
+        actual = keywordService.getKeyword("importTestThree");
+        assertNotNull(actual);
+        assertEquals("updates an existing key", actual.getContext());
+        translations = actual.getTranslations();
+        assertEquals(2, translations.size());
+        actualTranslations = actual.getTranslations().toArray();
+        actualTranslation = (Translation) actualTranslations[1];
+        assertEquals(defaultCountry, actualTranslation.getCountry());
+        assertEquals(defaultLanguage, actualTranslation.getLanguage());
+        assertEquals(bundle2, actualTranslation.getBundle());
+        assertEquals(expectedState, actualTranslation.getState());
+        assertEquals("new value 3", actualTranslation.getValue());
+
+        actual = keywordService.getKeyword("importTestFour");
+        assertNotNull(actual);
+        assertNull(actual.getContext());
+        translations = actual.getTranslations();
+        assertEquals(2, translations.size());
+        actualTranslations = actual.getTranslations().toArray();
+        actualTranslation = (Translation) actualTranslations[1];
+        assertEquals(defaultCountry, actualTranslation.getCountry());
+        assertEquals(defaultLanguage, actualTranslation.getLanguage());
+        assertEquals(bundle2, actualTranslation.getBundle());
+        assertEquals(expectedState, actualTranslation.getState());
+        assertNull(actualTranslation.getValue());
+
+        actual = keywordService.getKeyword("importTestFive");
+        assertNotNull(actual);
+        assertEquals("existing", actual.getContext());
+        translations = actual.getTranslations();
+        assertEquals(2, translations.size());
+        actualTranslations = actual.getTranslations().toArray();
+        actualTranslation = (Translation) actualTranslations[0];
+        assertEquals(defaultCountry, actualTranslation.getCountry());
+        assertEquals(defaultLanguage, actualTranslation.getLanguage());
+        assertEquals(bundle2, actualTranslation.getBundle());
+        assertEquals(expectedState, actualTranslation.getState());
+        assertEquals("<data> ! ?", actualTranslation.getValue());
+    }
+
+    /**
+     * Test method for
+     * {@link ResourceImporter#validate(String, Bundle, List)}.
      */
     public final void testValidateWithIllegalCountry() throws Exception
     {
@@ -332,7 +417,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.resx,
                 keywordService, transferRepository);
-        importer.validate(fileName, errorCodes);
+        importer.validate(fileName, null, errorCodes);
         assertEquals(2, errorCodes.size());
         assertTrue(errorCodes.contains(ImportErrorCode.illegalCountry));
         assertTrue(errorCodes.contains(ImportErrorCode.unknownCountry));
@@ -340,7 +425,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link ResourceImporter#validate(String, List)}.
+     * {@link ResourceImporter#validate(String, Bundle, List)}.
      */
     public final void testValidateWithUnknownCountry() throws Exception
     {
@@ -348,14 +433,14 @@ public final class ResourceImporterTest extends AbstractServiceTest
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.resx,
                 keywordService, transferRepository);
-        importer.validate(fileName, errorCodes);
+        importer.validate(fileName, null, errorCodes);
         assertEquals(1, errorCodes.size());
         assertEquals(ImportErrorCode.unknownCountry, errorCodes.get(0));
     }
 
     /**
      * Test method for
-     * {@link ResourceImporter#validate(String, List)}.
+     * {@link ResourceImporter#validate(String, Bundle, List)}.
      */
     public final void testValidateWithKnownCountry() throws Exception
     {
@@ -363,7 +448,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final ResourceImporter importer = (ResourceImporter) ImporterFactory
                 .getImporter(FormatType.resx, keywordService, transferRepository);
-        importer.validate(fileName, errorCodes);
+        importer.validate(fileName, null, errorCodes);
         assertTrue(errorCodes.isEmpty());
         assertEquals(bundle1, importer.getBundle());
         assertEquals(israel, importer.getCountry());
@@ -372,7 +457,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link ResourceImporter#validate(String, List)}.
+     * {@link ResourceImporter#validate(String, Bundle, List)}.
      */
     public final void testValidateWithIllegalLanguage() throws Exception
     {
@@ -380,7 +465,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.resx,
                 keywordService, transferRepository);
-        importer.validate(fileName, errorCodes);
+        importer.validate(fileName, null, errorCodes);
         assertEquals(2, errorCodes.size());
         assertTrue(errorCodes.contains(ImportErrorCode.illegalLanguage));
         assertTrue(errorCodes.contains(ImportErrorCode.unknownLanguage));
@@ -388,7 +473,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link ResourceImporter#validate(String, List)}.
+     * {@link ResourceImporter#validate(String, Bundle, List)}.
      */
     public final void testValidateWithUnknownLanguage() throws Exception
     {
@@ -396,14 +481,14 @@ public final class ResourceImporterTest extends AbstractServiceTest
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.resx,
                 keywordService, transferRepository);
-        importer.validate(fileName, errorCodes);
+        importer.validate(fileName, null, errorCodes);
         assertEquals(1, errorCodes.size());
         assertEquals(ImportErrorCode.unknownLanguage, errorCodes.get(0));
     }
 
     /**
      * Test method for
-     * {@link ResourceImporter#validate(String, List)}.
+     * {@link ResourceImporter#validate(String, Bundle, List)}.
      */
     public final void testValidateWithKnownLanguage() throws Exception
     {
@@ -411,7 +496,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final ResourceImporter importer = (ResourceImporter) ImporterFactory
                 .getImporter(FormatType.resx, keywordService, transferRepository);
-        importer.validate(fileName, errorCodes);
+        importer.validate(fileName, null, errorCodes);
         assertTrue(errorCodes.isEmpty());
         assertEquals(bundle1, importer.getBundle());
         assertEquals(defaultCountry, importer.getCountry());
@@ -420,7 +505,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link ResourceImporter#validate(String, List)}.
+     * {@link ResourceImporter#validate(String, Bundle, List)}.
      */
     public final void testValidateWithSimplifiedChinese() throws Exception
     {
@@ -428,7 +513,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final ResourceImporter importer = (ResourceImporter) ImporterFactory
                 .getImporter(FormatType.resx, keywordService, transferRepository);
-        importer.validate(fileName, errorCodes);
+        importer.validate(fileName, null, errorCodes);
         assertTrue(errorCodes.isEmpty());
         assertEquals(bundle1, importer.getBundle());
         assertEquals(defaultCountry, importer.getCountry());
@@ -437,7 +522,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link ResourceImporter#validate(String, List)}.
+     * {@link ResourceImporter#validate(String, Bundle, List)}.
      */
     public final void testValidateWithTraditionalChinese() throws Exception
     {
@@ -445,7 +530,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final ResourceImporter importer = (ResourceImporter) ImporterFactory
                 .getImporter(FormatType.resx, keywordService, transferRepository);
-        importer.validate(fileName, errorCodes);
+        importer.validate(fileName, null, errorCodes);
         assertTrue(errorCodes.isEmpty());
         assertEquals(bundle1, importer.getBundle());
         assertEquals(defaultCountry, importer.getCountry());
@@ -454,7 +539,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link ResourceImporter#validate(String, List)}.
+     * {@link ResourceImporter#validate(String, Bundle, List)}.
      */
     public final void testValidateWithUnknownBundle() throws Exception
     {
@@ -462,21 +547,21 @@ public final class ResourceImporterTest extends AbstractServiceTest
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.resx,
                 keywordService, transferRepository);
-        importer.validate(fileName, errorCodes);
+        importer.validate(fileName, null, errorCodes);
         assertEquals(1, errorCodes.size());
         assertEquals(ImportErrorCode.unknownBundle, errorCodes.get(0));
     }
 
     /**
      * Test method for
-     * {@link ResourceImporter#validate(String, List)}.
+     * {@link ResourceImporter#validate(String, Bundle, List)}.
      */
     public final void testValidateWithKnownBundle() throws Exception
     {
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final ResourceImporter importer = (ResourceImporter) ImporterFactory
                 .getImporter(FormatType.resx, keywordService, transferRepository);
-        importer.validate(RESOURCE_NAME_VALID, errorCodes);
+        importer.validate(RESOURCE_NAME_VALID, null, errorCodes);
         assertTrue(errorCodes.isEmpty());
         assertEquals(bundle1, importer.getBundle());
         assertEquals(defaultCountry, importer.getCountry());
@@ -485,7 +570,26 @@ public final class ResourceImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link ResourceImporter#validate(String, List)}.
+     * {@link PropertiesImporter#validate(String, Bundle, List)}.
+     */
+    public final void testValidateWithPresetBundle() throws Exception
+    {
+        List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
+        final ResourceImporter importer = (ResourceImporter) ImporterFactory
+            .getImporter(FormatType.resx, keywordService, transferRepository);
+        Bundle bundle = new Bundle();
+        bundle.setName("temp");
+        
+        importer.validate(RESOURCE_NAME_VALID, bundle, errorCodes);
+        assertTrue(errorCodes.isEmpty());
+        assertEquals(bundle, importer.getBundle());
+        assertEquals(defaultCountry, importer.getCountry());
+        assertEquals(defaultLanguage, importer.getLanguage());
+    }
+
+    /**
+     * Test method for
+     * {@link ResourceImporter#validate(String, Bundle, List)}.
      */
     public final void testValidateWithUnknownCountryKnownLanguage()
             throws Exception
@@ -494,14 +598,14 @@ public final class ResourceImporterTest extends AbstractServiceTest
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.resx,
                 keywordService, transferRepository);
-        importer.validate(fileName, errorCodes);
+        importer.validate(fileName, null, errorCodes);
         assertEquals(1, errorCodes.size());
         assertEquals(ImportErrorCode.unknownCountry, errorCodes.get(0));
     }
 
     /**
      * Test method for
-     * {@link ResourceImporter#validate(String, List)}.
+     * {@link ResourceImporter#validate(String, Bundle, List)}.
      */
     public final void testValidateWithIllegalCountryKnownLanguage()
             throws Exception
@@ -510,14 +614,14 @@ public final class ResourceImporterTest extends AbstractServiceTest
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.resx,
                 keywordService, transferRepository);
-        importer.validate(fileName, errorCodes);
+        importer.validate(fileName, null, errorCodes);
         assertEquals(1, errorCodes.size());
         assertEquals(ImportErrorCode.unknownCountry, errorCodes.get(0));
     }
 
     /**
      * Test method for
-     * {@link ResourceImporter#validate(String, List)}.
+     * {@link ResourceImporter#validate(String, Bundle, List)}.
      */
     public final void testValidateWithKnownCountryUnknownLanguage()
             throws Exception
@@ -526,14 +630,14 @@ public final class ResourceImporterTest extends AbstractServiceTest
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.resx,
                 keywordService, transferRepository);
-        importer.validate(fileName, errorCodes);
+        importer.validate(fileName, null, errorCodes);
         assertEquals(1, errorCodes.size());
         assertEquals(ImportErrorCode.unknownLanguage, errorCodes.get(0));
     }
 
     /**
      * Test method for
-     * {@link ResourceImporter#validate(String, List)}.
+     * {@link ResourceImporter#validate(String, Bundle, List)}.
      */
     public final void testValidateWithKnownCountryIllegalLanguage()
             throws Exception
@@ -542,7 +646,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(FormatType.resx,
                 keywordService, transferRepository);
-        importer.validate(fileName, errorCodes);
+        importer.validate(fileName, null, errorCodes);
         assertEquals(2, errorCodes.size());
         assertTrue(errorCodes.contains(ImportErrorCode.unknownLanguage));
         assertTrue(errorCodes.contains(ImportErrorCode.illegalLanguage));
@@ -550,7 +654,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link ResourceImporter#validate(String, List)}.
+     * {@link ResourceImporter#validate(String, Bundle, List)}.
      */
     public final void testValidateWithKnownCountryKnownLanguage()
             throws Exception
@@ -559,7 +663,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final ResourceImporter importer = (ResourceImporter) ImporterFactory
                 .getImporter(FormatType.resx, keywordService, transferRepository);
-        importer.validate(fileName, errorCodes);
+        importer.validate(fileName, null, errorCodes);
         assertTrue(errorCodes.isEmpty());
         assertEquals(bundle1, importer.getBundle());
         assertEquals(israel, importer.getCountry());
@@ -568,7 +672,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link ResourceImporter#validate(String, List)}.
+     * {@link ResourceImporter#validate(String, Bundle, List)}.
      */
     public final void testValidateWithInvalidFilenameFormat() throws Exception
     {
@@ -576,7 +680,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         List<ImportErrorCode> errorCodes = new ArrayList<ImportErrorCode>();
         final Importer importer = ImporterFactory.getImporter(
                 FormatType.resx, keywordService, transferRepository);
-        importer.validate(fileName, errorCodes);
+        importer.validate(fileName, null, errorCodes);
         assertEquals(3, errorCodes.size());
         assertTrue(errorCodes.contains(ImportErrorCode.unknownCountry));
         assertTrue(errorCodes.contains(ImportErrorCode.unknownLanguage));
@@ -584,7 +688,7 @@ public final class ResourceImporterTest extends AbstractServiceTest
         
         fileName = "ResourceImporterTest.ar-YE-DD";
         errorCodes = new ArrayList<ImportErrorCode>();
-        importer.validate(fileName, errorCodes);
+        importer.validate(fileName, null, errorCodes);
         assertEquals(3, errorCodes.size());
         assertTrue(errorCodes.contains(ImportErrorCode.unknownCountry));
         assertTrue(errorCodes.contains(ImportErrorCode.unknownLanguage));

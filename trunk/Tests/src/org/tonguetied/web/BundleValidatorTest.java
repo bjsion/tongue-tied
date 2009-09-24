@@ -55,6 +55,8 @@ public class BundleValidatorTest {
                 {null, "", null, "resource", false, false, FIELD_NAME},
                 {null, "   ", null, "resource", true, true, FIELD_NAME},
                 {null, "test", "description", "resource", true, false, FIELD_NAME},
+                {null, "test", "description", "\\u00f9\\u00f9\\u00e9\\u00e8\\u00e7\\u00e0", true, false, FIELD_NAME},
+                {null, "test", "description", "/location\\resource/test05-9.1_a", true, false, FIELD_NAME},
                 {1257L, "test", "descriptiond", "test2", true, false, FIELD_NAME},
                 {null, "new", "description", null, true, false, FIELD_RESOURCE_NAME},
                 {null, "new", "description", "", true, false, FIELD_RESOURCE_NAME},
@@ -63,7 +65,9 @@ public class BundleValidatorTest {
                 {1257L, "test2", "description", "test", true, false, FIELD_RESOURCE_NAME},
                 {null, "new", "description", "has whitespace", true, false, FIELD_RESOURCE_NAME},
 //              {"new", "description", "has\nwhitespace", true, false, FIELD_RESOURCE_NAME},
-                {null, "new", "description", "has\twhitespace", true, false, FIELD_RESOURCE_NAME}
+                {null, "new", "description", "has\twhitespace", true, false, FIELD_RESOURCE_NAME},
+                {null, "new", "description", "C:\\location\\resource", true, false, FIELD_RESOURCE_NAME},
+                {null, "new", "description", "some@invalid?char", true, false, FIELD_RESOURCE_NAME}
                 });
     }
     

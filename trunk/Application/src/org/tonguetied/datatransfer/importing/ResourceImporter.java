@@ -136,8 +136,8 @@ public class ResourceImporter extends AbstractSingleResourceImporter
      * {@link Language}.
      */
     @Override
-    protected void validate(final String fileName, List<ImportErrorCode> errorCodes)
-            throws ImportException
+    protected void validate(final String fileName, final Bundle bundle, 
+            List<ImportErrorCode> errorCodes) throws ImportException
     {
         String[] tokens = fileName.split("\\.|-");
         
@@ -197,10 +197,16 @@ public class ResourceImporter extends AbstractSingleResourceImporter
             logger.debug("bundle name = " + tokens[0]);
         }
 
-
-        setBundle(getKeywordService().getBundleByResourceName(tokens[0]));
-        if (getBundle() == null)
-            errorCodes.add(ImportErrorCode.unknownBundle);
+        if (bundle == null)
+        {
+            setBundle(getKeywordService().getBundleByResourceName(tokens[0]));
+            if (getBundle() == null)
+                errorCodes.add(ImportErrorCode.unknownBundle);
+        }
+        else
+        {
+            setBundle(bundle);
+        }
         
         this.setCountry(getKeywordService().getCountry(countryCode));
         if (getCountry() == null)

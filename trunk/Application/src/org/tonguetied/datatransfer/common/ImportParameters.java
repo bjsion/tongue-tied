@@ -17,6 +17,7 @@ package org.tonguetied.datatransfer.common;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Translation;
 import org.tonguetied.keywordmanagement.Translation.TranslationState;
 
@@ -34,6 +35,7 @@ public class ImportParameters
     private byte[] data;
     private FormatType formatType;
     private TranslationState translationState;
+    private Bundle bundle;
 
     /**
      * @return the fileName
@@ -106,6 +108,23 @@ public class ImportParameters
     public void setTranslationState(final TranslationState translationState)
     {
         this.translationState = translationState;
+    }
+
+    /**
+     * @return the {@link Bundle} used to map this file to for Java property 
+     * and .Net resource bundles.
+     */
+    public Bundle getBundle()
+    {
+        return bundle;
+    }
+
+    /**
+     * @param bundle the {@link Bundle} to set for resource matching to a bundle
+     */
+    public void setBundle(final Bundle bundle)
+    {
+        this.bundle = bundle;
     }
 
     @Override
