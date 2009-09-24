@@ -53,11 +53,16 @@ public class UserSessionInitializer implements HttpSessionListener
     }
 
     /**
-     * Currently does nothing.
+     * Clean up user preferences on session destroy.
      * 
-     * the notification event
+     * @param event the notification event
      */
     public void sessionDestroyed(HttpSessionEvent event)
     {
+        if (logger.isDebugEnabled())
+            logger.debug("removing user session attributes");
+        HttpSession session = event.getSession();
+        session.removeAttribute(SHOW_ALL_KEYWORDS);
+        session.removeAttribute(SHOW_ALL_USERS);
     }
 }
