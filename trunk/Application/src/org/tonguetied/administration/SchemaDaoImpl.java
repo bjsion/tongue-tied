@@ -16,6 +16,12 @@
 package org.tonguetied.administration;
 
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.HibernateException;
+import org.hibernate.dialect.Dialect;
+import org.hibernate.dialect.DialectFactory;
+import org.hibernate.dialect.HSQLDialect;
+import org.hibernate.dialect.MySQLDialect;
+import org.hibernate.dialect.PostgreSQLDialect;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
@@ -56,4 +62,68 @@ public class SchemaDaoImpl extends JdbcDaoSupport implements SchemaDao
                 logger.info("create schema: " + schema);
         }
     }
+
+    public String getSchemaFileName(final String dialectStr)
+    {
+        if (StringUtils.isBlank(dialectStr))
+            throw new IllegalArgumentException("dialect cannot be null or empty");
+        
+        if (logger.isDebugEnabled())
+            logger.debug("retrieving schema for dialect: " + dialectStr);
+        
+        String schemaFile = null;
+        final Dialect dialect;
+        try
+        {
+            dialect = DialectFactory.buildDialect(dialectStr);
+        }
+        catch (HibernateException he)
+        {
+            throw new RuntimeException(he);
+        }
+        
+        if (dialect instanceof HSQLDialect)
+        {
+            schemaFile = "hsql-schema.sql";
+        }
+        else if (dialect instanceof MySQLDialect)
+        {
+            schemaFile = "mysql-schema.sql";
+        }
+        else if (dialect instanceof PostgreSQLDialect)
+        {
+            schemaFile = "postgresql-schema.sql";
+        }
+        else
+        {
+            logger.warn("dialect " + dialectStr + " is not supported");
+        }
+        
+        return schemaFile;
+    }
+//  /**
+//  * 
+//  * @param dialectStr the string name of the SQL dialect
+//  * @return
+//  */
+// private String getUpdateSchema(final String dialectStr, final String version)
+// {
+//     String schemaFile = null;
+//     final Dialect dialect = DialectFactory.buildDialect(dialectStr);
+//     if (dialect instanceof HSQLDialect)
+//     {
+//         schemaFile = DIR_SQL_UPDATE+"/"+version+"/hsql-update.sql";
+//     }
+//     else if (dialect instanceof MySQLDialect)
+//     {
+//         schemaFile = DIR_SQL_UPDATE+"/"+version+"/mysql-update.sql";
+//     }
+//     else if (dialect instanceof PostgreSQLDialect)
+//     {
+//         schemaFile = DIR_SQL_UPDATE+"/"+version+"/postgresql-update.sql";
+//     }
+//     
+//     return schemaFile;
+// }
+
 }

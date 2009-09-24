@@ -49,6 +49,15 @@ public interface AdministrationService
      * @param schema the statements used to create the database schema
      */
     void createDatabase(final String[] schema);
+
+    /**
+     * Evaluate the dialect string, and return the location of the appropriate 
+     * db schema file.
+     * 
+     * @param dialectStr the string to evaluate
+     * @return the db schema file name to use
+     */
+    String getSchemaFileName(final String dialectStr);
     
     /**
      * Persist a {@link ServerData} object to permanent storage.

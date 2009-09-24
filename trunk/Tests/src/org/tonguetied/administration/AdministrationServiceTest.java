@@ -182,6 +182,56 @@ public class AdministrationServiceTest extends AbstractServiceTest
         administrationService.createDatabase(new String[]{});
     }
 
+    @Test(expected=IllegalArgumentException.class)
+    @ExpectedException(IllegalArgumentException.class)
+    public final void testGetSchemaFileNameWithNullString()
+    {
+        administrationService.getSchemaFileName(null);
+    }
+    
+    @Test(expected=IllegalArgumentException.class)
+    @ExpectedException(IllegalArgumentException.class)
+    public final void testGetSchemaFileNameWithEmptyString()
+    {
+        administrationService.getSchemaFileName("");
+    }
+    
+    @Test
+    @ExpectedException(RuntimeException.class)
+    public final void testGetSchemaFileNameWithInvalidString()
+    {
+        final String schemaName = administrationService.getSchemaFileName("invalid");
+        assertNull(schemaName);
+    }
+    
+    @Test
+    public final void testGetSchemaFileNameForPostgreSQL()
+    {
+        final String schemaName = administrationService.getSchemaFileName("org.hibernate.dialect.PostgreSQLDialect");
+        assertEquals("postgresql-schema.sql", schemaName);
+    }
+    
+    @Test
+    public final void testGetSchemaFileNameForMySQL()
+    {
+        final String schemaName = administrationService.getSchemaFileName("org.hibernate.dialect.MySQLDialect");
+        assertEquals("mysql-schema.sql", schemaName);
+    }
+    
+    @Test
+    public final void testGetSchemaFileNameForHSQL()
+    {
+        final String schemaName = administrationService.getSchemaFileName("org.hibernate.dialect.HSQLDialect");
+        assertEquals("hsql-schema.sql", schemaName);
+    }
+    
+    @Test
+    public final void testGetSchemaFileNameForValidDialectButNotSupported()
+    {
+        final String schemaName = administrationService.getSchemaFileName("org.hibernate.dialect.OracleDialect");
+        assertNull(schemaName);
+    }
+    
     /**
      * @throws IOException
      */

@@ -36,11 +36,6 @@ import javax.servlet.ServletContextListener;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-import org.hibernate.dialect.Dialect;
-import org.hibernate.dialect.DialectFactory;
-import org.hibernate.dialect.HSQLDialect;
-import org.hibernate.dialect.MySQLDialect;
-import org.hibernate.dialect.PostgreSQLDialect;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.tonguetied.administration.AdministrationService;
@@ -120,7 +115,8 @@ public class ServletContextInitializer implements ServletContextListener
             if (logger.isDebugEnabled())
                 logger.debug("attempting to create database");
             
-            final String[] schemas = loadSchemas(event.getServletContext(), dialect);
+            final String[] schemas = loadSchemas(
+                    event.getServletContext(), dialect, administrationService);
             administrationService.createDatabase(schemas);
             serverData = createServerData(event.getServletContext());
             if (serverData != null)
@@ -195,19 +191,23 @@ public class ServletContextInitializer implements ServletContextListener
     }
 
     /**
-     * Load the sql schema files used to create the database.
+     * Load the SQL schema files used to create the database.
      * 
      * @param servletContext
-     * @param dialect the sql dialect
-     * @return a string representation of each sql file
+     * @param dialect the SQL dialect
+     * @param administrationService the administration service
+     * @return a string representation of each SQL file
      */
-    private String[] loadSchemas(ServletContext servletContext, final String dialect)
+    private String[] loadSchemas(ServletContext servletContext,
+            final String dialect, AdministrationService administrationService)
     {
         InputStream is = null;
         try
         {
             List<String> schemas = new ArrayList<String>();
-            is = servletContext.getResourceAsStream(getSchema(dialect));
+            final String schemaFile = 
+                DIR_SQL+"/" + administrationService.getSchemaFileName(dialect);
+            is = servletContext.getResourceAsStream(schemaFile);
             schemas.add(IOUtils.toString(is));
             is = servletContext.getResourceAsStream(DIR_SQL+"/initial-data.sql");
             schemas.add(IOUtils.toString(is));
@@ -224,61 +224,6 @@ public class ServletContextInitializer implements ServletContextListener
         }
     }
     
-//    /**
-//     * Load the sql schema files used to update the database.
-//     * 
-//     * @param servletContext
-//     * @param dialect the sql dialect
-//     * @return a string representation of each sql file
-//     */
-//    private String[] loadSchemas(ServletContext servletContext, final String dialect, final String version)
-//    {
-//        InputStream is = null;
-//        try
-//        {
-//            List<String> schemas = new ArrayList<String>();
-//            is = servletContext.getResourceAsStream(getUpdateSchema(dialect, version));
-//            schemas.add(IOUtils.toString(is));
-//            return schemas.toArray(new String[schemas.size()]);
-//        }
-//        catch (IOException ioe)
-//        {
-//            logger.error("failed to load file", ioe);
-//            throw new IllegalStateException("failed to load schemas", ioe);
-//        }
-//        finally
-//        {
-//            IOUtils.closeQuietly(is);
-//        }
-//    }
-    
-    /**
-     * 
-     * @param dialectStr the string name of the SQL dialect
-     * @return
-     * TODO this seems like the wrong place for this. There really should not 
-     * be a dependency on Hibernate here
-     */
-    private String getSchema(final String dialectStr)
-    {
-        String schemaFile = null;
-        final Dialect dialect = DialectFactory.buildDialect(dialectStr);
-        if (dialect instanceof HSQLDialect)
-        {
-            schemaFile = DIR_SQL+"/hsql-schema.sql";
-        }
-        else if (dialect instanceof MySQLDialect)
-        {
-            schemaFile = DIR_SQL+"/mysql-schema.sql";
-        }
-        else if (dialect instanceof PostgreSQLDialect)
-        {
-            schemaFile = DIR_SQL+"/postgresql-schema.sql";
-        }
-        
-        return schemaFile;
-    }
-
 //    /**
 //     * 
 //     * @param dialectStr the string name of the SQL dialect
