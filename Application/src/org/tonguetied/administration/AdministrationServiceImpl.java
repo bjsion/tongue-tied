@@ -48,6 +48,11 @@ public class AdministrationServiceImpl implements AdministrationService
         schemaDao.createDatabase(schema);
     }
 
+    public String getSchemaFileName(String dialectStr)
+    {
+        return schemaDao.getSchemaFileName(dialectStr);
+    }
+
     /**
      * Assign the schemaDao.
      *

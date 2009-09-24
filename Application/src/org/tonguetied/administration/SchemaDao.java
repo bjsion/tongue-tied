@@ -32,4 +32,13 @@ public interface SchemaDao
      * @throws IllegalArgumentException if the <code>schema</code> is null
      */
     void createDatabase(final String[] schema) throws IllegalArgumentException;
+    
+    /**
+     * Evaluate the dialect string, and return the location of the appropriate 
+     * db schema file.
+     * 
+     * @param dialectStr the string to evaluate
+     * @return the db schema file name to use
+     */
+    String getSchemaFileName(final String dialectStr);
 }
