@@ -1,5 +1,5 @@
 #summary Instructions on how to upgrade to version 1.1.0
-#labels Featured,Phase-Deploy
+#labels Deprecated,Phase-Deploy
 
 = Introduction =
 
