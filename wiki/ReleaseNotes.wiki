@@ -1,6 +1,17 @@
 #summary Release Note.
 #labels Phase-Deploy,Featured
 
+= 1.3.0 =
+ * Minor Cosmetic UI changes
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=47 Issue 47] Cache queries results
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=68 Issue 68] Keywords and strings of bundle "All" not included during export of a specific bundle.
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=70 Issue 70] User search results are not remembered during session
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=78 Issue 78] Find users returns users in unordered
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=80 Issue 80] Use a third party connection pool
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=81 Issue 81] Allow imports of bundles with the same name but different locations
+
+
+
 = 1.2.1 =
  * Minor Cosmetic UI changes
  * Improvements to caching
