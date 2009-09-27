@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Use "ant -p" to see a description of tasks -->
+<project name="tonguetied" xmlns:ivy="antlib:org.apache.ivy.ant" default="build" basedir=".">
+
+    <property environment="env"/>
+
+    <property name="app.root" value="${basedir}/../"/>
+
+    <property file="${app.root}/BuildInfra/global.properties"/>
+
+    <property name="module.jarfile" value="${ant.project.name}.jar"/>
+    <property name="module.src.jarfile" value="${ant.project.name}-src.jar"/>
+    <property name="module.warfile" value="${ant.project.name}.war"/>
+
+    <property name="src.dir" value="${application.home}/src"/>
+    <property name="web.dir" value="${application.home}/web"/>
+    <property name="web.images.dir" value="${web.dir}/images"/>
+    <property name="web.css.dir" value="${web.dir}/css"/>
+    <property name="web.scripts.dir" value="${web.dir}/scripts"/>
+    <property name="web.jsp.dir" value="${web.dir}/jsp"/>
+    <property name="web.resources.dir" value="${web.dir}/resources"/>
+    <property name="resources.dir" value="${application.home}/resources"/>
+    <property name="config.dir" value="${resources.dir}/config"/>
+    <property name="shell.scripts.dir" value="${resources.dir}/shellScripts"/>
+    <property name="sql.dir" value="${resources.dir}/sql"/>
+    <property name="templates.dir" value="${resources.dir}/templates"/>
+    <property name="beandoc.propsfile" value="${config.dir}/beandoc.properties"/>
+    <property name="findbugs.home" value="${3rdparty.home}/findbugs/1.3.9"/>
+    <property name="findbugs.xml.file" value="${ant.project.name}-bug-report.xml"/>
+    <property name="hibernate.cfg.xml" value="${config.dir}/hibernate.cfg.xml"/>
+    <property name="web.server.root" value="${server.home}/tonguetied/webapp"/>
+    <property name="web.server.css" value="${web.server.root}/css"/>
+    <property name="web.server.images" value="${web.server.root}/images"/>
+    <property name="web.server.scripts" value="${web.server.root}/scripts"/>
+    <property name="web.server.webinf" value="${web.server.root}/WEB-INF"/>
+    <property name="server.jar" value="${application.short.name}Server.jar"/>
+    <property name="jdbc.props.file" value="${config.dir}/jdbc.${db.dialect}.properties"/>
+
+    <property file="${jdbc.props.file}"/>
+   
+    <!-- temporary directories -->
+    <property name="classes.dir" value="${application.home}/classes"/>
+    <property name="build.dir" value="${application.home}/builds"/>
+    <property name="docs.dir" value="${application.home}/docs"/>
+    <property name="generated.dir" value="${application.home}/generated"/>
+    <property name="generated.sql.dir" value="${generated.dir}/sql"/>
+    <property name="docs.api.dir" value="${docs.dir}/api"/>
+    <property name="docs.beandoc.dir" value="${docs.dir}/beandoc"/>
+    <property name="docs.hibernate.dir" value="${docs.dir}/hibernate"/>
+    <property name="docs.schema.dir" value="${docs.dir}/schema"/>
+    <property name="docs.findbugs.dir" value="${docs.dir}/findbugs"/>
+    <property name="hibernate.propsfile" value="hibernate.properties"/>
+    <property name="schema.file" value="${db.dialect}-schema.sql"/>
+    <property name="mapping.files.timestamp" value="${generated.dir}/mapping.files.timestamp"/>
+    <property name="schema.file.timestamp" value="${generated.dir}/schema.file.timestamp"/>
+    <property name="build.details.file" value="${generated.dir}/buildNumber.properties"/>
+
+
+    <property name="build.debug" value="on"/>
+
+    <path id="common.classpath">
+        <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-logging.jar"/>
+    </path>
+        
+    <path id="hsql.classpath">
+        <pathelement location="${3rdparty.home}/HSQLDB/1.8.0.9/hsqldb.jar"/>
+    </path>
+
+    <path id="hibernate.classpath">
+        <pathelement location="${3rdparty.home}/Hibernate/3.3.1/hibernate3.jar"/>
+        <pathelement location="${3rdparty.home}/ehcache/1.4.1/ehcache.jar"/>
+        <pathelement location="${3rdparty.home}/J2ee/jta.jar"/>
+        <pathelement location="${3rdparty.home}/Hibernate/annotations/3.4.0/ejb3-persistence.jar"/>
+        <pathelement location="${3rdparty.home}/Hibernate/annotations/3.4.0/hibernate-annotations.jar"/>
+        <pathelement location="${3rdparty.home}/Hibernate/annotations/3.4.0/hibernate-commons-annotations.jar"/>
+        <pathelement location="${3rdparty.home}/slf4j/1.5.6/slf4j-api.jar"/>
+        <pathelement location="${3rdparty.home}/slf4j/1.5.6/slf4j-simple.jar"/>
+    </path>
+
+    <path id="compile.classpath">
+        <path refid="hibernate.classpath"/>
+        <path refid="common.classpath"/>
+        <pathelement location="${3rdparty.home}/Spring/2.5.4/spring.jar"/>
+        <pathelement location="${3rdparty.home}/Spring/2.5.4/spring-webmvc.jar"/>
+        <pathelement location="${3rdparty.home}/Jetty/6.1.9/servlet-api-2.5.jar"/>
+        <pathelement location="${3rdparty.home}/Jetty/6.1.9/jsp-2.1/jsp-2.1.jar"/>
+        <pathelement location="${3rdparty.home}/Log4j/1.2.15/log4j.jar"/>
+        <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-lang-2.4.jar"/>
+        <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-collections-3.2.1.jar"/>
+        <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-io-1.4.jar"/>
+        <path refid="fmpp.classpath"/>
+        <pathelement location="${3rdparty.home}/POI/3.0.2/poi.jar"/>
+        <pathelement location="${3rdparty.home}/Spring/spring-security/2.0.1/spring-security-core.jar"/>
+        <pathelement location="${3rdparty.home}/opencsv/1.8/opencsv.jar"/>
+        <pathelement location="${3rdparty.home}/displaytag/1.2/displaytag.jar"/>
+    </path>
+
+    <path id="beandoc-classpath">
+        <path refid="common.classpath"/>
+        <pathelement location="${3rdparty.home}/Spring/beandoc/0.8.1/spring-beandoc.jar" />
+        <pathelement location="${3rdparty.home}/Spring/2.5.4/spring.jar"/>
+        <pathelement location="${3rdparty.home}/jdom/1.1/jdom.jar"/>
+    </path>
+
+    <path id="hibernate.tools.classpath">
+        <path refid="common.classpath"/>
+        <path refid="hsql.classpath"/>
+        <path refid="hibernate.classpath"/>
+        <pathelement location="${3rdparty.home}/MySQL/5.1.6/mysql-connector-java.jar"/>
+        <pathelement location="${metadata.home}/builds/metadata.jar"/>
+        <pathelement location="${3rdparty.home}/Hibernate/tools/3.2.4.beta1/hibernate-tools.jar"/>
+        <pathelement location="${3rdparty.home}/FreeMarker/2.3.13/freemarker.jar"/>
+        <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-collections-3.2.1.jar"/>
+        <pathelement location="${3rdparty.home}/DOM4J/1.6.1/dom4j.jar"/>
+        <pathelement location="${3rdparty.home}/cglib/2.2/cglib-nodep-2.2.jar"/>
+        <pathelement location="${3rdparty.home}/Spring/spring-security/2.0.1/spring-security-core.jar"/>
+    </path>
+
+    <path id="fmpp.classpath">
+        <pathelement location="${3rdparty.home}/FreeMarker/FMPP/0.9.13/fmpp.jar"/>
+        <pathelement location="${3rdparty.home}/FreeMarker/2.3.13/freemarker.jar"/>
+        <pathelement location="${3rdparty.home}/bsh/2.0b4/bsh.jar"/>
+        <pathelement location="${3rdparty.home}/oro/2.0.8/jakarta-oro.jar"/>
+        <path refid="hsql.classpath"/>
+    </path>
+
+    <taskdef name="hibernatetool"
+             classname="org.hibernate.tool.ant.HibernateToolTask">
+        <classpath refid="hibernate.tools.classpath"/>
+    </taskdef>
+
+    <taskdef name="beandoc" 
+             classname="org.springframework.beandoc.client.AntTask"
+             classpathref="beandoc-classpath"/>
+
+    <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
+        <classpath path="${findbugs.home}/lib/findbugs-ant.jar"/>
+    </taskdef>
+
+    <target name="resolve" description="Retrieve dependencies with ivy">
+        <!--property name="ivy.default.ivy.user.dir" value="${dependencies.home}"/-->
+        <echo>${ivy.conf.dir}</echo>
+        <ivy:settings file="${application.home}/ivysettings.xml"/>
+        <ivy:resolve />
+        <!--ivy:retrieve/-->
+    </target>
+
+    <target name="init">
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${build.dir}/war"/>
+        <mkdir dir="${docs.dir}"/>
+        <mkdir dir="${docs.beandoc.dir}"/>
+        <mkdir dir="${docs.findbugs.dir}"/>
+        <mkdir dir="${generated.dir}"/>
+        <mkdir dir="${generated.sql.dir}"/>
+    </target>
+
+    <target name="clean.classes" description="Remove all compiled classes">
+        <echo message="Cleaning ${ant.project.name} ..."/>
+        <delete dir="${classes.dir}" failonerror="true" deleteonexit="true"/>
+    </target>
+
+    <target name="clean" depends="clean.classes" description="Remove all generated files, including but not limited to classes, log files and jar files">
+        <delete dir="${build.dir}" failonerror="true" deleteonexit="true"/>
+        <delete dir="${docs.dir}" failonerror="true" deleteonexit="true"/>
+        <delete dir="${generated.dir}" failonerror="true" deleteonexit="true"/>
+    </target>
+
+    <target name="compile" depends="init" description="Generate all the class files for this module">
+        <echo message="Compiling module ${ant.project.name} ..."/>
+        <javac srcdir="${src.dir}"
+               destdir="${classes.dir}"
+               debug="${build.debug}"
+               optimize="off"
+               deprecation="off">
+            <include name="**/*.java"/>
+            <classpath refid="compile.classpath" />
+        </javac>
+    </target>
+
+    <target name="jar" depends="gen.schema" description="Generate the Java Archive files and put it an accessible location for other projects">
+        <echo message="Generating jar file for module ${ant.project.name} ..."/>
+        <jar jarfile="${build.dir}/${module.jarfile}">
+            <zipfileset dir="${classes.dir}">
+                <include name="**/*.class"/>
+            </zipfileset>
+            <zipfileset file="${hibernate.cfg.xml}"/>
+        </jar>
+    </target>
+
+    <target name="jar-src" description="Generate the Java Archive files for the source files">
+        <echo message="Generating jar file of source for module ${ant.project.name} ..."/>
+        <jar jarfile="${build.dir}/${module.src.jarfile}">
+            <zipfileset dir="${src.dir}">
+                <include name="**/*.*"/>
+            </zipfileset>
+        </jar>
+    </target>
+
+    <target name="manage.build.properties" depends="init">
+        <propertyfile file="${build.details.file}" comment="Last tonguetied build">
+            <entry key="build.date" type="date" value="now"/>
+            <entry key="version" type="string" value="${shortversion}"/>
+            <entry key="build.number" type="string" value="@@${label}"/>
+        </propertyfile>
+        <replace file="${build.details.file}" token="@@build." value=""/>
+    </target>
+    
+    <target name="gen.application.files">
+        <description>Dynamically set the server properties</description>
+        <echo message="Creating files used in the distribution"/>
+        <copy tofile="${generated.dir}/jdbc.properties">
+            <fileset dir="${config.dir}" includes="jdbc.${db.dialect}.properties"/>
+        </copy>
+        <concat destfile="${generated.dir}/jdbc.properties" append="true">
+            <fileset dir="${config.dir}">
+                <exclude name="jdbc.${db.dialect}.properties"/>
+                <include name="jdbc.*.properties"/>
+            </fileset>
+            <filterchain>
+                <prefixlines prefix="# "/>
+            </filterchain>
+        </concat>
+    </target>
+
+    <target name="war" depends="jar, jar-src, manage.build.properties, gen.application.files" description="Generate the Web Archive">
+        <echo message="Generating war file for module ${ant.project.name} ..."/>
+        <war destfile="${build.dir}/war/${module.warfile}" webxml="${config.dir}/web.xml">
+            <lib dir="${build.dir}">
+                <include name="${module.jarfile}"/>
+            </lib>
+            <lib dir="${3rdparty.home}/Antlr/2.7.6">
+                <include name="antlr.jar"/>
+            </lib>
+            <lib dir="${3rdparty.home}/bsh/2.0b4">
+                <include name="bsh.jar"/>
+                <include name="LICENSE.bsh.txt"/>
+            </lib>
+            <lib dir="${3rdparty.home}/c3p0/0.9.1.2">
+                <include name="c3p0.jar"/>
+                <include name="LICENSE.c3p0.txt"/>
+            </lib>
+            <lib dir="${3rdparty.home}/cglib/2.2">
+                <include name="cglib-nodep-2.2.jar"/>
+            </lib>
+            <lib dir="${3rdparty.home}/displaytag/1.2">
+                <include name="displaytag.jar"/>
+                <include name="LICENSE.displaytag.txt"/>
+            </lib>
+            <lib dir="${3rdparty.home}/DOM4J/1.6.1">
+                <include name="dom4j.jar"/>
+                <include name="jaxen-1.1-beta-7.jar"/>
+            </lib>
+            <lib dir="${3rdparty.home}/ehcache/1.4.1">
+                <include name="ehcache.jar"/>
+                <include name="backport-util-concurrent-3.0.jar"/>
+                <include name="LICENSE.ehcache.txt"/>
+            </lib>
+            <lib dir="${3rdparty.home}/FreeMarker/2.3.13">
+                <include name="freemarker.jar"/>
+                <include name="LICENSE.freemarker.txt"/>
+            </lib>
+            <lib dir="${3rdparty.home}/FreeMarker/FMPP/0.9.13">
+                <include name="fmpp.jar"/>
+                <include name="LICENSE.fmpp.txt"/>
+            </lib>
+            <lib dir="${3rdparty.home}/Hibernate/3.3.1">
+                <include name="hibernate3.jar"/>
+                <include name="LICENSE.hibernate.txt"/>
+            </lib>
+            <lib dir="${3rdparty.home}/Hibernate/annotations/3.4.0">
+                <include name="hibernate-annotations.jar"/>
+                <include name="hibernate-commons-annotations.jar"/>
+                <include name="ejb3-persistence.jar"/>
+                <include name="LICENSE.hibernate-annotations.txt"/>
+            </lib>
+            <lib dir="${3rdparty.home}/HSQLDB/1.8.0.9">
+                <include name="hsqldb.jar"/>
+                <include name="LICENSE.hsqldb.txt"/>
+            </lib>
+            <lib dir="${3rdparty.home}/J2ee">
+                <include name="jstl.jar"/>
+                <include name="jta.jar"/>
+                <include name="standard.jar"/>
+                <include name="taglibs-string.jar"/>
+            </lib>
+            <lib dir="${3rdparty.home}/Jakarta-Commons">
+                <include name="commons-beanutils-1.7.0.jar"/>
+                <include name="commons-collections-3.2.1.jar"/>
+                <include name="commons-digester-1.8.jar"/>
+                <include name="commons-el.jar"/>
+                <include name="commons-fileupload-1.2.1.jar"/>
+                <include name="commons-io-1.4.jar"/>
+                <include name="commons-lang-2.4.jar"/>
+                <include name="commons-logging.jar"/>
+                <include name="commons-codec-1.3.jar"/>
+                <include name="LICENSE.commons-cli.txt"/>
+                <include name="LICENSE.commons-fileupload.txt"/>
+                <include name="LICENSE.commons-io.txt"/>
+                <include name="LICENSE.commons-lang.txt"/>
+            </lib>
+            <lib dir="${3rdparty.home}/Javassist/3.9.0">
+                <include name="LICENSE.javassist.html"/>
+                <include name="javassist.jar"/>
+            </lib>
+            <lib dir="${3rdparty.home}/Log4j/1.2.15">
+                <include name="log4j.jar"/>
+                <include name="LICENSE.log4j.txt"/>
+            </lib>
+            <lib dir="${3rdparty.home}/opencsv/1.8">
+                <include name="opencsv.jar"/>
+                <include name="LICENCE.opencsv.txt"/>
+            </lib>
+            <lib dir="${3rdparty.home}/oro/2.0.8">
+                <include name="jakarta-oro.jar"/>
+            </lib>
+            <lib dir="${3rdparty.home}/POI/3.0.2">
+                <include name="poi.jar"/>
+                <include name="LICENSE.poi.txt"/>
+            </lib>
+            <lib dir="${3rdparty.home}/PostgreSQL/8.3-604">
+                <include name="postgresql.jdbc3.jar"/>
+                <include name="LICENSE.postgresql.txt"/>
+            </lib>
+            <lib dir="${3rdparty.home}/sitemesh/2.3">
+                <include name="sitemesh.jar"/>
+                <include name="LICENSE.sitemesh.txt"/>
+            </lib>
+            <lib dir="${3rdparty.home}/slf4j/1.5.6">
+                <include name="LICENSE.slf4j.txt"/>
+                <include name="slf4j-api.jar"/>
+                <include name="slf4j-simple.jar"/>
+            </lib>
+            <lib dir="${3rdparty.home}/Spring/2.5.4">
+                <include name="spring.jar"/>
+                <include name="spring-webmvc.jar"/>
+                <include name="LICENSE.spring.txt"/>
+            </lib>
+            <lib dir="${3rdparty.home}/Spring/spring-security/2.0.1">
+                <include name="spring-security-core.jar"/>
+                <include name="spring-security-taglibs.jar"/>
+                <include name="LICENSE.spring-security.txt"/>
+            </lib>
+            <lib dir="${3rdparty.home}/struts-menu/2.4.3">
+                <include name="LICENSE.struts-menu.txt"/>
+                <include name="struts-menu.jar"/>
+            </lib>
+            <lib dir="${3rdparty.home}/Velocity">
+                <include name="velocity-1.5.jar"/>
+                <include name="velocity-tools-view-1.4.jar"/>
+            </lib>
+            <webinf dir="${config.dir}">
+                <include name="*.xml"/>
+                <include name="log4j.properties"/>
+                <include name="fmpp.cfg"/>
+                <exclude name="ehcache.xml"/>
+                <exclude name="web.xml"/>
+            </webinf>
+            <webinf dir="${web.dir}">
+                <include name="**/jsp/**/*.jsp"/>
+                <exclude name="**/ROOT/*.*"/>
+            </webinf>
+            <webinf dir="${generated.dir}">
+                <include name="jdbc.properties"/>
+                <include name="**/sql/*.sql"/>
+                <exclude name="**/sql/postgresql-schema.sql"/>
+            </webinf>
+            <webinf dir="${resources.dir}">
+                <include name="**/sql/**/*.sql"/>
+            </webinf>
+            <classes dir="${config.dir}">
+                <include name="tonguetied*.properties"/>
+                <include name="displaytag*.properties"/>
+                <include name="language.properties"/>
+                <include name="ehcache.xml"/>
+            </classes>
+            <classes dir="${generated.dir}">
+                <include name="buildNumber.properties"/>
+            </classes>   
+            <zipfileset dir="${web.jsp.dir}/ROOT">
+                <include name="*.jsp"/>
+            </zipfileset>
+            <zipfileset dir="${web.images.dir}" prefix="images"/>
+            <zipfileset dir="${web.css.dir}" prefix="css"/>
+            <zipfileset dir="${web.scripts.dir}" prefix="scripts"/>
+            <zipfileset dir="${templates.dir}/freemarker/export" prefix="templates">
+                <include name="*.ftl"/>
+            </zipfileset>
+        </war>
+    </target>
+
+    <target name="build" depends="validate.xml, war" description="Compile entire module and validate xml files"/>
+ 
+    <target name="validate.xml" description="Validate XML configuration files" >
+        <echo message="validating XML in module ${ant.project.name}..." />
+        <xmlcatalog id="xml.entities">
+            <dtd publicid="-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                 location="${3rdparty.home}/XMLEntities/hibernate-configuration-3.0.dtd"/>
+        </xmlcatalog>
+        <schemavalidate>
+            <schema namespace="http://www.springframework.org/schema/beans"
+                file="${3rdparty.home}/XMLEntities/spring-beans-2.5.xsd"/>
+            <schema namespace="http://www.springframework.org/schema/aop" 
+                file="${3rdparty.home}/XMLEntities/spring-aop-2.5.xsd"/>
+            <schema namespace="http://www.springframework.org/schema/tx"
+                file="${3rdparty.home}/XMLEntities/spring-tx-2.5.xsd"/>
+            <schema namespace="http://www.springframework.org/schema/security"
+                file="${3rdparty.home}/XMLEntities/spring-security-2.0.xsd"/>
+            <fileset dir="${config.dir}" id="xml.resources">
+                <include name="**/*-context.xml"/>
+                <include name="**/web-servlet.xml"/>
+            </fileset>
+        </schemavalidate>
+        <schemavalidate file="${config.dir}/web.xml">
+            <schema namespace="http://www.w3.org/2001/XMLSchema"
+                file="${3rdparty.home}/XMLEntities/XMLSchema.xsd"/>
+            <schema namespace="http://www.w3.org/XML/1998/namespace"
+                file="${3rdparty.home}/XMLEntities/xml.xsd"/>
+            <schema namespace="http://java.sun.com/xml/ns/javaee"
+                file="${3rdparty.home}/XMLEntities/web-app_2_5.xsd"/>
+        </schemavalidate>
+        <schemavalidate file="${config.dir}/ehcache.xml" 
+            nonamespacefile="${3rdparty.home}/XMLEntities/ehcache.xsd">
+            <schema namespace="http://www.w3.org/2001/XMLSchema"
+                file="${3rdparty.home}/XMLEntities/XMLSchema.xsd"/>
+        </schemavalidate>
+        <xmlvalidate warn="yes" failonerror="true">
+            <fileset dir="${config.dir}" id="xml.resources">
+                <include name="**/hibernate.cfg.xml"/>
+            </fileset>
+            <xmlcatalog refid="xml.entities" />
+        </xmlvalidate>
+    </target>
+
+    <target name="javadoc" depends="init" description="Generate the javadoc for this module">
+        <echo message="Generating java api documentation for module ${ant.project.name}..."/>
+        <javadoc destdir="${docs.api.dir}"
+                 useexternalfile="true"
+                 author="true"
+                 version="true"
+                 use="true"
+                 classpathref="compile.classpath"
+                 windowtitle="${ant.project.name} API">
+            <doctitle><![CDATA[<h1>]]>${application.name}:- ${ant.project.name}<![CDATA[</h1>]]></doctitle>
+            <bottom><![CDATA[<i>Copyright &#169; 2008 Ben Sion. All Rights Reserved.</i>]]></bottom>
+            <fileset dir="${src.dir}" includes="**/*.java"/>
+        </javadoc>
+    </target>
+
+    <!-- In order to generate the diagrams, a third party application GraphViz
+         is required. This application is OS dependent. For more info see
+         http://www.graphviz.org
+    -->
+    <target name="beandoc" depends="init" description="Generate documentation and graphs of Spring bean factories and application context files for this module">
+        <echo message="Generating documentation of the Spring beans for module ${ant.project.name}..."/>
+        <beandoc beandocprops="${beandoc.propsfile}" outputdir="${docs.beandoc.dir}">
+            <fileset dir="${config.dir}">
+                <include name="application-context.xml"/>
+                <include name="security-context.xml"/>
+                <include name="common-authorization-context.xml"/>
+                <include name="web-servlet.xml"/>
+            </fileset>
+        </beandoc>
+    </target>
+
+    <target name="schema.up.to.date">
+        <uptodate property="is.schema.up.to.date"
+                  targetfile="${schema.file.timestamp}">
+            <srcfiles dir="${classes.dir}" includes="**/*.class"/>
+        </uptodate>
+    </target>
+        
+    <!-- The hbm2ddl requires that the all classes have been compiled and can be
+         referenced via the classpath
+    -->
+    <target name="gen.schema" depends="compile, schema.up.to.date" description="Generates DB schema with hbm2ddl.">
+        <echo message="Generating the database schema for module ${ant.project.name}..."/>
+        <hibernatetool destdir="${generated.sql.dir}">
+            <annotationconfiguration configurationfile="${hibernate.cfg.xml}"
+                propertyFile="${jdbc.props.file}"/>
+            <hbm2ddl outputfilename="${schema.file}"
+                     drop="true"
+                     export="false"
+                     format="true"
+                     delimiter=";"/>
+            <classpath location="${classes.dir}"/>
+        </hibernatetool>
+        <touch file="${schema.file.timestamp}"/>
+    </target>
+
+    <target name="db.create" description="This target creates the database">
+        <echo message="CREATE TABLES USING: driver=${jdbc.driverClassName} url=${jdbc.url} user=${jdbc.username} pwd=${jdbc.password}"/>
+        <sql driver="${jdbc.driverClassName}"
+             url="${jdbc.url}"
+             userid="${jdbc.username}"
+             password="${jdbc.password}"
+             onerror="continue">
+            <classpath refid="hsql.classpath"/>
+            <fileset dir="${generated.dir}">
+                <include name="${schema.file}"/>
+            </fileset>
+            <fileset dir="${sql.dir}">
+                <include name="initial-data.sql"/>
+            </fileset>
+        </sql>
+    </target>
+
+    <target name="analyze.code" depends="init" description="Inspect Java bytecode for occurrences of bug patterns using a static analysis tool">
+        <echo message="Performing code analysis on module ${ant.project.name}..."/>
+        <findbugs home="${findbugs.home}"
+                  reportlevel="low"
+                  effort="max"
+                  jvmargs="-Xmx256M"
+                  output="xml:withMessages"
+                  outputFile="${docs.findbugs.dir}/${findbugs.xml.file}">
+            <auxclasspath refid="compile.classpath"/>
+            <sourcepath path="${src.dir}"/>
+            <class location="${build.dir}/${module.jarfile}"/>
+        </findbugs>
+        <xslt in="${docs.findbugs.dir}/${findbugs.xml.file}"
+              out="${docs.findbugs.dir}/${findbugs.xml.file}.html"
+              style="${findbugs.home}/src/xsl/fancy.xsl">
+            <outputproperty name="method" value="html"/>
+        </xslt>
+    </target>
+
+    <target name="schemadoc" description="Generate graphical documentation of the database schema">
+        <echo message="Generating documentation for the database schema ..."/>
+        <hibernatetool>
+            <annotationconfiguration configurationfile="${hibernate.cfg.xml}"/>
+            <hbm2doc destdir="${docs.hibernate.dir}"/>
+            <classpath location="${classes.dir}"/>
+        </hibernatetool>
+
+        <java jar="${3rdparty.home}/SchemaSpy/3.1.1/schemaSpy.jar"
+              fork="true">
+            <arg value="-t" />
+            <arg value="hsqldb"/>
+            <arg value="-db"/>
+            <arg value="tonguetied"/>
+            <arg value="-cp"/>
+            <arg value="${3rdparty.home}/HSQLDB/1.8.0.9/hsqldb.jar"/>
+            <arg value="-u" />
+            <arg value="${jdbc.username}"/>
+            <!--arg value="-p"/>
+            <arg value="${jdbc.password}"/-->
+            <arg value="-s" />
+            <arg value="PUBLIC"/>
+            <arg value="-o" />
+            <arg value="${docs.schema.dir}"/>
+            <arg value="-host" />
+            <arg value="localhost:9010"/>
+            <!--arg value="-dbhelp"/-->
+        </java>
+    </target>
+    
+    <target name="hot.deploy" description="deploy the web components into a running server. This is for developers only">
+        <echo message="deploying files to ${web.server.webinf}..."/>
+        <copy todir="${web.server.webinf}/jsp">
+            <fileset dir="${web.jsp.dir}">
+                <exclude name="ROOT/*"/>
+            </fileset>
+        </copy>
+        <copy todir="${web.server.root}">
+            <fileset dir="${web.jsp.dir}/ROOT">
+                <include name="/*"/>
+            </fileset>
+        </copy>
+        <copy todir="${web.server.css}">
+            <fileset dir="${web.css.dir}">
+                <include name="**/*.css"/>
+            </fileset>
+        </copy>
+        <copy todir="${web.server.images}">
+            <fileset dir="${web.images.dir}">
+                <include name="**/*.ico"/>
+                <include name="**/*.png"/>
+            </fileset>
+        </copy>
+        <copy todir="${web.server.scripts}">
+            <fileset dir="${web.scripts.dir}">
+                <include name="**/*.js"/>
+            </fileset>
+        </copy>
+        <copy todir="${web.server.root}/templates">
+            <fileset dir="${templates.dir}/freemarker/export">
+                <include name="*.ftl"/>
+            </fileset>
+        </copy>
+    </target>
+</project>
