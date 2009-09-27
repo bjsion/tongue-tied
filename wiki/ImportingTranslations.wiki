@@ -10,6 +10,7 @@
   # Select the "Import / Export" tab
   # Select the "Import" option. *N.B.* The Languages, Countries and Resource bundles need to pre-exist in the system in order for resources to be imported.
   # Browse for the file resource to import.
-  # Select the type of resource file you are importing e.g. Java properties, .Net resource, CSV, etc
+  # Select the type of resource file you are importing e.g. Java properties, .Net resource, CSV, etc.
+    # If you selected a Java properties file or .Net resource file, then you can also over write the bundle by choosing a bundle. This is primarily used as differentiators for importing global values or if your resource bundle has sub-directories.
   # Select the state for each imported translation. Whilst this value is mandatory, it is only of value if you plan to utilise the work flow in !TongueTied.
   # Click on the "import" button.
