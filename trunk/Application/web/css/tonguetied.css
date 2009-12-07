@@ -28,44 +28,48 @@ ul.inline li a {
   color: #474747;
 }
 
-li.fileView {
-  background-image: url(../images/page_white.png);
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  padding: 3px 10px 3px 25px;
-  list-style: none;
-}
-
-li.directory {
-  background-image: url(../images/folder.png);
-}
-
-li.xls {
-  background-image: url(../images/page_white_excel.png);
-}
-
-li.resx {
-  background-image: url(../images/page_white_csharp.png);
-}
-
-li.properties {
-  background-image: url(../images/page_white_text.png);
-}
-
-li.csv {
-  background-image: url(../images/page_white_text.png);
-}
-
-li.zip {
-  background-image: url(../images/page_white_zip.png);
-}
-
-li.upOneLevel {
+li.up-one-level {
   list-style: none;
   padding: 4px 0px 7px 0px;
 }
 
-.fileAttributes {
+li.file-item {
+  padding: 3px 10px 3px 20px;
+  list-style: none;
+}
+
+a.file-link {
+  background-image: url(../images/page_white.png);
+  background-repeat: no-repeat;
+  padding-bottom: 3px;
+  padding-left: 20px;
+}
+
+a[href$=".dir"].file-link {
+  background-image: url(../images/folder.png);
+}
+
+a[href$=".csv"].file-link {
+  background-image: url(../images/page_white_text.png);
+}
+
+a[href$=".properties"].file-link {
+  background-image: url(../images/page_white_text.png);
+}
+
+a[href$=".resx"].file-link {
+  background-image: url(../images/page_white_csharp.png);
+}
+
+a[href$=".xls"].file-link {
+  background-image: url(../images/page_white_excel.png);
+}
+
+a[href$=".zip"].file-link {
+  background-image: url(../images/page_white_zip.png);
+}
+
+.file-attributes {
   float: right;
   text-align: right;
 }
@@ -98,6 +102,37 @@ div.right-element {
 
 div.sidepanel {
   clear: both;
+}
+
+div.side-panel-header-bar {
+  clear: both;
+  text-align: right;
+  height: 2em;
+  border-width: 1.5px;
+  border-color: #ebebeb;
+  border-style: solid;
+  width: 99%;
+  background-color: #666666;
+  color: #cccccc;
+}
+
+div.side-panel-header-bar a {
+  float: right;
+  padding: none;
+  vertical-align: top;
+}
+
+div.side-panel-header-bar a img {
+  padding: none;
+  width: 2em;
+  height: 2em;
+}
+
+div.side-panel-header-bar div {
+  float: left;
+  text-align: left;
+  padding-left: 3px;
+  padding-top: 3px;
 }
 
 div.contentPanel {
@@ -142,7 +177,7 @@ div.submit {
   float: right;
 }
 
-div.dirBreadcrumbs {
+div.dir-breadcrumbs {
   clear: both;
   border-color: #cccccc;
   border-width: 1px;
@@ -152,7 +187,7 @@ div.dirBreadcrumbs {
   padding: 5px 3px;
 }
 
-div.dirListing {
+div.dir-listing {
   clear: both;
   border-color: #cccccc;
   border-width: 1px;
@@ -376,7 +411,7 @@ h4.message {
 * Styles for hyperlinks display.
 ******************************************************************************/
 
-a img.imgLink {
+a img.img-link {
   border: 0;
 }
 

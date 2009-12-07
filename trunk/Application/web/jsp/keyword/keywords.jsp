@@ -9,10 +9,86 @@
 
 <div class="content">
     <div id="left">
-        <div class="sidepanel">
+        <fmt:message key="search" var="searchKey" scope="page"/>
+        <div class="side-panel-header-bar">
+            <div>${searchKey}</div>
+            <a id="showSearchParamPanel" href="#" class="hidden">
+                <img src="<c:url value="images/bullet_toggle_plus.png"/>" alt="<fmt:message key="show.panel"><fmt:param value="${searchKey}"/></fmt:message>" title="<fmt:message key="show.panel"><fmt:param value="${searchKey}"/></fmt:message>" class="img-link"/>
+            </a>
+            <a id="hideSearchParamPanel" href="#">
+                <img src="<c:url value="images/bullet_toggle_minus.png"/>" alt="<fmt:message key="hide.panel"><fmt:param value="${searchKey}"/></fmt:message>" title="<fmt:message key="hide.panel"><fmt:param value="${searchKey}"/></fmt:message>" class="img-link"/>
+            </a>
+        </div>
+        <div id="searchParamPanel" class="sidepanel">
+            <c:url value="/keywordSearch.htm" var="searchAction" scope="page"/>
+            <form:form id="searchParameters" method="post" action="${searchAction}" commandName="searchParameters">
+                <fieldset>
+                    <div>
+                        <form:label path="keywordKey" cssClass="sidepanel"><fmt:message key="keyword"/></form:label>
+                        <form:input path="keywordKey"/>
+                    </div>
+                    <div>
+                        <form:label path="bundle" cssClass="sidepanel"><fmt:message key="bundle"/></form:label>
+                        <form:select path="bundle" size="1" cssClass="sidepanel">
+                            <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
+                            <form:options items="${bundles}" itemValue="id" itemLabel="name"/>
+                        </form:select>
+                    </div>
+                    <div>
+                        <form:label path="country" cssClass="sidepanel"><fmt:message key="country"/></form:label>
+                        <form:select path="country" size="1" cssClass="sidepanel">
+                            <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
+                            <form:options items="${countries}" itemValue="id" itemLabel="name"/>
+                        </form:select>
+                    </div>
+                    <div>
+                        <form:label path="language" cssClass="sidepanel"><fmt:message key="language"/></form:label>
+                        <form:select path="language" size="1" cssClass="sidepanel">
+                            <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
+                            <form:options items="${languages}" itemValue="id" itemLabel="name"/>
+                        </form:select>
+                    </div>
+                    <div>
+                        <form:label path="translationState" cssClass="sidepanel"><fmt:message key="translation.state"/></form:label>
+                        <form:select path="translationState" size="1" cssClass="sidepanel">
+                            <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
+                            <c:forEach items="${states}" var="state">
+                                <c:if test="${translationState == state}">
+                                    <c:set var="selected" value="true"/>
+                                </c:if>
+                                <form:option value="${state}"><fmt:message key="${state}"/></form:option>
+                                <c:remove var="selected"/>
+                            </c:forEach>
+                        </form:select>
+                    </div>
+                    <div>
+                        <form:label path="translatedText" cssClass="sidepanel"><fmt:message key="translated.text"/></form:label>
+                        <form:input path="translatedText"/>
+                    </div>
+                    <div class="checkbox">
+                        <form:checkbox path="ignoreCase" id="ignoreCase"/>
+                        <form:label path="ignoreCase"><fmt:message key="ignore.case"/></form:label>
+                    </div>
+                </fieldset>
+                <div class="submit">
+                    <input type="submit" id="searchBtn" name="searchBtn" value="<fmt:message key="search"/>" class="button"/>
+                    <input type="reset" id="reset" name="reset" value="<fmt:message key="reset"/>" class="button"/>
+                </div>
+            </form:form>
+        </div>
+        <fmt:message key="preferences" var="preferencesKey" scope="page"/>
+        <div class="side-panel-header-bar">
+            <div>${preferencesKey}</div>
+            <a id="showPreferencesPanel" href="#">
+                <img src="<c:url value="images/bullet_toggle_plus.png"/>" alt="<fmt:message key="show.panel"><fmt:param value="${preferencesKey}"/></fmt:message></img>" title="<fmt:message key="show.panel"><fmt:param value="${preferencesKey}"/></fmt:message>" class="img-link"/>
+            </a>
+            <a id="hidePreferencesPanel" href="#">
+                <img src="<c:url value="images/bullet_toggle_minus.png"/>" alt="<fmt:message key="hide.panel"><fmt:param value="${preferencesKey}"/></fmt:message>" title="<fmt:message key="hide.panel"><fmt:param value="${preferencesKey}"/></fmt:message>" class="img-link"/>
+            </a>
+        </div>
+        <div id="preferencesPanel" class="sidepanel">
             <form id="viewPreferences" method="post" action="<c:url value="/preferences.htm"/>">
                 <fieldset>
-                    <legend><fmt:message key="preferences"/></legend>
                     <div>
                         <spring:bind path="viewPreferences.maxResults">
                         <label for="${status.expression}"><fmt:message key="max.results"/></label>
@@ -89,64 +165,6 @@
                 </div>
             </form>
         </div>
-        <div class="sidepanel">
-            <c:url value="/keywordSearch.htm" var="searchAction" scope="page"/>
-            <form:form id="searchParameters" method="post" action="${searchAction}" commandName="searchParameters">
-                <fieldset>
-                    <legend><fmt:message key="search"/></legend>
-                    <div>
-                        <form:label path="keywordKey" cssClass="sidepanel"><fmt:message key="keyword"/></form:label>
-                        <form:input path="keywordKey"/>
-                    </div>
-                    <div>
-                        <form:label path="bundle" cssClass="sidepanel"><fmt:message key="bundle"/></form:label>
-                        <form:select path="bundle" size="1" cssClass="sidepanel">
-                            <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
-                            <form:options items="${bundles}" itemValue="id" itemLabel="name"/>
-                        </form:select>
-                    </div>
-                    <div>
-                        <form:label path="country" cssClass="sidepanel"><fmt:message key="country"/></form:label>
-                        <form:select path="country" size="1" cssClass="sidepanel">
-                            <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
-                            <form:options items="${countries}" itemValue="id" itemLabel="name"/>
-                        </form:select>
-                    </div>
-                    <div>
-                        <form:label path="language" cssClass="sidepanel"><fmt:message key="language"/></form:label>
-                        <form:select path="language" size="1" cssClass="sidepanel">
-                            <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
-                            <form:options items="${languages}" itemValue="id" itemLabel="name"/>
-                        </form:select>
-                    </div>
-                    <div>
-                        <form:label path="translationState" cssClass="sidepanel"><fmt:message key="translation.state"/></form:label>
-                        <form:select path="translationState" size="1" cssClass="sidepanel">
-                            <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
-                            <c:forEach items="${states}" var="state">
-                                <c:if test="${translationState == state}">
-                                    <c:set var="selected" value="true"/>
-                                </c:if>
-                                <form:option value="${state}"><fmt:message key="${state}"/></form:option>
-                                <c:remove var="selected"/>
-                            </c:forEach>
-                        </form:select>
-                    </div>
-                    <div>
-                        <form:label path="translatedText" cssClass="sidepanel"><fmt:message key="translated.text"/></form:label>
-                        <form:input path="translatedText"/>
-                    </div>
-                    <div class="checkbox">
-                        <form:checkbox path="ignoreCase" id="ignoreCase"/>
-                        <form:label path="ignoreCase"><fmt:message key="ignore.case"/></form:label>
-                    </div>
-                </fieldset>
-                <div class="submit">
-                    <input type="submit" id="searchBtn" name="searchBtn" value="<fmt:message key="search"/>" class="button"/>
-                    <input type="reset" id="reset" name="reset" value="<fmt:message key="reset"/>" class="button"/>
-                </div>
-            </form:form>
-        </div>
     </div>
 
     <div class="contentPanel">
@@ -156,7 +174,7 @@
                 <c:url value="deleteKeyword.htm" var="deleteKeywordUrl" scope="page"><c:param name="keywordId" value="${keyword.id}"/></c:url>
                 <fmt:message key="confirm.keyword.delete" var="confirmDeleteKeywordMsg" scope="page" ><fmt:param value="${keyword.keyword}"/></fmt:message>
                 <a href="${deleteKeywordUrl}" onclick="return confirm('${fn:escapeXml(confirmDeleteKeywordMsg)}')">
-                    <img src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" class="imgLink"/>
+                    <img src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" class="img-link"/>
                 </a>
             </display:column>
             <display:column titleKey="keyword" group="2" class="keyword" sortable="true">
@@ -197,3 +215,46 @@
         </display:table>
     </div>
 </div>
+
+<script type="text/javascript" src="<c:url value="/scripts/jquery-1.3.2.min.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/scripts/jquery.cookie.1.0.js"/>"></script>
+
+<script>
+//<![CDATA[
+  $(document).ready(function(){
+    $("#hideSearchParamPanel").data("panelName","#searchParamPanel");
+    $("#showSearchParamPanel").data("panelName","#searchParamPanel");
+    $("#hidePreferencesPanel").data("panelName","#preferencesPanel");
+    $("#showPreferencesPanel").data("panelName","#preferencesPanel");
+
+    $(window).load(function()
+    {
+        if ($.cookie("#searchParamPanel") == "hide")
+        {
+            $("#searchParamPanel").hide();
+        }
+        if ($.cookie("#preferencesPanel") == "hide")
+        {
+            $("#preferencesPanel").hide();
+        }
+    });
+
+    $("#hideSearchParamPanel,#hidePreferencesPanel").click(function ()
+    {
+        var panelName = $(this).data("panelName");
+        $(panelName).slideUp("slow");
+        $.cookie(panelName, "hide");
+        return false;
+    });
+    
+    $("#showSearchParamPanel,#showPreferencesPanel").click(function ()
+     {
+        var panelName = $(this).data("panelName");
+        $(panelName).slideDown("slow");
+        $.cookie(panelName, null);
+        return false;
+    });
+  });
+//]]>
+</script>
+
