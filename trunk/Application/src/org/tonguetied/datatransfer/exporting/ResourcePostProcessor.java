@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.log4j.Logger;
 import org.tonguetied.datatransfer.common.ExportParameters;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Translation;
@@ -35,6 +36,9 @@ import org.tonguetied.keywordmanagement.TranslationKeywordPredicate;
 public class ResourcePostProcessor implements ExportDataPostProcessor
 {
     private ExportParameters parameters;
+    
+    private static final Logger logger = 
+        Logger.getLogger(ResourcePostProcessor.class);
 
     /**
      * Create a new instance of the PropertiesPostProcessor.
@@ -64,6 +68,9 @@ public class ResourcePostProcessor implements ExportDataPostProcessor
         List<Translation> results;
         if (parameters.isGlobalsMerged())
         {
+            if (logger.isDebugEnabled())
+                logger.debug("merging global bundle values");
+            
             results = new ArrayList<Translation>();
             final List<Bundle> bundles = 
                 getNonGlobalBundle(parameters.getBundles());
