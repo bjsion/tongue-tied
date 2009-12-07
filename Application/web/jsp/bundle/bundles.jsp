@@ -30,7 +30,7 @@
             <display:column sortable="true" titleKey="bundle.name" url="/bundle.htm" paramId="bundleId" paramProperty="id">
                 <c:out value="${bundle.name}"/>
                 <c:if test="${bundle.default}">
-                <img src="<c:url value="/images/asterisk_yellow.png"/>" alt="*" title="<fmt:message key="bundle.default"/>" class="imgLink"/>
+                <img src="<c:url value="/images/asterisk_yellow.png"/>" alt="*" title="<fmt:message key="bundle.default"/>" class="img-link"/>
                 </c:if>
             </display:column>
             <display:column property="resourceName" titleKey="bundle.resource.name" sortable="true"/>
@@ -38,7 +38,7 @@
                 <c:url value="deleteBundle.htm" var="deleteBundleUrl" scope="page"><c:param name="bundleId" value="${bundle.id}"/></c:url>
                 <fmt:message key="confirm.bundle.delete" var="confirmDeleteBundleMsg" scope="page" ><fmt:param value="${bundle.name}"/></fmt:message>
                 <a href="${deleteBundleUrl}" onclick="return confirm('${fn:escapeXml(confirmDeleteBundleMsg)}')">
-                    <img src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" class="imgLink"/>
+                    <img src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" class="img-link"/>
                 </a>
             </display:column>
         </display:table>

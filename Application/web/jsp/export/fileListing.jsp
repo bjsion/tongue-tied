@@ -4,38 +4,38 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
     <div class="content">
-        <div class="dirBreadcrumbs">
+        <div class="dir-breadcrumbs">
             <p><fmt:message key="listing.for"/></p>
             <span>
         <c:forEach items="${parents}" var="parent">
             <c:set value="${urlString}/${parent}" var="urlString" scope="page"/>
-            <c:url value="${urlString}${suffix}" var="parentUrl" />
+            <c:url value="${urlString}${suffix}" var="parentUrl" scope="page"/>
             /<a href="${parentUrl}" title="<fmt:message key="go.to"><fmt:param value="${parent}"/></fmt:message>">${parent}</a>
         </c:forEach>
             /${baseDir.name}
             </span>
         </div>
-        <div class="dirListing">
+        <div class="dir-listing">
             <ul>
-                <li class="upOneLevel"><a href="${parentUrl}" title="<fmt:message key="go.up.one.level"/>">..</a></li>
+            <c:if test="${parentUrl ne null}">
+                <li class="up-one-level"><a href="${parentUrl}" title="<fmt:message key="go.up.one.level"/>" class="file-link">..</a></li>
+            </c:if>
             <c:forEach items="${baseDir.files}" var="child">
                 <c:choose>
                     <c:when test="${child.directory}">
                         <c:url value="${baseDir.name}/${child.name}${suffix}" var="fileUrl"/>
-                        <c:set var="liClass" value="directory" scope="page"/>
                         <fmt:message key="go.to" var="itemTitle" scope="page">
                             <fmt:param value="${child.name}"/>
                         </fmt:message>
                     </c:when>
                     <c:otherwise>
                         <c:url value="${baseDir.name}/${child.name}" var="fileUrl"/>
-                        <c:set var="liClass" value="${child.fileType}" scope="page"/>
                         <fmt:message key="download.file" var="itemTitle" scope="page"/>
                     </c:otherwise>
                 </c:choose>
-                <li class="fileView ${liClass}">
-                    <a href="${fileUrl}" title="${itemTitle}">${child.name}</a>
-                    <span class="fileAttributes">
+                <li class="file-item">
+                    <a href="${fileUrl}" title="${itemTitle}" class="file-link">${child.name}</a>
+                    <span class="file-attributes">
                         <c:if test="${child.file}">
                             <c:choose>
                                 <c:when test="${child.size < 1000}">

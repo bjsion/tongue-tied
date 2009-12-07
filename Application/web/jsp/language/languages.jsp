@@ -35,7 +35,7 @@
                 <c:url value="deleteLanguage.htm" var="deleteLanguageUrl" scope="page"><c:param name="languageId" value="${language.id}"/></c:url>
                 <fmt:message key="confirm.language.delete" var="confirmDeleteLanguageMsg" scope="page" ><fmt:param value="${language.name}"/></fmt:message>
                 <a href="${deleteLanguageUrl}" onclick="return confirm('${fn:escapeXml(confirmDeleteLanguageMsg)}')">
-                    <img src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" class="imgLink"/>
+                    <img src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" class="img-link"/>
                 </a>
             </display:column>
         </display:table>

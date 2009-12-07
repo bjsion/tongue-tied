@@ -52,7 +52,7 @@
                         </c:otherwise>
                     </c:choose>
                     <a href="${userUrl}">
-                    <img src="<c:url value="/images/user.png"/>" alt="" title="${user.username}" class="imgLink"/>
+                    <img src="<c:url value="/images/user.png"/>" alt="" title="${user.username}" class="img-link"/>
                     <c:out value="${user.username}"/>
                     </a>
                 </display:column>

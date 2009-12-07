@@ -40,7 +40,7 @@
                 <c:url value="deleteCountry.htm" var="deleteCountryUrl" scope="page"><c:param name="countryId" value="${country.id}"/></c:url>
                 <fmt:message key="confirm.country.delete" var="confirmDeleteCountryMsg" scope="page" ><fmt:param value="${country.name}"/></fmt:message>
                 <a href="${deleteCountryUrl}" onclick="return confirm('${fn:escapeXml(confirmDeleteCountryMsg)}')">
-                    <img src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" class="imgLink"/>
+                    <img src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" class="img-link"/>
                 </a>
             </display:column>
         </display:table>
