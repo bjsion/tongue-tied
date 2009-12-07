@@ -25,8 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
 /**
- * Manages the display of directory that is within the context of this
- * application.
+ * Manages the display of a file system directory that is within the context of
+ * this application.
  * 
  * @author bsion
  *
