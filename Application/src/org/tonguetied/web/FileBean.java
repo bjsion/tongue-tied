@@ -28,6 +28,7 @@ import java.util.Date;
 public class FileBean extends File
 {
     private static final long serialVersionUID = -2248589294097284873L;
+    private String suffix;
 
     /**
      * Create a new instance of FileBean.
@@ -37,6 +38,7 @@ public class FileBean extends File
     public FileBean(final String pathName)
     {
         super(pathName);
+        setSuffix();
     }
     
     /**
@@ -47,6 +49,7 @@ public class FileBean extends File
     public FileBean(final File file)
     {
         super(file, "");
+        setSuffix();
     }
     
     /**
@@ -103,13 +106,23 @@ public class FileBean extends File
      */
     public String getFileType()
     {
+        return suffix;
+    }
+    
+    /**
+     * Determine the suffix of the file if there is one and set its value.
+     */
+    private void setSuffix() 
+    {
         final String name = super.getName();
         int suffixIndex = name.lastIndexOf(".");
-        String suffix = null;
         if ((suffixIndex > 0) && ((suffixIndex+1) < name.length()))
         {
             suffix = name.substring(suffixIndex+1);
         }
-        return suffix;
+        else
+        {
+            suffix = null;
+        }
     }
 }
