@@ -195,8 +195,8 @@
                         </c:otherwise>
                     </c:choose>
                     <display:setProperty name="basic.msg.empty_list" value="${emptyListMsg}"/>
-                    <display:column property="bundle.name" titleKey="bundle" class="bundle"/>
-                    <display:column property="language.name" titleKey="language" class="language"/>
+                    <display:column property="bundle.name" titleKey="bundle" class="bundle" escapeXml="true"/>
+                    <display:column property="language.name" titleKey="language" class="language" escapeXml="true"/>
                     <display:column titleKey="country" class="country">
                         <c:if test="${not empty translation.country.code and translation.country.code != \"DEFAULT\"}">
                         <img src="<c:url value="/images/flags/${fn:toLowerCase(translation.country.code)}.png"/>" alt="" title="${translation.country.name}"/>
