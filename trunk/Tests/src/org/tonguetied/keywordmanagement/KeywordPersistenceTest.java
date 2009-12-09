@@ -27,6 +27,7 @@ import static org.junit.Assert.assertTrue;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.GenericJDBCException;
+import org.junit.Before;
 import org.junit.Test;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
@@ -46,15 +47,45 @@ import org.tonguetied.test.common.PersistenceTestBase;
  */
 public class KeywordPersistenceTest extends PersistenceTestBase
 {
+    private Country country;
+    private Bundle bundle;
+    private Language language;
 
+    @Override
+    @Before
+    public void setUp() throws Exception
+    {
+        super.setUp();
+        Session session = getSession();
+        Transaction tx = session.beginTransaction();
+
+        country = new Country();
+        country.setCode(CountryCode.SG);
+        country.setName("Singapore");
+        
+        bundle = new Bundle();
+        bundle.setName("TongueTied Server");
+        bundle.setDescription("tonguetied resources");
+        bundle.setResourceName("tonguetied");
+
+        language = new Language();
+        language.setCode(LanguageCode.en);
+        language.setName("English");
+
+        session.saveOrUpdate(country);
+        session.saveOrUpdate(bundle);
+        session.saveOrUpdate(language);
+
+        session.flush();
+        tx.commit();
+        session.close();
+    }
+    
     @Test
     public final void simplePersistence()
     {
-        Session session;
-        Transaction tx;
-        
-        session = getSession();
-        tx = session.beginTransaction();
+        Session session = getSession();
+        Transaction tx = session.beginTransaction();
         assertTrue(tx.isActive());
 
         Keyword keyword = new Keyword();
@@ -75,29 +106,10 @@ public class KeywordPersistenceTest extends PersistenceTestBase
     @Test
     public final void persistKeywordWithTranslations()
     {
-        Session session;
-        Transaction tx;
-        
-        session = getSession();
-        tx = session.beginTransaction();
+        Session session = getSession();
+        Transaction tx = session.beginTransaction();
 
         // init data
-        Country country = new Country();
-        country.setCode(CountryCode.SG);
-        country.setName("Singapore");
-        
-        Bundle bundle = new Bundle();
-        bundle.setName("TongueTied Server");
-        bundle.setDescription("tonguetied resources");
-        bundle.setResourceName("tonguetied");
-
-        Language language = new Language();
-        language.setCode(LanguageCode.en);
-        language.setName("English");
-        session.saveOrUpdate(country);
-        session.saveOrUpdate(bundle);
-        session.saveOrUpdate(language);
-
         Keyword keyword = new Keyword();
         keyword.setContext("description of the keyword");
         keyword.setKeyword("testKeyword");
@@ -134,29 +146,10 @@ public class KeywordPersistenceTest extends PersistenceTestBase
     @Test(expected=GenericJDBCException.class)
     public final void persistKeywordWithTranslationsWithSameBusinesskey()
     {
-        Session session;
-        Transaction tx;
-        
-        session = getSession();
-        tx = session.beginTransaction();
+        Session session = getSession();
+        Transaction tx = session.beginTransaction();
 
         // init data
-        Country country = new Country();
-        country.setCode(CountryCode.SG);
-        country.setName("Singapore");
-        
-        Bundle bundle = new Bundle();
-        bundle.setName("tonguetied Server");
-        bundle.setDescription("tonguetied resources");
-        bundle.setResourceName("tonguetied");
-
-        Language language = new Language();
-        language.setCode(LanguageCode.en);
-        language.setName("English");
-        session.saveOrUpdate(country);
-        session.saveOrUpdate(bundle);
-        session.saveOrUpdate(language);
-
         Keyword keyword = new Keyword();
         keyword.setContext("description of the keyword");
         keyword.setKeyword("testKeyword");
@@ -191,6 +184,156 @@ public class KeywordPersistenceTest extends PersistenceTestBase
         session.flush();
         tx.commit();
 //        tx.rollback();
+        session.close();
+    }
+    
+    @Test
+    public final void persistDeleteTranslation()
+    {
+        Session session = getSession();
+        Transaction tx = session.beginTransaction();
+        
+        // init data
+        Keyword keyword = new Keyword();
+        keyword.setContext("description of the keyword");
+        keyword.setKeyword("testKeyword");
+        session.saveOrUpdate(keyword);
+        
+        Translation translation = new Translation();
+        translation.setValue("translated value");
+        translation.setState(TranslationState.UNVERIFIED);
+        translation.setBundle(bundle);
+        translation.setCountry(country);
+        translation.setLanguage(language);
+        translation.setKeyword(keyword);
+        
+        keyword.addTranslation(translation);
+        session.saveOrUpdate(keyword);
+        session.flush();
+        tx.commit();
+        session.close();
+        
+        // Delete translation
+        session = getSession();
+        tx = session.beginTransaction();
+        
+        keyword = (Keyword) session.get(Keyword.class, keyword.getId());
+        keyword.remove(translation);
+        session.saveOrUpdate(keyword);
+
+        session.flush();
+        tx.commit();
+        session.close();
+
+        session = getSession();
+        tx = session.beginTransaction();
+        Keyword reloaded = 
+            (Keyword) session.get(Keyword.class, keyword.getId());
+        assertTrue(reloaded.getTranslations().isEmpty());
+        assertEquals(keyword, reloaded);
+        tx.rollback();
+        session.close();
+    }
+    
+    @Test
+    public final void persistDeleteTranslationById()
+    {
+        Session session = getSession();
+        Transaction tx = session.beginTransaction();
+        
+        // init data
+        Keyword keyword = new Keyword();
+        keyword.setContext("description of the keyword");
+        keyword.setKeyword("testKeyword");
+        session.saveOrUpdate(keyword);
+        
+        Translation translation = new Translation();
+        translation.setValue("translated value");
+        translation.setState(TranslationState.UNVERIFIED);
+        translation.setBundle(bundle);
+        translation.setCountry(country);
+        translation.setLanguage(language);
+        translation.setKeyword(keyword);
+        
+        keyword.addTranslation(translation);
+        session.saveOrUpdate(keyword);
+        session.flush();
+        tx.commit();
+        session.close();
+        
+        // Delete translation
+        session = getSession();
+        tx = session.beginTransaction();
+        
+        keyword = (Keyword) session.get(Keyword.class, keyword.getId());
+        keyword.removeTranslation(translation.getId());
+        session.saveOrUpdate(keyword);
+
+        session.flush();
+        tx.commit();
+        session.close();
+
+        session = getSession();
+        tx = session.beginTransaction();
+        Keyword reloaded = 
+            (Keyword) session.get(Keyword.class, keyword.getId());
+        assertTrue(reloaded.getTranslations().isEmpty());
+        assertEquals(keyword, reloaded);
+        tx.rollback();
+        session.close();
+    }
+    
+    @Test
+    public final void persistDeleteUpdatedAndUnsavedTranslation()
+    {
+        Session session = getSession();
+        Transaction tx = session.beginTransaction();
+        
+        // init data
+        Language malay = new Language();
+        malay.setCode(LanguageCode.my);
+        malay.setName("Behasa Malayu");
+        session.saveOrUpdate(malay);
+        
+        Keyword keyword = new Keyword();
+        keyword.setContext("description of the keyword");
+        keyword.setKeyword("testKeyword");
+        session.saveOrUpdate(keyword);
+        
+        Translation translation = new Translation();
+        translation.setValue("translated value");
+        translation.setState(TranslationState.UNVERIFIED);
+        translation.setBundle(bundle);
+        translation.setCountry(country);
+        translation.setLanguage(language);
+        translation.setKeyword(keyword);
+        
+        keyword.addTranslation(translation);
+        session.saveOrUpdate(keyword);
+        session.flush();
+        tx.commit();
+        session.close();
+        
+        // Delete translation
+        session = getSession();
+        tx = session.beginTransaction();
+        
+        keyword = (Keyword) session.get(Keyword.class, keyword.getId());
+        translation.setLanguage(malay);
+        keyword.remove(translation);
+        session.saveOrUpdate(keyword);
+
+        session.flush();
+        tx.commit();
+        session.close();
+
+        session = getSession();
+        tx = session.beginTransaction();
+        Keyword reloaded = 
+            (Keyword) session.get(Keyword.class, keyword.getId());
+        assertTrue(reloaded.getTranslations().isEmpty());
+        assertEquals(keyword, reloaded);
+        tx.rollback();
         session.close();
     }
     

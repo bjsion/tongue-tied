@@ -40,6 +40,7 @@ import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.log4j.Logger;
 import org.hibernate.annotations.AccessType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -47,6 +48,7 @@ import org.hibernate.annotations.Sort;
 import org.hibernate.annotations.SortType;
 import org.hibernate.annotations.Type;
 import org.tonguetied.audit.Auditable;
+import org.tonguetied.keywordmanagement.Translation.TranslationIdComparator;
 import org.tonguetied.utils.pagination.DeepCloneable;
 
 /**
@@ -81,6 +83,8 @@ public class Keyword implements DeepCloneable<Keyword>, Comparable<Keyword>,
     protected static final String FIELD_ID = "id";
     protected static final String FIELD_KEYWORD = "keyword";
     protected static final String FIELD_TRANSLATIONS = "translations";
+    
+    private static final Logger logger = Logger.getLogger(Keyword.class);
     
     // This attribute is used for optimistic concurrency control in DB
     private Integer version;
@@ -193,13 +197,27 @@ public class Keyword implements DeepCloneable<Keyword>, Comparable<Keyword>,
      * Remove a {@link Translation} from this <code>Keyword</code>s list of 
      * <code>translations</code>. This method is a convenience method acting as
      * a wrapper around the lists' remove method. 
-     *  
+     * 
      * @param translation the {@link Translation} to remove.
      */
     public void remove(Translation translation)
     {
-        this.translations.remove(translation);
-        translation.setKeyword(null);
+        if (translation.getId() != null)
+        {
+            SortedSet<Translation> tempSet = new TreeSet<Translation>(
+                    new TranslationIdComparator());
+            tempSet.addAll(this.translations);
+            this.translations = tempSet;
+        }
+        
+        if (this.translations.remove(translation))
+        {
+            translation.setKeyword(null);
+        }
+        else
+        {
+            logger.warn("failed to remove translation: " + translation);
+        }
     }
     
     /**
