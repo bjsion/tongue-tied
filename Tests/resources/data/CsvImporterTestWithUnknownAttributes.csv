@@ -1,4 +1,0 @@
-import.test.one,"some context",DEFAULT,Default(English),DEFAULT,Default,bundle1,UNVERIFIED,"Value 1"
-import.test.two,"",fr,Default(English),BE,Default,unknown,UNVERIFIED,""
-import.test.six,"a context, with "reserved" chars",DEFAULT,Default(English),DEFAULT,Default,bundle1,UNVERIFIED,"new value 3"
-
