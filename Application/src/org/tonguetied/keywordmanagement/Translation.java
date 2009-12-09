@@ -15,6 +15,8 @@
  */
 package org.tonguetied.keywordmanagement;
 
+import java.util.Comparator;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -348,5 +350,40 @@ public class Translation implements DeepCloneable<Translation>,
     public static enum TranslationState
     {
         UNVERIFIED, VERIFIED, QUERIED
+    }
+
+    /**
+     * Comparator class used when Translations should be compared by the 
+     * {@link Translation#id} rather than the business key as used in the 
+     * equals method.
+     * 
+     * @author bsion
+     * @see Translation#equals(Object)
+     */
+    protected static class TranslationIdComparator implements Comparator<Translation>
+    {
+
+        public int compare(Translation t1, Translation t2)
+        {
+            int result;
+            if (t1.getId() == null && t2.getId() == null)
+            {
+                result = 0;
+            }
+            else if (t1.getId() != null && t2.getId() == null)
+            {
+                result = -1;
+            }
+            else if (t1.getId() == null && t2.getId() != null)
+            {
+                result = 1;
+            }
+            else
+            {
+                result = t1.getId().compareTo(t2.getId());
+            }
+            return result;
+        }
+        
     }
 }

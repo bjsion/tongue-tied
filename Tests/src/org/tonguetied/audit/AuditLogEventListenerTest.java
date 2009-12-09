@@ -377,7 +377,9 @@ public class AuditLogEventListenerTest extends PersistenceTestBase
         
         Keyword reloaded = 
             (Keyword) session.get(Keyword.class, keyword.getId());
-        final Long translationId = reloaded.getTranslations().first().getId();
+        final Translation translation = reloaded.getTranslations().first();
+        final Long translationId = translation.getId();
+        final String logValue = "translations = " + translation.toLogString() + "\n\n";
         reloaded.removeTranslation(translationId);
         session.saveOrUpdate(reloaded);
         session.flush();
@@ -390,8 +392,8 @@ public class AuditLogEventListenerTest extends PersistenceTestBase
         assertEquals(3, records.size());
         AuditLogRecord newRecord = records.get(2);
         assertEquals(Operation.update, newRecord.getMessage());
-        assertEquals("", newRecord.getNewValue());
-        assertEquals("", newRecord.getOldValue());
+        assertEquals("translations = null\n", newRecord.getNewValue());
+        assertEquals(logValue, newRecord.getOldValue());
         tx.rollback();
         session.close();
     }
