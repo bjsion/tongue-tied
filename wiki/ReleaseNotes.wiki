@@ -1,6 +1,12 @@
 #summary Release Note.
 #labels Phase-Deploy,Featured
 
+= 1.3.1 =
+ * Minor Cosmetic UI changes
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=82 Issue 82] Deletion of a translation failed
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=83 Issue 83] Change Request for the Preference area in the main view (Keywords view)
+
+
 = 1.3.0 =
  * Minor Cosmetic UI changes
  * [http://code.google.com/p/tongue-tied/issues/detail?id=47 Issue 47] Cache queries results
