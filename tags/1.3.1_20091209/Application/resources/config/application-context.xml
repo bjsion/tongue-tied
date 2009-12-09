@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+    
+    <!-- ======================= GENERAL DEFINITIONS ======================= -->
+    
+    
+    <!-- Configurer that replaces ${...} placeholders with values from properties files -->
+    <!-- (JDBC related properties) -->
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="locations">
+            <list>
+                <!--added for HSQL-->
+                <value>WEB-INF/jdbc.properties</value>
+                <value>classpath:jdbc.properties</value>
+                <value>WEB-INF/fmpp.cfg</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="messageSource"
+          class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>tonguetied</value>
+                <value>language</value>
+                <value>classpath:/org/springframework/security/messages</value>
+            </list>
+        </property>
+    </bean>
+    
+    <!-- ======================= RESOURCE DEFINITIONS ====================== -->
+    
+    <!-- Local DataSource that works in any environment -->
+    
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="driverClass" value="${jdbc.driverClassName}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="initialPoolSize" value="1"/>
+        <property name="maxPoolSize" value="15"/>
+        <property name="minPoolSize" value="5"/>
+        <property name="acquireIncrement" value="1"/>
+        <property name="acquireRetryAttempts" value="1"/>
+        <property name="maxStatements" value="50"/>
+    </bean>
+    
+    <!-- Hibernate SessionFactory -->
+    <bean id="sessionFactory"
+        class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        
+        <property name="configLocation">
+            <value>classpath:hibernate.cfg.xml</value>
+        </property>
+        
+        <property name="configurationClass">
+            <value>org.hibernate.cfg.AnnotationConfiguration</value>
+        </property>
+        
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+            </props>
+        </property>
+        
+        <property name="eventListeners">
+            <map>
+                <entry key="merge">
+                    <bean class="org.springframework.orm.hibernate3.support.IdTransferringMergeEventListener"/>
+                </entry>
+                <entry key="post-delete">
+                    <bean class="org.tonguetied.audit.AuditLogPostDeleteEventListener"/>
+                </entry>
+                <entry key="post-insert">
+                    <bean class="org.tonguetied.audit.AuditLogPostInsertEventListener"/>
+                </entry>
+                <entry key="post-update">
+                    <bean class="org.tonguetied.audit.AuditLogPostUpdateEventListener"/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    
+    <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    
+    <!-- ================================= DAO ============================= -->
+    
+    <bean id="serverDataRepository" class="org.tonguetied.administration.ServerDataRepositoryImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="auditRepository" class="org.tonguetied.audit.AuditRepositoryImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="bundleRepository" class="org.tonguetied.keywordmanagement.BundleRepositoryImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="countryRepository" class="org.tonguetied.keywordmanagement.CountryRepositoryImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="keywordRepository" class="org.tonguetied.keywordmanagement.KeywordRepositoryImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="languageRepository" class="org.tonguetied.keywordmanagement.LanguageRepositoryImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="transferRepository" class="org.tonguetied.datatransfer.dao.TransferRepositoryImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="userRepository" class="org.tonguetied.usermanagement.UserRepositoryImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    <bean id="schemaDao" class="org.tonguetied.administration.SchemaDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean name="openSessionInViewInterceptor" class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="flushModeName" value="FLUSH_AUTO"/>
+    </bean>
+   
+    
+    <!--
+    Transactional proxy for the CommandExectutionService.
+    
+    This service defines the entry point of the command execution flow. 
+    A Hibernate transaction is started at the method entry and 
+    committed at method exit unless there is an exception thrown. The idea
+    here is to use the PROPAGATIION_REQUIRED propagation policy in order 
+    for of other services to join the current transaction. Other services 
+    can have DAOs associated to them and just join in, reusing the hibernate 
+    session bound to the current thread. This allows for transparent lazy 
+    loading, transactional write behind and dirty object detection. 
+    
+    Alot of magic is taken care of by Spring here, YEAH!!
+    -->
+    
+    <bean id="keywordService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager" ref="transactionManager"/>
+        <property name="target" ref="keywordServiceTarget"/>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="keywordServiceTarget" autowire="byName" dependency-check="objects" class="org.tonguetied.keywordmanagement.KeywordServiceImpl"/>
+    
+    <bean id="userService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager" ref="transactionManager"/>
+        <property name="target" ref="userServiceTarget"/>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="userServiceTarget" autowire="byName" dependency-check="objects" class="org.tonguetied.usermanagement.UserServiceImpl"/>
+    
+    <bean id="dataService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" >
+        <property name="transactionManager" ref="transactionManager"/>
+        <property name="target" ref="dataServiceTarget"/>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="dataServiceTarget" dependency-check="objects" class="org.tonguetied.datatransfer.DataServiceImpl" init-method="init">
+        <property name="transferRepository" ref="transferRepository"/>
+        <property name="keywordService" ref="keywordService"/>
+        <property name="sourceRoot" value="${sourceRoot}"/>
+        <property name="outputRoot" value="${outputRoot}"/>
+    </bean>
+    
+    <bean id="auditService" autowire="byName" dependency-check="objects" class="org.tonguetied.audit.AuditServiceImpl" />
+    
+    <bean id="administrationService" autowire="byName" dependency-check="objects" class="org.tonguetied.administration.AdministrationServiceImpl" />
+
+    <!-- ============================== Encryption ========================= -->
+    
+    <bean id="passwordEncoder" class="org.springframework.security.providers.encoding.ShaPasswordEncoder">
+        <constructor-arg value="256"/>
+    </bean>
+</beans>
