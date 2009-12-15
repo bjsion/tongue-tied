@@ -14,8 +14,7 @@
             </div>
             <div>
                 <form:label path="parameters.formatType" cssClass="content"><fmt:message key="file.type"/></form:label>
-                <form:select path="parameters.formatType" size="1" onchange="toggleSection(document.getElementById('parameters.formatType').value == 'properties'
-             || document.getElementById('parameters.formatType').value == 'resx','bundleSection')">
+                <form:select path="parameters.formatType" size="1">
                     <form:option value="" cssClass="select"><fmt:message key="please.select"/></form:option>
                     <c:forEach items="${formatTypes}" var="type">
                         <c:if test="${formatType == type}">
@@ -27,7 +26,7 @@
                 </form:select>
                 <form:errors path="parameters.formatType" cssClass="error"/>
             </div>
-            <div id="bundleSection" <c:if test="${(import.parameters.formatType != 'properties') && (import.parameters.formatType != 'resx')}">class="hidden"</c:if>>
+            <div id="bundleSection">
                 <form:label path="parameters.bundle" cssClass="content"><fmt:message key="bundle"/></form:label>
                 <form:select path="parameters.bundle" id="parameters.bundle">
                     <form:option value="" cssClass="select"><fmt:message key="select.bundle"/></form:option>
@@ -58,4 +57,35 @@
     </form:form>
     </div>
 
-<script type="text/javascript" src="<c:url value="/scripts/tonguetied.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/scripts/jquery-1.3.2.min.js"/>"></script>
+
+<script>
+//<![CDATA[
+  $(document).ready(function()
+  {
+      $(window).load(function()
+          {
+              if ($("#parameters\\.formatType").val() != "properties" && 
+                          $("#parameters\\.formatType").val() != "resx")
+                  {
+                      $("#bundleSection").hide();
+                  }
+              }
+          );
+
+      $("#parameters\\.formatType").change(function()
+          {
+              if ($(this).val() == "properties" || $(this).val() == "resx")
+              {
+                  $("#bundleSection").slideDown("slow");
+              }
+              else
+              {
+                  $("#bundleSection").slideUp("slow");
+              }
+          }
+      );
+  });
+//]]>
+</script>
+  
