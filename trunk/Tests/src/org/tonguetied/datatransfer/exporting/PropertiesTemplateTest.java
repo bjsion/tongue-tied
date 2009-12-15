@@ -205,7 +205,7 @@ public class PropertiesTemplateTest extends TemplateTester
                 if ("PropertiesTemplateTest_en_US.properties".equals(file.getName()))
                 {
                     expected = new Properties();
-                    expected.put("akeyword", "split line continue on second");
+                    expected.put("akeyword", "split line \\\ncontinue on second");
                     // No KeywordThree as the value is the empty string so will be 
                     // omitted
                     assertEquals(expected, actual);
@@ -214,8 +214,8 @@ public class PropertiesTemplateTest extends TemplateTester
                 {
                     expected = new Properties();
                     expected.put("akeyword", "translation 1_1");
-                    expected.put("anotherkeyword", "unix linebreak another line");
-                    expected.put("KeywordThree", "windows linebreak another line");
+                    expected.put("anotherkeyword", "unix linebreak \\\nanother line");
+                    expected.put("KeywordThree", "windows linebreak \\\r\nanother line");
                     assertEquals(expected, actual);
                 }
                 else if ("PropertiesTemplateTest_it_IT.properties".equals(file.getName()))

@@ -24,7 +24,6 @@ import java.util.Map.Entry;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.tonguetied.datatransfer.importing.ImportException.ImportErrorCode;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
@@ -62,8 +61,12 @@ public class PropertiesImporter extends AbstractSingleResourceImporter
             throws ImportException
     {
         ByteArrayInputStream bais = null;
-        try {
-            bais = new ByteArrayInputStream(input);
+        try
+        {
+            // convert byte array into UTF-8 format rather than rely on the
+            // default string encoding for this JVM
+            final String inputString = new String(input, "UTF-8");
+            bais = new ByteArrayInputStream(inputString.getBytes());
             Properties properties = new Properties();
             properties.load(bais);
             Keyword keyword;
@@ -72,7 +75,7 @@ public class PropertiesImporter extends AbstractSingleResourceImporter
             for (Entry<Object, Object> entry : properties.entrySet())
             {
                 keyword = getKeywordService().getKeyword((String) entry.getKey());
-                value = evaluateValue((String)entry.getValue());
+                value = "".equals(entry.getValue())? null: (String)entry.getValue();
                 if (keyword == null)
                 {
                     keyword = new Keyword();
@@ -132,19 +135,6 @@ public class PropertiesImporter extends AbstractSingleResourceImporter
         }
         
         return translation;
-    }
-
-    /**
-     * Process the value, escaping and java escape rules. If <code>value</code>
-     * is the empty String then <code>null</code> is returned.
-     * 
-     * @param value the value to process
-     * @return the processed value
-     */
-    protected String evaluateValue(String value)
-    {
-        String retVal = StringEscapeUtils.unescapeJava(value);
-        return "".equals(value)? null: StringEscapeUtils.escapeJava(retVal);
     }
 
     /**

@@ -33,6 +33,7 @@ import org.junit.Test;
 import freemarker.core.Environment;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import freemarker.template.TemplateBooleanModel;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
@@ -97,7 +98,7 @@ public class Native2AsciiDirectiveTest
      * Test method for
      * {@link org.tonguetied.datatransfer.exporting.Native2AsciiDirective#execute(freemarker.core.Environment, java.util.Map, freemarker.template.TemplateModel[], freemarker.template.TemplateDirectiveBody)}.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected=IllegalArgumentException.class)
     public final void testExecuteWithNullBody() throws Exception
     {
         Native2AsciiDirective native2Ascii = new Native2AsciiDirective();
@@ -108,9 +109,53 @@ public class Native2AsciiDirectiveTest
      * Test method for
      * {@link org.tonguetied.datatransfer.exporting.Native2AsciiDirective#execute(freemarker.core.Environment, java.util.Map, freemarker.template.TemplateModel[], freemarker.template.TemplateDirectiveBody)}.
      */
-    @Test(expected = TemplateModelException.class)
+    @Test
+    public final void testExecuteWithValidParams() throws Exception
+    {
+        body = new TestBody("abcd");
+        params.put("iskey", TemplateBooleanModel.FALSE);
+        Native2AsciiDirective native2Ascii = new Native2AsciiDirective();
+        native2Ascii.execute(env, params, loopVars, body);
+        StringBuffer buffer = out.getBuffer();
+        assertEquals("abcd", buffer.toString());
+    }
+
+    /**
+     * Test method for
+     * {@link org.tonguetied.datatransfer.exporting.Native2AsciiDirective#execute(freemarker.core.Environment, java.util.Map, freemarker.template.TemplateModel[], freemarker.template.TemplateDirectiveBody)}.
+     */
+    @Test
+    public final void testExecuteWithSpaceInKey() throws Exception
+    {
+        body = new TestBody("abcd efg");
+        params.put("iskey", TemplateBooleanModel.TRUE);
+        Native2AsciiDirective native2Ascii = new Native2AsciiDirective();
+        native2Ascii.execute(env, params, loopVars, body);
+        StringBuffer buffer = out.getBuffer();
+        assertEquals("abcd\\ efg", buffer.toString());
+    }
+
+    /**
+     * Test method for
+     * {@link org.tonguetied.datatransfer.exporting.Native2AsciiDirective#execute(freemarker.core.Environment, java.util.Map, freemarker.template.TemplateModel[], freemarker.template.TemplateDirectiveBody)}.
+     */
+    @Test(expected=TemplateModelException.class)
+    public final void testExecuteWithInvalidParamValue() throws Exception
+    {
+        body = new TestBody("abcd");
+        params.put("iskey", "invalid");
+        Native2AsciiDirective native2Ascii = new Native2AsciiDirective();
+        native2Ascii.execute(env, params, loopVars, body);
+    }
+
+    /**
+     * Test method for
+     * {@link org.tonguetied.datatransfer.exporting.Native2AsciiDirective#execute(freemarker.core.Environment, java.util.Map, freemarker.template.TemplateModel[], freemarker.template.TemplateDirectiveBody)}.
+     */
+    @Test(expected=TemplateModelException.class)
     public final void testExecuteWithInvalidParams() throws Exception
     {
+        body = new TestBody("abcd");
         params.put("key", "value");
         Native2AsciiDirective native2Ascii = new Native2AsciiDirective();
         native2Ascii.execute(env, params, loopVars, body);
@@ -120,7 +165,7 @@ public class Native2AsciiDirectiveTest
      * Test method for
      * {@link org.tonguetied.datatransfer.exporting.Native2AsciiDirective#execute(freemarker.core.Environment, java.util.Map, freemarker.template.TemplateModel[], freemarker.template.TemplateDirectiveBody)}.
      */
-    @Test(expected = TemplateModelException.class)
+    @Test(expected=TemplateModelException.class)
     public final void testExecuteWithInvalidLoopVars() throws Exception
     {
         loopVars = new TemplateModel[] { null, null };

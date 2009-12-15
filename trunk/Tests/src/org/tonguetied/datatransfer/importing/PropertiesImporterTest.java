@@ -217,7 +217,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
         assertEquals(defaultLanguage, actualTranslation.getLanguage());
         assertEquals(bundle1, actualTranslation.getBundle());
         assertEquals(expectedState, actualTranslation.getState());
-        assertEquals("value 5 \\nnew line", actualTranslation.getValue());
+        assertEquals("value 5 \nnew line", actualTranslation.getValue());
     }
 
     /**
@@ -297,7 +297,7 @@ public final class PropertiesImporterTest extends AbstractServiceTest
         assertEquals(defaultLanguage, actualTranslation.getLanguage());
         assertEquals(bundle2, actualTranslation.getBundle());
         assertEquals(expectedState, actualTranslation.getState());
-        assertEquals("value 5 \\nnew line", actualTranslation.getValue());
+        assertEquals("value 5 \nnew line", actualTranslation.getValue());
     }
 
     /**
@@ -590,81 +590,6 @@ public final class PropertiesImporterTest extends AbstractServiceTest
         final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
                 .getImporter(FormatType.properties, keywordService, transferRepository);
         assertFalse(importer.isCountryCode(null));
-    }
-
-    /**
-     * Test the logic of the {@link PropertiesImporter#evaluateValue(String)}
-     * method with a <code>null</code> input value.
-     */
-    public final void testEvaluateValueWithNull()
-    {
-        final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
-                .getImporter(FormatType.properties, keywordService, transferRepository);
-        final String actual = importer.evaluateValue(null);
-        assertNull(actual);
-    }
-
-    /**
-     * Test the logic of the {@link PropertiesImporter#evaluateValue(String)}
-     * method with an empty string input value.
-     */
-    public final void testEvaluateValueEmptyString()
-    {
-        final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
-                .getImporter(FormatType.properties, keywordService, transferRepository);
-        final String actual = importer.evaluateValue("");
-        assertNull(actual);
-    }
-
-    /**
-     * Test the logic of the {@link PropertiesImporter#evaluateValue(String)}
-     * method with an input value containing Java escape characters.
-     */
-    public final void testEvaluateValueWithEscapeChars()
-    {
-        final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
-                .getImporter(FormatType.properties, keywordService, transferRepository);
-        final String actual = importer.evaluateValue("abc\t123\nnew line");
-        assertEquals("abc\\t123\\nnew line", actual);
-    }
-
-    /**
-     * Test the logic of the {@link PropertiesImporter#evaluateValue(String)}
-     * method with an input value containing Java escape characters.
-     */
-    public final void testEvaluateValueWithAlreadyEscapedValue()
-    {
-        final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
-                .getImporter(FormatType.properties, keywordService, transferRepository);
-        final String escapedString = "abc\\t123\\nnew line";
-        final String actual = importer.evaluateValue(escapedString);
-        assertEquals("abc\\t123\\nnew line", actual);
-    }
-
-    /**
-     * Test the logic of the {@link PropertiesImporter#evaluateValue(String)}
-     * method with an input value containing unicode characters.
-     */
-    public final void testEvaluateValueWithUnicodeValue()
-    {
-        final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
-                .getImporter(FormatType.properties, keywordService, transferRepository);
-        final String escapedString = "\u4e2d\u6587";
-        final String actual = importer.evaluateValue(escapedString);
-        assertEquals("\\u4E2D\\u6587", actual);
-    }
-
-    /**
-     * Test the logic of the {@link PropertiesImporter#evaluateValue(String)}
-     * method with a plain string input value.
-     */
-    public final void testEvaluateValue()
-    {
-        final PropertiesImporter importer = (PropertiesImporter) ImporterFactory
-                .getImporter(FormatType.properties, keywordService, transferRepository);
-        final String plainString = "plain value";
-        final String actual = importer.evaluateValue(plainString);
-        assertEquals(plainString, actual);
     }
 
     @Override

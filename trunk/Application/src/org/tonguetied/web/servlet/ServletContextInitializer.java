@@ -19,6 +19,7 @@ import static org.tonguetied.utils.database.Constants.KEY_HIBERNATE_DIALECT;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -135,6 +136,10 @@ public class ServletContextInitializer implements ServletContextListener
 //                administrationService.createDatabase(schemas);
                 administrationService.saveOrUpdate(curServerData);
             }
+        }
+        if (logger.isInfoEnabled())
+        {
+            logger.info("Charset for this JVM: " + Charset.defaultCharset());
         }
     }
 
