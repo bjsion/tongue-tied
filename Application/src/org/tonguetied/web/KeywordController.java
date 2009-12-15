@@ -81,8 +81,8 @@ private KeywordService keywordService;
             throws Exception
     {
         final Long id = RequestUtils.getLongParameter(request, KEYWORD_ID);
-        Keyword keyword = keywordService.getKeyword(id);
-        if (keyword == null)
+        Keyword keyword;
+        if (id == null)
         {
             final String creationType = request.getParameter("creationType");
             final Bundle bundle = keywordService.getDefaultBundle();
@@ -106,6 +106,10 @@ private KeywordService keywordService;
                 keyword = new Keyword();
             }
         }
+        else
+        {
+            keyword = keywordService.getKeyword(id);
+        }
         
         return keyword;
     }
@@ -116,25 +120,28 @@ private KeywordService keywordService;
                                     Object command,
                                     BindException errors) throws Exception
     {
-        if (logger.isDebugEnabled()) logger.debug("saving keyword");
         Keyword keyword = (Keyword) command;
         
         ModelAndView modelAndView;
         if (request.getParameter("add") != null)
         {
+            if (logger.isDebugEnabled()) logger.debug("adding translation");
             modelAndView = addTranslation(request, response, errors, keyword);
         }
         else if (request.getParameter("delete") != null)
         {
+            if (logger.isDebugEnabled()) logger.debug("deleting keyword");
             modelAndView = deleteKeyword(keyword);
         }
         else if (request.getParameter("deleteTranslation") != null)
         {
+            if (logger.isDebugEnabled()) logger.debug("deleting translation");
             modelAndView = 
                 deleteTranslation(request, response, errors, keyword);
         }
         else
         {
+            if (logger.isDebugEnabled()) logger.debug("saving keyword");
             modelAndView = saveKeyword(keyword);
         }
         

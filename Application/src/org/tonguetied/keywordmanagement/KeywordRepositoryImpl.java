@@ -262,6 +262,8 @@ public class KeywordRepositoryImpl extends HibernateDaoSupport implements
 
     public void delete(Keyword keyword)
     {
+        // remove any previously loaded entities before deleting the keyword
+        getSession().clear();
         getSession().delete(keyword);
     }
 }
