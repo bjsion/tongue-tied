@@ -115,6 +115,25 @@ private KeywordService keywordService;
     }
 
     @Override
+    protected boolean isFormSubmission(HttpServletRequest request)
+    {
+        return super.isFormSubmission(request) || 
+            isDeleteTranslationRequest(request);
+    }
+
+    /**
+     * Determine if this request was a delete translation request.
+     * 
+     * @param request the current request to process
+     * @return <code>true</code> if the request was to delete translations,
+     * <code>false</code> otherwise
+     */
+    private boolean isDeleteTranslationRequest(HttpServletRequest request)
+    {
+        return request.getParameter("deleteTranslation") != null;
+    }
+
+    @Override
     protected ModelAndView onSubmit(HttpServletRequest request, 
                                     HttpServletResponse response,
                                     Object command,

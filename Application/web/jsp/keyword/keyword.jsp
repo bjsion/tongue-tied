@@ -79,7 +79,10 @@
                                 <fmt:param value="${translation.country.name}"/>
                                 <fmt:param value="${translation.bundle.name}"/>
                             </fmt:message>
-                            <input type="image" src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" name="deleteTranslation" value="${translationId}" class="deleteImageButton" onclick="return confirm('${fn:escapeXml(confirmDeleteTranslationMsg)}')"/>
+                            <c:url value="keyword.htm" var="deleteTranslationUrl" scope="page"><c:param name="deleteTranslation" value="${translationId}"/></c:url>
+                            <a href="${deleteTranslationUrl}" onclick="return confirm('${fn:escapeXml(confirmDeleteTranslationMsg)}')">
+                                <img src="<c:url value="images/delete.png"/>" alt="<fmt:message key="delete"/>" title="<fmt:message key="delete"/>" class="img-link"/>
+                            </a>
                             </security:authorize>
                         </td>
                         <td>
