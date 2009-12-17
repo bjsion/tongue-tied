@@ -21,7 +21,7 @@
 </head>
 <body>
     <h1><fmt:message key="error.system.error"/></h1>
-    <p>
+    <p/>
         <dl id="errorList">
             <dt class="error"><fmt:message key="error.page.message"/></dt>
             <dd>
@@ -33,7 +33,6 @@
                 </code>
             </dd>
         </dl>
-    </p>
 </body>
 </fmt:bundle>
 </html>
