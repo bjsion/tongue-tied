@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="ApplicationExec" default="usage" basedir=".">
+    <description>
+        This project is a set of helper targets for the TongueTied project. The
+        primary use of these targets is for use in an automated build 
+        environment. Developers though, can use these targets as needed.
+    </description>
+
+    <property name="app.root" value="${basedir}/../"/>
+    
+    <property file="${app.root}/BuildInfra/global.properties"/>  
+
+    <property name="db.url" value="jdbc:hsqldb:hsql://localhost"/>
+    <property name="db.name" value="tonguetied"/>
+    <property name="db.port" value="9010"/>
+    <property name="db.user" value="sa"/>
+    <property name="db.pw" value=""/>
+    <property name="db.path" value="${app.root}/data/${db.name}"/>
+
+    <!-- temporary directories and files -->
+    <property name="classes.dir" value="classes"/>
+    <property name="generated.dir" value="generated"/>
+    <property name="fmpp.log.file" value="${generated.dir}/fmpp.log"/>
+    
+    <path id="db.server.classpath">
+        <pathelement location="${3rdparty.home}/HSQLDB/1.8.0.9/hsqldb.jar"/>
+    </path>
+
+    <path id="tonguetied.server.classpath">
+        <pathelement location="${server.home}/builds/jettyServer.jar"/>
+        <pathelement location="${3rdparty.home}/Jetty/6.1.9/jetty.jar"/>
+        <pathelement location="${3rdparty.home}/Log4j/1.2.15/log4j.jar"/>
+        <pathelement location="${3rdparty.home}/Jetty/5.1.5/javax.servlet.jar"/>
+        <pathelement location="${3rdparty.home}/Ant/1.7.0/ant.jar"/>
+        <pathelement location="${server.home}/builds/server.jar"/>
+        <pathelement location="${3rdparty.home}/Spring/2.5.4/spring.jar"/>
+        <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-logging.jar"/>
+        <pathelement location="${3rdparty.home}/Quartz/1.5.2/quartz.jar"/>
+        <pathelement location="${3rdparty.home}/Hibernate/3.3.1/hibernate3.jar"/>
+    </path>
+    
+    <target name="init">
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${generated.dir}"/>
+    </target>
+
+    <target name="usage">
+        <echo message="Use ant -p for target description"></echo>
+    </target>
+    
+    <target name="start.hsql.db" description="Start the HyperSonic Database server">
+        <echo message="Starting HyperSonic Database server..."/>
+        <java classname="org.hsqldb.Server" fork="true">
+            <classpath refid="db.server.classpath"/>
+            <!--arg value="-?"/-->
+            <arg value="-database"/>
+            <arg value="${db.path}"/>
+            <arg value="-dbname"/>
+            <arg value="${db.name}"/>
+            <arg value="-port"/>
+            <arg value="${db.port}"/>
+        </java>
+    </target>
+
+    <target name="stop.hsql.db" description="Shutdown the HyperSonic Database server">
+        <echo message="Stopping HyperSonic Database server..."/>
+        <sql driver="${tonguetied.db.driver}"
+             url="${db.url}:${db.port}/${db.name}"
+             classpathref="db.server.classpath"
+             autocommit="true"
+             password="${db.pw}"
+             userid="${db.user}">
+            <transaction>shutdown;</transaction>
+        </sql>
+    </target>
+    
+    <target name="start.server" description="Start the TongueTied server with Jetty">
+        <echo message="Starting TongueTied server..."/>
+        <java classname="org.tonguetied.server.Server" fork="false">
+            <classpath refid="tonguetied.server.classpath"/>
+            <classpath refid="temporary.server.path"/>
+            <arg value="-w"/>
+            <arg value="${server.home}/builds/tonguetied.war"/>
+            <arg value="-keystore"/>
+            <arg value="${server.home}/generated/keystore"/>
+        </java>
+    </target>
+    
+    <target name="stop.server" description="Stop the TongueTied server">
+        <echo message="Stopping TongueTied server..."/>
+        <java classname="org.tonguetied.server.Server" fork="false">
+            <classpath refid="tonguetied.server.classpath"/>
+            <arg value="-shutdown"/>
+        </java>
+    </target>
+</project>
