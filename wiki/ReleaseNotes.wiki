@@ -1,6 +1,12 @@
 #summary Release Note.
 #labels Phase-Deploy,Featured
 
+= 1.3.2 =
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=85 Issue 85] Import badly recognized properties files format escape sequences
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=86 Issue 86] Cannot delete keywords from edit keyword page in Internet Explorer
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=87 Issue 87] Replace hand coded js with jquery
+
+
 = 1.3.1 =
  * Minor Cosmetic UI changes
  * [http://code.google.com/p/tongue-tied/issues/detail?id=82 Issue 82] Deletion of a translation failed
