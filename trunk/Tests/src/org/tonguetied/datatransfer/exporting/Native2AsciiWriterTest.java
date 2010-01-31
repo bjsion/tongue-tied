@@ -70,7 +70,7 @@ public class Native2AsciiWriterTest {
     public final void testWriteUnicodeOnlyInput() throws Exception
     {
         final String expected = "\\u00f9\\u00f9\\u00e9\\u00e8\\u00e7\\u00e0";
-        final char[] charArray = {'ù','ù','é','è','ç','à'};
+        final char[] charArray = {'Ã¹','Ã¹','Ã©','Ã¨','Ã§','Ã '};
         writer.write(charArray, 0, charArray.length);
         StringBuffer buffer = out.getBuffer();
         assertEquals(expected, buffer.toString());
@@ -110,7 +110,7 @@ public class Native2AsciiWriterTest {
     public final void testWriteAsciiAndUnicodeInput() throws Exception
     {
         final String expected = "fromag\\u00e8";
-        final char[] charArray = {'f','r','o','m','a','g','è'};
+        final char[] charArray = {'f','r','o','m','a','g','Ã¨'};
         writer.write(charArray, 0, charArray.length);
         StringBuffer buffer = out.getBuffer();
         assertEquals(expected, buffer.toString());
