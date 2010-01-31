@@ -22,6 +22,6 @@
         <@pp.changeOutputFile name="${newFileName}" append=true/>
     </#if>
     <#if (translation.value!)?length gt 0>
-<@native2ascii>${translation.keyword.keyword}</@native2ascii>=<@native2ascii>${translation.value}</@native2ascii>
+<@native2ascii iskey=true>${translation.keyword.keyword}</@native2ascii>=<@native2ascii>${translation.value}</@native2ascii>
     </#if>
 </#list>
