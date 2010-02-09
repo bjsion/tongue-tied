@@ -31,11 +31,15 @@ public class ServerDataComparabilityTest extends ComparabilityTestCase
     private static final long TICKS_EQUALS = new Date().getTime();
     private static final long TICKS_GREATER = new Date().getTime() + 999999999;
     private static final long TICKS_LESSER = new Date().getTime() - 999999999;
+    
+    private static final Date DATE_EQUALS = new Date(TICKS_EQUALS);
+    private static final Date DATE_GREATER = new Date(TICKS_GREATER);
+    private static final Date DATE_LESSER = new Date(TICKS_LESSER);
 
     /**
      * @param name
      */
-    public ServerDataComparabilityTest(String name)
+    public ServerDataComparabilityTest(final String name)
     {
         super(name);
     }
@@ -43,18 +47,24 @@ public class ServerDataComparabilityTest extends ComparabilityTestCase
     @Override
     protected Comparable<ServerData> createEqualInstance() throws Exception
     {
-        return new ServerData("1.1.0", "0012", new Date(TICKS_EQUALS));
+        ServerData serverData = new ServerData("1.1.0", "0012", DATE_EQUALS);
+        serverData.setSetupDate(DATE_EQUALS);
+        return serverData;
     }
 
     @Override
     protected Comparable<ServerData> createGreaterInstance() throws Exception
     {
-        return new ServerData("1.10.0", "1024", new Date(TICKS_GREATER));
+        ServerData serverData =  new ServerData("1.10.0", "1024", DATE_GREATER);
+        serverData.setSetupDate(DATE_EQUALS);
+        return serverData;
     }
 
     @Override
     protected Comparable<ServerData> createLessInstance() throws Exception
     {
-        return new ServerData("1.0.9", "5824", new Date(TICKS_LESSER));
+        ServerData serverData =  new ServerData("1.0.9", "5824", DATE_LESSER);
+        serverData.setSetupDate(DATE_EQUALS);
+        return serverData;
     }
 }
