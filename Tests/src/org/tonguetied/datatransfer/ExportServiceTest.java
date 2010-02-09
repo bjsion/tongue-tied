@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.zip.ZipEntry;
@@ -456,15 +457,19 @@ public class ExportServiceTest extends AbstractServiceTest
                 ".zip"));
         assertEquals(1, files.length);
         ZipInputStream zis = null;
+        final String[] fileNames = {"temp", "temp_en"};
         try
         {
             zis = new ZipInputStream(new FileInputStream(files[0]));
             ZipEntry zipEntry = zis.getNextEntry();
-            assertEquals("temp", zipEntry.getName());
+            Arrays.binarySearch(fileNames, zipEntry.getName());
             zis.closeEntry();
             zipEntry = zis.getNextEntry();
-            assertEquals("temp_en", zipEntry.getName());
+            Arrays.binarySearch(fileNames, zipEntry.getName());
             zis.closeEntry();
+            
+            // confirm that there are no more files in the archive
+            assertEquals(0, zis.available());
         }
         finally
         {
