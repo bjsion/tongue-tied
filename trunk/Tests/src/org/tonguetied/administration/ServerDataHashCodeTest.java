@@ -39,7 +39,6 @@ public class ServerDataHashCodeTest extends EqualsHashCodeTestCase
     protected Object createInstance() throws Exception
     {
         ServerData serverData = new ServerData("2.0.1", "5684", BUILD_DATE);
-        serverData.setSetupDate(BUILD_DATE);
 
         return serverData;
     }
@@ -48,7 +47,6 @@ public class ServerDataHashCodeTest extends EqualsHashCodeTestCase
     protected Object createNotEqualInstance() throws Exception
     {
         ServerData serverData = new ServerData("2.0.1", "6455", BUILD_DATE);
-        serverData.setSetupDate(BUILD_DATE);
 
         return serverData;
     }

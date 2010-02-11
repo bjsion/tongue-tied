@@ -276,8 +276,7 @@ public class AuditLogRecord
                     append(username, other.username).
                     append(oldValue, other.oldValue).
                     append(newValue, other.newValue).
-                    append(created, other.created).
-                    isEquals();  
+                    isEquals();
         }
             
         return isEqual;
@@ -293,7 +292,6 @@ public class AuditLogRecord
                     append(entityId).
                     append(entityClass).
                     append(username).
-                    append(created).
                     toHashCode();
         
         return hashCode;

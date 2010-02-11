@@ -48,7 +48,6 @@ public class ServerDataComparabilityTest extends ComparabilityTestCase
     protected Comparable<ServerData> createEqualInstance() throws Exception
     {
         ServerData serverData = new ServerData("1.1.0", "0012", DATE_EQUALS);
-        serverData.setSetupDate(DATE_EQUALS);
         return serverData;
     }
 
@@ -56,7 +55,6 @@ public class ServerDataComparabilityTest extends ComparabilityTestCase
     protected Comparable<ServerData> createGreaterInstance() throws Exception
     {
         ServerData serverData =  new ServerData("1.10.0", "1024", DATE_GREATER);
-        serverData.setSetupDate(DATE_EQUALS);
         return serverData;
     }
 
@@ -64,7 +62,6 @@ public class ServerDataComparabilityTest extends ComparabilityTestCase
     protected Comparable<ServerData> createLessInstance() throws Exception
     {
         ServerData serverData =  new ServerData("1.0.9", "5824", DATE_LESSER);
-        serverData.setSetupDate(DATE_EQUALS);
         return serverData;
     }
 }
