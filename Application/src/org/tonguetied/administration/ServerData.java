@@ -205,7 +205,7 @@ public class ServerData implements Comparable<ServerData>
     public int hashCode()
     {
         HashCodeBuilder builder = new HashCodeBuilder(31, 29);
-        builder.append(version).append(buildNumber).append(buildDate).append(setupDate);
+        builder.append(version).append(buildNumber).append(buildDate);
 
         return builder.toHashCode();
     }
@@ -226,8 +226,7 @@ public class ServerData implements Comparable<ServerData>
             EqualsBuilder builder = new EqualsBuilder();
             builder.append(version, other.version).
                 append(buildNumber, other.buildNumber).
-                append(buildDate, other.buildDate).
-                append(setupDate, other.setupDate);
+                append(buildDate, other.buildDate);
             
             isEqual = builder.isEquals();
         }
