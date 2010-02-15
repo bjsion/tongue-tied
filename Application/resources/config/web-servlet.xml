@@ -208,6 +208,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="successView" value="redirect:/keywords.htm"/>
         <property name="cancelView" value="redirect:/keywords.htm"/>
         <property name="keywordService" ref="keywordService"/>
+        <property name="viewPreferences" ref="viewPreferences"/>
     </bean>
 
     <bean name="keywordSearchController" class="org.tonguetied.web.KeywordSearchController">

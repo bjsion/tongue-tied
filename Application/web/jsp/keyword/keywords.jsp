@@ -188,10 +188,10 @@
                 <display:table name="${translations}" id="translation" htmlId="translationTable${keyword_rowNum}" class="sublist">
                     <c:choose>
                         <c:when test="${applyFilter}">
-                            <fmt:message key="translation.filtered.sublist.msg.empty_list" var="emptyListMsg" scope="page"/>
+                            <fmt:message key="translation.filtered.sublist.msg.empty.list" var="emptyListMsg" scope="page"/>
                         </c:when>
                         <c:otherwise>
-                            <fmt:message key="translation.sublist.msg.empty_list" var="emptyListMsg" scope="page"/>
+                            <fmt:message key="translation.sublist.msg.empty.list" var="emptyListMsg" scope="page"/>
                         </c:otherwise>
                     </c:choose>
                     <display:setProperty name="basic.msg.empty_list" value="${emptyListMsg}"/>

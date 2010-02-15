@@ -94,6 +94,7 @@ public class KeywordValidatorTest
 
         Translation translation3 = new Translation();
         translation3.setState(TranslationState.VERIFIED);
+        
         Translation translation4 = new Translation();
         
         return Arrays.asList(new Object[][] {

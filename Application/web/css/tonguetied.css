@@ -118,12 +118,12 @@ div.side-panel-header-bar {
 
 div.side-panel-header-bar a {
   float: right;
-  padding: none;
+  padding: 0;
   vertical-align: top;
 }
 
 div.side-panel-header-bar a img {
-  padding: none;
+  padding: 0;
   width: 2em;
   height: 2em;
 }
