@@ -226,6 +226,8 @@ public class ExportServiceTest extends AbstractServiceTest
         dataService.exportData(parameters);
 
         final File exportDir = dataService.getExportPath();
+        if (logger.isInfoEnabled())
+            logger.info("reading files from: " + exportDir.getAbsolutePath());
         File[] files = exportDir.listFiles(new FileExtensionFilter(
                 FormatType.xls.getDefaultFileExtension()));
         // assertEquals(1, files.length);
