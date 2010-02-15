@@ -31,7 +31,6 @@
     <property name="docs.api.dir" value="${docs.dir}/api"/>
     <property name="logs.dir" value="${server.home}/logs"/>
     <property name="docs.findbugs.dir" value="${docs.dir}/findbugs"/>
-    <property name="build.details.file" value="${generated.dir}/buildNumber.properties"/>
     <property name="keystore.file" value="${generated.dir}/keystore"/>
 
 
@@ -77,6 +76,7 @@
                destdir="${classes.dir}"
                debug="${build.debug}"
                optimize="off"
+               encoding="UTF-8"
                deprecation="off">
             <include name="**/*.java"/>
             <classpath refid="compile.classpath" />
