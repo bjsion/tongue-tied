@@ -24,6 +24,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Language;
+import org.tonguetied.keywordmanagement.Translation;
 
 
 /**
@@ -154,6 +155,26 @@ public class PreferenceForm
     public void setMaxResults(int maxResults)
     {
         this.maxResults = maxResults;
+    }
+
+    /**
+     * Determine if a filter on keyword {@link Translation}'s should be applied.
+     * The filter should only be applied if there are values for the country, or
+     * the bundle or the language.
+     * 
+     * @return <code>true</code> if the filter should be applied, 
+     * <code>false</code> otherwise
+     */
+    public boolean isTranslationFilterApplied()
+    {
+        return isListFiltered(this.selectedBundles) || 
+            isListFiltered(this.selectedCountries) || 
+            isListFiltered(this.selectedLanguages);
+    }
+    
+    private boolean isListFiltered(List<?> list)
+    {
+        return list == null? false: !list.isEmpty();
     }
 
     /**

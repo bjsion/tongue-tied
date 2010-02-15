@@ -32,8 +32,25 @@
                 <form:errors path="context" cssClass="error"/>
             </div>
             <form:errors path="translations" cssClass="error"/>
+            <c:choose>
+                <c:when test="${empty keyword.translations && sessionScope.applyFilter}">
+                <div><p><fmt:message key="translation.filtered.sublist.msg.empty.list"/></p></div>
+                </c:when>
+                <c:otherwise>
+            <c:if test="${sessionScope.applyFilter}">
+            </c:if>
             <table>
-                <caption><fmt:message key="translations"/></caption>
+                <caption>
+                <c:choose>
+                    <c:when test="${sessionScope.applyFilter}">
+                <img src="<c:url value="images/information.png"/>" alt="<fmt:message key="information"/>" title="<fmt:message key="information"/>"/>
+                <fmt:message key="translation.filter.on"/>
+                    </c:when>
+                    <c:otherwise>
+                <fmt:message key="translations"/>
+                    </c:otherwise>
+                </c:choose>
+                </caption>
                 <colgroup>
                     <col class="action"/>
                     <col class="language"/>
@@ -147,6 +164,8 @@
                     </c:forEach>
                 </tbody>
             </table>
+                </c:otherwise>
+            </c:choose>
         </fieldset>
         <div class="submit">
             <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN,ROLE_DEV">

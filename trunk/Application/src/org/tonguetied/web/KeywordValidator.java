@@ -82,7 +82,7 @@ public class KeywordValidator implements Validator
             }
             // check for duplicates of existing keywords
             else if (!keyword.getId().equals(other.getId()))
-        	{
+            {
                 errors.rejectValue(FIELD_KEYWORD,
                         "error.keyword.already.exists", 
                         new String[] {keyword.getKeyword() },
@@ -98,7 +98,7 @@ public class KeywordValidator implements Validator
      * @param translations the set of {@link Translation}s to validate
      * @param errors contextual state about the validation process (never null)
      */
-    private void validateDuplicates(SortedSet<Translation> translations, Errors errors)
+    protected void validateDuplicates(SortedSet<Translation> translations, Errors errors)
     {
         Collection<Translation> output;
         TranslationPredicate predicate;
@@ -134,7 +134,6 @@ public class KeywordValidator implements Validator
             }
         }
     }
-
     /**
      * This validation method checks if the set of {@link Translation}s for a 
      * {@link Keyword} contains duplicate entries for new values of the 

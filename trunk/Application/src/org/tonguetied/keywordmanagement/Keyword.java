@@ -34,7 +34,6 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.SetUtils;
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -182,7 +181,7 @@ public class Keyword implements DeepCloneable<Keyword>, Comparable<Keyword>,
             throw new IllegalArgumentException("translationId cannot be null");
             
         Translation translation = (Translation) CollectionUtils.find(
-                translations, new TranslationPredicate(translationId));
+                translations, new TranslationIdPredicate(translationId));
         if (translation == null)
         {
             Translation[] array = new Translation[this.translations.size()];
@@ -337,43 +336,5 @@ public class Keyword implements DeepCloneable<Keyword>, Comparable<Keyword>,
         builder.append("]]");
         
         return builder.toString();
-    }
-
-    /**
-     * This predicate is used to find {@link Translation}s based off its 
-     * primary key.
-     * 
-     * @author bsion
-     *
-     */
-    protected static class TranslationPredicate implements Predicate
-    {
-        private Long id;
-        
-        /**
-         * Create a new instance of TranslationPredicate.
-         * 
-         * @param id the <code>id</code> of the translation to find
-         */
-        public TranslationPredicate(final Long id)
-        {
-            this.id = id;
-        }
-        
-        /** 
-         * Evaluate if a {@link Translation}s business keys are equal. This  
-         * method evaluates if the {@link Language}, {@link Bundle} and
-         * {@link Country} are equal
-         * 
-         * @return <code>true</code> if the {@link Translation} business keys
-         * match. <code>false</code> otherwise
-         * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
-         */
-        public boolean evaluate(Object object)
-        {
-            final Translation translation = (Translation) object;
-            
-            return id.equals(translation.getId());
-        }
     }
 }

@@ -48,6 +48,7 @@ import org.junit.runners.Suite.SuiteClasses;
     TranslationComparabilityTest.class,
     TranslationEqualsHashCodeTest.class,
     TranslationIdComparatorTest.class,
+    TranslationIdPredicateTest.class,
     TranslationKeyowrdPredicateTest.class,
     TranslationPersistenceTest.class,
     TranslationPredicateTest.class,

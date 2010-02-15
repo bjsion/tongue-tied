@@ -100,23 +100,12 @@ public class PreferenceController extends SimpleFormController
         if (logger.isDebugEnabled()) 
             logger.debug("setting view preferences");
         
-        request.getSession().setAttribute(APPLY_FILTER, isFilterApplied());
+        request.getSession().setAttribute(APPLY_FILTER, 
+                viewPreferences.isTranslationFilterApplied());
 
         return new ModelAndView(getSuccessView());
     }
     
-    private boolean isFilterApplied()
-    {
-        return (isFilterApplied(viewPreferences.getSelectedBundles()) ||
-                isFilterApplied(viewPreferences.getSelectedCountries()) ||
-                isFilterApplied(viewPreferences.getSelectedLanguages()));
-    }
-    
-    private boolean isFilterApplied(List<?> list)
-    {
-        return list == null? false: !list.isEmpty();
-    }
-
     @Override
     protected Map<String, Object> referenceData(HttpServletRequest request) 
             throws Exception 

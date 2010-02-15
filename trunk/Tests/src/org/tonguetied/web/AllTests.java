@@ -52,6 +52,7 @@ import org.junit.runners.Suite.SuiteClasses;
     PermissionSupportTest.class,
     PreferenceFilterTest.class,
     PreferenceFormEqualsHashCodeTest.class,
+    PreferenceFormTest.class,
     RequestUtilsTest.class,
     SearchFormTest.class,
     TranslationStateSupportTest.class,
