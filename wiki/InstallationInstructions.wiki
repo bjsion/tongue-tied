@@ -42,9 +42,5 @@ Now open http://localhost:8080/tonguetied (or what ever IP address you have put 
   # Open the !TongueTied URL for example http://localhost:8080/tonguetied.
 
 
-=== Upgrading from 1.0.0 to 1.1.0 ===
-See the [UpgradeTo110 Upgrade to 1.1.0] page.
-
-
 
 *Next*: [GettingStarted Getting started]
