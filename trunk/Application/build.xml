@@ -375,6 +375,7 @@
                 <include name="tonguetied*.properties"/>
                 <include name="displaytag*.properties"/>
                 <include name="language.properties"/>
+                <include name="velocity.properties"/>
                 <include name="ehcache.xml"/>
             </classes>
             <classes dir="${generated.dir}">
