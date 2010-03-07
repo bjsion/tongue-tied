@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Use "ant -p" to see a description of tasks -->
+<project name="server" xmlns:ivy="antlib:org.apache.ivy.ant" default="build" basedir=".">
+
+    <property environment="env"/>
+
+    <property name="app.root" value="${basedir}/../"/>
+
+    <property file="${app.root}/BuildInfra/global.properties"/>
+
+    <property name="module.jarfile" value="${ant.project.name}.jar"/>
+    <property name="module.src.jarfile" value="${ant.project.name}-src.jar"/>
+
+    <property name="src.dir" value="${server.home}/src"/>
+    <property name="resources.dir" value="${server.home}/resources"/>
+    <property name="config.dir" value="${resources.dir}/config"/>
+    <property name="findbugs.home" value="${3rdparty.home}/findbugs/1.3.9"/>
+    <property name="findbugs.xml.file" value="${ant.project.name}-bug-report.xml"/>
+    <property name="web.server.root" value="${user.dir}/tonguetied/webapp"/>
+    <property name="web.server.css" value="${web.server.root}/css"/>
+    <property name="web.server.images" value="${web.server.root}/images"/>
+    <property name="web.server.scripts" value="${web.server.root}/scripts"/>
+    <property name="web.server.webinf" value="${web.server.root}/WEB-INF"/>
+
+    <!-- temporary directories and files-->
+    <property name="classes.dir" value="${server.home}/classes"/>
+    <property name="build.dir" value="${server.home}/builds"/>
+    <property name="docs.dir" value="${server.home}/docs"/>
+    <property name="generated.dir" value="${server.home}/generated"/>
+    <property name="docs.api.dir" value="${docs.dir}/api"/>
+    <property name="logs.dir" value="${server.home}/logs"/>
+    <property name="docs.findbugs.dir" value="${docs.dir}/findbugs"/>
+    <property name="keystore.file" value="${generated.dir}/keystore"/>
+
+
+    <property name="build.debug" value="on"/>
+
+    <path id="compile.classpath">
+        <pathelement location="${3rdparty.home}/Jetty/6.1.9/jetty.jar"/>
+        <pathelement location="${3rdparty.home}/Jetty/6.1.9/jetty-util.jar"/>
+        <pathelement location="${3rdparty.home}/Jakarta-Commons/commons-cli-1.1.jar"/>
+        <pathelement location="${3rdparty.home}/Log4j/1.2.15/log4j.jar"/>
+        <pathelement location="${3rdparty.home}/Jetty/6.1.9/servlet-api-2.5.jar"/>
+    </path>
+
+    <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
+        <classpath path="${findbugs.home}/lib/findbugs-ant.jar"/>
+    </taskdef>
+
+    <target name="init">
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${docs.dir}"/>
+        <mkdir dir="${docs.findbugs.dir}"/>
+        <mkdir dir="${generated.dir}"/>
+        <mkdir dir="${logs.dir}"/>
+        <available file="${keystore.file}" property="is.keystore.available"/>
+    </target>
+
+    <target name="clean.classes" description="Remove all compiled classes">
+        <echo message="Cleaning ${ant.project.name} ..."/>
+        <delete dir="${classes.dir}" failonerror="true" deleteonexit="true"/>
+    </target>
+
+    <target name="clean" depends="clean.classes" description="Remove all generated files, including but not limited to classes, log files and jar files">
+        <delete dir="${build.dir}" failonerror="true" deleteonexit="true"/>
+        <delete dir="${docs.dir}" failonerror="true" deleteonexit="true"/>
+        <delete dir="${generated.dir}" failonerror="true" deleteonexit="true"/>
+        <delete dir="${logs.dir}" failonerror="true" deleteonexit="true"/>
+    </target>
+
+    <target name="compile" depends="init" description="Generate all the class files for this module">
+        <echo message="Compiling module ${ant.project.name} ..."/>
+        <javac srcdir="${src.dir}"
+               destdir="${classes.dir}"
+               debug="${build.debug}"
+               optimize="off"
+               encoding="UTF-8"
+               deprecation="off">
+            <include name="**/*.java"/>
+            <classpath refid="compile.classpath" />
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile" description="Generate the Java Archive files and put it an accessible location for other projects">
+        <echo message="Generating jar file for module ${ant.project.name} ..."/>
+        <jar jarfile="${build.dir}/${module.jarfile}">
+            <zipfileset dir="${classes.dir}">
+                <include name="**/*.class"/>
+            </zipfileset>
+        </jar>
+    </target>
+
+    <target name="jar-src" description="Generate the Java Archive files for the source files">
+        <echo message="Generating jar file of source for module ${ant.project.name} ..."/>
+        <jar jarfile="${build.dir}/${module.src.jarfile}">
+            <zipfileset dir="${src.dir}">
+                <include name="**/*.*"/>
+            </zipfileset>
+        </jar>
+    </target>
+
+    <target name="gen.key" depends="init" description="Generate the keystore for this server" unless="is.keystore.available">
+        <echo message="Generating keystore for module ${ant.project.name} ..."/>
+        <genkey alias="tonguetied" storepass="abc123" keystore="${keystore.file}">
+            <dname>
+                <param name="CN" value="Google Code"/>
+                <param name="OU" value="Tongue Tied"/>
+            </dname>
+        </genkey>
+    </target>
+
+    <target name="build" depends="validate.xml, set.server.props, jar, jar-src, gen.key" description="Compile entire module and validate xml files"/>
+
+    <target name="validate.xml" description="Validate XML configuration files" >
+        <echo message="validating XML in module ${ant.project.name}..." />
+    </target>
+
+    <target name="set.server.props">
+        <description>Dynamically set the server properties</description>
+        <echo message="Setting server settings for the build mode"/>
+        <property file="${config.dir}/${build.mode.file}"/>
+        <copy file="${config.dir}/embeddedServer.properties" 
+              tofile="${generated.dir}/embeddedServer.properties"
+              overwrite="true">
+            <filterchain>
+                <expandproperties/>
+            </filterchain>
+        </copy>
+    </target>
+
+    <target name="javadoc" depends="init" description="Generate the javadoc for this module">
+        <echo message="Generating java api documentation for module ${ant.project.name}..."/>
+        <javadoc destdir="${docs.api.dir}"
+                 useexternalfile="true"
+                 author="true"
+                 version="true"
+                 use="true"
+                 classpathref="compile.classpath"
+                 windowtitle="${ant.project.name} API">
+            <doctitle><![CDATA[<h1>]]>${application.name}:- ${ant.project.name}<![CDATA[</h1>]]></doctitle>
+            <bottom><![CDATA[<i>Copyright &#169; 2008 Ben Sion. All Rights Reserved.</i>]]></bottom>
+            <fileset dir="${src.dir}" includes="**/*.java"/>
+        </javadoc>
+    </target>
+
+    <target name="analyze.code" depends="init" description="Inspect Java bytecode for occurrences of bug patterns using a static analysis tool">
+        <echo message="Performing code analysis on module ${ant.project.name}..."/>
+        <findbugs home="${findbugs.home}"
+                  reportlevel="low"
+                  effort="max"
+                  jvmargs="-Xmx256M"
+                  output="xml:withMessages"
+                  outputFile="${docs.findbugs.dir}/${findbugs.xml.file}">
+            <auxclasspath refid="compile.classpath"/>
+            <sourcepath path="${src.dir}"/>
+            <class location="${build.dir}/${module.jarfile}"/>
+        </findbugs>
+        <xslt in="${docs.findbugs.dir}/${findbugs.xml.file}"
+              out="${docs.findbugs.dir}/${findbugs.xml.file}.html"
+              style="${findbugs.home}/src/xsl/fancy.xsl">
+            <outputproperty name="method" value="html"/>
+        </xslt>
+    </target>
+</project>
