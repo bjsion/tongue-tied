@@ -1,0 +1,11 @@
+#summary Reference for Frequently Asked Questions.
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+1 TongueTied fails to start in Tomcat after being deployed in Linux.
+This is related to the tomcat security manager. In the file /etc/init.d/tomcat6 change the value TOMCAT_SECURITY=yes to TOMCAT_SECURITY=no. Please note this is a temporary solution until a better recommendation can be made.
