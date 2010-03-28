@@ -51,10 +51,10 @@ public class DirectoryViewController extends AbstractController
         if (logger.isDebugEnabled())
             logger.debug("homePath = " + homePath);
         
-        FileBean baseDirectory = new FileBean(homePath);
+        final FileBean baseDirectory = new FileBean(homePath);
         if (logger.isInfoEnabled())
             logger.info("displaying contents of basedir = " + baseDirectory);
-        int lastIndex = servletPath.lastIndexOf("/");
+        final int lastIndex = servletPath.lastIndexOf("/");
         final String[] parents;
         if (lastIndex > 0)
             parents = servletPath.substring(1, lastIndex).split("/");
