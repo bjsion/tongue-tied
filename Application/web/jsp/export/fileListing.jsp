@@ -7,6 +7,7 @@
         <div class="dir-breadcrumbs">
             <p><fmt:message key="listing.for"/></p>
             <span>
+        <c:set value="" var="urlString" scope="page"/>
         <c:forEach items="${parents}" var="parent">
             <c:set value="${urlString}/${parent}" var="urlString" scope="page"/>
             <c:url value="${urlString}${suffix}" var="parentUrl" scope="page"/>
