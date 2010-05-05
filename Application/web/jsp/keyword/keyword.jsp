@@ -19,7 +19,7 @@
             <div>
                 <form:label path="keyword" cssClass="content"><fmt:message key="keyword.id"/></form:label>
                 <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN,ROLE_DEV">
-                <form:input path="keyword"/>
+                <form:input path="keyword" cssClass="keyword-entry"/>
                 <form:errors path="keyword" cssClass="error"/>
                 </security:authorize>
                 <security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN,ROLE_DEV">
