@@ -62,7 +62,7 @@
                 <Cell ss:StyleID="s24"><Data ss:Type="String">Bundle</Data></Cell>
                 <Cell ss:StyleID="s24"><Data ss:Type="String">Country</Data></Cell>
                 <#list languages as language>
-                <Cell ss:StyleID="s24"><Data ss:Type="String">${language.name}</Data></Cell>
+                <Cell ss:StyleID="s24"><Data ss:Type="String">${language.code}:${language.name}</Data></Cell>
                 </#list>
             </Row>
             <#list translations as item>
@@ -70,7 +70,7 @@
                 <Cell><Data ss:Type="String">${item.keyword}</Data></Cell>
                 <Cell><Data ss:Type="String">${item.context!?xml}</Data></Cell>
                 <Cell><Data ss:Type="String">${item.bundle.name}</Data></Cell>
-                <Cell><Data ss:Type="String">${item.country.name}</Data></Cell>
+                <Cell><Data ss:Type="String">${item.country.code}:${item.country.name}</Data></Cell>
                 <#list languages as language>
                     <#assign hasMatch = false>
                     <#list item.translationEntries as entry>
