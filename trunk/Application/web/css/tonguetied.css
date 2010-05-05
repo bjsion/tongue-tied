@@ -376,6 +376,9 @@ input[type=checkbox] {
   border: none;
 }
 
+input.keyword-entry {
+  width: 60%;
+}
 
 /******************************************************************************
 * Styles for heading display.
