@@ -1,6 +1,13 @@
 #summary Release Note.
 #labels Phase-Deploy,Featured
 
+= 1.3.6 =
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=99 Issue 99] Tonguetied: login failed after about 3 days
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=106 Issue 106] Too short keyword textfield in keyword details
+ * [http://code.google.com/p/tongue-tied/issues/detail?id=109 Issue 109] Language centric import fails
+
+
+
 = 1.3.5 =
  * [http://code.google.com/p/tongue-tied/issues/detail?id=100 Issue 100] This release supercedes version 1.3.4 as it was released with the wrong configuration options.
 
