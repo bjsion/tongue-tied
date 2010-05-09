@@ -235,6 +235,10 @@
             <lib dir="${3rdparty.home}/Antlr/2.7.6">
                 <include name="antlr.jar"/>
             </lib>
+            <lib dir="${3rdparty.home}/aspectj/1.5.4">
+                <include name="aspectjweaver.jar"/>
+                <include name="LICENSE.aspectj.txt"/>
+            </lib>
             <lib dir="${3rdparty.home}/bsh/2.0b4">
                 <include name="bsh.jar"/>
                 <include name="LICENSE.bsh.txt"/>
