@@ -24,13 +24,14 @@ import java.io.File;
  * @author bsion
  * @see Server
  */
-public interface ServerConstants {
+public interface ServerConstants
+{
     static final String KEY_KEYSTORE_LOC =  "tonguetied.server.keystore.location";
     static final String KEY_KEYSTORE_PASSWORD = "tonguetied.server.keystore.password";
     static final String KEY_LOG_LEVEL = "log.level";
     static final String KEY_REQUEST_LOG_DAYS = "tonguetied.request.log.days";
     static final String KEY_REQUEST_TIMEZONE = "tonguetied.request.log.timezone";
-    static final String KEY_SERVER_PORT = "serverPort";
+    static final String KEY_SERVER_PORT = "tonguetied.server.port";
     static final String KEY_CONTEXT_PATH_DEF = "tonguetied.context.path.def";
     static final String KEY_SECURE_SERVER_PORT = "tonguetied.server.secure.port";
     static final String KEY_WORKING_LOC = "tonguetied.server.working.location";
@@ -41,7 +42,7 @@ public interface ServerConstants {
     static final String KEY_MAX_THREADS = "tonguetied.server.max.threads";
     static final String KEY_MIN_THREADS = "tonguetied.server.min.threads";
     static final String KEY_USE_FILE_MAPPED_BUFFER = 
-    	"tonguetied.server.useFileMappedBuffer";
+        "tonguetied.server.useFileMappedBuffer";
     
     /**
      * The default location to look for the war file or an extracted war file.
