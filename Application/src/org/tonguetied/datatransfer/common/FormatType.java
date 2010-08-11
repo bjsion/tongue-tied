@@ -79,6 +79,14 @@ public enum FormatType
         {
             return "resx";
         }
+    },
+    javafx
+    {
+        @Override
+        public String getDefaultFileExtension()
+        {
+            return "fxproperties";
+        }
     };
 
     /**

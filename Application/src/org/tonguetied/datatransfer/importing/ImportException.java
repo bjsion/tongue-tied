@@ -84,6 +84,7 @@ public class ImportException extends RuntimeException
     protected enum ImportErrorCode
     {
         emptyData, illegalCountry, illegalLanguage, illegalTranslationState, 
-        invalidNameFormat, unknownBundle, unknownCountry, unknownLanguage
+        invalidNameFormat, unknownBundle, unknownCountry, unknownLanguage,
+        invalidKeyValueFormat
     }
 }

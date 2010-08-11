@@ -33,6 +33,7 @@ import org.junit.runners.Suite.SuiteClasses;
     CsvImporterTest.class,
     ExcelLanguageCentricParserTest.class,
     ExcelImporterTest.class,
+    JavaFxPropertiesImporterTest.class,
     ImporterFactoryTest.class,
     ImporterTest.class,
     ImporterUtilsTest.class,

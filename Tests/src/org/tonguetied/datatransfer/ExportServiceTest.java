@@ -382,6 +382,30 @@ public class ExportServiceTest extends AbstractServiceTest
     }
 
     /**
+     * Test export to a javafx properties file
+     * 
+     * @throws Exception
+     */
+    @Test
+    public final void testExportToJavaFxProperties() throws Exception
+    {
+        ExportParameters parameters = new ExportParameters();
+        parameters.addLanguage(english);
+        parameters.addLanguage(chinese);
+        parameters.addBundle(bundle);
+        parameters.addCountry(australia);
+        parameters.addCountry(singapore);
+        parameters.setFormatType(FormatType.javafx);
+        parameters.setTranslationState(TranslationState.VERIFIED);
+        dataService.exportData(parameters);
+
+        final File exportDir = dataService.getExportPath();
+        final File[] files = exportDir.listFiles(new FileExtensionFilter(
+                ".fxproperties"));
+        assertEquals(3, files.length);
+    }
+
+    /**
      * Test the export to a .Net resource file.
      * 
      * @throws Exception

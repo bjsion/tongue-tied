@@ -61,6 +61,9 @@ public class ImporterFactory
             case properties:
                 importer = new PropertiesImporter(keywordService);
                 break;
+            case javafx:
+                importer = new JavaFxPropertiesImporter(keywordService);
+                break;
             case resx:
                 importer = new ResourceImporter(keywordService);
                 break;
