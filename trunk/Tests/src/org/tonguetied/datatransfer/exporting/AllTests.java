@@ -33,6 +33,7 @@ import org.junit.runners.Suite.SuiteClasses;
     CsvTemplateTest.class,
     ExcelTemplateTest.class,
     ExportDataPostProcessorFactoryTest.class,
+    JavaFxPropertiesTemplateTest.class,
     LanguageCentricProcessorTest.class,
     Native2AsciiDirectiveTest.class,
     Native2AsciiWriterTest.class,

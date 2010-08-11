@@ -51,6 +51,7 @@ public class ImporterFactoryTest
                 {FormatType.properties, PropertiesImporter.class},
                 {FormatType.csv, CsvImporter.class},
                 {FormatType.resx, ResourceImporter.class},
+                {FormatType.javafx, JavaFxPropertiesImporter.class},
                 {null, null}
         });
     }

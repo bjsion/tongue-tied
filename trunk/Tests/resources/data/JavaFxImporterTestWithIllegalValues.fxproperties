@@ -1,0 +1,13 @@
+@charset="UTF-8"
+// Test file for data import of java fx properties with invalid keys and values
+// Invalid key
+import.test.one"="Value 1"
+// no value set
+"import.test.two"=
+// Invalid value, no closing quote
+"import.test.three" = "new value 3"
+"import.test.four"=""
+"import.test.five"="value 5 \nnew line"
+// invalid key no quotes
+import.test.six="你好"
+"import test seven" = "שלום"
