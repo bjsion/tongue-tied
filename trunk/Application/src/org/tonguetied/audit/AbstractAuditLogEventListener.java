@@ -83,7 +83,7 @@ public abstract class AbstractAuditLogEventListener
         {
             value = ((Auditable) state).toLogString();
         }
-        else if (state instanceof Collection)
+        else if (state instanceof Collection<?>)
         {
             StringBuilder builder = new StringBuilder();
             for (Object item : (Collection<?>)state)

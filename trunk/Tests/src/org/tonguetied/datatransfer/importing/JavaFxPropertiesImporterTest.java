@@ -445,7 +445,7 @@ public final class JavaFxPropertiesImporterTest extends AbstractServiceTest
 
     /**
      * Test method for
-     * {@link FxFxPropertiesImporter#validate(String, Bundle, List)}.
+     * {@link JavaFxPropertiesImporter#validate(String, Bundle, List)}.
      */
     public final void testValidateWithIllegalLanguage() throws Exception
     {
