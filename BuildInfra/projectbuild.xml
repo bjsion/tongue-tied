@@ -149,25 +149,9 @@
     <target name="package.zip">
         <description>Create the distributable package for windows systems</description>
         <zip destfile="${package.dir}/${version}-${DSTAMP}.zip" >
-            <zipfileset dir="${3rdparty.home}/Jakarta-Commons" prefix="${version}/libs">
-                <include name="commons-cli-1.1.jar"/>
-            </zipfileset>
-            <zipfileset dir="${3rdparty.home}/HSQLDB/1.8.0.9" prefix="${version}/libs">
-                <include name="hsqldb.jar"/>
-            </zipfileset>
-            <zipfileset dir="${3rdparty.home}/Jetty/6.1.9" prefix="${version}/libs">
-                <include name="jetty.jar"/>
-                <include name="jetty-util.jar"/>
-                <include name="servlet-api-2.5.jar"/>
-            </zipfileset>
-            <zipfileset dir="${3rdparty.home}/Jetty/6.1.9/jsp-2.1" prefix="${version}/libs">
-                <include name="core-3.1.1.jar"/>
-                <include name="jsp-2.1.jar"/>
-                <include name="jsp-api-2.1.jar"/>
-            </zipfileset>
-            <zipfileset dir="${3rdparty.home}/Log4j/1.2.15" prefix="${version}/libs">
-                <include name="log4j.jar"/>
-            </zipfileset>
+            <tarfileset dir="${lib.dir}/runtime" prefix="${version}/libs">
+                <include name="*.jar"/>
+            </tarfileset>
             <zipfileset dir="${server.home}/builds" prefix="${version}/libs">
                 <include name="${server.jar.file}"/>
             </zipfileset>
@@ -205,24 +189,8 @@
     <target name="package.tar.gz">
         <description>Create the distributable package for *nix systems</description>
         <tar destfile="${package.dir}/${version}-${DSTAMP}.tar">
-            <tarfileset dir="${3rdparty.home}/Jakarta-Commons" prefix="${version}/libs">
-                <include name="commons-cli-1.1.jar"/>
-            </tarfileset>
-            <tarfileset dir="${3rdparty.home}/HSQLDB/1.8.0.9" prefix="${version}/libs">
-                <include name="hsqldb.jar"/>
-            </tarfileset>
-            <tarfileset dir="${3rdparty.home}/Jetty/6.1.9" prefix="${version}/libs">
-                <include name="jetty.jar"/>
-                <include name="jetty-util.jar"/>
-                <include name="servlet-api-2.5.jar"/>
-            </tarfileset>
-            <tarfileset dir="${3rdparty.home}/Jetty/6.1.9/jsp-2.1" prefix="${version}/libs">
-                <include name="core-3.1.1.jar"/>
-                <include name="jsp-2.1.jar"/>
-                <include name="jsp-api-2.1.jar"/>
-            </tarfileset>
-            <tarfileset dir="${3rdparty.home}/Log4j/1.2.15" prefix="${version}/libs">
-                <include name="log4j.jar"/>
+            <tarfileset dir="${lib.dir}/runtime" prefix="${version}/libs">
+                <include name="*.jar"/>
             </tarfileset>
             <tarfileset dir="${server.home}/builds" prefix="${version}/libs">
                 <include name="${server.jar.file}"/>
