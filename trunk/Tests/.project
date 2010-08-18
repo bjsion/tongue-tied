@@ -3,7 +3,6 @@
 	<name>Tests</name>
 	<comment></comment>
 	<projects>
-		<project>Build3rdParty</project>
 		<project>Server</project>
 	</projects>
 	<buildSpec>
