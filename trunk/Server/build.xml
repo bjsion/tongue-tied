@@ -85,7 +85,26 @@
 
     <target name="jar" depends="compile" description="Generate the Java Archive files and put it an accessible location for other projects">
         <echo message="Generating jar file for module ${ant.project.name} ..."/>
+        <path id="runtime.jars">
+            <fileset id="runtime.jars" dir="${lib.dir}/runtime">
+                <include name="*.jar"/>
+    	    </fileset>
+        </path>
+        <pathconvert property="class.path" refid="runtime.jars" pathsep=" ">
+        	<map from="${basedir}/lib/runtime" to="."/>
+        </pathconvert>
+
         <jar jarfile="${build.dir}/${module.jarfile}">
+        	<manifest>
+                <attribute name="Built-By" value="TongueTied Devs"/>
+                <attribute name="Implementation-Vendor" value="TongueTied"/>
+                <attribute name="Implementation-Vendor-Id" value="org.tonguetied"/>
+                <attribute name="Implementation-Version" value="${version}"/>
+                <attribute name="Implementation-Title" value="org.tonguetied.server"/>
+                <attribute name="Implementation-URL" value="http://code.google.com/p/tongue-tied/"/>
+                <attribute name="Main-Class" value="org.tonguetied.server.Server"/>
+                <attribute name="Class-Path" value="${class.path}"/>
+        	</manifest>
             <zipfileset dir="${classes.dir}">
                 <include name="**/*.class"/>
             </zipfileset>
