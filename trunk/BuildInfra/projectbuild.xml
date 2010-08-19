@@ -149,7 +149,7 @@
     <target name="package.zip">
         <description>Create the distributable package for windows systems</description>
         <zip destfile="${package.dir}/${version}-${DSTAMP}.zip" >
-            <tarfileset dir="${lib.dir}/runtime" prefix="${version}/libs">
+            <tarfileset dir="${server.home}/lib/runtime" prefix="${version}/libs">
                 <include name="*.jar"/>
             </tarfileset>
             <zipfileset dir="${server.home}/builds" prefix="${version}/libs">
@@ -189,7 +189,7 @@
     <target name="package.tar.gz">
         <description>Create the distributable package for *nix systems</description>
         <tar destfile="${package.dir}/${version}-${DSTAMP}.tar">
-            <tarfileset dir="${lib.dir}/runtime" prefix="${version}/libs">
+            <tarfileset dir="${server.home}/lib/runtime" prefix="${version}/libs">
                 <include name="*.jar"/>
             </tarfileset>
             <tarfileset dir="${server.home}/builds" prefix="${version}/libs">

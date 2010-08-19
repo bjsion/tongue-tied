@@ -87,7 +87,7 @@
         <dependency org="jaxen" name="jaxen" rev="1.1.1" conf="war->default">
             <artifact name="jaxen" type="jar"/>
         </dependency>
-        <dependency org="jstl" name="jstl" rev="1.1.2" conf="war->default">
+        <dependency org="javax.servlet" name="jstl" rev="1.1.2" conf="war->default">
             <artifact name="jstl" type="jar"/>
         </dependency>
         <dependency org="log4j" name="log4j" rev="1.2.15" conf="compile;war->default">
