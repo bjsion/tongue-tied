@@ -28,19 +28,8 @@ echo TT_HOME is : $TT_HOME
 
 
 LIBDIR=$TT_HOME/libs
-TT_PATH=$LIBDIR/server.jar
-TT_PATH=$TT_PATH:$LIBDIR/jetty.jar
-TT_PATH=$TT_PATH:$LIBDIR/jetty-util.jar
-TT_PATH=$TT_PATH:$LIBDIR/servlet-api-2.5.jar
-TT_PATH=$TT_PATH:$LIBDIR/ant.jar
-TT_PATH=$TT_PATH:$LIBDIR/log4j.jar
-TT_PATH=$TT_PATH:$LIBDIR/jsp-2.1.jar
-TT_PATH=$TT_PATH:$LIBDIR/jsp-api-2.1.jar
-TT_PATH=$TT_PATH:$LIBDIR/core-3.1.1.jar
-TT_PATH=$TT_PATH:$LIBDIR/commons-cli-1.1.jar
-TT_PATH=$TT_PATH:.
 
-EXEC="${JAVA_HOME:-/usr}/bin/java $tt_opts -cp $TT_PATH org.tonguetied.server.Server"
+EXEC="${JAVA_HOME:-/usr}/bin/java $tt_opts -cp $TT_PATH  -jar $LIBDIR/server.jar"
 echo $EXEC
 $EXEC &
 
