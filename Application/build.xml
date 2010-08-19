@@ -83,10 +83,6 @@
         <fileset dir="${lib.dir}/findbugs"/>
     </path>
 
-    <taskdef name="beandoc" 
-             classname="org.springframework.beandoc.client.AntTask"
-             classpathref="beandoc-classpath"/>
-
     <target name="resolve" description="Retrieve dependencies with ivy">
         <ivy:retrieve refresh="true"
                       sync="true"
@@ -238,6 +234,7 @@
         <ivy:publish artifactspattern="${build.dir}/[artifact].[ext]" 
                         resolver="local"
                         status="integration"
+                        overwrite="true"
                         forcedeliver="true">
             <ivy:artifacts pattern="[organisation]/[module]/[artifact]-[revision].[ext]"/>
         </ivy:publish>
@@ -308,6 +305,10 @@
     -->
     <target name="beandoc" depends="init" description="Generate documentation and graphs of Spring bean factories and application context files for this module">
         <echo message="Generating documentation of the Spring beans for module ${ant.project.name}..."/>
+        <taskdef name="beandoc" 
+                 classname="org.springframework.beandoc.client.AntTask"
+                 classpathref="beandoc-classpath"/>
+
         <beandoc beandocprops="${beandoc.propsfile}" outputdir="${docs.beandoc.dir}">
             <fileset dir="${config.dir}">
                 <include name="application-context.xml"/>
