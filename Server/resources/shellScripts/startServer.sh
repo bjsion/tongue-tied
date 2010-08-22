@@ -29,7 +29,7 @@ echo TT_HOME is : $TT_HOME
 
 LIBDIR=$TT_HOME/libs
 
-EXEC="${JAVA_HOME:-/usr}/bin/java $tt_opts -cp $TT_PATH  -jar $LIBDIR/server.jar"
+EXEC="${JAVA_HOME:-/usr}/bin/java $tt_opts -jar $LIBDIR/server.jar"
 echo $EXEC
 $EXEC &
 

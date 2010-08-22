@@ -28,18 +28,7 @@ goto have_tonguetied_home
 :have_tonguetied_home
 
 @set LIBDIR=%TT_HOME%\libs
-@set TT_PATH=%TT_PATH%;%LIBDIR%\server.jar
-@set TT_PATH=%TT_PATH%;%LIBDIR%\jetty.jar
-@set TT_PATH=%TT_PATH%;%LIBDIR%\jetty-util.jar
-@set TT_PATH=%TT_PATH%;%LIBDIR%\servlet-api-2.5.jar
-@set TT_PATH=%TT_PATH%;%LIBDIR%\ant.jar
-@set TT_PATH=%TT_PATH%;%LIBDIR%\log4j.jar
-@set TT_PATH=%TT_PATH%;%LIBDIR%\jsp-2.1.jar
-@set TT_PATH=%TT_PATH%;%LIBDIR%\jsp-api-2.1.jar
-@set TT_PATH=%TT_PATH%;%LIBDIR%\core-3.1.1.jar
-@set TT_PATH=%TT_PATH%;%LIBDIR%\commons-cli-1.1.jar
-@set TT_PATH=%TT_PATH%;.
 
-"%JAVA_HOME%\bin\java" %TT_OPTS% -cp "%TT_PATH%" org.tonguetied.server.Server
+"%JAVA_HOME%\bin\java" %TT_OPTS% -jar %LIBDIR%/server.jar"
 
 :the_end
