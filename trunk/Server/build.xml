@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<!-- 
+  Copyright 2008 The Tongue-Tied Authors
+  
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not 
+  use this file except in compliance with the License. You may obtain a copy 
+  of the License at
+   
+  http://www.apache.org/licenses/LICENSE-2.0 
+  
+  Unless required by applicable law or agreed to in writing, software 
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT 
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+  License for the specific language governing permissions and limitations 
+  under the License. 
+-->
 <!-- Use "ant -p" to see a description of tasks -->
 <project name="server" xmlns:ivy="antlib:org.apache.ivy.ant" default="build" basedir=".">
 
@@ -88,14 +102,14 @@
         <path id="runtime.jars">
             <fileset id="runtime.jars" dir="${lib.dir}/runtime">
                 <include name="*.jar"/>
-    	    </fileset>
+            </fileset>
         </path>
         <pathconvert property="class.path" refid="runtime.jars" pathsep=" ">
-        	<map from="${basedir}/lib/runtime" to="."/>
+            <map from="${basedir}/lib/runtime" to="."/>
         </pathconvert>
 
         <jar jarfile="${build.dir}/${module.jarfile}">
-        	<manifest>
+            <manifest>
                 <attribute name="Built-By" value="TongueTied Devs"/>
                 <attribute name="Implementation-Vendor" value="TongueTied"/>
                 <attribute name="Implementation-Vendor-Id" value="org.tonguetied"/>
@@ -104,7 +118,7 @@
                 <attribute name="Implementation-URL" value="http://code.google.com/p/tongue-tied/"/>
                 <attribute name="Main-Class" value="org.tonguetied.server.Server"/>
                 <attribute name="Class-Path" value="${class.path}"/>
-        	</manifest>
+            </manifest>
             <zipfileset dir="${classes.dir}">
                 <include name="**/*.class"/>
             </zipfileset>
@@ -170,26 +184,20 @@
         <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
             <classpath refid="findbugs.classpath"/>
         </taskdef>
-        <findbugs reportlevel="low" 
-                  effort="max"
+        <findbugs reportlevel="low"
+                  effort="max" 
+                  output="html"
                   description="Static code analysis on ${ant.project.name}"
-                  projectname="${ant.project.name}"
-                  output="xml:withMessages"
-                  outputFile="${docs.findbugs.dir}/${findbugs.xml.file}">
+                  projectname=""
+                  stylesheet="fancy.xsl"
+                  outputFile="${docs.findbugs.dir}/${findbugs.report}">
             <classpath refid="findbugs.classpath"/>
             <pluginlist/>
             <auxclasspath>
                 <path refid="compile.classpath"/>
             </auxclasspath>
-            <sourcepath path="${src.dir}"/>
+            <sourcepath path="${java.dir}"/>
             <class location="${build.dir}/${module.jarfile}"/>
         </findbugs>
-        <xslt in="${docs.findbugs.dir}/${findbugs.xml.file}" 
-              out="${docs.findbugs.dir}/${findbugs.report}">
-            <style>
-                <javaresource name="fancy.xsl" classpathref="findbugs.classpath"/>
-            </style>
-            <outputproperty name="method" value="html"/>
-        </xslt>
     </target>
 </project>

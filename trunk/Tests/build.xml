@@ -177,27 +177,21 @@
         <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
             <classpath refid="findbugs.classpath"/>
         </taskdef>
-        <findbugs reportlevel="low" 
-                  effort="max"
+        <findbugs reportlevel="low"
+                  effort="max" 
+                  output="html"
                   description="Static code analysis on ${ant.project.name}"
-                  projectname="${ant.project.name}"
-                  output="xml:withMessages"
-                  outputFile="${docs.findbugs.dir}/${findbugs.xml.file}">
+                  projectname=""
+                  stylesheet="fancy.xsl"
+                  outputFile="${docs.findbugs.dir}/${findbugs.report}">
             <classpath refid="findbugs.classpath"/>
             <pluginlist/>
             <auxclasspath>
                 <path refid="compile.classpath"/>
             </auxclasspath>
-            <sourcepath path="${src.dir}"/>
+            <sourcepath path="${java.dir}"/>
             <class location="${build.dir}/${module.jarfile}"/>
         </findbugs>
-        <xslt in="${docs.findbugs.dir}/${findbugs.xml.file}" 
-              out="${docs.findbugs.dir}/${findbugs.report}">
-            <style>
-                <javaresource name="fancy.xsl" classpathref="findbugs.classpath"/>
-            </style>
-            <outputproperty name="method" value="html"/>
-        </xslt>
     </target>
      
     <target name="javadoc" depends="init" description="generate the javadoc for this module">
