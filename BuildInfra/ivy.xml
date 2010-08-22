@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../xml/ivy-doc.xsl"?>
+<ivy-module version="2.0" xmlns:e="http://ant.apache.org/ivy/extra">
+    <info organisation="org.tonguetied" module="buildinfra" revision="1.4.0">
+        <license name="Apache 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+        <description homepage="http://code.google.com/p/tongue-tied/">
+        TODO: complete
+        </description>
+    </info>
+    <configurations defaultconfmapping="jdepend->default">
+        <conf name="default"/>
+        <conf name="jdepend" transitive="false" description="The libraries and files used by the jDepend tool"/>
+    </configurations>
+    <dependencies>
+        <dependency org="jdepend" name="jdepend" rev="2.9.1" conf="jdepend">
+            <artifact name="jdepend" type="jar"/>
+        </dependency>
+    </dependencies>
+</ivy-module>
