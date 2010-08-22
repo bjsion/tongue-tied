@@ -15,6 +15,7 @@
  */
 package org.tonguetied.keywordmanagement;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 import javax.persistence.CascadeType;
@@ -360,8 +361,10 @@ public class Translation implements DeepCloneable<Translation>,
      * @author bsion
      * @see Translation#equals(Object)
      */
-    protected static class TranslationIdComparator implements Comparator<Translation>
+    protected static class TranslationIdComparator implements 
+            Comparator<Translation>, Serializable
     {
+        private static final long serialVersionUID = 8942014286479032574L;
 
         public int compare(Translation t1, Translation t2)
         {
