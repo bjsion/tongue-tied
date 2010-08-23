@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="BuildInfra" default="build" basedir=".">
+<project name="BuildInfra" xmlns:ivy="antlib:org.apache.ivy.ant" default="build" basedir=".">
 
     <property name="app.root" value="${basedir}/../"/>
     
@@ -14,7 +14,13 @@
 
     <!-- temporary directories -->
 
-    <target name="build" depends="init">
+    <target name="resolve">
+        <ivy:retrieve refresh="true"
+                      sync="true"
+                      pattern="${ivy.lib.dir}/[conf]/[artifact]-[revision].[ext]"/>
+    </target>
+
+    <target name="build" depends="init, resolve">
         <description>presently does nothing</description>
     </target>
 

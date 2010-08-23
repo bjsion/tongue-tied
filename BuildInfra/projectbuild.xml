@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="TongueTiedProjectBuild" xmlns:ivy="antlib:org.apache.ivy.ant" default="global.build" basedir=".">
+<project name="TongueTiedProjectBuild" default="global.build" basedir=".">
 
     <property name="app.root" value="${basedir}/../"/>
 
@@ -14,12 +14,6 @@
     <!-- temporary directories -->
     <property name="docs.dir" value="${infra.home}/docs"/>
     <property name="docs.metrics.dir" value="${docs.dir}/metrics"/>
-
-    <target name="resolve">
-        <ivy:retrieve refresh="true"
-                      sync="true"
-                      pattern="${ivy.lib.dir}/[conf]/[artifact]-[revision].[ext]"/>
-    </target>
 
     <!-- target used to invoke a build script with a set of properties -->
     <!-- param: module.path -->
