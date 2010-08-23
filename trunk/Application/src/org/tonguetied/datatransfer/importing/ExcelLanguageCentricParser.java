@@ -57,7 +57,7 @@ public class ExcelLanguageCentricParser implements ExcelParser
     private Map<String, Keyword> keywords;
     private Keyword keyword;
     private Translation baseTranslation;
-    private short lastColOfRow;
+    private int lastColOfRow;
     private KeywordService keywordService;
     private List<ImportErrorCode> errorCodes;
     
