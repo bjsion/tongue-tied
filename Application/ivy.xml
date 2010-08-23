@@ -75,9 +75,6 @@
         <dependency org="dom4j" name="dom4j" rev="1.6.1" conf="hibernate-tools->default;war->default;compile->default">
             <artifact name="dom4j" type="jar"/>
         </dependency>
-        <!--dependency org="javassist" name="javassist" rev="3.9.0.GA" conf="war->default">
-            <artifact name="javassist" type="jar" url="http://repository.jboss.org/maven2/javassist/javassist/3.9.0.GA/"/>
-        </dependency-->
         <dependency org="javassist" name="javassist" rev="3.9.0.GA" conf="war->default">
             <artifact name="javassist" type="jar"/>
         </dependency>
@@ -108,7 +105,7 @@
         <dependency org="opensymphony" name="sitemesh" rev="2.3" conf="war->default">
             <artifact name="sitemesh" type="jar"/>
         </dependency>
-        <dependency org="org.apache.poi" name="poi" rev="3.0.2-FINAL" conf="compile;war->default">
+        <dependency org="org.apache.poi" name="poi" rev="3.6" conf="compile;war->default">
             <artifact name="poi" type="jar"/>
         </dependency>
         <dependency org="org.beanshell" name="bsh" rev="2.0b4" conf="fmpp->default;war->default">
@@ -189,15 +186,6 @@
         <dependency org="velocity-tools" name="velocity-tools" rev="1.4" conf="war->default">
             <artifact name="velocity-tools" type="jar"/>
         </dependency>
-        <!-- dependency org="" name="" rev="" conf="war->default">
-            <artifact name="" type="jar"/>
-        </dependency-->
-        <!-- dependency org="" name="" rev="" conf="compile" transitive="false">
-            <artifact name="" type="jar"/>
-        </dependency-->
-        <!-- dependency org="" name="" rev="">
-            <artifact name="" type=""/>
-        </dependency-->
         <dependency org="aop" name="spring-aop-2.5" rev="2.5" conf="xmlentities->default">
             <artifact name="spring-aop-2.5" type="xsd"/>
         </dependency>
