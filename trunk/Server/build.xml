@@ -144,7 +144,7 @@
         </genkey>
     </target>
 
-    <target name="build" depends="validate.xml, set.server.props, jar, jar-src, gen.key" description="Compile entire module and validate xml files"/>
+    <target name="build" depends="resolve, validate.xml, set.server.props, jar, jar-src, gen.key" description="Compile entire module and validate xml files"/>
 
     <target name="validate.xml" description="Validate XML configuration files" >
         <echo message="validating XML in module ${ant.project.name}..." />
