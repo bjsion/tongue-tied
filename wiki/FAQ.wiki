@@ -1,4 +1,5 @@
 #summary Reference for Frequently Asked Questions.
+#labels Featured
 
 = Frequently Asked Questions =
 
