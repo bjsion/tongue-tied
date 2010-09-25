@@ -48,6 +48,7 @@ import org.tonguetied.datatransfer.exporting.ExportDataPostProcessor;
 import org.tonguetied.datatransfer.exporting.ExportDataPostProcessorFactory;
 import org.tonguetied.datatransfer.exporting.ExportException;
 import org.tonguetied.datatransfer.exporting.Native2AsciiDirective;
+import org.tonguetied.datatransfer.exporting.NoExportDataException;
 import org.tonguetied.datatransfer.importing.Importer;
 import org.tonguetied.datatransfer.importing.ImporterFactory;
 import org.tonguetied.keywordmanagement.KeywordService;
@@ -146,6 +147,13 @@ public class DataServiceImpl implements DataService
         
         try
         {
+            List<Translation> translations = 
+                transferRepository.findTranslations(parameters);
+            if (translations.isEmpty())
+            {
+                throw new NoExportDataException(parameters);
+            }
+            
             File exportPath = getExportPath(true);
             final boolean isDirCreated = exportPath.mkdir();
             if (!isDirCreated)
@@ -157,8 +165,6 @@ public class DataServiceImpl implements DataService
                 new String[] {"ftl", parameters.getFormatType().getDefaultFileExtension()};
             settings.set(NAME_REPLACE_EXTENSIONS, replaceExtensions);
             
-            List<Translation> translations = 
-                transferRepository.findTranslations(parameters);
             Map<String, Object> root = postProcess(parameters, translations);
             // TODO: follow best practice and put in the configuration as a 
             // shared variable, see: http://freemarker.sourceforge.net/docs/pgui_datamodel_directive.html

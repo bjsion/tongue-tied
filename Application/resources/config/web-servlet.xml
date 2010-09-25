@@ -46,6 +46,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
             <props>
+                <prop key="org.tonguetied.datatransfer.exporting.NoExportDataException">export/error</prop>
                 <prop key="org.tonguetied.datatransfer.importing.ImportException">import/error</prop>
                 <prop key="javax.servlet.ServletException">error</prop>
                 <prop key="java.lang.Exception">error</prop>
