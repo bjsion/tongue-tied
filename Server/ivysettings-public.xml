@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ivysettings>
-    <resolvers>
-        <chain name="public">
-            <ibiblio name="jboss" root="http://repository.jboss.org/maven2/" m2compatible="true"/>
-            <ibiblio name="ibiblio" m2compatible="true"/>
-        </chain>
-    </resolvers>
-</ivysettings>
