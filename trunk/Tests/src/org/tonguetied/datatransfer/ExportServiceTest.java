@@ -41,6 +41,7 @@ import org.springframework.test.annotation.ExpectedException;
 import org.tonguetied.datatransfer.common.ExportParameters;
 import org.tonguetied.datatransfer.common.FormatType;
 import org.tonguetied.datatransfer.dao.TransferRepository;
+import org.tonguetied.datatransfer.exporting.NoExportDataException;
 import org.tonguetied.keywordmanagement.Bundle;
 import org.tonguetied.keywordmanagement.Country;
 import org.tonguetied.keywordmanagement.Keyword;
@@ -67,6 +68,7 @@ public class ExportServiceTest extends AbstractServiceTest
 
     private Language english;
     private Language chinese;
+    private Language tamil;
 
     private Bundle bundle;
 
@@ -110,6 +112,11 @@ public class ExportServiceTest extends AbstractServiceTest
         chinese.setCode(LanguageCode.zh);
         chinese.setName("Simplified Chinese");
         getLanguageRepository().saveOrUpdate(chinese);
+
+        tamil = new Language();
+        tamil.setCode(LanguageCode.tl);
+        tamil.setName("Tamil");
+        getLanguageRepository().saveOrUpdate(tamil);
 
         bundle = new Bundle();
         bundle.setName("testBundle");
@@ -531,6 +538,18 @@ public class ExportServiceTest extends AbstractServiceTest
         parameters.addCountry(singapore);
         parameters.setTranslationState(TranslationState.VERIFIED);
         parameters.setFormatType(null);
+        dataService.exportData(parameters);
+    }
+
+    @ExpectedException(NoExportDataException.class)
+    public final void testExportWithNoDataFound() throws Exception
+    {
+        ExportParameters parameters = new ExportParameters();
+        parameters.addLanguage(tamil);
+        parameters.addBundle(bundle);
+        parameters.addCountry(singapore);
+        parameters.setTranslationState(TranslationState.QUERIED);
+        parameters.setFormatType(FormatType.javafx);
         dataService.exportData(parameters);
     }
 
