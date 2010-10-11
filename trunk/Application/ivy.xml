@@ -183,6 +183,9 @@
         <dependency org="org.apache.velocity" name="velocity" rev="1.5" conf="war->default">
             <artifact name="velocity" type="jar"/>
         </dependency>
+        <dependency org="schemaspy" name="SchemaSpy" rev="5.0.0" conf="schemaspy->default">
+            <artifact name="schemaSpy" type="jar"/>
+        </dependency>
         <dependency org="velocity-tools" name="velocity-tools" rev="1.4" conf="war->default">
             <artifact name="velocity-tools" type="jar"/>
         </dependency>

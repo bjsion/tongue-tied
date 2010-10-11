@@ -387,14 +387,19 @@
 
     <target name="schemadoc" description="Generate graphical documentation of the database schema">
         <echo message="Generating documentation for the database schema ..."/>
+
+        <taskdef name="hibernatetool"
+                 classname="org.hibernate.tool.ant.HibernateToolTask">
+            <classpath refid="hibernate.tools.classpath"/>
+        </taskdef>
+    	
         <hibernatetool>
             <annotationconfiguration configurationfile="${hibernate.cfg.xml}"/>
             <hbm2doc destdir="${docs.hibernate.dir}"/>
             <classpath location="${classes.dir}"/>
         </hibernatetool>
 
-        <java jar="${3rdparty.home}/SchemaSpy/3.1.1/schemaSpy.jar"
-              fork="true">
+        <java jar="${lib.dir}/schemaspy/schemaSpy-5.0.0.jar" fork="true">
             <arg value="-t" />
             <arg value="hsqldb"/>
             <arg value="-db"/>
