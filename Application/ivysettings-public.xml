@@ -4,6 +4,9 @@
         <chain name="public">
             <ibiblio name="jboss" root="http://repository.jboss.org/maven2/" m2compatible="true"/>
             <ibiblio name="ibiblio" m2compatible="true"/>
+            <url name="sourceforge" checksums="">
+                <artifact pattern="http://sourceforge.net/projects/[organisation]/files/[organisation]/[module]%20[revision]/[artifact]_[revision].[ext]/download"/>
+            </url>
         </chain>
     </resolvers>
 </ivysettings>
