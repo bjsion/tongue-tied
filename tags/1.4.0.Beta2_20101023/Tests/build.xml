@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  Copyright 2008 The Tongue-Tied Authors
+  
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not 
+  use this file except in compliance with the License. You may obtain a copy 
+  of the License at
+   
+  http://www.apache.org/licenses/LICENSE-2.0 
+  
+  Unless required by applicable law or agreed to in writing, software 
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT 
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+  License for the specific language governing permissions and limitations 
+  under the License. 
+-->
+<!-- Use "ant -p" to see a description of tasks -->
+<project name="tests" xmlns:ivy="antlib:org.apache.ivy.ant" default="build" basedir=".">
+
+    <property name="app.root" value="${basedir}/../"/>
+
+    <property file="${app.root}/BuildInfra/global.properties"/>
+
+    <property name="module.jarfile" value="${ant.project.name}.jar"/>
+    <property name="module.src.jarfile" value="${ant.project.name}-src.jar"/>
+
+    <property name="src.dir" value="${tests.home}/src"/>
+    <property name="resources.dir" value="${tests.home}/resources"/>
+    <property name="config.dir" value="${resources.dir}/config"/>
+ 
+    <!-- temporary directories -->
+    <property name="classes.dir" value="${tests.home}/classes"/>
+    <property name="lib.dir" value="${tests.home}/lib"/>
+    <property name="build.dir" value="${tests.home}/builds"/>
+    <property name="data.dir" value="${tests.home}/data"/>
+    <property name="docs.dir" value="${tests.home}/docs"/>
+    <property name="docs.api.dir" value="${docs.dir}/api"/>
+    <property name="docs.junit.dir" value="${docs.dir}/junit"/>
+    <property name="docs.findbugs.dir" value="${docs.dir}/findbugs"/>
+    <property name="findbugs.xml.file" value="${ant.project.name}-bug-report.xml"/>
+    <property name="findbugs.report" value="${ant.project.name}-bug-report.html"/>
+
+    <property name="build.debug" value="on"/>
+
+    <path id="compile.classpath">
+        <fileset dir="${lib.dir}/compile"/>
+    </path>
+    
+    <path id="test.classpath">
+        <fileset dir="${lib.dir}/test"/>
+        <pathelement location="${config.dir}"/>
+        <pathelement location="${application.home}/resources/sql"/>
+        <pathelement location="${application.home}/generated/sql"/>
+        <pathelement location="${resources.dir}/sql"/>
+        <pathelement location="${build.dir}/${module.jarfile}"/>
+    </path>
+
+    <path id="findbugs.classpath">
+        <fileset dir="${lib.dir}/findbugs"/>
+    </path>
+
+    <target name="init">
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${docs.dir}"/>
+        <mkdir dir="${docs.junit.dir}"/>
+        <mkdir dir="${docs.findbugs.dir}"/>
+        <mkdir dir="${data.dir}"/>
+    </target>
+
+    <target name="resolve" description="Retrieve dependencies with ivy">
+        <ivy:retrieve refresh="true"
+                      sync="true"
+                      conf="compile,test,findbugs"
+                      pattern="${ivy.lib.dir}/[conf]/[artifact]-[revision].[ext]"/>
+        <ivy:settings id="xsd.settings" file="${tests.home}/ivysettings-xsd.xml"/>
+        <ivy:retrieve settingsref="xsd.settings"
+                      refresh="false"
+                      sync="false"
+                      conf="xmlentities"
+                      pattern="${ivy.lib.dir}/[conf]/[artifact].[ext]"/>
+    </target>
+
+    <target name="clean.classes" description="Remove all compiled classes">
+        <echo message="Cleaning ${ant.project.name} ..."/>
+        <delete dir="${classes.dir}" failonerror="true" deleteonexit="true"/>
+    </target>
+
+    <target name="clean" depends="clean.classes" description="Remove all generated files, including but not limited to classes, log files and jar files">
+        <delete dir="${build.dir}" failonerror="true" deleteonexit="true"/>
+        <delete dir="${docs.dir}" failonerror="true" deleteonexit="true"/>   
+        <delete dir="${data.dir}" failonerror="true" deleteonexit="true"/>
+    </target>
+
+    <target name="jar" depends="compile" description="Generate the Java Archive file and put it an accesable location for other projects">
+        <echo message="Generating jar file for module ${ant.project.name} ..."/>
+        <jar jarfile="${build.dir}/${module.jarfile}">
+            <zipfileset dir="${classes.dir}" includes="**/*.class"/>
+            <zipfileset dir="${config.dir}">
+                <include name="**/*.xml"/>
+                <include name="**/*.properties"/>
+            </zipfileset>
+        </jar>
+    </target>
+
+    <target name="jar-src" description="Generate the Java Archive files for the source files">
+        <echo message="Generating jar file of source for module ${ant.project.name} ..."/>
+        <jar jarfile="${build.dir}/${module.src.jarfile}">
+            <zipfileset dir="${src.dir}">
+                <include name="**/*.*"/>
+            </zipfileset>
+        </jar>
+    </target>
+
+    <target name="build" depends="resolve, jar, validate.xml, jar-src" description="Compile entire module and validate xml files"/>
+
+    <target name="compile" depends="init" description="Generate all the class files for this module">
+        <echo message="Compiling module ${ant.project.name} ..."/>
+        <javac srcdir="${src.dir}"
+               destdir="${classes.dir}"
+               debug="${build.debug}"
+               optimize="off"
+               encoding="UTF-8"
+               deprecation="off">
+            <include name="**/*.java"/>
+            <classpath refid="compile.classpath" />
+        </javac>
+    </target>
+
+    <target name="run.tests" depends="jar" description="Execute all the unit tests and generate a report of results" >
+        <echo message="Executing unit tests ..." />
+        
+        <path id="user.dir.internal">
+            <pathelement location="${basedir}" />
+        </path>
+
+        <pathconvert targetos="unix" property="user.dir.apa" refid="user.dir.internal" />
+
+        <junit printsummary="yes" haltonfailure="no" showoutput="true" forkmode="perBatch" failureproperty="has.tests.failed">
+            <classpath refid="test.classpath" />
+            <formatter type="xml" />
+            <sysproperty key="user.dir" value="${user.dir.apa}"/>
+
+            <batchtest fork="yes" todir="${docs.junit.dir}">
+                <fileset dir="${src.dir}">
+                    <include name="org/tonguetied/**/AllTests.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+
+        <echo message="Generating report of unit tests" />
+        <junitreport todir="${docs.junit.dir}">
+            <fileset dir="${docs.junit.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${docs.junit.dir}"/>
+        </junitreport>
+        
+        <fail if="has.tests.failed">
+            The unit tests failed. Please check the logs to see the errors.
+        </fail>
+    </target>
+
+    <target name="validate.xml" description="Validate XML configuration files" >
+        <echo message="validating XML in module ${ant.project.name}..." />
+        <schemavalidate>
+            <schema namespace="http://www.springframework.org/schema/beans"
+                    file="${lib.dir}/xmlentities/spring-beans-2.5.xsd"/>
+            <fileset dir="${config.dir}" id="xml.resources">
+                <include name="**/*-context.xml"/>
+            </fileset>
+        </schemavalidate>
+    </target>
+    
+    <target name="analyze.code" depends="init" description="Inspect Java bytecode for occurrences of bug patterns using a static analysis tool">
+        <echo message="Performing code analysis on module ${ant.project.name}..."/>
+        <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
+            <classpath refid="findbugs.classpath"/>
+        </taskdef>
+        <findbugs reportlevel="low"
+                  effort="max" 
+                  output="html"
+                  description="Static code analysis on ${ant.project.name}"
+                  projectname=""
+                  stylesheet="fancy.xsl"
+                  outputFile="${docs.findbugs.dir}/${findbugs.report}">
+            <classpath refid="findbugs.classpath"/>
+            <pluginlist/>
+            <auxclasspath>
+                <path refid="compile.classpath"/>
+            </auxclasspath>
+            <sourcepath path="${java.dir}"/>
+            <class location="${build.dir}/${module.jarfile}"/>
+        </findbugs>
+    </target>
+     
+    <target name="javadoc" depends="init" description="generate the javadoc for this module">
+        <echo message="Generating java api documentation for module ${ant.project.name}..."/>
+        <javadoc destdir="${docs.api.dir}" 
+                 useexternalfile="true" 
+                 author="true"   
+                 version="true"   
+                 use="true"   
+                 classpathref="compile.classpath"
+                 windowtitle="${ant.project.name} API">
+            <doctitle><![CDATA[<h1>]]>${application.name}:- ${ant.project.name}<![CDATA[</h1>]]></doctitle>
+            <bottom><![CDATA[<i>Copyright &#169; 2008 Ben Sion. All Rights Reserved.</i>]]></bottom>
+            <fileset dir="${src.dir}" includes="**/*.java"/>
+        </javadoc>
+    </target>
+</project>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../xml/ivy-doc.xsl"?>
+<ivy-module version="2.0" xmlns:e="http://ant.apache.org/ivy/extra">
+    <info organisation="org.tonguetied" module="server" revision="1.4.0">
+        <license name="Apache 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+        <description homepage="http://code.google.com/p/tongue-tied/">
+        TODO: complete
+        </description>
+    </info>
+    <configurations defaultconfmapping="compile->default">
+        <conf name="compile" visibility="private" transitive="false" description="The library dependencies for compilation of the code"/>
+        <conf name="default"/>
+        <conf name="findbugs" description="The libraries and files used by the findbugs tool"/>
+        <conf name="runtime" extends="compile" transitive="false" description="The libraries used to run the server"/>
+    </configurations>
+    <publications>
+        <artifact name="${ant.project.name}" type="jar"/>
+        <artifact name="${ant.project.name}-src" type="source" ext="jar"/>
+        <artifact name="${ant.project.name}" type="war"/>
+    </publications>
+    <dependencies>
+        <dependency org="com.google.code.findbugs" name="findbugs" rev="${findbugs.version}" conf="findbugs->default">
+        </dependency>
+        <dependency org="com.google.code.findbugs" name="findbugs-ant" rev="${findbugs.version}" conf="findbugs->default" transitive="false">
+        </dependency>
+        <dependency org="commons-cli" name="commons-cli" rev="1.1" conf="compile->default">
+            <artifact name="commons-cli" type="jar"/>
+        </dependency>
+        <dependency org="log4j" name="log4j" rev="1.2.15" conf="compile->default">
+            <artifact name="log4j" type="jar"/>
+        </dependency>
+        <dependency org="org.eclipse.jdt" name="core" rev="3.1.1" conf="runtime">
+            <artifact name="core" type="jar"/>
+        </dependency>
+        <dependency org="org.mortbay.jetty" name="jetty" rev="${jetty.version}" conf="compile">
+            <artifact name="jetty" type="jar"/>
+        </dependency>
+        <dependency org="org.mortbay.jetty" name="jetty-util" rev="${jetty.version}" conf="compile">
+            <artifact name="jetty-util" type="jar"/>
+        </dependency>
+        <dependency org="org.mortbay.jetty" name="jsp-2.1" rev="${jsp.version}" conf="runtime">
+            <artifact name="jsp-2.1" type="jar"/>
+        </dependency>
+        <dependency org="org.mortbay.jetty" name="jsp-api-2.1" rev="${jsp.version}" conf="runtime">
+            <artifact name="jsp-api-2.1" type="jar"/>
+        </dependency>
+        <dependency org="org.mortbay.jetty" name="servlet-api-2.5" rev="6.1.14" conf="compile">
+            <artifact name="servlet-api-2.5" type="jar"/>
+        </dependency>
+    </dependencies>
+</ivy-module>

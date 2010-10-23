@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivysettings>
+    <settings defaultResolver="namespaces"/>
+    <resolvers>
+        <chain name="namespaces" returnFirst="true">
+            <url name="spring-ns" checksums="">
+                <artifact pattern="http://www.springframework.org/schema/[organisation]/[artifact].[ext]"/>
+            </url>
+            <url name="w3-org-ns" checksums="">
+                <artifact pattern="http://www.w3.org/2001/[artifact].[ext]"/>
+            </url>
+        </chain>
+    </resolvers>
+</ivysettings>
+
