@@ -134,7 +134,7 @@
         build_date timestamp not null,
         build_number varchar(10) not null,
         setup_date timestamp not null,
-        version varchar(10) not null,
+        version varchar(12) not null,
         primary key (server_data_id),
         unique (version, build_number)
     );
