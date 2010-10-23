@@ -58,7 +58,7 @@ public class ServerData implements Comparable<ServerData>
     @SequenceGenerator(name="server_data_generator",sequenceName="server_data_id_seq")
     @Column(name=COL_ID)
     private Long id;
-    @Column(nullable=false,length=10)
+    @Column(nullable=false,length=12)
     private String version;
     @Column(name=COL_BUILD_NUMBER,nullable=false,length=10)
     private String buildNumber;
