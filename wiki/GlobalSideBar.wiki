@@ -1,15 +1,15 @@
 *!TongueTied*
 
-*[TongueTiedOverview Overview]*
+[TongueTiedOverview Overview]
 
-*[InstallationInstructions Installation Instructions]*
+[InstallationInstructions Installation Instructions]
 
-*[GettingStarted Getting Started]*
+[GettingStarted Getting Started]
 
-*[ImportingTranslations Importing values]*
+[ImportingTranslations Importing values]
 
-*[TranslationWorkFlow Work flow]*
+[TranslationWorkFlow Work flow]
 
-*[FAQ FAQ]*
+[FAQ FAQ]
 
-*[SupportTongueTied Support]*
+[SupportTongueTied Support]
