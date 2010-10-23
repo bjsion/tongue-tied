@@ -1,8 +1,11 @@
 *!TongueTied*
 
    * [TongueTiedOverview Overview]
+   * [ReleaseNotes Release Notes] 
    * [InstallationInstructions Installation Instructions]
       * [UsingMySql Connect to MySQL DB]
+      * [UsingPostreSQL Connect to PostgreSQL DB]
+      * [ConfiguringEmbeddedWebServer Configure Web Server]
    * [GettingStarted Getting Started]
    * [ImportingTranslations Importing values]
    * [TranslationWorkFlow Work flow]
