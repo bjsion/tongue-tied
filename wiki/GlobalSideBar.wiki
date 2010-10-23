@@ -1,15 +1,10 @@
 *!TongueTied*
 
-[TongueTiedOverview Overview]
-
-[InstallationInstructions Installation Instructions]
-
-[GettingStarted Getting Started]
-
-[ImportingTranslations Importing values]
-
-[TranslationWorkFlow Work flow]
-
-[FAQ FAQ]
-
-[SupportTongueTied Support]
+   * [TongueTiedOverview Overview]
+   * [InstallationInstructions Installation Instructions]
+      * [UsingMySql Connect to MySQL DB]
+   * [GettingStarted Getting Started]
+   * [ImportingTranslations Importing values]
+   * [TranslationWorkFlow Work flow]
+   * [FAQ FAQ]
+   * [SupportTongueTied Support]
