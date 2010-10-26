@@ -11,7 +11,7 @@ You can support Tongue-Tied in many ways. These include:
   * Submit bug or enhancement requests.
   * Submit patches.
   * Test new releases.
-  * Click on the "I use this" button on [http://www.ohloh.net/p/tongue-tied Ohloh].
+  * Click on the "I use this" button on [http://www.ohloh.net/p/tongue-tied Ohloh] or use the button below.
  <wiki:gadget url="http://www.ohloh.net/p/tongue-tied/widgets/project_users.xml" height="100" border="0" />
 
   * Spread the word in your blog.
