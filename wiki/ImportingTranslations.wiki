@@ -1,4 +1,5 @@
 #summary Importing translations.
+#labels Phase-Deploy
 
 = Introduction =
 
