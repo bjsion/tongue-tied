@@ -1,5 +1,5 @@
 #summary Reference for Frequently Asked Questions.
-#labels Featured
+#labels Featured,Phase-Support
 
 = Frequently Asked Questions =
 
