@@ -12,6 +12,7 @@ This tool helps with the creation of keywords with support for multi-language or
 
 One of the key features of !TongueTied is that it allows static resources to be exported from the application and can import translations from resources into the application. The following formats are currently supported for both export and import:
  * Java Properties
+ * Java FX Properties
  * .Net Resources (.resx)
  * CSV
  * Excel
