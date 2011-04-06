@@ -9,6 +9,9 @@
             <url name="w3-org-ns" checksums="">
                 <artifact pattern="http://www.w3.org/2001/[artifact].[ext]"/>
             </url>
+            <url name="javaee-ns" checksums="">
+            	<artifact pattern="http://java.sun.com/xml/ns/[organisation]/[artifact].[ext]"/>
+            </url>
             <url name="hibernate-ns" checksums="">
                 <artifact pattern="http://hibernate.sourceforge.net/[artifact].[ext]"/>
             </url>

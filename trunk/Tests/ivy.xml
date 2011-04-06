@@ -54,8 +54,15 @@
         <dependency org="xmlunit" name="xmlunit" rev="1.3" conf="compile" transitive="false">
             <artifact name="xmlunit" type="jar"/>
         </dependency>
-        <dependency org="beans" name="spring-beans-2.5" rev="2.5" conf="xmlentities->default">
+        <dependency org="beans" name="spring-beans-2.5" rev="2.5" conf="xmlentities->*">
             <artifact name="spring-beans-2.5" type="xsd"/>
+        </dependency>
+        <dependency org="tx" name="spring-tx-2.5" rev="2.5" conf="xmlentities->*">
+            <artifact name="spring-tx" type="xsd"/>
+        </dependency>
+        <dependency org="xmlschema" name="xmlschema" rev="2001" conf="xmlentities->*">
+            <artifact name="XMLSchema" type="xsd"/>
+            <artifact name="xml" type="xsd"/>
         </dependency>
     </dependencies>
 </ivy-module>

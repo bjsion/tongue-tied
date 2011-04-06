@@ -120,7 +120,7 @@
         <dependency org="org.hibernate" name="hibernate-annotations" rev="3.4.0.GA" conf="hibernate->default">
             <artifact name="hibernate-annotations" type="jar"/>
         </dependency>
-        <dependency org="org.hibernate" name="hibernate-commons-annotations" rev="3.3.0.ga" conf="hibernate->default">
+        <dependency org="org.hibernate" name="hibernate-commons-annotations" rev="3.2.0.Final" conf="hibernate->default">
             <artifact name="hibernate-commons-annotations" type="jar"/>
         </dependency>
         <dependency org="org.hibernate" name="hibernate-core" rev="3.3.1.GA" conf="hibernate->default">
